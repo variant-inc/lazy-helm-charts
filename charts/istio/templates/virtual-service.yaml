@@ -1,0 +1,20 @@
+{{- $fullName := (include "istio.fullname" .) -}}
+{{- $labels := (include "istio.labels" .) -}}
+{{- if .Values.ingress }}
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ $fullName }}
+  labels: {{ $labels | nindent 4 }}
+spec:
+  gateways:
+    - default/default
+  hosts:
+    - {{ .Values.ingress.host | quote }}
+  http:
+    - route:
+        - destination:
+            host: {{ .Values.ingress.backend.service.name }}
+            port:
+              number: {{ int .Values.ingress.backend.service.port }}
+{{- end}}
