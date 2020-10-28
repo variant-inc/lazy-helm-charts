@@ -1,3 +1,6 @@
+{{- if .Values.ingress }}
+
 You can reach the application at
 
-https://{{ .Values.host }}
+https://{{ .Values.ingress.host }}
+{{- end}}
