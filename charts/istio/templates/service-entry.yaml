@@ -18,7 +18,7 @@ spec:
   ports:
     {{- range .ports }}
     - number: {{ .number }}
-      name: {{ printf "%s_%v" .protocol .number | lower }}
+      name: {{ .protocol | lower }}
       protocol: {{ .protocol | upper }}
     {{- end }}
   resolution: DNS
