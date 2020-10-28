@@ -17,4 +17,5 @@ jobs:
         env:
           VALIDATE_ALL_CODEBASE: false
           VALIDATE_YAML: false
+          VALIDATE_KUBERNETES_KUBEVAL: false
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
