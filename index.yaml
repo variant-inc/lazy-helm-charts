@@ -1,3 +1,41 @@
 apiVersion: v1
-entries: {}
+entries:
+  istio:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2020-10-28T12:40:43.907184747Z"
+    description: A Helm chart for Istio Objects
+    digest: 4d606f6d520dd689bcf137fecb0fa28d495785fd9d792b1758de15841fb08f27
+    home: https://www.drivevariant.com/
+    icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
+    kubeVersion: ^1.7.1-0
+    maintainers:
+    - email: vibind@drivevariant.com
+      name: vibindaniel
+    name: istio
+    sources:
+    - https://github.com/variant-inc
+    type: application
+    urls:
+    - https://github.com/variant-inc/in-helm-charts/releases/download/istio-0.1.0/istio-0.1.0.tgz
+    version: 0.1.0
+  sample-chart:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2020-10-28T12:40:44.029637958Z"
+    description: A Helm chart for Kubernetes
+    digest: d60935f51c910ceab58d491e5fa6ce5878c1f6a2ce5ab5c1a3e33ee71e544298
+    home: https://www.drivevariant.com/
+    icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
+    kubeVersion: ^1.7.1-0
+    maintainers:
+    - email: vibind@drivevariant.com
+      name: vibindaniel
+    name: sample-chart
+    sources:
+    - https://github.com/variant-inc
+    type: application
+    urls:
+    - https://github.com/variant-inc/in-helm-charts/releases/download/sample-chart-1.0.0/sample-chart-1.0.0.tgz
+    version: 1.0.0
 generated: "2020-09-28T09:46:27.2963929-04:00"
