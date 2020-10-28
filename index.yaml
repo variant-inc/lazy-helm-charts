@@ -2,6 +2,22 @@ apiVersion: v1
 entries:
   istio:
   - apiVersion: v2
+    created: "2020-10-28T15:17:55.303136275Z"
+    description: A Helm chart for Istio Objects
+    digest: 750ddf3288d8d2bd6254ac9e8e82ed19999ca65e6602becbfb0c8be5a94a7b10
+    home: https://www.drivevariant.com/
+    icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
+    kubeVersion: ^1.7.1-0
+    maintainers:
+    - email: vibind@drivevariant.com
+      name: vibindaniel
+    name: istio
+    sources:
+    - https://github.com/variant-inc
+    urls:
+    - https://github.com/variant-inc/in-helm-charts/releases/download/istio-0.1.2/istio-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
     appVersion: 1.16.1
     created: "2020-10-28T13:17:41.470397105Z"
     description: A Helm chart for Istio Objects
