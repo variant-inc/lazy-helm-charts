@@ -1,0 +1,25 @@
+{{- $egress := .Values.egress -}}
+{{- $fullName := (include "istio.fullname" .) -}}
+{{- $labels := (include "istio.labels" .) -}}
+{{- range $egress }}
+apiVersion: networking.istio.io/v1beta1
+kind: ServiceEntry
+metadata:
+  name: {{ $fullName }}
+  labels: {{ $labels | nindent 4 }}
+spec:
+  hosts:
+    {{- range .hosts }}
+    - {{ . }}
+    {{- end }}
+  exportTo:
+    - "."
+  location: MESH_EXTERNAL
+  ports:
+    {{- range .ports }}
+    - number: {{ .number }}
+      name: {{ printf "%s_%v" .protocol .number | lower }}
+      protocol: {{ .protocol | upper }}
+    {{- end }}
+  resolution: DNS
+{{- end -}}
