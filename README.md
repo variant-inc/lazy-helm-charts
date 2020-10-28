@@ -2,8 +2,8 @@
 
 This repository holds all helm charts that are used by DevOps
 
-## Re-index
+## Add Repo
 
-To re-index the index.yaml file, do
+To import the chart repository, do
 
-`helm repo index . --merge --url https://variant-inc.github.io/in-helm-charts/`
+`helm repo add variant-in-helm-charts https://variant-inc.github.io/in-helm-charts/ --password <token>`
