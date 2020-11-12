@@ -1,7 +1,7 @@
 {{- if .Values.istio.enabled -}}
 {{- $fullName := (include "chart.fullname" .) -}}
 {{- $labels := (include "chart.labels" .) -}}
-{{- if .Values.ingress }}
+{{- if .Values.istio.ingress }}
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
@@ -11,12 +11,12 @@ spec:
   gateways:
     - default/default
   hosts:
-    - {{ tpl .Values.ingress.host $ | quote }}
+    - {{ tpl .Values.istio.ingress.host $ | quote }}
   http:
     - route:
         - destination:
-            host: {{ tpl .Values.ingress.backend.service.name $ }}
+            host: {{ tpl .Values.istio.ingress.backend.service.name $ }}
             port:
-              number: {{ int (tpl (.Values.ingress.backend.service.port | toString) $) }}
+              number: {{ int (tpl (.Values.istio.ingress.backend.service.port | toString) $) }}
 {{- end -}}
 {{- end -}}
