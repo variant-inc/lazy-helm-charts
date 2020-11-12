@@ -1,0 +1,38 @@
+# Default values for istio.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+nameOverride:
+fullnameOverride:
+
+istio:
+  enabled: false
+  ## For traffic to the cluster
+  ingress:
+    # # Provide only the full hostname
+    # host: "test.example.com"
+    # # Should the endpoint be external or internal
+    # backend:
+    #   service:
+    #     name: test
+    #     ## port should be number
+    #     port: 1234
+
+  ## For external traffic
+  egress:
+    # ## List of hostnames and ports
+    # # Hosts should be FQDN
+    # - hosts:
+    #     - "test.example.com"
+    #   ports:
+    #     - number: 123
+    #       ## MUST BE one of HTTP|HTTPS|GRPC|HTTP2|MONGO|TCP|TLS
+    #       protocol: HTTPS
+
+serviceMonitor:
+  enabled: false
+  targetPort: 9090
+  interval: 10s
+  scrapeTimeout: 10s
+  # any label selector
+  selector: {}

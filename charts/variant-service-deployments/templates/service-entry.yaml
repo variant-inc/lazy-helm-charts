@@ -1,6 +1,7 @@
+{{- if .Values.istio.enabled -}}
 {{- $egress := .Values.egress -}}
-{{- $fullName := (include "istio.fullname" .) -}}
-{{- $labels := (include "istio.labels" .) -}}
+{{- $fullName := (include "chart.fullname" .) -}}
+{{- $labels := (include "chart.labels" .) -}}
 {{- range $egress }}
 apiVersion: networking.istio.io/v1beta1
 kind: ServiceEntry
@@ -22,4 +23,5 @@ spec:
       protocol: {{ .protocol | upper }}
     {{- end }}
   resolution: DNS
+{{- end -}}
 {{- end -}}

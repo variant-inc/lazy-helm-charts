@@ -1,5 +1,6 @@
-{{- $fullName := (include "istio.fullname" .) -}}
-{{- $labels := (include "istio.labels" .) -}}
+{{- if .Values.istio.enabled -}}
+{{- $fullName := (include "chart.fullname" .) -}}
+{{- $labels := (include "chart.labels" .) -}}
 {{- if .Values.ingress }}
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -17,4 +18,5 @@ spec:
             host: {{ tpl .Values.ingress.backend.service.name $ }}
             port:
               number: {{ int (tpl (.Values.ingress.backend.service.port | toString) $) }}
-{{- end}}
+{{- end -}}
+{{- end -}}

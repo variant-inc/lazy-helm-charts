@@ -1,4 +1,4 @@
-# Istio Objects Helm Charts
+# Variant Service Deployments Helm Chart
 
 ## Install
 
@@ -9,4 +9,4 @@ first add the repo
 
 and then install the chart using
 
-`helm upgrade --install devops-istio -n sample-ns -f values.yaml`
+`helm upgrade --install devops-services -n sample-ns -f values.yaml`

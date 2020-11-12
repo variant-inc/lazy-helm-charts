@@ -6,4 +6,4 @@ chart-dirs:
 helm-extra-args: --timeout 600s
 ValidateMaintainers: false
 excluded-charts:
-  - istio
+  - variant-service-deployments

@@ -1,8 +1,8 @@
 apiVersion: v2
-name: istio
+name: variant-service-deployments
 description: A Helm chart for Istio Objects
 
-version: 0.1.2
+version: 0.1.0
 
 kubeVersion: "^1.7.1-0"
 home: https://www.drivevariant.com/
