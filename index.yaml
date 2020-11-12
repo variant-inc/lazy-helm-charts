@@ -74,6 +74,22 @@ entries:
     version: 1.0.0
   variant-service-deployments:
   - apiVersion: v2
+    created: "2020-11-12T14:30:35.978527887Z"
+    description: A Helm chart for Istio Objects
+    digest: 3763bf000293bddabf05aac579836418c573bfef1907a30da2ea597a503ec3cc
+    home: https://www.drivevariant.com/
+    icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
+    kubeVersion: ^1.7.1-0
+    maintainers:
+    - email: vibind@drivevariant.com
+      name: vibindaniel
+    name: variant-service-deployments
+    sources:
+    - https://github.com/variant-inc
+    urls:
+    - https://github.com/variant-inc/in-helm-charts/releases/download/variant-service-deployments-0.1.1/variant-service-deployments-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
     created: "2020-11-12T14:15:12.61685129Z"
     description: A Helm chart for Istio Objects
     digest: 60ce2f0692e84dd1d6d9f71c8ee9cad0969607993c07c8f82a7415141d7acf8e
