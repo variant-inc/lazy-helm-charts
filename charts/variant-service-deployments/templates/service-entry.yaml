@@ -1,5 +1,5 @@
 {{- if .Values.istio.enabled -}}
-{{- $egress := .Values.egress -}}
+{{- $egress := .Values.istio.egress -}}
 {{- $fullName := (include "chart.fullname" .) -}}
 {{- $labels := (include "chart.labels" .) -}}
 {{- range $egress }}
