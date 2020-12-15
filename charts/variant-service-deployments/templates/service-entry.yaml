@@ -7,7 +7,7 @@
 apiVersion: networking.istio.io/v1beta1
 kind: ServiceEntry
 metadata:
-  name: {{ $fullName }}
+  name: {{ $fullName }}-{{ required "A valid name is required for each ServiceEntry!" .name }}
   labels: {{ $labels | nindent 4 }}
 spec:
   hosts:
