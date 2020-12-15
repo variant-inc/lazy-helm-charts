@@ -2,6 +2,7 @@
 {{- $fullName := (include "chart.fullname" .) -}}
 {{- $labels := (include "chart.labels" .) -}}
 {{- if .Values.istio.ingress }}
+---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
