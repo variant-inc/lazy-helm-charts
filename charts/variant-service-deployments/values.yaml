@@ -22,7 +22,8 @@ istio:
   egress:
     # ## List of hostnames and ports
     # # Hosts should be FQDN
-    # - hosts:
+    # - name:
+    #   hosts:
     #     - "test.example.com"
     #   ports:
     #     - number: 123
