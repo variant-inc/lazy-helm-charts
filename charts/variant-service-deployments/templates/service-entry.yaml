@@ -3,6 +3,7 @@
 {{- $fullName := (include "chart.fullname" .) -}}
 {{- $labels := (include "chart.labels" .) -}}
 {{- range $egress }}
+---
 apiVersion: networking.istio.io/v1beta1
 kind: ServiceEntry
 metadata:
