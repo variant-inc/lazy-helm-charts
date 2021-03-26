@@ -14,10 +14,12 @@ spec:
     {{- range .hosts }}
     - {{ . }}
     {{- end }}
+  {{- if .addresses }}
   addresses:
     {{- range .addresses }}
     - {{ . }}
     {{- end }}
+  {{- end }}
   exportTo:
     - "."
   location: MESH_EXTERNAL
@@ -27,6 +29,6 @@ spec:
       name: {{ .protocol | lower }}
       protocol: {{ .protocol | upper }}
     {{- end }}
-  resolution: DNS
+  resolution: {{ .resolution | default "DNS" }}
 {{- end -}}
 {{- end -}}
