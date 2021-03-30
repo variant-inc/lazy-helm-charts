@@ -6,17 +6,22 @@ nameOverride:
 fullnameOverride:
 
 istio:
-  enabled: false
+  enabled: true
   ## For traffic to the cluster
   ingress:
     # # Provide only the full hostname
-    # host: "test.example.com"
+    host: drivevariant.com
+    env: ops
+
+    # Add endpoints to be rerouted to / in public access
+    redirects:
+      - prefix: /health
     # # Should the endpoint be external or internal
-    # backend:
-    #   service:
-    #     name: test
-    #     ## port should be number
-    #     port: 1234
+    backend:
+      service:
+        name: test
+        ## port should be number
+        port: 1234
 
   ## For external traffic
   egress:
