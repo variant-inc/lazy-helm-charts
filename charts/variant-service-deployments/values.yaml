@@ -31,6 +31,8 @@ istio:
     # - name:
     #   hosts:
     #     - "test.example.com"
+    #   addresses:
+    #     - "10.0.0.1"
     #   ports:
     #     - number: 123
     #       ## MUST BE one of HTTP|HTTPS|GRPC|HTTP2|MONGO|TCP|TLS
