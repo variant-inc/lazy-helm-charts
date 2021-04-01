@@ -2,21 +2,31 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-nameOverride:
-fullnameOverride:
+nameOverride: ""
+fullnameOverride: ""
 
 istio:
   enabled: false
   ## For traffic to the cluster
   ingress:
+    # # Should the service be exposed via public ingress gateway?
+    public: false
     # # Provide only the full hostname
-    # host: "test.example.com"
+    host: ops-drivevariant.com
+
+    # Add endpoints to be rerouted to / in public access
+    redirects: []
+      # - prefix: /health
     # # Should the endpoint be external or internal
-    # backend:
-    #   service:
-    #     name: test
-    #     ## port should be number
-    #     port: 1234
+    backend:
+      service:
+        ## These values can be template variables
+        # name: {{ .Values.ReleaseName }}
+        # port: {{ .Global.service.port }}
+        name: test
+        ## port should be number
+        port: 1234
+        
 
   ## For external traffic
   egress:
@@ -39,3 +49,4 @@ serviceMonitor:
   scrapeTimeout: 10s
   # any label selector
   selector: {}
+  

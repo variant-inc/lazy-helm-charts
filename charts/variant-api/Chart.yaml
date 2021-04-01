@@ -1,8 +1,8 @@
 apiVersion: v2
-name: variant-service-deployments
+name: variant-api
 description: A Helm chart for Istio Objects
 
-version: 0.1.5
+version: 1.0.0
 
 kubeVersion: "^1.7.1-0"
 home: https://www.drivevariant.com/
@@ -12,3 +12,5 @@ sources:
 maintainers:
   - name: vibindaniel
     email: vibind@drivevariant.com
+  - name: samiralyateem
+    email: samira@drivevariant.com

@@ -1,0 +1,81 @@
+{{- if .Values.istio.enabled -}}
+{{- $fullName := (include "chart.fullname" .) -}}
+{{- $labels := (include "chart.labels" .) -}}
+{{- if .Values.istio.ingress }}
+---
+{{- if .Values.istio.ingress.public }}
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ $fullName }}
+  labels: {{ $labels | nindent 4 }}
+spec:
+  gateways:
+    - default/default
+  hosts:
+    - api.{{ .Values.istio.ingress.host }} 
+    - api.apps.{{ .Values.istio.ingress.host }}
+  http:
+    - name: Private Path Redirects
+      match:
+      {{- if .Values.istio.ingress.redirects}}
+        {{- range .Values.istio.ingress.redirects }}
+        - uri:
+            prefix: /{{ $.Release.Namespace }}/{{ $fullName }}{{ .prefix  }}
+        {{- end }}
+      {{- end }}
+        - uri:
+            prefix: /{{ .Release.Namespace }}/{{ $fullName }}/health
+        - uri:
+            prefix: /{{ .Release.Namespace }}/{{ $fullName }}/docs
+        - uri:
+            prefix: /{{ .Release.Namespace }}/{{ $fullName }}/redoc
+        - uri:
+            prefix: /{{ .Release.Namespace }}/{{ $fullName }}/swagger
+        - uri:
+            prefix: /{{ .Release.Namespace }}/{{ $fullName }}/swaggerui
+      rewrite:
+        uri: /
+      route:
+        - destination:
+            host: {{ tpl .Values.istio.ingress.backend.service.name $ }}
+            port:
+              number: {{ int (tpl (.Values.istio.ingress.backend.service.port | toString) $) }}
+    - name: Default Ingress
+      match:
+        - uri:
+            prefix: /{{ .Release.Namespace }}/{{ $fullName }}/
+      rewrite:
+        uri: /
+      route:
+        - destination:
+            host: {{ tpl .Values.istio.ingress.backend.service.name $ }}
+            port:
+              number: {{ int (tpl (.Values.istio.ingress.backend.service.port | toString) $) }}
+---
+{{- end -}}
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ $fullName }}-internal
+  labels: {{ $labels | nindent 4 }}
+spec:
+  gateways:
+    - default/default
+  hosts:
+    - api.internal.{{ .Values.istio.ingress.host }}
+    - api.internal.apps.{{ .Values.istio.ingress.host }}
+  http:
+    - name: Private Ingress
+      match:
+        - uri:
+            prefix: /{{ .Release.Namespace }}/{{ $fullName }}/
+      rewrite:
+        uri: /
+      route:
+        - destination:
+            host: {{ tpl .Values.istio.ingress.backend.service.name $ }}
+            port:
+              number: {{ int (tpl (.Values.istio.ingress.backend.service.port | toString) $) }}
+{{- end -}}
+{{- end -}}

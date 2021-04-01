@@ -1,0 +1,13 @@
+{{- $fullName := (include "chart.fullname" .) -}}
+{{- if .Values.istio.ingress }}
+
+You can reach the application at through vpn-<env>-drivevariant.com
+
+https://api.internal.apps.{{ .Values.istio.ingress.host }}/{{ .Release.Namespace }}/{{ $fullName }}
+
+{{- if .Values.istio.ingress.public }}
+....or 
+https://api.apps.{{ .Values.istio.ingress.host }}/{{ .Release.Namespace }}/{{ $fullName }}
+for public access
+{{- end}}
+{{- end}}
