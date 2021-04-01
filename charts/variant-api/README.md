@@ -15,7 +15,9 @@ and then install the chart using
 
 ### Standard URL Prefix
 
-When using Istio ingress, the standard url schema {HOST}/{NAMESPACE}/{RELEASE_NAME}. This is a departure from the previous version that did not include a specific match url prefix. This may be a breaking change where your application may not know to redirect requests with the prefix of the url schema. See documentation about running your app/server running behind a proxy to allow proper function of your backend.
+When using Istio ingress, the standard url schema {HOST}/{NAMESPACE}/{RELEASE_NAME}.
+This is a departure from the previous version that did not include a specific match url prefix.
+This also may be a breaking change where your application may not know to redirect requests with the prefix of the url schema. See documentation about running your app/server running behind a proxy to allow proper function of your backend.
 
 ### Public vs Private Ingress
 
