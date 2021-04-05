@@ -10,13 +10,13 @@ istio:
   ## For traffic to the cluster
   ingress:
     # # Should the service be exposed via public ingress gateway?
-    public: false
+    public: true
     # # Provide only the full hostname
     host: ops-drivevariant.com
 
     # Add endpoints to be rerouted to / in public access
-    redirects: []
-      # - prefix: /health
+    redirects:
+      - prefix: /hidden
     # # Should the endpoint be external or internal
     backend:
       service:

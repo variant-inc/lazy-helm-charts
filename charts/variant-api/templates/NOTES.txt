@@ -8,6 +8,18 @@ https://api.internal.apps.{{ .Values.istio.ingress.host }}/{{ .Release.Namespace
 {{- if .Values.istio.ingress.public }}
 ....or 
 https://api.apps.{{ .Values.istio.ingress.host }}/{{ .Release.Namespace }}/{{ $fullName }}
-for public access
+for public access.
+
+The folowing endpoints are being redirected to /{{ $.Release.Namespace }}/{{ $fullName }}
+{{- if .Values.istio.ingress.redirects}}
+{{- range .Values.istio.ingress.redirects }}
+/{{ $.Release.Namespace }}/{{ $fullName }}{{ .prefix  }}
+{{- end }}
+{{- end }}
+/{{ .Release.Namespace }}/{{ $fullName }}/health
+/{{ .Release.Namespace }}/{{ $fullName }}/docs
+/{{ .Release.Namespace }}/{{ $fullName }}/redoc
+/{{ .Release.Namespace }}/{{ $fullName }}/swagger
+/{{ .Release.Namespace }}/{{ $fullName }}/swaggerui
 {{- end}}
 {{- end}}
