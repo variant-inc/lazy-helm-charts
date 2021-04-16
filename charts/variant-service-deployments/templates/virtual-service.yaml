@@ -12,7 +12,9 @@ spec:
   gateways:
     - default/default
   hosts:
-    - {{ tpl .Values.istio.ingress.host $ | quote }}
+  {{- range .Values.istio.ingress.hosts }}
+    - {{ tpl .url $ | quote }}
+  {{- end }}
   http:
     - route:
         - destination:

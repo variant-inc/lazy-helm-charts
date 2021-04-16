@@ -10,7 +10,9 @@ istio:
   ## For traffic to the cluster
   ingress:
     # # Provide only the full hostname
-    # host: "test.example.com"
+    # hosts: 
+    #   - url: "test.example.com"
+    #   - url: "test.other.com"
     # # Should the endpoint be external or internal
     # backend:
     #   service:
