@@ -1,6 +1,8 @@
 {{- if .Values.ingress }}
 
-You can reach the application at
+You can reach the application at the following hosts
 
-https://{{ .Values.ingress.host }}
+{{- range .Values.istio.ingress.hosts }}
+- https://{{ tpl .url $ | quote }}
+{{- end }}
 {{- end}}
