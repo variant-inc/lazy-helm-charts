@@ -1,11 +1,11 @@
-# Variant Service Deployments Helm Chart
+# Variant UI Helm Chart
 
 ## Install
 
 To install the chart,
 first add the repo
 
-`helm repo add variant-inc-helm-charts https://variant-inc.github.io/in-helm-charts/ --password <token>`
+`helm repo add variant-inc-helm-charts https://variant-inc.github.io/lazy-helm-charts/ --password <token>`
 
 and then install the chart using
 
