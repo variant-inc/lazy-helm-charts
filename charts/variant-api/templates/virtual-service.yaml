@@ -1,6 +1,7 @@
 {{- if .Values.istio.enabled -}}
 {{- $fullName := (include "chart.fullname" .) -}}
 {{- $labels := (include "chart.labels" .) -}}
+{{- $release := .Release -}}
 {{- if .Values.istio.ingress }}
 ---
 apiVersion: networking.istio.io/v1alpha3
@@ -18,7 +19,7 @@ spec:
     - name: Private Ingress
       match:
         - uri:
-            prefix: /{{ .Release.Namespace }}/{{ $fullName }}/
+            prefix: /{{ $release.Namespace }}/{{ $release.Name }}/
       rewrite:
         uri: /
       route:

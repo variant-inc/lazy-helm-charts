@@ -1,6 +1,7 @@
 {{- if .Values.istio.enabled -}}
 {{- $fullName := (include "chart.fullname" .) -}}
 {{- $labels := (include "chart.labels" .) -}}
+{{- $release := .Release -}}
 {{- if .Values.istio.ingress }}
 {{- if .Values.istio.ingress.public }}
 ---
@@ -21,19 +22,19 @@ spec:
       {{- if .Values.istio.ingress.redirects}}
         {{- range .Values.istio.ingress.redirects }}
         - uri:
-            prefix: /{{ $.Release.Namespace }}/{{ $fullName }}{{ .prefix  }}
+            prefix: /{{ $release.Namespace }}/{{ $release.Name }}{{ .prefix  }}
         {{- end }}
       {{- end }}
         - uri:
-            prefix: /{{ .Release.Namespace }}/{{ $fullName }}/health
+            prefix: /{{ $release.Namespace }}/{{ $release.Name }}/health
         - uri:
-            prefix: /{{ .Release.Namespace }}/{{ $fullName }}/docs
+            prefix: /{{ $release.Namespace }}/{{ $release.Name }}/docs
         - uri:
-            prefix: /{{ .Release.Namespace }}/{{ $fullName }}/redoc
+            prefix: /{{ $release.Namespace }}/{{ $release.Name }}/redoc
         - uri:
-            prefix: /{{ .Release.Namespace }}/{{ $fullName }}/swagger
+            prefix: /{{ $release.Namespace }}/{{ $release.Name }}/swagger
         - uri:
-            prefix: /{{ .Release.Namespace }}/{{ $fullName }}/swaggerui
+            prefix: /{{ $release.Namespace }}/{{ $release.Name }}/swaggerui
       rewrite:
         uri: /
       route:
@@ -44,7 +45,7 @@ spec:
     - name: Default Ingress
       match:
         - uri:
-            prefix: /{{ .Release.Namespace }}/{{ $fullName }}/
+            prefix: /{{ $release.Namespace }}/{{ $release.Name }}/
       rewrite:
         uri: /
       route:
