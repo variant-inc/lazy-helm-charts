@@ -1,0 +1,45 @@
+{{- if .Values.istio.enabled -}}
+{{- $fullName := (include "chart.fullname" .) -}}
+{{- $labels := (include "chart.labels" .) -}}
+{{- $publicHosts := (include "chart.publicHosts" .) -}}
+{{- if .Values.istio.ingress }}
+{{- if empty $publicHosts | not}}
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ $fullName }}
+  labels: {{ $labels | nindent 4 }}
+spec:
+  gateways:
+    - default/default
+  hosts: {{ $publicHosts }}
+  http:
+    - name: Private Path Redirects
+      match:
+      {{- if .Values.istio.ingress.redirects}}
+        {{- range .Values.istio.ingress.redirects }}
+        - uri:
+            prefix: {{ .prefix  }}
+        {{- end }}
+      {{- end }}
+        - uri:
+            prefix: /health
+        - uri:
+            prefix: /healthz
+      rewrite:
+        uri: /
+      route:
+        - destination:
+            host: {{ tpl .Values.istio.ingress.backend.service.name $ }}
+            port:
+              number: {{ int (tpl (.Values.istio.ingress.backend.service.port | toString) $) }}
+    - name: Default Ingress
+      route:
+        - destination:
+            host: {{ tpl .Values.istio.ingress.backend.service.name $ }}
+            port:
+              number: {{ int (tpl (.Values.istio.ingress.backend.service.port | toString) $) }}
+{{- end }}
+{{- end }}
+{{- end }}
