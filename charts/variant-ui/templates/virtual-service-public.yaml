@@ -1,9 +1,9 @@
 {{- if .Values.istio.enabled -}}
 {{- $fullName := (include "chart.fullname" .) -}}
 {{- $labels := (include "chart.labels" .) -}}
-{{- $release := .Release -}}
+{{- $publicHosts := (include "chart.publicHosts" .) -}}
 {{- if .Values.istio.ingress }}
-{{- if .Values.istio.ingress.public }}
+{{- if empty $publicHosts | not}}
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -13,28 +13,20 @@ metadata:
 spec:
   gateways:
     - default/default
-  hosts:
-    - api.{{ .Values.istio.ingress.host }} 
-    - api.apps.{{ .Values.istio.ingress.host }}
+  hosts: {{ $publicHosts }}
   http:
     - name: Private Path Redirects
       match:
       {{- if .Values.istio.ingress.redirects}}
         {{- range .Values.istio.ingress.redirects }}
         - uri:
-            prefix: /{{ $release.Namespace }}/{{ $release.Name }}{{ .prefix  }}
+            prefix: {{ .prefix  }}
         {{- end }}
       {{- end }}
         - uri:
-            prefix: /{{ $release.Namespace }}/{{ $release.Name }}/health
+            prefix: /health
         - uri:
-            prefix: /{{ $release.Namespace }}/{{ $release.Name }}/docs
-        - uri:
-            prefix: /{{ $release.Namespace }}/{{ $release.Name }}/redoc
-        - uri:
-            prefix: /{{ $release.Namespace }}/{{ $release.Name }}/swagger
-        - uri:
-            prefix: /{{ $release.Namespace }}/{{ $release.Name }}/swaggerui
+            prefix: /healthz
       rewrite:
         uri: /
       route:
@@ -43,16 +35,11 @@ spec:
             port:
               number: {{ int (tpl (.Values.istio.ingress.backend.service.port | toString) $) }}
     - name: Default Ingress
-      match:
-        - uri:
-            prefix: /{{ $release.Namespace }}/{{ $release.Name }}/
-      rewrite:
-        uri: /
       route:
         - destination:
             host: {{ tpl .Values.istio.ingress.backend.service.name $ }}
             port:
               number: {{ int (tpl (.Values.istio.ingress.backend.service.port | toString) $) }}
-{{- end -}}
-{{- end -}}
-{{- end -}}
+{{- end }}
+{{- end }}
+{{- end }}

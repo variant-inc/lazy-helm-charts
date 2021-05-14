@@ -1,0 +1,34 @@
+{{- if .Values.istio.enabled -}}
+{{- $egress := .Values.istio.egress -}}
+{{- $fullName := (include "chart.fullname" .) -}}
+{{- $labels := (include "chart.labels" .) -}}
+{{- range $egress }}
+---
+apiVersion: networking.istio.io/v1beta1
+kind: ServiceEntry
+metadata:
+  name: {{ $fullName }}-{{ required "A valid name is required for each ServiceEntry!" .name }}
+  labels: {{ $labels | nindent 4 }}
+spec:
+  hosts:
+    {{- range .hosts }}
+    - {{ . }}
+    {{- end }}
+  {{- if .addresses }}
+  addresses:
+    {{- range .addresses }}
+    - {{ . }}
+    {{- end }}
+  {{- end }}
+  exportTo:
+    - "."
+  location: MESH_EXTERNAL
+  ports:
+    {{- range .ports }}
+    - number: {{ .number }}
+      name: {{ .protocol | lower }}
+      protocol: {{ .protocol | upper }}
+    {{- end }}
+  resolution: {{ .resolution | default "DNS" }}
+{{- end -}}
+{{- end -}}

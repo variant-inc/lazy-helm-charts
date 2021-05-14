@@ -9,16 +9,18 @@ istio:
   enabled: false
   ## For traffic to the cluster
   ingress:
-    # # Provide only the full hostname
-    # hosts: 
-    #   - url: "test.example.com"
-    #   - url: "test.other.com"
-    # # Should the endpoint be external or internal
-    # backend:
-    #   service:
-    #     name: test
-    #     ## port should be number
-    #     port: 1234
+    # Provide only the full hostname
+    hosts: []
+      # - url: "release.apps.dev-drivevariant.com"
+      # - url: "release.internal.apps.dev-drivevariant.com"
+    # Add endpoints to be rerouted to / in public access
+    redirects:
+      - prefix: /hidden
+    backend:
+      service:
+        name: test
+        ## port should be number
+        port: 1234
 
   ## For external traffic
   egress:

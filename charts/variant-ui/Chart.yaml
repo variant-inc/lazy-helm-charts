@@ -4,6 +4,7 @@ description: A Helm chart for a web UI configuration
 
 version: 1.0.2
 
+
 kubeVersion: "^1.7.1-0"
 home: https://www.drivevariant.com/
 icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
