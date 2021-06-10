@@ -12,12 +12,12 @@ metadata:
 spec:
   hosts:
     {{- range .hosts }}
-    - {{ . }}
+    - {{ . | quote }}
     {{- end }}
   {{- if .addresses }}
   addresses:
     {{- range .addresses }}
-    - {{ . }}
+    - {{ . | quote }}
     {{- end }}
   {{- end }}
   exportTo:

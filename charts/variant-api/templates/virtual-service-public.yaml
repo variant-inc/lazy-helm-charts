@@ -14,7 +14,7 @@ spec:
   gateways:
     - default/default
   hosts:
-    - api.{{ .Values.istio.ingress.host }} 
+    - api.{{ .Values.istio.ingress.host }}
     - api.apps.{{ .Values.istio.ingress.host }}
   http:
     - name: Private Path Redirects
