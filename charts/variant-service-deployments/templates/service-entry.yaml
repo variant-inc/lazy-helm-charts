@@ -12,7 +12,7 @@ metadata:
 spec:
   hosts:
     {{- range .hosts }}
-    - {{ . }}
+    - {{ . | quote }}
     {{- end }}
   {{- if .addresses }}
   addresses:
