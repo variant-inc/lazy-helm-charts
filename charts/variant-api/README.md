@@ -24,3 +24,9 @@ This also may be a breaking change where your application may not know to redire
 When not using public ingress, you can only access your Service via [VPN](https://usxtech.atlassian.net/wiki/spaces/CLOUD/pages/1332445185/How+to+configure+OpenVPN+using+Okta+SSO+to+access+USX+Variant+Resources).
 
 When using public ingess, the following URL prefixes are rerouted to the root URL and are essentially blocked. They must be accessed internally, or through VPN. You can add to this list in Values.istio.ingress.redirects.
+
+- health
+- docs
+- redoc
+- swagger
+- swaggerui
