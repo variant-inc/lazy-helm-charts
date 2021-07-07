@@ -35,13 +35,9 @@ spec:
             prefix: /{{ $release.Namespace }}/{{ $release.Name }}/swagger
         - uri:
             prefix: /{{ $release.Namespace }}/{{ $release.Name }}/swaggerui
-      rewrite:
-        uri: /
-      route:
-        - destination:
-            host: {{ tpl .Values.istio.ingress.backend.service.name $ }}
-            port:
-              number: {{ int (tpl (.Values.istio.ingress.backend.service.port | toString) $) }}
+      redirect:
+        authority: api.internal.apps.{{ .Values.istio.ingress.host }}
+        redirectCode: 307
     - name: Default Ingress
       match:
         - uri:
