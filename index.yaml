@@ -188,6 +188,24 @@ entries:
     version: 0.1.0
   variant-ui:
   - apiVersion: v2
+    created: "2021-08-02T16:17:51.098207021Z"
+    description: A Helm chart for a web UI configuration
+    digest: fc0ecf41fe6c12d11bd01ad38b3c03b57e3c1fa07c6ccfdad5dfdc49568cb588
+    home: https://www.drivevariant.com/
+    icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
+    kubeVersion: ^1.7.1-0
+    maintainers:
+    - email: vibind@drivevariant.com
+      name: vibindaniel
+    - email: samira@drivevariant.com
+      name: salyateem13
+    name: variant-ui
+    sources:
+    - https://github.com/variant-inc
+    urls:
+    - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-ui-1.0.3/variant-ui-1.0.3.tgz
+    version: 1.0.3
+  - apiVersion: v2
     created: "2021-05-14T17:33:43.838364326Z"
     description: A Helm chart for a web UI configuration
     digest: ba9cb1628612ec13a7dd474abe41a834cc44a274255514148b0ec705bebca057
@@ -241,4 +259,4 @@ entries:
     urls:
     - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-ui-1.0.0/variant-ui-1.0.0.tgz
     version: 1.0.0
-generated: "2021-06-10T16:15:56.255910034Z"
+generated: "2021-08-02T16:17:51.098293443Z"
