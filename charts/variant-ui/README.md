@@ -21,7 +21,7 @@ When using custom hosts, ie
 istio:
   enabled: true
   ingress:
-    # hosts: 
+    # hosts:
       - url: "internal.apps.drive-variant.com" ##Included
       - url: "awesomeapp.drive-variant.com" ##Custom
 ```
