@@ -14,6 +14,9 @@ istio:
     # # Provide only the full hostname
     host: ops-drivevariant.com
 
+    # Make this as true if you want to handle the rewrite inside the app
+    disableRewrite: false
+
     # Add endpoints to be rerouted to / in public access
     redirects:
       - prefix: /hidden
@@ -26,7 +29,6 @@ istio:
         name: test
         ## port should be number
         port: 1234
-        
 
   ## For external traffic
   egress:
@@ -49,4 +51,3 @@ serviceMonitor:
   scrapeTimeout: 10s
   # any label selector
   selector: {}
-  

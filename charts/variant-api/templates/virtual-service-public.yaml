@@ -42,8 +42,10 @@ spec:
       match:
         - uri:
             prefix: /{{ $release.Namespace }}/{{ $release.Name }}/
+      {{- if not .Values.istio.ingress.disableRewrite }}
       rewrite:
         uri: /
+      {{- end -}}
       route:
         - destination:
             host: {{ tpl .Values.istio.ingress.backend.service.name $ }}
