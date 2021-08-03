@@ -33,8 +33,6 @@ jobs:
       #     helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com/
 
       - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.2.0
+        uses: helm/chart-releaser-action@main
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          # CR_GIT_BASE_URL: "https://api.github.com/"
-          # CR_GIT_UPLOAD_URL: "https://uploads.github.com/"
