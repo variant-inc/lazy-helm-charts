@@ -2,7 +2,7 @@ apiVersion: v2
 name: variant-api
 description: A Helm chart for Istio Objects
 
-version: 1.0.5
+version: 1.0.6
 
 kubeVersion: "^1.7.1-0"
 home: https://www.drivevariant.com/
