@@ -9,7 +9,7 @@ spec:
   endpoints:
     - targetPort: {{ default 9090 .Values.serviceMonitor.targetPort }}
       port: {{ default "metrics" .Values.serviceMonitor.port }}
-      interval: {{ .Values.serviceMonitor.interval }}
+      interval: {{ default "10s" .Values.serviceMonitor.interval }}
       {{- if .Values.serviceMonitor.scrapeTimeout }}
       scrapeTimeout: {{ .Values.serviceMonitor.scrapeTimeout }}
       {{- end }}

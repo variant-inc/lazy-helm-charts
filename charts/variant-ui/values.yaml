@@ -41,5 +41,6 @@ serviceMonitor:
   targetPort: 9090
   interval: 10s
   scrapeTimeout: 10s
+  port: metrics
   # any label selector
   selector: {}
