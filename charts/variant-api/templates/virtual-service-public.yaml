@@ -14,8 +14,8 @@ spec:
   gateways:
     - default/default
   hosts:
-    - api.{{ .Values.istio.ingress.host }}
-    - api.apps.{{ .Values.istio.ingress.host }}
+    - api.{{ required ".Values.istio.ingress.host should be valid" .Values.istio.ingress.host }}
+    - api.apps.{{ required ".Values.istio.ingress.host should be valid" .Values.istio.ingress.host }}
   http:
     - name: Private Path Redirects
       match:

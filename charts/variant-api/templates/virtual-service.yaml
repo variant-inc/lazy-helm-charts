@@ -13,8 +13,8 @@ spec:
   gateways:
     - default/default
   hosts:
-    - api.internal.{{ .Values.istio.ingress.host }}
-    - api.internal.apps.{{ .Values.istio.ingress.host }}
+    - api.internal.{{ required ".Values.istio.ingress.host should be valid" .Values.istio.ingress.host }}
+    - api.internal.apps.{{ required ".Values.istio.ingress.host should be valid" .Values.istio.ingress.host }}
   http:
     - name: Private Ingress
       match:
