@@ -26,8 +26,8 @@ spec:
       {{ end -}}
       route:
         - destination:
-            host: {{ tpl .Values.istio.ingress.backend.service.name $ }}
+            host: {{ $fullName }}
             port:
-              number: {{ int (tpl (.Values.istio.ingress.backend.service.port | toString) $) }}
+              number: {{ .Values.service.port }}
 {{- end -}}
 {{- end -}}
