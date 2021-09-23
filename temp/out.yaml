@@ -1,0 +1,200 @@
+---
+# Source: variant-api/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: schedule-adherence
+  labels:
+    helm.sh/chart: variant-api-1.1.0
+    app.kubernetes.io/name: variant-api
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/managed-by: Helm
+    revision: "abc123"
+  annotations:
+    "eks.amazonaws.com/role-arn": "amazon-role"
+---
+# Source: variant-api/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: schedule-adherence
+  labels:
+    helm.sh/chart: variant-api-1.1.0
+    app.kubernetes.io/name: variant-api
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/managed-by: Helm
+    revision: "abc123"
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 9000
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: variant-api
+    app.kubernetes.io/instance: RELEASE-NAME
+---
+# Source: variant-api/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: schedule-adherence
+  labels:
+    helm.sh/chart: variant-api-1.1.0
+    app.kubernetes.io/name: variant-api
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/managed-by: Helm
+    revision: "abc123"
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: variant-api
+      app.kubernetes.io/instance: RELEASE-NAME
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: variant-api
+        app.kubernetes.io/instance: RELEASE-NAME
+    spec:
+      serviceAccountName: service-account
+      automountServiceAccountToken: true
+      securityContext:
+        fsGroup: 65534
+      containers:
+        - name: schedule-adherence
+          image: abc123
+          imagePullPolicy: Always
+          args:
+            - some
+            - args
+          ports:
+            - name: http
+              containerPort: 9000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          resources:
+            limits:
+              cpu: 1
+              memory: 768Mi
+            requests:
+              cpu: 0.1
+              memory: 384Mi
+          env:
+            - name: env1
+              value: env1
+            - name: env2
+              value: env2
+---
+# Source: variant-api/templates/service-monitor.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels: 
+    helm.sh/chart: variant-api-1.1.0
+    app.kubernetes.io/name: variant-api
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/managed-by: Helm
+    revision: "abc123"
+  name: schedule-adherence
+spec:
+  endpoints:
+    - targetPort: 9000
+      port: 80
+      interval: 10s
+      scrapeTimeout: 10s
+  namespaceSelector:
+    matchNames:
+      - schedule-adherence
+  selector: 
+    matchLabels:
+      app.kubernetes.io/name: variant-api
+      app.kubernetes.io/instance: RELEASE-NAME
+---
+# Source: variant-api/templates/virtual-service-public.yaml
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: schedule-adherence
+  labels: 
+    helm.sh/chart: variant-api-1.1.0
+    app.kubernetes.io/name: variant-api
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/managed-by: Helm
+    revision: "abc123"
+spec:
+  gateways:
+    - default/default
+  hosts:
+    - api.ops-drivevariant.com
+    - api.apps.ops-drivevariant.com
+  http:
+    - name: Private Path Redirects
+      match:
+        - uri:
+            prefix: /schedule-adherence/RELEASE-NAME/hidden
+        - uri:
+            prefix: /schedule-adherence/RELEASE-NAME/health
+        - uri:
+            prefix: /schedule-adherence/RELEASE-NAME/docs
+        - uri:
+            prefix: /schedule-adherence/RELEASE-NAME/redoc
+        - uri:
+            prefix: /schedule-adherence/RELEASE-NAME/swagger
+        - uri:
+            prefix: /schedule-adherence/RELEASE-NAME/swaggerui
+      redirect:
+        authority: api.internal.apps.ops-drivevariant.com
+        redirectCode: 307
+    - name: Default Ingress
+      match:
+        - uri:
+            prefix: /schedule-adherence/RELEASE-NAME/
+      rewrite:
+        uri: /
+      route:
+        - destination:
+            host: schedule-adherence
+            port:
+              number: 80
+---
+# Source: variant-api/templates/virtual-service.yaml
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: schedule-adherence-internal
+  labels: 
+    helm.sh/chart: variant-api-1.1.0
+    app.kubernetes.io/name: variant-api
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/managed-by: Helm
+    revision: "abc123"
+spec:
+  gateways:
+    - default/default
+  hosts:
+    - api.internal.ops-drivevariant.com
+    - api.internal.apps.ops-drivevariant.com
+  http:
+    - name: Private Ingress
+      match:
+        - uri:
+            prefix: /schedule-adherence/RELEASE-NAME/
+      rewrite:
+        uri: /
+      route:
+        - destination:
+            host: schedule-adherence
+            port:
+              number: 80

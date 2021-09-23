@@ -3,10 +3,10 @@
 # Declare variables to be passed into your templates.
 
 nameOverride: ""
-fullnameOverride: ""
+fullnameOverride: "schedule-adherence"
 
 istio:
-  enabled: false
+  enabled: true
   ## For traffic to the cluster
   ingress:
     # # Should the service be exposed via public ingress gateway?
@@ -45,9 +45,51 @@ istio:
     #       protocol: HTTPS
 
 serviceMonitor:
-  enabled: false
-  targetPort: 9090
+  enabled: true
   interval: 10s
   scrapeTimeout: 10s
-  # any label selector
-  selector: {}
+
+service:
+  # Port # exposed by the Kubernetes Service which will point to your deployed Pods
+  port: 80
+  # Port # that exposes your HTTP application in your image
+  targetPort: 9000
+  type: ClusterIP
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+
+image:
+  # SET via terrform syntax {alias}.image.tag
+  tag: abc123
+  pullPolicy: Always
+
+resources:
+  limits:
+    cpu: 1
+    memory: 768Mi
+  requests:
+    cpu: .1
+    memory: 384Mi
+
+# SET via terrform syntax {alias}.revision
+revision: abc123
+
+serviceAccount:
+  # SET via terrform syntax {alias}.serviceAccount.name
+  name: service-account
+  # SET via terrform syntax {alias}.serviceAccount.roleArn if AWS permissions are required
+  roleArn: amazon-role
+
+# SET via terraform syntax {alias}.args[0], {alias}.args[1], etc. for the number of args required
+args: [some, args]
+
+# SET via terraform syntax in pairs of {alias}.envVars[0].name, {alias}.envVars[0].value
+envVars:
+  - name: env1
+    value: env1
+  - name: env2
+    value: env2

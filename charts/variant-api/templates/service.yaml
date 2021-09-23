@@ -1,0 +1,18 @@
+{{- $fullName := (include "chart.fullname" .) -}}
+{{- $labels := (include "chart.labels" .) -}}
+{{- $selectorLabels := (include "chart.selectorLabels" .) -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- $labels | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}
+      protocol: TCP
+      name: http
+  selector:
+    {{- $selectorLabels | nindent 4 }}
