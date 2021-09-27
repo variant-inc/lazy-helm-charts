@@ -3,10 +3,10 @@
 # Declare variables to be passed into your templates.
 
 nameOverride: ""
-fullnameOverride: "schedule-adherence"
+fullnameOverride: ""
 
 istio:
-  enabled: true
+  enabled: false
   ## For traffic to the cluster
   ingress:
     # # Should the service be exposed via public ingress gateway?
@@ -45,7 +45,7 @@ istio:
     #       protocol: HTTPS
 
 serviceMonitor:
-  enabled: true
+  enabled: false
   interval: 10s
   scrapeTimeout: 10s
 
@@ -62,34 +62,29 @@ autoscaling:
   maxReplicas: 5
   targetCPUUtilizationPercentage: 80
 
-image:
-  # SET via terrform syntax {alias}.image.tag
-  tag: abc123
-  pullPolicy: Always
-
-resources:
-  limits:
-    cpu: 1
-    memory: 768Mi
-  requests:
-    cpu: .1
-    memory: 384Mi
-
 # SET via terrform syntax {alias}.revision
-revision: abc123
+revision:
 
 serviceAccount:
-  # SET via terrform syntax {alias}.serviceAccount.name
-  name: service-account
   # SET via terrform syntax {alias}.serviceAccount.roleArn if AWS permissions are required
-  roleArn: amazon-role
+  roleArn:
 
-# SET via terraform syntax {alias}.args[0], {alias}.args[1], etc. for the number of args required
-args: [some, args]
+deployment:
+  image:
+    # SET via terrform syntax {alias}.image.tag
+    tag:
+    pullPolicy: Always
 
-# SET via terraform syntax in pairs of {alias}.envVars[0].name, {alias}.envVars[0].value
-envVars:
-  - name: env1
-    value: env1
-  - name: env2
-    value: env2
+  resources:
+    limits:
+      cpu: 1
+      memory: 768Mi
+    requests:
+      cpu: .1
+      memory: 384Mi
+
+  # SET via terraform syntax {alias}.args[0], {alias}.args[1], etc. for the number of args required
+  args: []
+
+  # SET via terraform syntax in pairs of {alias}.envVars[0].name, {alias}.envVars[0].value
+  envVars: []

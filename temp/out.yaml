@@ -3,21 +3,13 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: schedule-adherence
-  labels:
-    helm.sh/chart: variant-api-1.1.0
-    app.kubernetes.io/name: variant-api
-    app.kubernetes.io/instance: RELEASE-NAME
-    app.kubernetes.io/managed-by: Helm
-    revision: "abc123"
-  annotations:
-    "eks.amazonaws.com/role-arn": "amazon-role"
+  name: schedule-adherence-api
 ---
 # Source: variant-api/templates/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: schedule-adherence
+  name: schedule-adherence-api
   labels:
     helm.sh/chart: variant-api-1.1.0
     app.kubernetes.io/name: variant-api
@@ -39,7 +31,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: schedule-adherence
+  name: schedule-adherence-api
   labels:
     helm.sh/chart: variant-api-1.1.0
     app.kubernetes.io/name: variant-api
@@ -57,17 +49,14 @@ spec:
         app.kubernetes.io/name: variant-api
         app.kubernetes.io/instance: RELEASE-NAME
     spec:
-      serviceAccountName: service-account
+      serviceAccountName: schedule-adherence-api
       automountServiceAccountToken: true
       securityContext:
         fsGroup: 65534
       containers:
-        - name: schedule-adherence
+        - name: schedule-adherence-api
           image: abc123
           imagePullPolicy: Always
-          args:
-            - some
-            - args
           ports:
             - name: http
               containerPort: 9000
@@ -91,11 +80,30 @@ spec:
             requests:
               cpu: 0.1
               memory: 384Mi
-          env:
-            - name: env1
-              value: env1
-            - name: env2
-              value: env2
+---
+# Source: variant-api/templates/hpa.yaml
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: schedule-adherence-api
+  labels:
+    helm.sh/chart: variant-api-1.1.0
+    app.kubernetes.io/name: variant-api
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/managed-by: Helm
+    revision: "abc123"
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: schedule-adherence-api
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        targetAverageUtilization: 80
 ---
 # Source: variant-api/templates/service-monitor.yaml
 apiVersion: monitoring.coreos.com/v1
@@ -107,7 +115,7 @@ metadata:
     app.kubernetes.io/instance: RELEASE-NAME
     app.kubernetes.io/managed-by: Helm
     revision: "abc123"
-  name: schedule-adherence
+  name: schedule-adherence-api
 spec:
   endpoints:
     - targetPort: 9000
@@ -126,7 +134,7 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: schedule-adherence
+  name: schedule-adherence-api
   labels: 
     helm.sh/chart: variant-api-1.1.0
     app.kubernetes.io/name: variant-api
@@ -165,7 +173,7 @@ spec:
         uri: /
       route:
         - destination:
-            host: schedule-adherence
+            host: schedule-adherence-api
             port:
               number: 80
 ---
@@ -173,7 +181,7 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: schedule-adherence-internal
+  name: schedule-adherence-api-internal
   labels: 
     helm.sh/chart: variant-api-1.1.0
     app.kubernetes.io/name: variant-api
@@ -195,6 +203,6 @@ spec:
         uri: /
       route:
         - destination:
-            host: schedule-adherence
+            host: schedule-adherence-api
             port:
               number: 80
