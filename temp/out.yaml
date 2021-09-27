@@ -11,7 +11,7 @@ kind: Service
 metadata:
   name: schedule-adherence-api
   labels:
-    helm.sh/chart: variant-api-1.1.0
+    helm.sh/chart: variant-api-2.0.0
     app.kubernetes.io/name: variant-api
     app.kubernetes.io/instance: RELEASE-NAME
     app.kubernetes.io/managed-by: Helm
@@ -33,7 +33,7 @@ kind: Deployment
 metadata:
   name: schedule-adherence-api
   labels:
-    helm.sh/chart: variant-api-1.1.0
+    helm.sh/chart: variant-api-2.0.0
     app.kubernetes.io/name: variant-api
     app.kubernetes.io/instance: RELEASE-NAME
     app.kubernetes.io/managed-by: Helm
@@ -80,6 +80,9 @@ spec:
             requests:
               cpu: 0.1
               memory: 384Mi
+          env:
+            - name: REVISION
+              value: "abc123"
 ---
 # Source: variant-api/templates/hpa.yaml
 apiVersion: autoscaling/v2beta1
@@ -87,7 +90,7 @@ kind: HorizontalPodAutoscaler
 metadata:
   name: schedule-adherence-api
   labels:
-    helm.sh/chart: variant-api-1.1.0
+    helm.sh/chart: variant-api-2.0.0
     app.kubernetes.io/name: variant-api
     app.kubernetes.io/instance: RELEASE-NAME
     app.kubernetes.io/managed-by: Helm
@@ -105,12 +108,36 @@ spec:
         name: cpu
         targetAverageUtilization: 80
 ---
+# Source: variant-api/templates/service-entry.yaml
+apiVersion: networking.istio.io/v1beta1
+kind: ServiceEntry
+metadata:
+  name: schedule-adherence-api-test
+  labels: 
+    helm.sh/chart: variant-api-2.0.0
+    app.kubernetes.io/name: variant-api
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/managed-by: Helm
+    revision: "abc123"
+spec:
+  hosts:
+    - "test.com"
+    - "blah.net"
+  exportTo:
+    - "."
+  location: MESH_EXTERNAL
+  ports:
+    - number: 80
+      name: http
+      protocol: HTTP
+  resolution: DNS
+---
 # Source: variant-api/templates/service-monitor.yaml
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   labels: 
-    helm.sh/chart: variant-api-1.1.0
+    helm.sh/chart: variant-api-2.0.0
     app.kubernetes.io/name: variant-api
     app.kubernetes.io/instance: RELEASE-NAME
     app.kubernetes.io/managed-by: Helm
@@ -118,8 +145,7 @@ metadata:
   name: schedule-adherence-api
 spec:
   endpoints:
-    - targetPort: 9000
-      port: 80
+    - port: 80
       interval: 10s
       scrapeTimeout: 10s
   namespaceSelector:
@@ -130,60 +156,13 @@ spec:
       app.kubernetes.io/name: variant-api
       app.kubernetes.io/instance: RELEASE-NAME
 ---
-# Source: variant-api/templates/virtual-service-public.yaml
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: schedule-adherence-api
-  labels: 
-    helm.sh/chart: variant-api-1.1.0
-    app.kubernetes.io/name: variant-api
-    app.kubernetes.io/instance: RELEASE-NAME
-    app.kubernetes.io/managed-by: Helm
-    revision: "abc123"
-spec:
-  gateways:
-    - default/default
-  hosts:
-    - api.ops-drivevariant.com
-    - api.apps.ops-drivevariant.com
-  http:
-    - name: Private Path Redirects
-      match:
-        - uri:
-            prefix: /schedule-adherence/RELEASE-NAME/hidden
-        - uri:
-            prefix: /schedule-adherence/RELEASE-NAME/health
-        - uri:
-            prefix: /schedule-adherence/RELEASE-NAME/docs
-        - uri:
-            prefix: /schedule-adherence/RELEASE-NAME/redoc
-        - uri:
-            prefix: /schedule-adherence/RELEASE-NAME/swagger
-        - uri:
-            prefix: /schedule-adherence/RELEASE-NAME/swaggerui
-      redirect:
-        authority: api.internal.apps.ops-drivevariant.com
-        redirectCode: 307
-    - name: Default Ingress
-      match:
-        - uri:
-            prefix: /schedule-adherence/RELEASE-NAME/
-      rewrite:
-        uri: /
-      route:
-        - destination:
-            host: schedule-adherence-api
-            port:
-              number: 80
----
 # Source: variant-api/templates/virtual-service.yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: schedule-adherence-api-internal
   labels: 
-    helm.sh/chart: variant-api-1.1.0
+    helm.sh/chart: variant-api-2.0.0
     app.kubernetes.io/name: variant-api
     app.kubernetes.io/instance: RELEASE-NAME
     app.kubernetes.io/managed-by: Helm

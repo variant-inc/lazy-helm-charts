@@ -1,48 +1,31 @@
-# Default values for istio.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
 nameOverride: ""
 fullnameOverride: ""
+revision: 
 
 istio:
   enabled: false
-  ## For traffic to the cluster
   ingress:
-    # # Should the service be exposed via public ingress gateway?
-    public: true
-    # # Provide only the full hostname
+    public: false
     host: ops-drivevariant.com
-
-    # Make this as true if you want to handle the rewrite inside the app
     disableRewrite: false
 
     # Add endpoints to be rerouted to / in public access
     redirects:
       - prefix: /hidden
-    # # Should the endpoint be external or internal
-    backend:
-      service:
-        ## These values can be template variables
-        # name: {{ .Values.ReleaseName }}
-        # port: {{ .Global.service.port }}
-        name: test
-        ## port should be number
-        port: 1234
 
-  ## For external traffic
-  egress:
-    # ## List of hostnames and ports
-    # # Hosts should be FQDN
-    # - name:
+  egress: []
+    # - name: some-external-api
     #   hosts:
     #     - "test.example.com"
+    #   ports:
+    #     - number: 443
+    #       protocol: HTTPS
+    # - name: some-external-database
     #   addresses:
     #     - "10.0.0.1"
     #   ports:
-    #     - number: 123
-    #       ## MUST BE one of HTTP|HTTPS|GRPC|HTTP2|MONGO|TCP|TLS
-    #       protocol: HTTPS
+    #     - number: 5432
+    #       protocol: TCP
 
 serviceMonitor:
   enabled: false
@@ -54,16 +37,12 @@ service:
   port: 80
   # Port # that exposes your HTTP application in your image
   targetPort: 9000
-  type: ClusterIP
 
 autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 5
   targetCPUUtilizationPercentage: 80
-
-# SET via terrform syntax {alias}.revision
-revision:
 
 serviceAccount:
   # SET via terrform syntax {alias}.serviceAccount.roleArn if AWS permissions are required

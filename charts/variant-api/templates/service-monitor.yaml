@@ -8,8 +8,7 @@ metadata:
   name: {{ include "chart.fullname" . }}
 spec:
   endpoints:
-    - targetPort: {{ default 9090 .Values.service.targetPort }}
-      port: {{ default "metrics" .Values.service.port }}
+    - port: {{ default "metrics" .Values.service.port }}
       interval: {{ .Values.serviceMonitor.interval }}
       {{- if .Values.serviceMonitor.scrapeTimeout }}
       scrapeTimeout: {{ .Values.serviceMonitor.scrapeTimeout }}
