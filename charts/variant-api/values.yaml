@@ -3,7 +3,6 @@ fullnameOverride: ""
 revision: 
 
 istio:
-  enabled: false
   ingress:
     public: false
     host: ops-drivevariant.com
@@ -28,7 +27,6 @@ istio:
     #       protocol: TCP
 
 serviceMonitor:
-  enabled: false
   interval: 10s
   scrapeTimeout: 10s
 
@@ -39,7 +37,6 @@ service:
   targetPort: 9000
 
 autoscaling:
-  enabled: false
   minReplicas: 1
   maxReplicas: 5
   targetCPUUtilizationPercentage: 80

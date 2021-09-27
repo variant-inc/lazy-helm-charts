@@ -31,6 +31,13 @@ When using public ingess, the following URL prefixes are rerouted to the root UR
 - swagger
 - swaggerui
 
+## API Requirements
+
+Before deploying, your API should:
+
+- Host a health check endpoint via `GET /health` which returns a status code < 400 when healthy or >= 400 when unhealthy
+- Host a Prometheus metrics endpoint via `GET /metrics`
+
 ## Object Reference
 
 All possible objects created by this chart:
@@ -45,16 +52,15 @@ All possible objects created by this chart:
 
 ## Inputs
 
-Default values for all optional inputs can be see in [values.yaml](values.yaml)
+Default values for all optional inputs can be seen in [values.yaml](values.yaml)
 
 | Input | [Kubernetes Object Type](https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/) | Description | Required | Default Value |
 | - | - | - | - | - |
 | fullnameOverride | All | The root [object name](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/) that will be assigned to all Kubernetes objects created by this chart | [x] | |
 | revision | All | Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) `revision` that will be applied to all objects created by a specific chart installation | [x] | |
-| istio.enabled | ServiceEntry, VirtualService | `false` if the API is fully internal (is only accessed by other apps within the same cluster AND does not require access to any services outside of the same cluster). This should almost always be `true` to be able to expose a QA endpoint for your API on VPN.  When `true`, a URL will be created with the format `api.internal.{istio.ingress.host}/{target-namespace}/{helm-release-name}` that will expose your application. `internal` URLs require an OpenVPN connection. | [ ] | `false` |
-| istio.ingress.disableRewrite | VirtualService | When `true`, the path `/{target-namespace}/{helm-release-name}` will be preserved in requests to your application, else rewritten to `/` when `false` | [ ] | `false` |
+| istio.ingress.public | VirtualService | When `false`, an internal URL will be created with the format `api.internal.{istio.ingress.host}/{target-namespace}/{helm-release-name}` that will expose your application via OpenVPN-only. When `true`, an additional public URL will be created with the format `api.{istio.ingress.host}/{target-namespace}/{helm-release-name}` that will expose your application publicly. This API should be secured behind some authentication method when set to `true`.  | [ ] | `false` |
 | istio.ingress.host | VirtualService | The base domain that will be used to construct URLs that point to your API. This should almost always be the Octopus Variable named `DOMAIN` in the [AWS Access Keys](https://octopus.apps.ops-drivevariant.com/app#/Spaces-22/library/variables/LibraryVariableSets-121?activeTab=variables) Octopus Variable Set  | [ ] | ops-drivevariant.com |
-| istio.ingress.public | VirtualService | When `true`, a URL will be created with the format `api.{istio.ingress.host}/{target-namespace}/{helm-release-name}` that will expose your application publicly. This API should be secured behind some authentication method when set to `true`.  | [ ] | `false` |
+| istio.ingress.disableRewrite | VirtualService | When `true`, the path `/{target-namespace}/{helm-release-name}` will be preserved in requests to your application, else rewritten to `/` when `false` | [ ] | `false` |
 | istio.egress | ServiceEntry | A whitelist of external services that your API requires connection to. The whitelist applies to the entire namespace in which this chart is installed. [These services](https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8) are globally whitelisted and do not require declaration. | [ ] | [] |
 | istio.egress[N].name | ServiceEntry | A name for this whitelist entry | [x] | |
 | istio.egress[N].hosts | ServiceEntry | A list of hostnames to be whitelisted  | One or both istio.egress[N].hosts and istio.egress[N].addresses must be specified | [] |

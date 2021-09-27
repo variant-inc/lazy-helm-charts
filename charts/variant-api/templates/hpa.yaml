@@ -1,4 +1,3 @@
-{{- if .Values.autoscaling.enabled }}
 {{- $fullName := (include "chart.fullname" .) -}}
 {{- $labels := (include "chart.labels" .) -}}
 apiVersion: autoscaling/v2beta1
@@ -30,4 +29,3 @@ spec:
         name: memory
         targetAverageUtilization: {{ .Values.autoscaling.targetMemoryUtilizationPercentage }}
     {{- end }}
-{{- end }}

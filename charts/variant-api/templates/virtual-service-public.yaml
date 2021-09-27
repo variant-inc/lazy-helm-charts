@@ -1,4 +1,3 @@
-{{- if .Values.istio.enabled -}}
 {{- $fullName := (include "chart.fullname" .) -}}
 {{- $labels := (include "chart.labels" .) -}}
 {{- $release := .Release -}}
@@ -51,6 +50,5 @@ spec:
             host: {{ $fullName }}
             port:
               number: {{ .Values.service.port }}
-{{- end -}}
 {{- end -}}
 {{- end -}}

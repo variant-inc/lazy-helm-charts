@@ -1,4 +1,3 @@
-{{- if .Values.istio.enabled -}}
 {{- $egress := .Values.istio.egress -}}
 {{- $fullName := (include "chart.fullname" .) -}}
 {{- $labels := (include "chart.labels" .) -}}
@@ -30,5 +29,4 @@ spec:
       protocol: {{ .protocol | upper }}
     {{- end }}
   resolution: {{ .resolution | default "DNS" }}
-{{- end -}}
 {{- end -}}
