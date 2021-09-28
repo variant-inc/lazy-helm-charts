@@ -48,6 +48,9 @@ spec:
       labels:
         app.kubernetes.io/name: variant-api
         app.kubernetes.io/instance: RELEASE-NAME
+      annotations:
+        annotation1: annotation1
+        annotation2: annotation2
     spec:
       serviceAccountName: schedule-adherence-api
       automountServiceAccountToken: true

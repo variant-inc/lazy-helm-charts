@@ -64,3 +64,4 @@ deployment:
 
   # SET via terraform syntax in pairs of {alias}.envVars[0].name, {alias}.envVars[0].value
   envVars: []
+  podAnnotations: {}
