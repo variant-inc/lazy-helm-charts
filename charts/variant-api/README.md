@@ -2,9 +2,61 @@
 
 Use this chart to deploy an API image to Kubernetes -- the Variant, CloudOps-approved way.
 
-## Before you start
+## TL;DR
 
-### Must-do (your deployment will be non-compliant, fail without these)
+TL;DR is based on the [Minimum Required Inputs](#minimum-required-inputs) and corresponding values in the example code block.
+
+### What can it do
+
+- Your API will be available on VPN at `https://api.internal.dev-drivevariant.com/my-namespace/my-release-name/`
+- Your API will be available to other services in the cluster at `http://my-api.my-namespace.svc.cluster.local/`
+- Private - the API is reachable only via [OpenVPN](https://usxtech.atlassian.net/wiki/spaces/CLOUD/pages/1332445185/How+to+configure+OpenVPN+using+Okta+SSO+to+access+USX+Variant+Resources), or by other services inside the same cluster
+  - See [ingress confguration](#ingress-configuration) to make it public, and for information regarding the generated URLs
+- Firewall - the API can only reach [these services](https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8) or other services inside the same cluster by default
+  - See [egress configuration](#egress-configuration) to whitelist services you need to reach outside of the cluster
+- No Infrastructure Access - Amazon services are firewall whitelisted by default, but you still need an AWS role if you need access to AWS services (SQS, SNS, RDS, etc.)
+  - See [infrastructure permissions](#infrastructure-permissions)
+
+### Terraform
+
+```
+resource "kubernetes_namespace" "namespace" {
+  metadata {
+    name = "my-namespace"
+    labels = {
+      "istio-injection" : "enabled"
+    }
+  }
+}
+
+resource "helm_release" "api_release" {
+  chart = "TBD"
+  name  = "my-release-name"
+  namespace = kubernetes_namespace.namespace.metadata[0].name
+
+  set {
+    name  = "fullnameOverride"
+    value = "my-api"
+  }
+
+  set {
+    name  = "istio.ingress.host"
+    value = "dev-drivevariant.com"
+  }
+
+  set {
+    name  = "deployment.image.tag"
+    value = "ecr.amazonaws.com/my-project/my-api:abc123"
+  }
+
+  set {
+    name  = "revision"
+    value = "abc123
+  }
+}
+```
+
+## Before you start
 
 1. Use a CloudOps Github CI workflow that publishes an image
    * [.NET](https://github.com/variant-inc/actions-dotnet)
@@ -18,22 +70,13 @@ Use this chart to deploy an API image to Kubernetes -- the Variant, CloudOps-app
      * Node - [NestJS](https://github.com/digikare/nestjs-prom), [Express](https://github.com/joao-fontenele/express-prometheus-middleware)
      * Python - [Flask](https://github.com/rycus86/prometheus_flask_exporter), [Django](https://github.com/korfuri/django-prometheus)
 
-
-### Should-do (you have the option to override these in your deployment)
-
-1. Run on port 9000
-1. Run without any required arguments (i.e can be executed as `docker run [image]`)
-
-
 ## Minimum Required Inputs
 
-Providing the minimum required inputs results in a complete API deployment with these features:
-- Private - the API is reachable only via OpenVPN, or by other services inside the same cluster
-  - See [ingress confguration](#ingress-configuration) to make changes and information regarding the generated URLs
-- Firewall - the API can only reach [these services](https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8) or other services inside the same cluster by default
-  - See [egress configuration](#egress-configuration) to whitelist additional services you need to reach outside of the cluster
-- No Infrastructure Access - Although Amazon services are firewall whitelisted, you still need to provide an AWS role that this API will be bound to for AWS permissions
-  - See [infrastructure permissions](#infrastructure-permissions)
+If only the minimum inputs are provided, these assumptions are made about your application. See [Application Configuration](#application-configuration) to override these assumptions if necessary.
+
+1. Runs on port 9000
+1. Runs without any required arguments (i.e can be executed as `docker run [image]`)
+1. There are no required envrionment variables
 
 | Input | [Kubernetes Object Type](https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/) | Description |
 | - | - | - |
@@ -42,19 +85,20 @@ Providing the minimum required inputs results in a complete API deployment with 
 | istio.ingress.host | VirtualService | The base domain that will be used to construct URLs that point to your API. This should almost always be the Octopus Variable named `DOMAIN` in the [AWS Access Keys](https://octopus.apps.ops-drivevariant.com/app#/Spaces-22/library/variables/LibraryVariableSets-121?activeTab=variables) Octopus Variable Set  |
 | deployment.image.tag | Deployment | The full URL of the image to be deployed containing the HTTP API application |
 
-
 ## Optional Inputs
 
 ### Ingress Configuration
 
-### Egress Configuration
+| Input | [Kubernetes Object Type](https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/) | Description | Default Value |
+| - | - | - | - |
+| istio.ingress.public | VirtualService | When `false`, an internal URL will be created with the format `api.internal.{istio.ingress.host}/{target-namespace}/{helm-release-name}` that will expose your application *via OpenVPN-only*. When `true`, an additional public URL will be created with the format `api.{istio.ingress.host}/{target-namespace}/{helm-release-name}` that will expose your application publicly. This API should be secured behind some authentication method when set to `true`. | `false` |
+| istio.ingress.disableRewrite | VirtualService | When `true`, the path `/{target-namespace}/{helm-release-name}` will be preserved in requests to your application, else rewritten to `/` when `false` | `false` |
+| service.port | VirtualService, Service | | 80 |
 
-### Infrastructure Permissions
+### Egress Configuration
 
 | Input | [Kubernetes Object Type](https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/) | Description | Required | Default Value |
 | - | - | - | - | - |
-| istio.ingress.public | VirtualService | When `false`, an internal URL will be created with the format `api.internal.{istio.ingress.host}/{target-namespace}/{helm-release-name}` that will expose your application *via OpenVPN-only*. When `true`, an additional public URL will be created with the format `api.{istio.ingress.host}/{target-namespace}/{helm-release-name}` that will expose your application publicly. This API should be secured behind some authentication method when set to `true`.  | [ ] | `false` |
-| istio.ingress.disableRewrite | VirtualService | When `true`, the path `/{target-namespace}/{helm-release-name}` will be preserved in requests to your application, else rewritten to `/` when `false` | [ ] | `false` |
 | istio.egress | ServiceEntry | A whitelist of external services that your API requires connection to. The whitelist applies to the entire namespace in which this chart is installed. [These services](https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8) are globally whitelisted and do not require declaration. | [ ] | [] |
 | istio.egress[N].name | ServiceEntry | A name for this whitelist entry | [x] | |
 | istio.egress[N].hosts | ServiceEntry | A list of hostnames to be whitelisted  | One or both istio.egress[N].hosts and istio.egress[N].addresses must be specified | [] |
@@ -63,7 +107,36 @@ Providing the minimum required inputs results in a complete API deployment with 
 | istio.egress[N].ports[M].number | ServiceEntry | A port number | [x] | |
 | istio.egress[N].ports[M].protocol | ServiceEntry | Any of the protocols listed [here](https://istio.io/latest/docs/reference/config/networking/gateway/#Port) | [x] | |
 
-## Object Reference
+When using public ingess, the following URL prefixes are rerouted to the root URL and are essentially blocked. They must be accessed internally, or through VPN. You can add to this list in Values.istio.ingress.redirects.
+
+- health
+- docs
+- redoc
+- swagger
+- swaggerui
+
+### Infrastructure Permissions
+
+| Input | [Kubernetes Object Type](https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/) | Description |
+| - | - | - |
+| serviceAccount.roleArn | ServiceAccount | ARN of the IAM role to be assumed by your application. If your API requires access to any AWS services, a role should be created in AWS IAM. This role should have an inline policy that describes the permissions your API needs (connect to RDS, publish to an SNS topic, read from an SQS queue, etc.). |
+
+### Application Configuration
+
+| Input | [Kubernetes Object Type](https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/) | Description | Default Value |
+| - | - | - | - |
+| service.targetPort | Service, Deployment | - | 9000 |
+| deployment.args | Deployment | - | [] |
+| deployment.envVars | Deployment | - | [] |
+
+### Resources and Scaling
+
+| Input | [Kubernetes Object Type](https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/) | Description |
+| - | - | - |
+| deployment.resource | Deployment | - |
+| autoscaling | HorizontalPodAutoscaler | - |
+
+## Kubernetes Object Reference
 
 All possible objects created by this chart:
 
@@ -85,23 +158,3 @@ first add the repo
 and then install the chart using
 
 `helm upgrade --install devops-services variant-inc-helm-charts/variant-api -n sample-ns -f values.yaml`
-
-## Considerations
-
-### Standard URL Prefix
-
-When using Istio ingress, the standard url schema {HOST}/{NAMESPACE}/{RELEASE_NAME}.
-This is a departure from the previous version that did not include a specific match url prefix.
-This also may be a breaking change where your application may not know to redirect requests with the prefix of the url schema. See documentation about running your app/server running behind a proxy to allow proper function of your backend.
-
-### Public vs Private Ingress
-
-When not using public ingress, you can only access your Service via [VPN](https://usxtech.atlassian.net/wiki/spaces/CLOUD/pages/1332445185/How+to+configure+OpenVPN+using+Okta+SSO+to+access+USX+Variant+Resources).
-
-When using public ingess, the following URL prefixes are rerouted to the root URL and are essentially blocked. They must be accessed internally, or through VPN. You can add to this list in Values.istio.ingress.redirects.
-
-- health
-- docs
-- redoc
-- swagger
-- swaggerui
