@@ -4,7 +4,7 @@ Use this chart to deploy an API image to Kubernetes -- the Variant, CloudOps-app
 
 ## TL;DR
 
-TL;DR is based on the [Minimum Required Inputs](#minimum-required-inputs) and corresponding values in the example code block.
+Deploy your API using [Terraform](#terraform) or the [Helm CLI](#helm-cli) by providing the [Minimum Required Inputs](#minimum-required-inputs) 
 
 ### What can it do
 
@@ -56,6 +56,17 @@ resource "helm_release" "api_release" {
 }
 ```
 
+### Helm CLI
+
+To install the chart,
+first add the repo
+
+`helm repo add variant-inc-helm-charts https://variant-inc.github.io/lazy-helm-charts/ --password <token>`
+
+and then install the chart using
+
+`helm upgrade --install my-release-name variant-inc-helm-charts/variant-api -n my-namespace --set "istio.ingress.host=dev-drivevariant.com" --set "revision=abc123" --set "deployment.image.tag=ecr.amazonaws.com/my-project/my-api:abc123"`
+
 ## Before you start
 
 1. Use a CloudOps Github CI workflow that publishes an image
@@ -95,6 +106,14 @@ If only the minimum inputs are provided, these assumptions are made about your a
 | istio.ingress.disableRewrite | VirtualService | When `true`, the path `/{target-namespace}/{helm-release-name}` will be preserved in requests to your application, else rewritten to `/` when `false` | `false` |
 | service.port | VirtualService, Service | | 80 |
 
+When using public ingess, the following URL prefixes are rerouted to the root URL and are essentially blocked. They must be accessed internally, or through VPN. You can add to this list in Values.istio.ingress.redirects.
+
+- health
+- docs
+- redoc
+- swagger
+- swaggerui
+
 ### Egress Configuration
 
 | Input | [Kubernetes Object Type](https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/) | Description | Required | Default Value |
@@ -106,14 +125,6 @@ If only the minimum inputs are provided, these assumptions are made about your a
 | istio.egress[N].ports | ServiceEntry | A list of ports for the corresponding `istio.egress[N].hosts` or `istio.egress[N].addresses` to be whitelisted | [x] | [] |
 | istio.egress[N].ports[M].number | ServiceEntry | A port number | [x] | |
 | istio.egress[N].ports[M].protocol | ServiceEntry | Any of the protocols listed [here](https://istio.io/latest/docs/reference/config/networking/gateway/#Port) | [x] | |
-
-When using public ingess, the following URL prefixes are rerouted to the root URL and are essentially blocked. They must be accessed internally, or through VPN. You can add to this list in Values.istio.ingress.redirects.
-
-- health
-- docs
-- redoc
-- swagger
-- swaggerui
 
 ### Infrastructure Permissions
 
@@ -147,14 +158,3 @@ All possible objects created by this chart:
 - [Service](https://kubernetes.io/docs/reference/kubernetes-api/service-resources/service-v1/)
 - [ServiceAccount](https://kubernetes.io/docs/reference/kubernetes-api/authentication-resources/service-account-v1/)
 - [VirtualService](https://istio.io/latest/docs/reference/config/networking/virtual-service/#VirtualService)
-
-## Install
-
-To install the chart,
-first add the repo
-
-`helm repo add variant-inc-helm-charts https://variant-inc.github.io/lazy-helm-charts/ --password <token>`
-
-and then install the chart using
-
-`helm upgrade --install devops-services variant-inc-helm-charts/variant-api -n sample-ns -f values.yaml`

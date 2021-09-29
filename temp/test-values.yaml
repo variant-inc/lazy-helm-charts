@@ -8,6 +8,9 @@ deployment:
     annotation1: annotation1
     annotation2: annotation2
 
+serviceAccount:
+  roleArn: arn:aws:iam::account:role/role
+
 istio:
   ingress:
     public: true
