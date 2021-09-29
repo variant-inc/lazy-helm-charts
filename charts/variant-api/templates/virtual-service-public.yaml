@@ -1,8 +1,8 @@
+{{- if .Values.istio.ingress.public }}
 {{- $fullName := (include "chart.fullname" .) -}}
 {{- $labels := (include "chart.labels" .) -}}
 {{- $release := .Release -}}
-{{- if .Values.istio.ingress }}
-{{- if .Values.istio.ingress.public }}
+{{- $host := (include "chart.ingressHostname" .) -}}
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -13,8 +13,8 @@ spec:
   gateways:
     - default/default
   hosts:
-    - api.{{ .Values.istio.ingress.host }}
-    - api.apps.{{ .Values.istio.ingress.host }}
+    - api.{{ $host }}
+    - api.apps.{{ $host }}
   http:
     - name: Private Path Redirects
       match:
@@ -35,7 +35,7 @@ spec:
         - uri:
             prefix: /{{ $release.Namespace }}/{{ $release.Name }}/swaggerui
       redirect:
-        authority: api.internal.apps.{{ .Values.istio.ingress.host }}
+        authority: api.internal.apps.{{ $host }}
         redirectCode: 307
     - name: Default Ingress
       match:
@@ -50,5 +50,4 @@ spec:
             host: {{ $fullName }}
             port:
               number: {{ .Values.service.port }}
-{{- end -}}
 {{- end -}}

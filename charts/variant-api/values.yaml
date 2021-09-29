@@ -1,11 +1,11 @@
 nameOverride: ""
-fullnameOverride: ""
+fullnameOverride:
 revision: 
 
 istio:
   ingress:
+    host:
     public: false
-    host: ops-drivevariant.com
     disableRewrite: false
 
     # Add endpoints to be rerouted to / in public access

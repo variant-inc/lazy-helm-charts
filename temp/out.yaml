@@ -54,11 +54,29 @@ spec:
     spec:
       serviceAccountName: schedule-adherence-api
       automountServiceAccountToken: true
+      ### Behold! Long explanation for why securityContext is set here:
+      #
+      # When the "eks.amazonaws.com/role-arn" annotation is applied to the ServiceAccount used by this Deployment, 
+      # some new volume is mounted which contains the AWS secrets for authentication. By default, the owner will 
+      # be root, but the AWS SDK in our applications need access to this volume at runtime and our applications 
+      # should _not_ run as root.
+      #
+      # fsGroup determines group ownership of volumes mounted in this dynamic manner.
+      #
+      # Assumptions:
+      # 1) The application process runs on an Alpine based platform -- the "nobody" group is defined as ID 65534 in Alpine
+      # 2) The application is running as a non-root user (u better be)
+      # 3) The non-root user _does not_ belong to any groups (i.e, "nobody")
+      #
+      # Let's not run as root
+      # Chown all the things that you own
+      # Groups of nobody
+      ###
       securityContext:
         fsGroup: 65534
       containers:
         - name: schedule-adherence-api
-          image: abc123
+          image: ecr.amazonaws.com/schedule-adherence/schedule-adherence-api:abc123
           imagePullPolicy: Always
           ports:
             - name: http
@@ -115,7 +133,7 @@ spec:
 apiVersion: networking.istio.io/v1beta1
 kind: ServiceEntry
 metadata:
-  name: schedule-adherence-api-test
+  name: schedule-adherence-api-here-api
   labels: 
     helm.sh/chart: variant-api-2.0.0
     app.kubernetes.io/name: variant-api
@@ -124,15 +142,37 @@ metadata:
     revision: "abc123"
 spec:
   hosts:
-    - "test.com"
-    - "blah.net"
+    - "api.hereapi.com"
   exportTo:
     - "."
   location: MESH_EXTERNAL
   ports:
-    - number: 80
-      name: http
-      protocol: HTTP
+    - number: 443
+      name: https
+      protocol: HTTPS
+  resolution: DNS
+---
+# Source: variant-api/templates/service-entry.yaml
+apiVersion: networking.istio.io/v1beta1
+kind: ServiceEntry
+metadata:
+  name: schedule-adherence-api-database
+  labels: 
+    helm.sh/chart: variant-api-2.0.0
+    app.kubernetes.io/name: variant-api
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/managed-by: Helm
+    revision: "abc123"
+spec:
+  addresses:
+    - "1.1.1.1"
+  exportTo:
+    - "."
+  location: MESH_EXTERNAL
+  ports:
+    - number: 5432
+      name: tcp
+      protocol: TCP
   resolution: DNS
 ---
 # Source: variant-api/templates/service-monitor.yaml
@@ -159,6 +199,51 @@ spec:
       app.kubernetes.io/name: variant-api
       app.kubernetes.io/instance: RELEASE-NAME
 ---
+# Source: variant-api/templates/virtual-service-public.yaml
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: schedule-adherence-api
+  labels: 
+    helm.sh/chart: variant-api-2.0.0
+    app.kubernetes.io/name: variant-api
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/managed-by: Helm
+    revision: "abc123"
+spec:
+  gateways:
+    - default/default
+  hosts:
+    - api.dev-drivevariant.com
+    - api.apps.dev-drivevariant.com
+  http:
+    - name: Private Path Redirects
+      match:
+        - uri:
+            prefix: /schedule-adherence/RELEASE-NAME/hidden
+        - uri:
+            prefix: /schedule-adherence/RELEASE-NAME/health
+        - uri:
+            prefix: /schedule-adherence/RELEASE-NAME/docs
+        - uri:
+            prefix: /schedule-adherence/RELEASE-NAME/redoc
+        - uri:
+            prefix: /schedule-adherence/RELEASE-NAME/swagger
+        - uri:
+            prefix: /schedule-adherence/RELEASE-NAME/swaggerui
+      redirect:
+        authority: api.internal.apps.dev-drivevariant.com
+        redirectCode: 307
+    - name: Default Ingress
+      match:
+        - uri:
+            prefix: /schedule-adherence/RELEASE-NAME/
+      route:
+        - destination:
+            host: schedule-adherence-api
+            port:
+              number: 80
+---
 # Source: variant-api/templates/virtual-service.yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -174,15 +259,13 @@ spec:
   gateways:
     - default/default
   hosts:
-    - api.internal.ops-drivevariant.com
-    - api.internal.apps.ops-drivevariant.com
+    - api.internal.dev-drivevariant.com
+    - api.internal.apps.dev-drivevariant.com
   http:
     - name: Private Ingress
       match:
         - uri:
             prefix: /schedule-adherence/RELEASE-NAME/
-      rewrite:
-        uri: /
       route:
         - destination:
             host: schedule-adherence-api

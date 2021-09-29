@@ -1,0 +1,28 @@
+fullnameOverride: schedule-adherence-api
+revision: abc123
+
+deployment:
+  image:
+    tag: ecr.amazonaws.com/schedule-adherence/schedule-adherence-api:abc123
+  podAnnotations:
+    annotation1: annotation1
+    annotation2: annotation2
+
+istio:
+  ingress:
+    public: true
+    host: dev-drivevariant.com
+    disableRewrite: true
+  egress:
+    - name: here-api
+      hosts: 
+        - api.hereapi.com
+      ports:
+        - number: 443
+          protocol: HTTPS
+    - name: database
+      addresses:
+        - 1.1.1.1
+      ports:
+        - number: 5432
+          protocol: TCP

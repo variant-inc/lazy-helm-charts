@@ -9,10 +9,12 @@ metadata:
   name: {{ $fullName }}-{{ required "A valid name is required for each ServiceEntry!" .name }}
   labels: {{ $labels | nindent 4 }}
 spec:
+  {{- if .hosts }}
   hosts:
     {{- range .hosts }}
     - {{ . | quote }}
     {{- end }}
+  {{- end }}
   {{- if .addresses }}
   addresses:
     {{- range .addresses }}
