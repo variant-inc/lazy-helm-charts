@@ -4,7 +4,7 @@ Use this chart to deploy an API image to Kubernetes -- the Variant, CloudOps-app
 
 ## TL;DR
 
-Deploy your API using [Terraform](#terraform) or the [Helm CLI](#helm-cli) by providing the [Minimum Required Inputs](#minimum-required-inputs) 
+Deploy your API using [Terraform](#terraform) or the [Helm CLI](#helm-cli) by providing the [Minimum Required Inputs](#minimum-required-inputs)
 
 ### What can it do
 
@@ -19,7 +19,7 @@ Deploy your API using [Terraform](#terraform) or the [Helm CLI](#helm-cli) by pr
 
 ### Terraform
 
-```
+```bash
 resource "kubernetes_namespace" "namespace" {
   metadata {
     name = "my-namespace"
@@ -88,13 +88,16 @@ See [Application Configuration](#application-configuration) to override these as
 
 ### Release name
 
+According to the [Workload Naming Conventions](https://drivevariant.atlassian.net/wiki/spaces/CLOUD/pages/1665859671/Recommended+Conventions#Workload-Naming-Conventions), this name must end with `-api` such as `schedule-adherence-api` or `driver-api`. 
+
 How to set release name
-- [Terraform](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release#name)
+- Terraform
+  - `name` [argument](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release#name) argument in the `helm_release` resource
 - Helm CLI
   - helm install [RELEASE_NAME] [CHART] [flags]
   - helm upgrade [RELEASE_NAME] [CHART] [flags]
 
-According to the [Workload Naming Conventions](https://drivevariant.atlassian.net/wiki/spaces/CLOUD/pages/1665859671/Recommended+Conventions#Workload-Naming-Conventions), this name must end with `-api` such as `schedule-adherence-api` or `driver-api`. This will be used as the base [object name](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/) that will be assigned to all Kubernetes objects created by this chart.
+This will be used as the base [object name](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/) that will be assigned to all Kubernetes objects created by this chart.
 
 ### Minimum required input table
 
@@ -110,9 +113,14 @@ According to the [Workload Naming Conventions](https://drivevariant.atlassian.ne
 
 | Input | [Kubernetes Object Type](https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/) | Description | Default Value |
 | - | - | - | - |
-| istio.ingress.public | VirtualService | When `false`, an internal URL will be created with the format `api.internal.{istio.ingress.host}/{target-namespace}/{helm-release-name}` that will expose your application *via OpenVPN-only*. When `true`, an additional public URL will be created with the format `api.{istio.ingress.host}/{target-namespace}/{helm-release-name}` that will expose your application publicly. This API should be secured behind some authentication method when set to `true`. | `false` |
+| istio.ingress.public | VirtualService | When `false`, an internal URL will be created that will expose your application *via OpenVPN-only*. When `true`, an additional publicly accesible URL will be created. This API should be secured behind some authentication method when set to `true`. | `false` |
 | istio.ingress.disableRewrite | VirtualService | When `true`, the path `/{target-namespace}/{helm-release-name}` will be preserved in requests to your application, else rewritten to `/` when `false` | `false` |
 | service.port | VirtualService, Service | | 80 |
+
+URL Formats
+
+- Public: `api.{istio.ingress.host}/{target-namespace}/{helm-release-name}`
+- Private (OpenVPN): `api.internal.{istio.ingress.host}/{target-namespace}/{helm-release-name}`
 
 When using public ingess, the following URL prefixes are rerouted to the root URL and are essentially blocked. They must be accessed internally, or through VPN. You can add to this list in Values.istio.ingress.redirects.
 
@@ -162,7 +170,7 @@ All possible objects created by this chart:
 - [Deployment](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/deployment-v1/)
 - [HorizontalPodAutoscaler](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/horizontal-pod-autoscaler-v1/)
 - [ServiceEntry](https://istio.io/latest/docs/reference/config/networking/service-entry/#ServiceEntry)
-- [ServiceMonitor]()
+- [ServiceMonitor](https://docs.openshift.com/container-platform/4.8/rest_api/monitoring_apis/servicemonitor-monitoring-coreos-com-v1.html)
 - [Service](https://kubernetes.io/docs/reference/kubernetes-api/service-resources/service-v1/)
 - [ServiceAccount](https://kubernetes.io/docs/reference/kubernetes-api/authentication-resources/service-account-v1/)
 - [VirtualService](https://istio.io/latest/docs/reference/config/networking/virtual-service/#VirtualService)
