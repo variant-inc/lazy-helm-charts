@@ -6,8 +6,8 @@ metadata:
   name: schedule-adherence-api
   labels:
     helm.sh/chart: variant-api-2.0.0
-    app.kubernetes.io/name: schedule-adherence-api
-    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/name: variant-api
+    app.kubernetes.io/instance: schedule-adherence-api
     app.kubernetes.io/managed-by: Helm
     revision: "abc123"
   annotations:
@@ -20,8 +20,8 @@ metadata:
   name: schedule-adherence-api
   labels:
     helm.sh/chart: variant-api-2.0.0
-    app.kubernetes.io/name: schedule-adherence-api
-    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/name: variant-api
+    app.kubernetes.io/instance: schedule-adherence-api
     app.kubernetes.io/managed-by: Helm
     revision: "abc123"
 spec:
@@ -32,8 +32,8 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app.kubernetes.io/name: schedule-adherence-api
-    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/name: variant-api
+    app.kubernetes.io/instance: schedule-adherence-api
 ---
 # Source: variant-api/templates/deployment.yaml
 apiVersion: apps/v1
@@ -42,20 +42,20 @@ metadata:
   name: schedule-adherence-api
   labels:
     helm.sh/chart: variant-api-2.0.0
-    app.kubernetes.io/name: schedule-adherence-api
-    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/name: variant-api
+    app.kubernetes.io/instance: schedule-adherence-api
     app.kubernetes.io/managed-by: Helm
     revision: "abc123"
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: schedule-adherence-api
-      app.kubernetes.io/instance: RELEASE-NAME
+      app.kubernetes.io/name: variant-api
+      app.kubernetes.io/instance: schedule-adherence-api
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: schedule-adherence-api
-        app.kubernetes.io/instance: RELEASE-NAME
+        app.kubernetes.io/name: variant-api
+        app.kubernetes.io/instance: schedule-adherence-api
       annotations:
         annotation1: annotation1
         annotation2: annotation2
@@ -120,8 +120,8 @@ metadata:
   name: schedule-adherence-api
   labels:
     helm.sh/chart: variant-api-2.0.0
-    app.kubernetes.io/name: schedule-adherence-api
-    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/name: variant-api
+    app.kubernetes.io/instance: schedule-adherence-api
     app.kubernetes.io/managed-by: Helm
     revision: "abc123"
 spec:
@@ -144,8 +144,8 @@ metadata:
   name: schedule-adherence-api-here-api
   labels: 
     helm.sh/chart: variant-api-2.0.0
-    app.kubernetes.io/name: schedule-adherence-api
-    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/name: variant-api
+    app.kubernetes.io/instance: schedule-adherence-api
     app.kubernetes.io/managed-by: Helm
     revision: "abc123"
 spec:
@@ -167,8 +167,8 @@ metadata:
   name: schedule-adherence-api-database
   labels: 
     helm.sh/chart: variant-api-2.0.0
-    app.kubernetes.io/name: schedule-adherence-api
-    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/name: variant-api
+    app.kubernetes.io/instance: schedule-adherence-api
     app.kubernetes.io/managed-by: Helm
     revision: "abc123"
 spec:
@@ -189,8 +189,8 @@ kind: ServiceMonitor
 metadata:
   labels: 
     helm.sh/chart: variant-api-2.0.0
-    app.kubernetes.io/name: schedule-adherence-api
-    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/name: variant-api
+    app.kubernetes.io/instance: schedule-adherence-api
     app.kubernetes.io/managed-by: Helm
     revision: "abc123"
   name: schedule-adherence-api
@@ -204,8 +204,8 @@ spec:
       - schedule-adherence
   selector: 
     matchLabels:
-      app.kubernetes.io/name: schedule-adherence-api
-      app.kubernetes.io/instance: RELEASE-NAME
+      app.kubernetes.io/name: variant-api
+      app.kubernetes.io/instance: schedule-adherence-api
 ---
 # Source: variant-api/templates/virtual-service-public.yaml
 apiVersion: networking.istio.io/v1alpha3
@@ -214,8 +214,8 @@ metadata:
   name: schedule-adherence-api
   labels: 
     helm.sh/chart: variant-api-2.0.0
-    app.kubernetes.io/name: schedule-adherence-api
-    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/name: variant-api
+    app.kubernetes.io/instance: schedule-adherence-api
     app.kubernetes.io/managed-by: Helm
     revision: "abc123"
 spec:
@@ -228,24 +228,24 @@ spec:
     - name: Private Path Redirects
       match:
         - uri:
-            prefix: /schedule-adherence/RELEASE-NAME/hidden
+            prefix: /schedule-adherence/schedule-adherence-api/hidden
         - uri:
-            prefix: /schedule-adherence/RELEASE-NAME/health
+            prefix: /schedule-adherence/schedule-adherence-api/health
         - uri:
-            prefix: /schedule-adherence/RELEASE-NAME/docs
+            prefix: /schedule-adherence/schedule-adherence-api/docs
         - uri:
-            prefix: /schedule-adherence/RELEASE-NAME/redoc
+            prefix: /schedule-adherence/schedule-adherence-api/redoc
         - uri:
-            prefix: /schedule-adherence/RELEASE-NAME/swagger
+            prefix: /schedule-adherence/schedule-adherence-api/swagger
         - uri:
-            prefix: /schedule-adherence/RELEASE-NAME/swaggerui
+            prefix: /schedule-adherence/schedule-adherence-api/swaggerui
       redirect:
         authority: api.internal.apps.dev-drivevariant.com
         redirectCode: 307
     - name: Default Ingress
       match:
         - uri:
-            prefix: /schedule-adherence/RELEASE-NAME/
+            prefix: /schedule-adherence/schedule-adherence-api/
       route:
         - destination:
             host: schedule-adherence-api
@@ -259,8 +259,8 @@ metadata:
   name: schedule-adherence-api-internal
   labels: 
     helm.sh/chart: variant-api-2.0.0
-    app.kubernetes.io/name: schedule-adherence-api
-    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/name: variant-api
+    app.kubernetes.io/instance: schedule-adherence-api
     app.kubernetes.io/managed-by: Helm
     revision: "abc123"
 spec:
@@ -273,7 +273,7 @@ spec:
     - name: Private Ingress
       match:
         - uri:
-            prefix: /schedule-adherence/RELEASE-NAME/
+            prefix: /schedule-adherence/schedule-adherence-api/
       route:
         - destination:
             host: schedule-adherence-api

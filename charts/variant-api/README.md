@@ -8,7 +8,7 @@ Deploy your API using [Terraform](#terraform) or the [Helm CLI](#helm-cli) by pr
 
 ### What can it do
 
-- Your API will be available on VPN at `https://api.internal.dev-drivevariant.com/my-namespace/my-release-name/`
+- Your API will be available on VPN at `https://api.internal.dev-drivevariant.com/my-namespace/my-api/`
 - Your API will be available to other services in the cluster at `http://my-api.my-namespace.svc.cluster.local/`
 - Private - the API is reachable only via [OpenVPN](https://usxtech.atlassian.net/wiki/spaces/CLOUD/pages/1332445185/How+to+configure+OpenVPN+using+Okta+SSO+to+access+USX+Variant+Resources), or by other services inside the same cluster
   - See [ingress confguration](#ingress-configuration) to make it public, and for information regarding the generated URLs
@@ -31,13 +31,8 @@ resource "kubernetes_namespace" "namespace" {
 
 resource "helm_release" "api_release" {
   chart = "TBD"
-  name  = "my-release-name"
+  name  = "my-api"
   namespace = kubernetes_namespace.namespace.metadata[0].name
-
-  set {
-    name  = "fullnameOverride"
-    value = "my-api"
-  }
 
   set {
     name  = "istio.ingress.host"
@@ -65,7 +60,7 @@ first add the repo
 
 and then install the chart using
 
-`helm upgrade --install my-release-name variant-inc-helm-charts/variant-api -n my-namespace --set "istio.ingress.host=dev-drivevariant.com" --set "revision=abc123" --set "deployment.image.tag=ecr.amazonaws.com/my-project/my-api:abc123"`
+`helm upgrade --install my-api variant-inc-helm-charts/variant-api -n my-namespace --set "istio.ingress.host=dev-drivevariant.com" --set "revision=abc123" --set "deployment.image.tag=ecr.amazonaws.com/my-project/my-api:abc123"`
 
 ## Before you start
 
@@ -83,15 +78,28 @@ and then install the chart using
 
 ## Minimum Required Inputs
 
-If only the minimum inputs are provided, these assumptions are made about your application. See [Application Configuration](#application-configuration) to override these assumptions if necessary.
+### Assumptions
+
+See [Application Configuration](#application-configuration) to override these assumptions if necessary.
 
 1. Runs on port 9000
 1. Runs without any required arguments (i.e can be executed as `docker run [image]`)
 1. There are no required envrionment variables
 
+### Release name
+
+How to set release name
+- [Terraform](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release#name)
+- Helm CLI
+  - helm install [RELEASE_NAME] [CHART] [flags]
+  - helm upgrade [RELEASE_NAME] [CHART] [flags]
+
+According to the [Workload Naming Conventions](https://drivevariant.atlassian.net/wiki/spaces/CLOUD/pages/1665859671/Recommended+Conventions#Workload-Naming-Conventions), this name must end with `-api` such as `schedule-adherence-api` or `driver-api`. This will be used as the base [object name](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/) that will be assigned to all Kubernetes objects created by this chart.
+
+### Minimum required input table
+
 | Input | [Kubernetes Object Type](https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/) | Description |
 | - | - | - |
-| fullnameOverride | All | According to the [Workload Naming Conventions](https://drivevariant.atlassian.net/wiki/spaces/CLOUD/pages/1665859671/Recommended+Conventions#Workload-Naming-Conventions), this name must end with `-api` such as `schedule-adherence-api` or `driver-api`. The root [object name](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/) that will be assigned to all Kubernetes objects created by this chart.  |
 | revision | All | Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision` that will be applied to all objects created by a specific chart installation. Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version |
 | istio.ingress.host | VirtualService | The base domain that will be used to construct URLs that point to your API. This should almost always be the Octopus Variable named `DOMAIN` in the [AWS Access Keys](https://octopus.apps.ops-drivevariant.com/app#/Spaces-22/library/variables/LibraryVariableSets-121?activeTab=variables) Octopus Variable Set  |
 | deployment.image.tag | Deployment | The full URL of the image to be deployed containing the HTTP API application |
