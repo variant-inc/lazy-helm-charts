@@ -4,20 +4,7 @@ Use this chart to deploy an API image to Kubernetes -- the Variant, CloudOps-app
 
 ## TL;DR
 
-Deploy your API using [Terraform](#terraform) or the [Helm CLI](#helm-cli) by providing the [Minimum Required Inputs](#minimum-required-inputs)
-
-### What can it do
-
-- Your API will be available on VPN at `https://api.internal.dev-drivevariant.com/my-namespace/my-api/`
-- Your API will be available to other services in the cluster at `http://my-api.my-namespace.svc.cluster.local/`
-- Private - the API is reachable only via [OpenVPN](https://usxtech.atlassian.net/wiki/spaces/CLOUD/pages/1332445185/How+to+configure+OpenVPN+using+Okta+SSO+to+access+USX+Variant+Resources), or by other services inside the same cluster
-  - See [ingress confguration](#ingress-configuration) to make it public, and for information regarding the generated URLs
-- Firewall - the API can only reach [these services](https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8) or other services inside the same cluster by default
-  - See [egress configuration](#egress-configuration) to whitelist services you need to reach outside of the cluster
-- No Infrastructure Access - Amazon services are firewall whitelisted by default, but you still need an AWS role if you need access to AWS services (SQS, SNS, RDS, etc.)
-  - See [infrastructure permissions](#infrastructure-permissions)
-
-### Terraform
+Review the [Assumptions](#assumptions) and provide the [Minimum Required Inputs](#minimum-required-input-table) to get deployed using Terraform:
 
 ```bash
 resource "kubernetes_namespace" "namespace" {
@@ -30,9 +17,11 @@ resource "kubernetes_namespace" "namespace" {
 }
 
 resource "helm_release" "api_release" {
-  chart = "TBD"
-  name  = "my-api"
-  namespace = kubernetes_namespace.namespace.metadata[0].name
+  repository = "https://variant-inc.github.io/lazy-helm-charts/"
+  chart      = "variant-api"
+  version    = "2.0.0"
+  name       = "my-api"
+  namespace  = kubernetes_namespace.namespace.metadata[0].name
 
   set {
     name  = "istio.ingress.host"
@@ -51,30 +40,30 @@ resource "helm_release" "api_release" {
 }
 ```
 
-### Helm CLI
+### What does it do by default
 
-To install the chart,
-first add the repo
-
-`helm repo add variant-inc-helm-charts https://variant-inc.github.io/lazy-helm-charts/ --password <token>`
-
-and then install the chart using
-
-`helm upgrade --install my-api variant-inc-helm-charts/variant-api -n my-namespace --set "istio.ingress.host=dev-drivevariant.com" --set "revision=abc123" --set "deployment.image.tag=ecr.amazonaws.com/my-project/my-api:abc123"`
+- Your API will be available on VPN at `https://api.internal.dev-drivevariant.com/my-namespace/my-api/`
+- Your API will be available to other services in the cluster at `http://my-api.my-namespace.svc.cluster.local/`
+- Private - the API is reachable only via [OpenVPN](https://usxtech.atlassian.net/wiki/spaces/CLOUD/pages/1332445185/How+to+configure+OpenVPN+using+Okta+SSO+to+access+USX+Variant+Resources), or by other services inside the same cluster
+  - See [ingress confguration](#ingress-configuration) to make it public, and for information regarding the generated URLs
+- Firewall - the API can only reach [these services](https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8) or other services inside the same cluster by default
+  - See [egress configuration](#egress-configuration) to whitelist services you need to reach outside of the cluster
+- No Infrastructure Access - Amazon services are firewall whitelisted by default, but you still need an AWS role if you need access to AWS services (SQS, SNS, RDS, etc.)
+  - See [infrastructure permissions](#infrastructure-permissions)
 
 ## Before you start
 
 1. Use a CloudOps Github CI workflow that publishes an image
-   * [.NET](https://github.com/variant-inc/actions-dotnet)
-   * [Node](https://github.com/variant-inc/actions-nodejs)
-   * [Python](https://github.com/variant-inc/actions-python)
+   - [.NET](https://github.com/variant-inc/actions-dotnet)
+   - [Node](https://github.com/variant-inc/actions-nodejs)
+   - [Python](https://github.com/variant-inc/actions-python)
 1. Host a health check endpoint via `GET /health` which returns a status code < 400 when healthy or >= 400 when unhealthy
 1. Host a Prometheus metrics endpoint via `GET /metrics`
-   * This chart configures a ServiceMonitor (see [Object Reference](#object-reference)) to collect metrics from your API
-   * Middleware exists for most major API frameworks that provide a useful out of the box HTTP server metrics, and simple tools to push custom metrics for your product:
-     * [.NET](https://github.com/prometheus-net/prometheus-net)
-     * Node - [NestJS](https://github.com/digikare/nestjs-prom), [Express](https://github.com/joao-fontenele/express-prometheus-middleware)
-     * Python - [Flask](https://github.com/rycus86/prometheus_flask_exporter), [Django](https://github.com/korfuri/django-prometheus)
+   - This chart configures a ServiceMonitor (see [Object Reference](#object-reference)) to collect metrics from your API
+   - Middleware exists for most major API frameworks that provide a useful out of the box HTTP server metrics, and simple tools to push custom metrics for your product:
+     - [.NET](https://github.com/prometheus-net/prometheus-net)
+     - Node - [NestJS](https://github.com/digikare/nestjs-prom), [Express](https://github.com/joao-fontenele/express-prometheus-middleware)
+     - Python - [Flask](https://github.com/rycus86/prometheus_flask_exporter), [Django](https://github.com/korfuri/django-prometheus)
 
 ## Minimum Required Inputs
 
@@ -82,22 +71,15 @@ and then install the chart using
 
 See [Application Configuration](#application-configuration) to override these assumptions if necessary.
 
-1. Runs on port 9000
-1. Runs without any required arguments (i.e can be executed as `docker run [image]`)
-1. There are no required envrionment variables
+1. Your API, health check endpoint, and metrics endpoint all run on the same server at port 9000
+1. Your container executes without any required arguments (i.e can be executed as `docker run [image]`)
+1. There are no required envrionment variables for your API to function
 
 ### Release name
 
-According to the [Workload Naming Conventions](https://drivevariant.atlassian.net/wiki/spaces/CLOUD/pages/1665859671/Recommended+Conventions#Workload-Naming-Conventions), this name must end with `-api` such as `schedule-adherence-api` or `driver-api`. 
-
-How to set release name
-- Terraform
-  - `name` [argument](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release#name) argument in the `helm_release` resource
-- Helm CLI
-  - helm install [RELEASE_NAME] [CHART] [flags]
-  - helm upgrade [RELEASE_NAME] [CHART] [flags]
-
-This will be used as the base [object name](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/) that will be assigned to all Kubernetes objects created by this chart.
+- Provide the `name` [argument](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release#name) argument in the `helm_release` resource
+- According to the [Workload Naming Conventions](https://drivevariant.atlassian.net/wiki/spaces/CLOUD/pages/1665859671/Recommended+Conventions#Workload-Naming-Conventions), this name must end with `-api` such as `schedule-adherence-api` or `driver-api`
+- This will be used as the base [object name](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/) that will be assigned to all Kubernetes objects created by this chart
 
 ### Minimum required input table
 
