@@ -1,4 +1,3 @@
-fullnameOverride: schedule-adherence-api
 revision: abc123
 
 deployment:
@@ -7,6 +6,20 @@ deployment:
   podAnnotations:
     annotation1: annotation1
     annotation2: annotation2
+  envVars:
+    - name: required_env_var
+      value: required_env_var
+  conditionalEnvVars:
+    - condition: false
+      envVars:
+        - name: false_conditional
+          value: false_conditional
+    - condition: true
+      envVars:
+        - name: true_conditional_1
+          value: true_conditional_1
+        - name: true_conditional_2
+          value: true_conditional_2
 
 serviceAccount:
   roleArn: arn:aws:iam::account:role/role

@@ -1,16 +1,11 @@
-fullnameOverride:
-revision: 
+# This file contains the defaults for all optional, overridable values
 
 istio:
   ingress:
-    host:
     public: false
     disableRewrite: false
-
-    # Add endpoints to be rerouted to / in public access
-    redirects:
-      - prefix: /hidden
-
+    redirects: []
+      # - prefix: /hidden
   egress: []
     # - name: some-external-api
     #   hosts:
@@ -30,9 +25,7 @@ serviceMonitor:
   scrapeTimeout: 10s
 
 service:
-  # Port # exposed by the Kubernetes Service which will point to your deployed Pods
   port: 80
-  # Port # that exposes your HTTP application in your image
   targetPort: 9000
 
 autoscaling:
@@ -40,16 +33,9 @@ autoscaling:
   maxReplicas: 5
   targetCPUUtilizationPercentage: 80
 
-serviceAccount:
-  # SET via terrform syntax {alias}.serviceAccount.roleArn if AWS permissions are required
-  roleArn:
-
 deployment:
   image:
-    # SET via terrform syntax {alias}.image.tag
-    tag:
     pullPolicy: Always
-
   resources:
     limits:
       cpu: 1
@@ -57,10 +43,19 @@ deployment:
     requests:
       cpu: .1
       memory: 384Mi
-
-  # SET via terraform syntax {alias}.args[0], {alias}.args[1], etc. for the number of args required
   args: []
-
-  # SET via terraform syntax in pairs of {alias}.envVars[0].name, {alias}.envVars[0].value
   envVars: []
+    # - name: required_env_var
+    #   value: required_env_var
+  conditionalEnvVars: []
+    # - condition: false
+    #   envVars:
+    #     - name: false_conditional
+    #       value: false_conditional
+    # - condition: true
+    #   envVars:
+    #     - name: true_conditional_1
+    #       value: true_conditional_1
+    #     - name: true_conditional_2
+    #       value: true_conditional_2
   podAnnotations: {}

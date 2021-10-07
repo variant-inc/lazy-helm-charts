@@ -112,6 +112,12 @@ spec:
           env:
             - name: REVISION
               value: "abc123"
+            - name: required_env_var
+              value: required_env_var
+            - name: true_conditional_1
+              value: true_conditional_1
+            - name: true_conditional_2
+              value: true_conditional_2
 ---
 # Source: variant-api/templates/hpa.yaml
 apiVersion: autoscaling/v2beta1
@@ -227,8 +233,6 @@ spec:
   http:
     - name: Private Path Redirects
       match:
-        - uri:
-            prefix: /schedule-adherence/schedule-adherence-api/hidden
         - uri:
             prefix: /schedule-adherence/schedule-adherence-api/health
         - uri:
