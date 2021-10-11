@@ -1,6 +1,7 @@
 {{- $fullName := (include "chart.fullname" .) -}}
 {{- $labels := (include "chart.labels" .) -}}
 {{- $selectorLabels := (include "chart.selectorLabels" .) -}}
+{{- $secrets := .Values.secrets -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -42,15 +43,23 @@ spec:
       ###
       securityContext:
         fsGroup: 65534
+      {{- if len $secrets }}
+      volumes:
+        {{- range $secrets }}
+        - name: {{ .name }}
+          secret:
+            secretName: {{ $fullName}}-{{ .name }}
+        {{- end }}
+      {{- end }}
       containers:
         - name: {{ $fullName }}
           image: {{ required "deployment.image.tag is required" .Values.deployment.image.tag }}
           imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
           {{- if len .Values.deployment.args }}
           args: 
-          {{- range .Values.deployment.args }}
+            {{- range .Values.deployment.args }}
             - {{ . }}
-          {{- end }}
+            {{- end }}
           {{- end }}
           ports:
             - name: http
@@ -73,19 +82,25 @@ spec:
           env:
             - name: REVISION
               value: {{ required "revision is required" .Values.revision | quote }}
-          {{- if len .Values.deployment.envVars }}
-          {{- range .Values.deployment.envVars }}
+            {{- range .Values.deployment.envVars }}
             - name: {{ required ".name is required for all envVars" .name }}
               value: {{ required ".value is required for all envVars" .value }}
-          {{- end }}
-          {{- end }}
-          {{- if len .Values.deployment.conditionalEnvVars }}
-          {{- range .Values.deployment.conditionalEnvVars }}
-          {{- if .condition }}
-          {{- range .envVars }}
+            {{- end }}
+            {{- if len .Values.deployment.conditionalEnvVars }}
+            {{- range .Values.deployment.conditionalEnvVars }}
+            {{- if .condition }}
+            {{- range .envVars }}
             - name: {{ required ".name is required for all envVars" .name }}
               value: {{ required ".value is required for all envVars" .value }}
-          {{- end }}
-          {{- end }}
-          {{- end }}
+            {{- end }}
+            {{- end }}
+            {{- end }}
+            {{- end }}
+          {{- if len $secrets }}
+          volumeMounts:
+            {{- range $secrets }}
+            - name: {{ .name }}
+              readOnly: true
+              mountPath: {{ .mountPath }}/{{ .fileName }}
+            {{- end }}
           {{- end }}

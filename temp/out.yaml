@@ -82,6 +82,10 @@ spec:
       ###
       securityContext:
         fsGroup: 65534
+      volumes:
+        - name: eng-secret-in-aws
+          secret:
+            secretName: schedule-adherence-api-eng-secret-in-aws
       containers:
         - name: schedule-adherence-api
           image: ecr.amazonaws.com/schedule-adherence/schedule-adherence-api:abc123
@@ -118,6 +122,10 @@ spec:
               value: true_conditional_1
             - name: true_conditional_2
               value: true_conditional_2
+          volumeMounts:
+            - name: eng-secret-in-aws
+              readOnly: true
+              mountPath: /app/secrets/aws-secret.json
 ---
 # Source: variant-api/templates/hpa.yaml
 apiVersion: autoscaling/v2beta1
@@ -142,6 +150,23 @@ spec:
       resource:
         name: cpu
         targetAverageUtilization: 80
+---
+# Source: variant-api/templates/external-secret.yaml
+apiVersion: 'kubernetes-client.io/v1'
+kind: ExternalSecret
+metadata:
+  name: schedule-adherence-api-eng-secret-in-aws
+  labels:
+    helm.sh/chart: variant-api-2.0.0
+    app.kubernetes.io/name: variant-api
+    app.kubernetes.io/instance: schedule-adherence-api
+    app.kubernetes.io/managed-by: Helm
+    revision: "abc123"
+spec:
+  backendType: secretsManager
+  data:
+    - key: eng-secret-in-aws
+      name: aws-secret.json
 ---
 # Source: variant-api/templates/service-entry.yaml
 apiVersion: networking.istio.io/v1beta1

@@ -42,3 +42,8 @@ istio:
       ports:
         - number: 5432
           protocol: TCP
+
+secrets:
+  - name: eng-secret-in-aws
+    mountPath: /app/secrets
+    fileName: aws-secret.json
