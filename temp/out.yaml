@@ -203,6 +203,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     revision: "abc123"
 spec:
+  hosts:
+    - "schedule-adherence-api-database"
   addresses:
     - "1.1.1.1"
   exportTo:
