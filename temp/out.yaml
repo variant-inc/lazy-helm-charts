@@ -28,7 +28,7 @@ spec:
   type: ClusterIP
   ports:
     - port: 80
-      targetPort: 9000
+      targetPort: http
       protocol: TCP
       name: http
   selector:
@@ -94,16 +94,23 @@ spec:
             - name: http
               containerPort: 9000
               protocol: TCP
+            - name: metrics
+              containerPort: 9999
+              protocol: TCP
+            - name: health
+              containerPort: 8888
+              protocol: TCP
+          
           livenessProbe:
             httpGet:
               path: /health
-              port: http
+              port: health
             initialDelaySeconds: 10
             periodSeconds: 10
           readinessProbe:
             httpGet:
               path: /health
-              port: http
+              port: health
             initialDelaySeconds: 10
             periodSeconds: 10
           resources:
@@ -229,7 +236,7 @@ metadata:
   name: schedule-adherence-api
 spec:
   endpoints:
-    - port: 80
+    - targetPort: metrics
       interval: 10s
       scrapeTimeout: 10s
   namespaceSelector:

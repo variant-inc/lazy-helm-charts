@@ -134,7 +134,10 @@ When using public ingess, the following URL prefixes are rerouted to the root UR
 
 | Input | [Kubernetes Object Type](https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/) | Description | Default Value |
 | - | - | - | - |
-| service.targetPort | Service, Deployment | - | 9000 |
+| service.port | Service, ServiceMonitor | Port for internal services to access your API | 80 |
+| service.targetPort | Service, Deployment | Port on your container that exposes your HTTP API | 9000 |
+| service.metricsPort | Service, ServiceMonitor, Deployment | Port which serves prometheus metrics endpoint at `/metrics` | service.targetPort |
+| service.healthCheckPort | Service, ServiceMonitor, Deployment | - | service.targetPort |
 | deployment.args | Deployment | - | [] |
 | deployment.envVars | Deployment | - | [] |
 

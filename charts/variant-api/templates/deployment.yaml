@@ -65,16 +65,27 @@ spec:
             - name: http
               containerPort: {{ required "Target Port is required" .Values.service.targetPort }}
               protocol: TCP
+            {{- if .Values.service.metricsPort }}
+            - name: metrics
+              containerPort: {{ .Values.service.metricsPort }}
+              protocol: TCP
+            {{- end }}
+            {{- if .Values.service.healthCheckPort }}
+            - name: health
+              containerPort: {{ .Values.service.healthCheckPort }}
+              protocol: TCP
+            {{- end }}
+          {{ $port := ternary "http" "health" (empty .Values.service.healthCheckPort) }}
           livenessProbe:
             httpGet:
               path: /health
-              port: http
+              port: {{ $port }}
             initialDelaySeconds: 10
             periodSeconds: 10
           readinessProbe:
             httpGet:
               path: /health
-              port: http
+              port: {{ $port }}
             initialDelaySeconds: 10
             periodSeconds: 10
           resources:

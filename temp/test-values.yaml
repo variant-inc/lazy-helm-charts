@@ -47,3 +47,7 @@ secrets:
   - name: eng-secret-in-aws
     mountPath: /app/secrets
     fileName: aws-secret.json
+
+service:
+  healthCheckPort: 8888
+  metricsPort: 9999
