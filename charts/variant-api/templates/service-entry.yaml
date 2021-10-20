@@ -36,8 +36,8 @@ spec:
   ports:
     {{- range .ports }}
     - number: {{ .number }}
-      name: {{ .protocol | lower }}
-      protocol: {{ .protocol | upper }}
+      name: {{ .protocol | quote | lower }}
+      protocol: {{ .protocol | quote | upper }}
     {{- end }}
   resolution: {{ .resolution | default "DNS" }}
 {{- end -}}

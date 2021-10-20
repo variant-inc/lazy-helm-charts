@@ -93,6 +93,8 @@ spec:
           env:
             - name: REVISION
               value: {{ required "revision is required" .Values.revision | quote }}
+            - name: API_BASE_PATH
+              value: /{{ .Release.Namespace }}/{{ .Release.Name }}
             {{- range .Values.deployment.envVars }}
             - name: {{ required ".name is required for all envVars" .name }}
               value: {{ required ".value is required for all envVars" .value }}
@@ -112,6 +114,6 @@ spec:
             {{- range $secrets }}
             - name: {{ .name }}
               readOnly: true
-              mountPath: {{ .mountPath }}/{{ .fileName }}
+              mountPath: {{ .mountPath }}
             {{- end }}
           {{- end }}

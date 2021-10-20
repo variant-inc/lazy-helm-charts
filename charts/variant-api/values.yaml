@@ -27,6 +27,11 @@ serviceMonitor:
 service:
   port: 80
   targetPort: 9000
+  healthCheckPort:
+  metricsPort:
+
+serviceAccount:
+  roleArn:
 
 autoscaling:
   minReplicas: 1
@@ -35,7 +40,7 @@ autoscaling:
 
 deployment:
   image:
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
   resources:
     limits:
       cpu: 1

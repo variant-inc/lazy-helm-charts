@@ -7,7 +7,7 @@ Use this chart to deploy an API image to Kubernetes -- the Variant, CloudOps-app
 Review the [Assumptions](#assumptions) and provide the [Minimum Required Inputs](#minimum-required-input-table) to get deployed using Terraform:
 
 ```bash
-resource "kubernetes_namespace" "namespace" {
+resource "kubernetes_namespace" "test_namespace" {
   metadata {
     name = "my-namespace"
     labels = {
@@ -16,27 +16,28 @@ resource "kubernetes_namespace" "namespace" {
   }
 }
 
-resource "helm_release" "api_release" {
-  repository = "https://variant-inc.github.io/lazy-helm-charts/"
-  chart      = "variant-api"
-  version    = "2.0.0"
-  name       = "my-api"
-  namespace  = kubernetes_namespace.namespace.metadata[0].name
+resource "helm_release" "test_api_release" {
+  repository        = "https://variant-inc.github.io/lazy-helm-charts/"
+  chart             = "variant-api"
+  version           = "2.0.0"
+  name              = "test-my-api"
+  namespace         = kubernetes_namespace.test_namespace.metadata[0].name
+  lint              = true
+  dependency_update = true
 
-  set {
-    name  = "istio.ingress.host"
-    value = "dev-drivevariant.com"
-  }
+    values = [<<EOF
+revision: abc123
 
-  set {
-    name  = "deployment.image.tag"
-    value = "ecr.amazonaws.com/my-project/my-api:abc123"
-  }
+istio:
+  ingress:
+    host: dev-drivevariant.com
 
-  set {
-    name  = "revision"
-    value = "abc123
-  }
+deployment:
+  image:
+    tag: ecr.amazonaws.com/my-project/my-api:abc123
+
+EOF
+  ]
 }
 ```
 
@@ -140,6 +141,7 @@ When using public ingess, the following URL prefixes are rerouted to the root UR
 | service.healthCheckPort | Service, ServiceMonitor, Deployment | - | service.targetPort |
 | deployment.args | Deployment | - | [] |
 | deployment.envVars | Deployment | - | [] |
+| deployment.conditionalEnvVars | Deployment | - | [] |
 
 ### Resources and Scaling
 
