@@ -1,4 +1,4 @@
-{{- if .Values.serviceMonitor.enabled }}
+{{- $selectorLabels := (include "chart.selectorLabels" .) -}}
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -7,8 +7,7 @@ metadata:
   name: {{ include "chart.fullname" . }}
 spec:
   endpoints:
-    - targetPort: {{ default 9090 .Values.serviceMonitor.targetPort }}
-      port: {{ default "metrics" .Values.serviceMonitor.port }}
+    - targetPort: {{ ternary "http" "metrics" (empty .Values.service.metricsPort)}}
       interval: {{ .Values.serviceMonitor.interval }}
       {{- if .Values.serviceMonitor.scrapeTimeout }}
       scrapeTimeout: {{ .Values.serviceMonitor.scrapeTimeout }}
@@ -16,5 +15,6 @@ spec:
   namespaceSelector:
     matchNames:
       - {{ .Release.Namespace }}
-  selector: {{- toYaml .Values.serviceMonitor.selector | nindent 4 }}
-{{- end }}
+  selector: 
+    matchLabels:
+      {{- $selectorLabels | nindent 6 }}

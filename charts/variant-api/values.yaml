@@ -1,53 +1,72 @@
-# Default values for istio.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
-nameOverride: ""
-fullnameOverride: ""
+# This file contains the defaults for all optional, overridable values
 
 istio:
-  enabled: false
-  ## For traffic to the cluster
   ingress:
-    # # Should the service be exposed via public ingress gateway?
-    public: true
-    # # Provide only the full hostname
-    host: ops-drivevariant.com
-
-    # Make this as true if you want to handle the rewrite inside the app
+    public: false
     disableRewrite: false
-
-    # Add endpoints to be rerouted to / in public access
-    redirects:
-      - prefix: /hidden
-    # # Should the endpoint be external or internal
-    backend:
-      service:
-        ## These values can be template variables
-        # name: {{ .Values.ReleaseName }}
-        # port: {{ .Global.service.port }}
-        name: test
-        ## port should be number
-        port: 1234
-
-  ## For external traffic
-  egress:
-    # ## List of hostnames and ports
-    # # Hosts should be FQDN
-    # - name:
+    redirects: []
+      # - prefix: /hidden
+  egress: []
+    # - name: some-external-api
     #   hosts:
     #     - "test.example.com"
+    #   ports:
+    #     - number: 443
+    #       protocol: HTTPS
+    # - name: some-external-database
     #   addresses:
     #     - "10.0.0.1"
     #   ports:
-    #     - number: 123
-    #       ## MUST BE one of HTTP|HTTPS|GRPC|HTTP2|MONGO|TCP|TLS
-    #       protocol: HTTPS
+    #     - number: 5432
+    #       protocol: TCP
 
 serviceMonitor:
-  enabled: false
-  targetPort: 9090
   interval: 10s
   scrapeTimeout: 10s
-  # any label selector
-  selector: {}
+
+service:
+  port: 80
+  targetPort: 9000
+  healthCheckPort:
+  metricsPort:
+
+serviceAccount:
+  roleArn:
+
+autoscaling:
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage:
+
+deployment:
+  image:
+    pullPolicy: IfNotPresent
+  resources:
+    limits:
+      cpu: 1
+      memory: 768Mi
+    requests:
+      cpu: .1
+      memory: 384Mi
+  args: []
+  envVars: []
+    # - name: required_env_var
+    #   value: required_env_var
+  conditionalEnvVars: []
+    # - condition: false
+    #   envVars:
+    #     - name: false_conditional
+    #       value: false_conditional
+    # - condition: true
+    #   envVars:
+    #     - name: true_conditional_1
+    #       value: true_conditional_1
+    #     - name: true_conditional_2
+    #       value: true_conditional_2
+  podAnnotations: {}
+
+secrets: []
+  # - name: eng-secret-in-aws
+  #   mountPath: /app/secrets
+  #   fileName: aws-secret.json

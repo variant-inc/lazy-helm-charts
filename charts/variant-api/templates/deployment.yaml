@@ -1,0 +1,119 @@
+{{- $fullName := (include "chart.fullname" .) -}}
+{{- $labels := (include "chart.labels" .) -}}
+{{- $selectorLabels := (include "chart.selectorLabels" .) -}}
+{{- $secrets := .Values.secrets -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- $labels | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- $selectorLabels | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- $selectorLabels | nindent 8 }}
+      {{- with .Values.deployment.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      serviceAccountName: {{ $fullName }}
+      automountServiceAccountToken: true
+      ### Behold! Long explanation for why securityContext is set here:
+      #
+      # When the "eks.amazonaws.com/role-arn" annotation is applied to the ServiceAccount used by this Deployment, 
+      # some new volume is mounted which contains the AWS secrets for authentication. By default, the owner will 
+      # be root, but the AWS SDK in our applications need access to this volume at runtime and our applications 
+      # should _not_ run as root.
+      #
+      # fsGroup determines group ownership of volumes mounted in this dynamic manner.
+      #
+      # Assumptions:
+      # 1) The application process runs on an Alpine based platform -- the "nobody" group is defined as ID 65534 in Alpine
+      # 2) The application is running as a non-root user (u better be)
+      # 3) The non-root user _does not_ belong to any groups (i.e, "nobody")
+      #
+      # Let's not run as root
+      # Chown all the things that you own
+      # Groups of nobody
+      ###
+      securityContext:
+        fsGroup: 65534
+      {{- if len $secrets }}
+      volumes:
+        {{- range $secrets }}
+        - name: {{ .name }}
+          secret:
+            secretName: {{ $fullName}}-{{ .name }}
+        {{- end }}
+      {{- end }}
+      containers:
+        - name: {{ $fullName }}
+          image: {{ required "deployment.image.tag is required" .Values.deployment.image.tag }}
+          imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
+          {{- if len .Values.deployment.args }}
+          args: 
+            {{- range .Values.deployment.args }}
+            - {{ . }}
+            {{- end }}
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: {{ required "Target Port is required" .Values.service.targetPort }}
+              protocol: TCP
+            {{- if .Values.service.metricsPort }}
+            - name: metrics
+              containerPort: {{ .Values.service.metricsPort }}
+              protocol: TCP
+            {{- end }}
+            {{- if .Values.service.healthCheckPort }}
+            - name: health
+              containerPort: {{ .Values.service.healthCheckPort }}
+              protocol: TCP
+            {{- end }}
+          {{ $port := ternary "http" "health" (empty .Values.service.healthCheckPort) }}
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: {{ $port }}
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: {{ $port }}
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          resources:
+            {{- toYaml .Values.deployment.resources | nindent 12 }}
+          env:
+            - name: REVISION
+              value: {{ required "revision is required" .Values.revision | quote }}
+            - name: API_BASE_PATH
+              value: /{{ .Release.Namespace }}/{{ .Release.Name }}
+            {{- range .Values.deployment.envVars }}
+            - name: {{ required ".name is required for all envVars" .name }}
+              value: {{ required ".value is required for all envVars" .value }}
+            {{- end }}
+            {{- if len .Values.deployment.conditionalEnvVars }}
+            {{- range .Values.deployment.conditionalEnvVars }}
+            {{- if .condition }}
+            {{- range .envVars }}
+            - name: {{ required ".name is required for all envVars" .name }}
+              value: {{ required ".value is required for all envVars" .value }}
+            {{- end }}
+            {{- end }}
+            {{- end }}
+            {{- end }}
+          {{- if len $secrets }}
+          volumeMounts:
+            {{- range $secrets }}
+            - name: {{ .name }}
+              readOnly: true
+              mountPath: {{ .mountPath }}
+            {{- end }}
+          {{- end }}

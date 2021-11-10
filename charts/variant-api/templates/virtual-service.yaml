@@ -1,8 +1,7 @@
-{{- if .Values.istio.enabled -}}
 {{- $fullName := (include "chart.fullname" .) -}}
 {{- $labels := (include "chart.labels" .) -}}
 {{- $release := .Release -}}
-{{- if .Values.istio.ingress }}
+{{- $host := (include "chart.ingressHostname" .) -}}
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -13,8 +12,8 @@ spec:
   gateways:
     - default/default
   hosts:
-    - api.internal.{{ .Values.istio.ingress.host }}
-    - api.internal.apps.{{ .Values.istio.ingress.host }}
+    - api.internal.{{ $host }}
+    - api.internal.apps.{{ $host }}
   http:
     - name: Private Ingress
       match:
@@ -26,8 +25,6 @@ spec:
       {{ end -}}
       route:
         - destination:
-            host: {{ tpl .Values.istio.ingress.backend.service.name $ }}
+            host: {{ $fullName }}
             port:
-              number: {{ int (tpl (.Values.istio.ingress.backend.service.port | toString) $) }}
-{{- end -}}
-{{- end -}}
+              number: {{ .Values.service.port }}
