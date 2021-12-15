@@ -70,3 +70,6 @@ secrets: []
   # - name: eng-secret-in-aws
   #   mountPath: /app/secrets
   #   fileName: aws-secret.json
+
+authentication:
+  enabled: false
