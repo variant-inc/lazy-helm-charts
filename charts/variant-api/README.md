@@ -65,6 +65,7 @@ EOF
      - [.NET](https://github.com/prometheus-net/prometheus-net)
      - Node - [NestJS](https://github.com/digikare/nestjs-prom), [Express](https://github.com/joao-fontenele/express-prometheus-middleware)
      - Python - [Flask](https://github.com/rycus86/prometheus_flask_exporter), [Django](https://github.com/korfuri/django-prometheus)
+    - Documentation with some instructions on how to implement a metrics endpoint can be found [here](https://drivevariant.atlassian.net/wiki/spaces/SRE/pages/2353594376/Service+Metrics+Endpoint)
 
 ## Minimum Required Inputs
 
