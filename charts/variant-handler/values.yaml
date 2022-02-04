@@ -1,0 +1,96 @@
+replicaCount: 1
+
+image:
+  repository: 064859874041.dkr.ecr.us-east-2.amazonaws.com/dms-handler/handler
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "0.1.0"
+
+imagePullSecrets: []
+
+nameOverride: ""
+fullnameOverride: "test"
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 1
+  targetCPUUtilizationPercentage: 60
+  targetMemoryUtilizationPercentage: 60
+
+serviceAccount:
+  create: true
+  # Annotations to add to the service account
+  annotations:
+    eks.amazonaws.com/role-arn: ""
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext:
+  fsGroup: 65534
+
+securityContext:
+  allowPrivilegeEscalation: false
+
+service:
+  type: ClusterIP
+  port: 8080
+
+vsd:
+  istio:
+    public: true
+    enabled: true
+    ingress:
+      host: "chart.example.com"
+      backend:
+        service:
+          name: "{{ .Release.Name }}"
+          port: 8080
+
+resources:
+ limits:
+   cpu: 100m
+   memory: 128Mi
+ requests:
+   cpu: 100m
+   memory: 128Mi
+
+nodeSelector:
+  cicd: "true"
+
+tolerations:
+  - key: "cicd"
+    operator: "Equal"
+    value: "true"
+    effect: "NoSchedule"
+
+affinity: {}
+
+secrets: {}
+
+# secretsEnvVars:
+#   API_KEY: ""
+
+# env: {}
+env:
+  key1: value1
+  key2: value2
+
+hpa:
+  enabled: true
+
+podMonitor:
+  sampleLimit:
+  enabled: true
+  targetPort: 1234
+  portName: metrics
+  path: metrics/
+  scrapeIntervalInSeconds: 10
+  # should be less than interval
+  scrapeTimeoutInSeconds: 5
+  # see note in health for why these are acceptable defaults
+  matchedHost: "+"
+  useHttps: false

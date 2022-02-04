@@ -1,0 +1,28 @@
+{{- $selectorLabels := (include "chart.selectorLabels" .) -}}
+---
+apiVersion: monitoring.coreos.com/v1
+# not service monitor since we do not have
+# a k8s service for queue workers
+kind: PodMonitor
+metadata:
+  labels:
+  {{- include "chart.labels" . | nindent 4 }}
+  name: {{ .Values.fullnameOverride }}
+spec:
+  jobLabel: {{ .Chart.Name }}
+  {{- if .Values.podMonitor.sampleLimit }}
+  sampleLimit: {{ .Values.podMonitor.sampleLimit }}
+  {{- end }}
+  podMetricsEndpoints:
+    - port: {{ required "Pod monitor port name is required" .Values.podMonitor.portName }}
+      interval: "{{ .Values.podMonitor.scrapeIntervalInSeconds | default 10  }}s"
+      path: {{ required "Pod monitor path is required" .Values.podMonitor.path }}
+      {{- if .Values.podMonitor.scrapeTimeoutInSeconds }}
+      scrapeTimeout: "{{ .Values.podMonitor.scrapeTimeoutInSeconds | default 20 }}s"
+  {{- end }}
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
+  selector:
+    matchLabels:
+  {{- $selectorLabels | nindent 6 }}

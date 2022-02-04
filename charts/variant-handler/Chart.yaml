@@ -1,0 +1,18 @@
+apiVersion: v2
+name: variant-handler
+description: A Helm chart for kubernetes handler
+
+version: 2.0.0-beta1
+
+kubeVersion: "^1.7.1-0"
+home: https://www.drivevariant.com/
+icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
+sources:
+  - https://github.com/variant-inc
+maintainers:
+  - name: vibindaniel
+    email: vibind@drivevariant.com
+  - name: samiralyateem
+    email: samira@drivevariant.com
+  - name: naveenpaka
+    email: naveenp@drivevariant.com
