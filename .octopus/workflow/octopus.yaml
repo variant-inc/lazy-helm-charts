@@ -1,0 +1,13 @@
+SpaceName: DevOps
+ProjectName: lazy-helm-charts
+
+Process:
+  - Name: variant-api
+    Actions:
+      - Name: Test variant-api chart
+        ActionType: Octopus.Script
+        Properties:
+          Octopus.Action.Script.ScriptSource: Package
+          Octopus.Action.RunOnServer: true
+          Octopus.Action.Script.ScriptFileName: "scripts/test.ps1"
+          Octopus.Action.Script.ScriptParameters: "../charts/variant-api"

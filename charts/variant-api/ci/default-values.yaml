@@ -1,0 +1,9 @@
+deployment:
+  image:
+    tag: 064859874041.dkr.ecr.us-east-2.amazonaws.com/lazy-helm-charts/variant-api:v0.1
+revision: testing
+istio:
+  ingress:
+    host: dev-drivevariant.com
+service:
+  targetPort: 5000
