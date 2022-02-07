@@ -49,7 +49,7 @@ spec:
         {{- range $secrets }}
         - name: {{ .name }}
           secret:
-            secretName: {{ $fullName}}-{{ .name }}
+            secretName: {{ .name }}
         {{- end }}
       {{- end }}
       containers:
@@ -105,6 +105,22 @@ spec:
             {{- end }}
             {{- end }}
             {{- end }}
+            {{- end }}
+            {{- $secretName := (printf "%s-%s" (include "chart.fullname" .) "secret") -}}
+            {{- range $key, $value := .Values.secretsEnvVars }}
+            - name: {{ $key | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $secretName }}
+                  key: {{ $key }}
+            {{- end }}
+            {{- $configMapName := (printf "%s-%s" (include "chart.fullname" .) "config") -}}
+            {{- range $key, $value := .Values.configsEnvVars }}
+            - name: {{ $key | quote }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $configMapName }}
+                  key: {{ $key }}
             {{- end }}
           {{- if len $secrets }}
           volumeMounts:

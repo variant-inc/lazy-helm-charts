@@ -8,7 +8,6 @@ tests:
     asserts:
       - template: service.yaml
         containsDocument:
-          apiVersion: networking.istio.io/v1alpha3
           kind: Service
           name: nginx
       - template: service.yaml
