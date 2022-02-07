@@ -1,96 +1,57 @@
+# This file contains the defaults for all optional, overridable values
+
+serviceMonitor:
+  interval: 10s
+  scrapeTimeout: 10s
+
+service:
+  port: 80
+  targetPort: 9000
+  healthCheckPort:
+  metricsPort:
+  healthCheckPath: /health
+
+serviceAccount:
+  roleArn:
+
 replicaCount: 1
-
-image:
-  repository: 064859874041.dkr.ecr.us-east-2.amazonaws.com/dms-handler/handler
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.1.0"
-
-imagePullSecrets: []
-
-nameOverride: ""
-fullnameOverride: "test"
 
 autoscaling:
   enabled: false
   minReplicas: 1
-  maxReplicas: 1
-  targetCPUUtilizationPercentage: 60
-  targetMemoryUtilizationPercentage: 60
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage:
 
-serviceAccount:
-  create: true
-  # Annotations to add to the service account
-  annotations:
-    eks.amazonaws.com/role-arn: ""
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name: ""
+deployment:
+  image:
+    tag: nginx:latest
+    pullPolicy: IfNotPresent
+  resources:
+    limits:
+      cpu: 1
+      memory: 768Mi
+    requests:
+      cpu: .1
+      memory: 384Mi
+  args: []
+  envVars: []
+    # - name: required_env_var
+    #   value: required_env_var
+  conditionalEnvVars: []
+    # - condition: false
+    #   envVars:
+    #     - name: false_conditional
+    #       value: false_conditional
+    # - condition: true
+    #   envVars:
+    #     - name: true_conditional_1
+    #       value: true_conditional_1
+    #     - name: true_conditional_2
+    #       value: true_conditional_2
+  podAnnotations: {}
 
-podAnnotations: {}
-
-podSecurityContext:
-  fsGroup: 65534
-
-securityContext:
-  allowPrivilegeEscalation: false
-
-service:
-  type: ClusterIP
-  port: 8080
-
-vsd:
-  istio:
-    public: true
-    enabled: true
-    ingress:
-      host: "chart.example.com"
-      backend:
-        service:
-          name: "{{ .Release.Name }}"
-          port: 8080
-
-resources:
- limits:
-   cpu: 100m
-   memory: 128Mi
- requests:
-   cpu: 100m
-   memory: 128Mi
-
-nodeSelector:
-  cicd: "true"
-
-tolerations:
-  - key: "cicd"
-    operator: "Equal"
-    value: "true"
-    effect: "NoSchedule"
-
-affinity: {}
-
-secrets: {}
-
-# secretsEnvVars:
-#   API_KEY: ""
-
-# env: {}
-env:
-  key1: value1
-  key2: value2
-
-hpa:
-  enabled: true
-
-podMonitor:
-  sampleLimit:
-  enabled: true
-  targetPort: 1234
-  portName: metrics
-  path: metrics/
-  scrapeIntervalInSeconds: 10
-  # should be less than interval
-  scrapeTimeoutInSeconds: 5
-  # see note in health for why these are acceptable defaults
-  matchedHost: "+"
-  useHttps: false
+secrets: []
+  # - name: eng-secret-in-aws
+  #   mountPath: /app/secrets
+  #   fileName: aws-secret.json
