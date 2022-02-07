@@ -1,0 +1,16 @@
+suite: Chart defaults
+tests:
+  - it: should be internal only
+    release:
+      name: test
+    set:
+      deployment.image.tag: tag
+    asserts:
+      - template: service.yaml
+        containsDocument:
+          apiVersion: networking.istio.io/v1alpha3
+          kind: Service
+          name: nginx
+      - template: service.yaml
+        hasDocuments:
+          count: 1

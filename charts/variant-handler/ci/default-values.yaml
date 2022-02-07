@@ -1,0 +1,7 @@
+deployment:
+  image:
+    tag: k8s.gcr.io/nginx-slim:0.8
+
+service:
+  targetPort: 80
+  healthCheckPath: /

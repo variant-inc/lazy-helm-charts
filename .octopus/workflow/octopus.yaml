@@ -11,3 +11,12 @@ Process:
           Octopus.Action.RunOnServer: true
           Octopus.Action.Script.ScriptFileName: "scripts/test.ps1"
           Octopus.Action.Script.ScriptParameters: "../charts/variant-api"
+  - Name: variant-handler
+    Actions:
+      - Name: Test variant-handler chart
+        ActionType: Octopus.Script
+        Properties:
+          Octopus.Action.Script.ScriptSource: Package
+          Octopus.Action.RunOnServer: true
+          Octopus.Action.Script.ScriptFileName: "scripts/test.ps1"
+          Octopus.Action.Script.ScriptParameters: "../charts/variant-handler"
