@@ -9,7 +9,8 @@ tests:
       - template: service.yaml
         containsDocument:
           kind: Service
-          name: nginx
+          apiVersion: v1
+          name: test
       - template: service.yaml
         hasDocuments:
           count: 1
