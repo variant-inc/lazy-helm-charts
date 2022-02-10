@@ -1,0 +1,84 @@
+{{- if .Values.authentication.enabled }}
+{{- $fullName := (include "chart.fullname" .) -}}
+{{- $labels := (include "chart.labels" .) -}}
+{{- $selectorLabels := (include "chart.selectorLabels" .) -}}
+{{- $host := (include "chart.ingressHostname" .) -}}
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- $labels | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- $selectorLabels | nindent 6 }}
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        requestPrincipals: ["*"]
+  - from:
+    - source:
+        notPrincipals: ["cluster.local*"]
+    to:
+    - operation:
+        methods: ["GET"]
+        paths: ["/health"]
+    - operation:
+        methods: ["GET"]
+        paths: ["/metrics"]
+  {{- if .Values.authorization.rules.to }}
+  {{- range  .Values.authorization.rules.to }}
+    - operation:
+        methods: [{{ .operation.methods | quote }}]
+        paths: [{{ .operation.paths | quote }}]
+  {{- end }}
+  {{- end }}
+    
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ $fullName }}-auth-internal-test
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": hook-succeeded
+  labels:
+    {{- $labels | nindent 4 }}
+  namespace: "lazy-helm-charts-tests"
+spec:
+  restartPolicy: Never
+  containers:
+    - name: curl
+      image: curlimages/curl:7.81.0
+      env:
+      - name: fullname
+        value: {{ $fullName }}
+      args: ["-s", "-i", "-v", "-L", "--fail-with-body", "-X", "GET", "http://$(fullname).lazy-helm-charts/health"]
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ $fullName }}-auth-external-test
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": hook-succeeded
+  namespace: "lazy-helm-charts-tests"
+  labels:
+    {{- $labels | nindent 4 }}
+spec:
+  restartPolicy: Never
+  containers:
+    - name: curl
+      image: bash
+      env:
+      - name: fullname
+        value: api.{{ $host }}/{{ .Release.Namespace }}/{{ .Release.Name }}
+      command: ["/bin/sh", "-c"]
+      args: 
+        - STATUS=$(curl -s -L -w "%{http_code}" -o /dev/null -X GET www.google.com);
+          if [ "$STATUS" -gt 399 ];
+          then exit 1;
+          fi;
+{{- end }}

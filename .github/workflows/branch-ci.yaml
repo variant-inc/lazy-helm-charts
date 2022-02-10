@@ -1,0 +1,38 @@
+name: Branch CI
+
+on:
+  push:
+    branches-ignore:
+      - master
+
+jobs:
+  test:
+    runs-on: eks
+    name: CI
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Lazy Actions Setup
+        id: lazy-setup
+        uses: variant-inc/actions-setup@v1
+      # - name: Lint
+      #   run: |
+      #     helm lint --strict ./charts/*
+      - name: Set up Unit Test
+        run: |
+          if helm plugin list | grep unit; then
+              echo "Plugin already installed"
+          else
+              helm plugin install https://github.com/quintush/helm-unittest
+          fi
+      - name: Unit Test
+        run: |
+          helm unittest -3 --strict -f ci/unit/*.yaml ./charts/*
+      - name: Lazy Action Octopus
+        uses: variant-inc/actions-octopus@v2
+        with:
+          default_branch: master
+          version: ${{ steps.lazy-setup.outputs.image_version }}
+          charts_dir_path: charts/variant-api

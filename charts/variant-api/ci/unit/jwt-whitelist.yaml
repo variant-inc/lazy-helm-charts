@@ -1,0 +1,28 @@
+suite: Chart defaults
+templates:
+  - authorization.yaml
+tests:
+  - it: should whitelist
+    release:
+      name: test
+    documentIndex: 0
+    set:
+      revision: revision
+      istio.ingress.host: host
+      deployment.image.tag: tag
+      authentication:
+        enabled: true
+        server: trustme.com
+      authorization:
+        rules:
+          to:
+            - operation:
+                methods: "GET"
+                paths: "/swagger"
+    asserts:
+      - contains:
+          path: spec.rules[1].to
+          content:
+            operation:
+              methods: ["GET"]
+              paths: ["/swagger"]
