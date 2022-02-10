@@ -70,15 +70,18 @@ metadata:
 spec:
   restartPolicy: Never
   containers:
-    - name: curl
-      image: bash
+    - name: bash
+      image: ellerbrock/alpine-bash-curl-ssl
       env:
-      - name: fullname
-        value: api.{{ $host }}/{{ .Release.Namespace }}/{{ .Release.Name }}
+      - name: FULLNAME
+        value: api.{{ $host }}/{{ .Release.Namespace }}/{{ .Release.Name }}/
       command: ["/bin/sh", "-c"]
       args: 
-        - STATUS=$(curl -s -L -w "%{http_code}" -o /dev/null -X GET https://$(fullname)/health);
-          if [ "$STATUS" -gt 399 ];
-          then exit 1;
+        - export FULLNAME=$(FULLNAME);
+          echo $FULLNAME;
+          STATUS=$(curl -s -L -w "%{http_code}" -o /dev/null -X GET $FULLNAME);
+          echo "$STATUS";
+          if [ "$STATUS" -ne 403 ];
+          then echo $STATUS && exit 1;
           fi;
 {{- end }}
