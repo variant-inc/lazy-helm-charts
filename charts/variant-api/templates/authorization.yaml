@@ -77,7 +77,7 @@ spec:
         value: api.{{ $host }}/{{ .Release.Namespace }}/{{ .Release.Name }}
       command: ["/bin/sh", "-c"]
       args: 
-        - STATUS=$(curl -s -L -w "%{http_code}" -o /dev/null -X GET www.google.com);
+        - STATUS=$(curl -s -L -w "%{http_code}" -o /dev/null -X GET https://$(fullname)/health);
           if [ "$STATUS" -gt 399 ];
           then exit 1;
           fi;
