@@ -72,12 +72,11 @@ secrets: []
   #   fileName: aws-secret.json
 
 authentication:
-  enabled: true
-  server: trustme.com
+  enabled: false
 
 authorization:
   rules:
-    to:
-      - operation:
-          methods: "GET"
-          paths: "/swagger"
+    to: []
+      # - operation:
+      #     methods: "GET"
+      #     paths: "/swagger"
