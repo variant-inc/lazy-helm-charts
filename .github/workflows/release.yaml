@@ -1,6 +1,7 @@
 name: Release Charts
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
@@ -9,30 +10,18 @@ jobs:
   release:
     runs-on: [ "eks" ]
     steps:
-      - name: Checkout
+      - name: Checkout Code
         uses: actions/checkout@v2
-
-      - name: Fetch history
-        run: git fetch --prune --unshallow
+        with:
+          fetch-depth: 0
 
       - name: Configure Git
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
-      # See https://github.com/helm/chart-releaser-action/issues/6
-      # - name: Install Helm
-      #   run: |
-      #     curl -fsSLo get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
-      #     chmod 700 get_helm.sh
-      #     ./get_helm.sh
-
-      # - name: Add dependency chart repos
-      #   run: |
-      #     helm repo add stable https://kubernetes-charts.storage.googleapis.com/
-      #     helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com/
-
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@main
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          CR_SKIP_EXISTING: true

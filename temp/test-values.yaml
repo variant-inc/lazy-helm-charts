@@ -51,3 +51,15 @@ secrets:
 service:
   healthCheckPort: 8888
   metricsPort: 9999
+
+authentication:
+  enabled: true
+  server: trustme.com
+
+authorization:
+  rules:
+    to:
+      - operation:
+          methods: "GET"
+          paths: "/swagger"
+
