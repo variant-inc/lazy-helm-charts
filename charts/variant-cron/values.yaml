@@ -1,0 +1,80 @@
+# This file contains the defaults for all optional, overridable values
+
+istio:
+  egress: []
+    # - name: some-external-api
+    #   hosts:
+    #     - "test.example.com"
+    #   ports:
+    #     - number: 443
+    #       protocol: HTTPS
+    # - name: some-external-database
+    #   addresses:
+    #     - "10.0.0.1"
+    #   ports:
+    #     - number: 5432
+    #       protocol: TCP
+
+imagePullSecrets: []
+
+serviceAccount:
+  roleArn:
+
+podSecurityContext:
+    fsGroup: 65534
+
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  capabilities:
+    drop:
+    - ALL
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+
+cronJob:
+  schedule:
+  # Cron Style Schedule. For help check https://crontab.guru/
+  image:
+    pullPolicy: Always
+    tag:
+  resources:
+    limits:
+      cpu: 1
+      memory: 768Mi
+    requests:
+      cpu: .1
+      memory: 384Mi
+  args: []
+  podAnnotations: {}
+  command: []
+    # - "/bin/sh"
+    # - "-c"
+    # - "date; echo Hello from the K8s cluster"
+
+awsSecrets: []
+  # - name: eng-secret-in-aws
+
+secretVars: []
+  # key: value
+
+configVars: []
+  # key: value
+
+revision:
+  # test-latest
+
+## Node labels for pod assignment
+## ref: https://kubernetes.io/docs/user-guide/node-selection/
+#
+nodeSelector: {}
+
+## Tolerations for pod assignment
+## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+##
+tolerations: []
+
+## Affinity for pod assignment
+## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+##
+affinity: {}
