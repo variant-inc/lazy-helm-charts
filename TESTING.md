@@ -11,7 +11,7 @@
 
 - Values in `values.yaml` next to `Chart.yaml` in the chart directory are meant to be defaults, not examples
 - Defaults are overriden, so if something is required for every installation, build it into the chart instead of `values.yaml`
-- Values required by the chart user should be omitted from `values.yaml` and be set appropriately in unit and integration tests
+- Values required by the chart user should be omitted from or null (empty) in `values.yaml` and be set appropriately in unit and integration tests
 
 ## Unit Tests
 

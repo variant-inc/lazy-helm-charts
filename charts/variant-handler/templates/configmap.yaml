@@ -5,6 +5,6 @@ metadata:
   labels:
     {{- include "chart.labels" . | nindent 4 }}
 data:
-  {{- range $key, $value := .Values.configsEnvVars }}
+  {{- range $key, $value := .Values.configVars }}
   {{ $key }}: {{ $value | quote }}
   {{- end }}

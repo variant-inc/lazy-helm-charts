@@ -5,6 +5,7 @@ tests:
       name: test
     set:
       deployment.image.tag: tag
+      revision: abc
     asserts:
       - template: service.yaml
         containsDocument:

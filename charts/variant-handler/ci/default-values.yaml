@@ -1,7 +1,13 @@
+revision: abc
 deployment:
   image:
-    tag: k8s.gcr.io/nginx-slim:0.8
+    tag: 064859874041.dkr.ecr.us-east-2.amazonaws.com/lazy-helm-charts/variant-api:v0.1
 
 service:
-  targetPort: 80
-  healthCheckPath: /
+  targetPort: 5000
+  healthCheckPath: /health
+
+podSecurityContext:
+  fsGroup: 65534
+
+securityContext: {}

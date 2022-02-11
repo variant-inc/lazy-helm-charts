@@ -24,6 +24,7 @@ helm.sh/chart: {{ include "chart.chart" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+revision: {{ required "revision is required" .Values.revision | quote }}
 {{- end }}
 
 {{/*
