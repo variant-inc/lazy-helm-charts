@@ -4,6 +4,6 @@ deployment:
 revision: testing
 istio:
   ingress:
-    host: dev-drivevariant.com
+    host: dpl-drivevariant.com
 service:
   targetPort: 5000

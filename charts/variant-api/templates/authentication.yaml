@@ -15,19 +15,4 @@ spec:
   jwtRules:
   - issuer: {{ required ".Values.authentication.server is required when .Values.authentication.enabled" .Values.authentication.server }}
     jwksUri: {{ required ".Values.authentication.server is required when .Values.authentication.enabled" .Values.authentication.server }}/v1/keys
----
-apiVersion: security.istio.io/v1beta1
-kind: AuthorizationPolicy
-metadata:
-  name: {{ $fullName }}
-  labels:
-    {{- $labels | nindent 4 }}
-spec:
-  selector:
-    matchLabels:
-      {{- $selectorLabels | nindent 6 }}
-  rules:
-  - from:
-    - source:
-        requestPrincipals: ["*"]
 {{- end }}

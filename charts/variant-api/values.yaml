@@ -73,3 +73,10 @@ secrets: []
 
 authentication:
   enabled: false
+
+authorization:
+  rules:
+    to: []
+      # - operation:
+      #     methods: "GET"
+      #     paths: "/swagger"
