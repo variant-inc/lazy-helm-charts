@@ -1,0 +1,55 @@
+# This file contains the defaults for all optional, overridable values
+
+istio:
+  egress: []
+    # - name: some-external-api
+    #   hosts:
+    #     - "test.example.com"
+    #   ports:
+    #     - number: 443
+    #       protocol: HTTPS
+    # - name: some-external-database
+    #   addresses:
+    #     - "10.0.0.1"
+    #   ports:
+    #     - number: 5432
+    #       protocol: TCP
+
+serviceAccount:
+  roleArn:
+
+cronJob:
+  schedule: "*/2 * * * *"
+  image:
+    pullPolicy: IfNotPresent
+    tag: busybox:latest
+  resources:
+    limits:
+      cpu: 1
+      memory: 768Mi
+    requests:
+      cpu: .1
+      memory: 384Mi
+  args: []
+  podAnnotations: {}
+  command:
+    - "/bin/sh"
+    - "-c"
+    - "date; echo Hello from the K8s cluster"
+
+secrets: []
+  #- name: eng-secret-in-aws
+
+secretVars:
+  foo: bar
+
+configVars:
+  bar: foo
+
+revision: "test-latest"
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
