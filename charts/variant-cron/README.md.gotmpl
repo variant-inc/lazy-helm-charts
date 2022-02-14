@@ -2,40 +2,13 @@
 
 Use this chart to deploy a CronJob image to Kubernetes -- the Variant, CloudOps-approved way.
 
-![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square)
+{{ template "chart.deprecationWarning" . }}
 
-A Helm chart for Istio Objects
+{{ template "chart.badgesSection" . }}
 
-## Values
+{{ template "chart.description" . }}
 
-| Key | Type | Default | Description |
-|-----|------|---------|-------------|
-| affinity | object | `{}` |  |
-| awsSecrets | list | `[]` |  |
-| configVars | list | `[]` |  |
-| cronJob.args | list | `[]` |  |
-| cronJob.command | list | `[]` |  |
-| cronJob.image.pullPolicy | string | `"Always"` |  |
-| cronJob.image.tag | string | `nil` |  |
-| cronJob.podAnnotations | object | `{}` |  |
-| cronJob.resources.limits.cpu | int | `1` |  |
-| cronJob.resources.limits.memory | string | `"768Mi"` |  |
-| cronJob.resources.requests.cpu | float | `0.1` |  |
-| cronJob.resources.requests.memory | string | `"384Mi"` |  |
-| cronJob.schedule | string | `nil` |  |
-| imagePullSecrets | list | `[]` |  |
-| istio.egress | list | `[]` |  |
-| nodeSelector | object | `{}` |  |
-| podSecurityContext.fsGroup | int | `65534` |  |
-| revision | string | `nil` |  |
-| secretVars | list | `[]` |  |
-| securityContext.allowPrivilegeEscalation | bool | `false` |  |
-| securityContext.capabilities.drop[0] | string | `"ALL"` |  |
-| securityContext.readOnlyRootFilesystem | bool | `true` |  |
-| securityContext.runAsNonRoot | bool | `true` |  |
-| securityContext.runAsUser | int | `1000` |  |
-| serviceAccount.roleArn | string | `nil` |  |
-| tolerations | list | `[]` |  |
+{{ template "chart.valuesSection" . }}
 
 ## TL;DR
 
