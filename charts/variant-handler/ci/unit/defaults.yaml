@@ -1,0 +1,17 @@
+suite: Chart defaults
+tests:
+  - it: should be internal only
+    release:
+      name: test
+    set:
+      deployment.image.tag: tag
+      revision: abc
+    asserts:
+      - template: service.yaml
+        containsDocument:
+          kind: Service
+          apiVersion: v1
+          name: test
+      - template: service.yaml
+        hasDocuments:
+          count: 1

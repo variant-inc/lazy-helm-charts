@@ -1,0 +1,124 @@
+{{- $fullName := (include "chart.fullname" .) -}}
+{{- $labels := (include "chart.labels" .) -}}
+{{- $selectorLabels := (include "chart.selectorLabels" .) -}}
+{{- $secrets := .Values.awsSecrets -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- $labels | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- $selectorLabels | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- $selectorLabels | nindent 8 }}
+      {{- with .Values.deployment.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      serviceAccountName: {{ $fullName }}
+      automountServiceAccountToken: true
+      {{- if len .Values.nodeSelector }}
+      nodeSelector:
+        {{- range $key, $value := .Values.nodeSelector }}
+        {{ $key }}: {{ $value }}
+        {{- end }}
+      {{- end }}
+      {{- if len .Values.affinity }}
+      affinity:
+        {{- range $key, $value := .Values.affinity }}
+        {{ $key }}: {{ toYaml $value | nindent 14 }}
+        {{- end }}
+      {{- end }}
+      {{- if len .Values.tolerations }}
+      tolerations:
+        {{- range .Values.tolerations }}
+        - key: {{ required "Key is required for tolerations" .key | quote }}
+          operator: {{ .operator | default "Equal" | quote }}
+          effect: {{ .effect | default "NoSchedule" | quote }}
+        {{- end }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 12 }}
+      {{- if len $secrets }}
+      volumes:
+        {{- range $secrets }}
+        - name: {{ .name }}
+          secret:
+            secretName: {{ $fullName }}-{{ .name }}
+        {{- end }}
+      {{- end }}
+      containers:
+        - name: {{ $fullName }}
+          image: {{ required "deployment.image.tag is required" .Values.deployment.image.tag}}
+          imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 16 }}
+          {{- if len .Values.deployment.args }}
+          args:
+            {{- range .Values.deployment.args }}
+            - {{ . }}
+            {{- end }}
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: {{ required "Target Port is required" .Values.service.targetPort }}
+              protocol: TCP
+            {{- if .Values.service.metricsPort }}
+            - name: metrics
+              containerPort: {{ .Values.service.metricsPort }}
+              protocol: TCP
+            {{- end }}
+            {{- if .Values.service.healthCheckPort }}
+            - name: health
+              containerPort: {{ .Values.service.healthCheckPort }}
+              protocol: TCP
+            {{- end }}
+          {{ $port := ternary "http" "health" (empty .Values.service.healthCheckPort) }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.service.healthCheckPath }}
+              port: {{ $port }}
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.service.healthCheckPath }}
+              port: {{ $port }}
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          resources:
+            {{- toYaml .Values.deployment.resources | nindent 12 }}
+          env:
+            - name: REVISION
+              value: {{ required "revision is required" .Values.revision | quote }}
+            {{- $secretName := (printf "%s-%s" (include "chart.fullname" .) "secret") -}}
+            {{- range $key, $value := .Values.secretVars }}
+            - name: {{ $key | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $secretName }}
+                  key: {{ $key }}
+            {{- end }}
+            {{- $configMapName := (printf "%s-%s" (include "chart.fullname" .) "config") -}}
+            {{- range $key, $value := .Values.configsVars }}
+            - name: {{ $key | quote }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $configMapName }}
+                  key: {{ $key }}
+            {{- end }}
+          {{- if len $secrets }}
+          volumeMounts:
+            {{- range $secrets }}
+            - name: {{ .name }}
+              readOnly: true
+              mountPath: /app/secrets
+            {{- end }}
+          {{- end }}
