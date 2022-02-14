@@ -15,4 +15,4 @@ tests:
           name: test-internal
       - template: virtual-service.yaml
         hasDocuments:
-          count: 1
+          count: 2
