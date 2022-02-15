@@ -38,8 +38,7 @@ spec:
   gateways:
     - default/default
   hosts:
-    - {{ $fullName }}.api.internal.{{ $host }}
-    - {{ $fullName }}.api.internal.apps.{{ $host }}
+    - {{ $fullName }}.internal.apps.{{ $host }}
   http:
     - name: Private Ingress
       route:
@@ -47,28 +46,7 @@ spec:
             host: {{ $fullName }}
             port:
               number: {{ .Values.service.port }}
-
 ---
-apiVersion: v1
-kind: Pod
-metadata:
-  name: {{ $fullName }}-newstyle-internal-test
-  annotations:
-    "helm.sh/hook": test
-    "helm.sh/hook-delete-policy": hook-succeeded
-  labels:
-    {{- $labels | nindent 4 }}
-  namespace: "lazy-helm-charts-tests"
-spec:
-  restartPolicy: Never
-  containers:
-    - name: curl
-      image: curlimages/curl:7.81.0
-      env:
-      - name: fullname
-        value: {{ $fullName }}
-      args: ["-s", "-i", "-v", "-L", "--fail-with-body", "-X", "GET", "http://$(fullname).api.internal/health"]
-
 {{- if .Values.istio.ingress.public }}
 {{- $fullName := (include "chart.fullname" .) -}}
 {{- $labels := (include "chart.labels" .) -}}
@@ -121,7 +99,6 @@ spec:
             host: {{ $fullName }}
             port:
               number: {{ .Values.service.port }}
-
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -132,8 +109,7 @@ spec:
   gateways:
     - default/default
   hosts:
-    - {{ $fullName }}.api.{{ $host }}
-    - {{ $fullName }}.api.apps.{{ $host }}
+    - {{ $fullName }}.apps.{{ $host }}
   http:
     - name: Private Path Redirects
       match:
@@ -154,7 +130,7 @@ spec:
         - uri:
             prefix: /swaggerui
       redirect:
-        authority: api.internal.apps.{{ $host }}
+        authority: {{ $fullName }}.internal.apps.{{ $host }}
         redirectCode: 307
     - name: Default Ingress
       route:
