@@ -17,6 +17,9 @@ jobs:
       - name: Lazy Actions Setup
         id: lazy-setup
         uses: variant-inc/actions-setup@v1
+      - name: Pre-commit
+        run: pre-commit run -a --show-diff-on-failure
+      # TODO - Re-enable linting after cluster is upgraded to 1.22+
       # - name: Lint
       #   run: |
       #     helm lint --strict ./charts/*

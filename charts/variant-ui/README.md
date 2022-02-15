@@ -1,5 +1,27 @@
 # Variant UI Helm Chart
 
+![Version: 1.0.3](https://img.shields.io/badge/Version-1.0.3-informational?style=flat-square)
+
+A Helm chart for a web UI configuration
+
+## Values
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| fullnameOverride | string | `nil` |  |
+| istio.egress | string | `nil` |  |
+| istio.enabled | bool | `false` |  |
+| istio.ingress.backend.service.name | string | `"test"` |  |
+| istio.ingress.backend.service.port | int | `1234` |  |
+| istio.ingress.hosts | list | `[]` |  |
+| istio.ingress.redirects[0].prefix | string | `"/hidden"` |  |
+| nameOverride | string | `nil` |  |
+| serviceMonitor.enabled | bool | `false` |  |
+| serviceMonitor.interval | string | `"10s"` |  |
+| serviceMonitor.scrapeTimeout | string | `"10s"` |  |
+| serviceMonitor.selector | object | `{}` |  |
+| serviceMonitor.targetPort | int | `9090` |  |
+
 ## Install
 
 To install the chart,

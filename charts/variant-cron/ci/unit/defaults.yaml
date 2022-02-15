@@ -1,0 +1,22 @@
+suite: Chart defaults
+tests:
+  - it: should work
+    release:
+      name: test
+    set:
+      cronJob.image.tag: busybox:latest
+      cronJob.schedule: "*/2 * * * *"
+      revision: revision
+      cronJob.command:
+        - "/bin/sh"
+        - "-c"
+        - "date; echo Hello from unit test"
+    asserts:
+      - template: cron.yaml
+        containsDocument:
+          apiVersion: batch/v1beta1
+          kind: CronJob
+          name: test
+      - template: cron.yaml
+        hasDocuments:
+          count: 1

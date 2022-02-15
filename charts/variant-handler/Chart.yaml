@@ -1,8 +1,8 @@
 apiVersion: v2
-name: variant-api
-description: A Helm chart for APIs to Variant clusters
+name: variant-handler
+description: A Helm chart for kubernetes handler
 
-version: 2.0.0-beta6
+version: 1.0.0
 
 kubeVersion: "^1.7.1-0"
 home: https://www.drivevariant.com/
@@ -14,3 +14,5 @@ maintainers:
     email: vibind@drivevariant.com
   - name: samiralyateem
     email: samira@drivevariant.com
+  - name: naveenpaka
+    email: naveenp@drivevariant.com
