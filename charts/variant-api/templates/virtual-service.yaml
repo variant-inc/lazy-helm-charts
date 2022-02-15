@@ -48,6 +48,26 @@ spec:
             port:
               number: {{ .Values.service.port }}
 
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ $fullName }}-newstyle-internal-test
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": hook-succeeded
+  labels:
+    {{- $labels | nindent 4 }}
+  namespace: "lazy-helm-charts-tests"
+spec:
+  restartPolicy: Never
+  containers:
+    - name: curl
+      image: curlimages/curl:7.81.0
+      env:
+      - name: fullname
+        value: {{ $fullName }}
+      args: ["-s", "-i", "-v", "-L", "--fail-with-body", "-X", "GET", "http://$(fullname).api.internal/health"]
 
 {{- if .Values.istio.ingress.public }}
 {{- $fullName := (include "chart.fullname" .) -}}
