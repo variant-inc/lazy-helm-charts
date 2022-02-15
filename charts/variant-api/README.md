@@ -8,6 +8,8 @@ A Helm chart for APIs to Variant clusters
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| authentication.enabled | bool | `false` |  |
+| authorization.rules.to | list | `[]` |  |
 | autoscaling.maxReplicas | int | `5` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
