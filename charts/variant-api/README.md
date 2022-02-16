@@ -1,6 +1,6 @@
 # Variant API Helm Chart
 
-![Version: 2.0.0-beta6](https://img.shields.io/badge/Version-2.0.0--beta6-informational?style=flat-square)
+![Version: 2.0.0-beta7](https://img.shields.io/badge/Version-2.0.0--beta7-informational?style=flat-square)
 
 A Helm chart for APIs to Variant clusters
 
