@@ -1,0 +1,13 @@
+revision: abc
+deployment:
+  image:
+    tag: 064859874041.dkr.ecr.us-east-2.amazonaws.com/lazy-helm-charts/variant-api:v0.1
+
+service:
+  targetPort: 5000
+  healthCheckPath: /health
+
+podSecurityContext:
+  fsGroup: 65534
+
+securityContext: {}
