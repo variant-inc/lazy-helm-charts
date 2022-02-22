@@ -78,3 +78,8 @@ tolerations: []
 ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 ##
 affinity: {}
+
+## Karpenter Provisioner Variables
+instanceType:
+nodeScaleDownTime: 30
+CLUSTER_NAME: variant-dev

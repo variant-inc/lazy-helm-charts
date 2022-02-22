@@ -1,0 +1,42 @@
+{{- if .Values.instanceType }}
+{{- $fullName := (include "chart.fullname" .) -}}
+apiVersion: karpenter.sh/v1alpha5
+kind: Provisioner
+metadata:
+  name: {{ $fullName }}
+spec:
+  # If nil, the feature is disabled, nodes will never expire
+  ttlSecondsUntilExpired: 2592000 # 30 Days = 60 * 60 * 24 * 30 Seconds;
+
+  # If nil, the feature is disabled, nodes will never scale down due to low utilization
+  ttlSecondsAfterEmpty: {{ .Values.nodeScaleDownTime }}
+
+  # Provisioned nodes will have these taints
+  # Taints may prevent pods from scheduling if they are not tolerated
+  taints:
+    {{- range .Values.tolerations }}
+    - key: {{ required "Key is required for tolerations" .key | quote }}
+      effect: {{ .effect | default "NoSchedule" | quote }}
+    {{- end }}
+
+  # Labels are arbitrary key-values that are applied to all nodes
+  labels:
+    {{- range $key, $value := .Values.nodeSelector }}
+    {{ $key }}: {{ $value }}
+    {{- end }}
+
+  requirements:
+    - key: "node.kubernetes.io/instance-type"
+      operator: In
+      values: [{{ .Values.instanceType | quote }}]
+  # These fields vary per cloud provider, see your cloud provider specific documentation
+  provider:
+    subnetSelector:
+      kubernetes.io/role/internal-elb: '1'
+    securityGroupSelector:
+      kubernetes.io/cluster/{{ .Values.CLUSTER_NAME }}: '*'
+    tags:
+      owner: engineering
+      team: engineering
+      owner: engineering
+{{- end }}
