@@ -10,6 +10,7 @@ A Helm chart for Istio Objects
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| CLUSTER_NAME | string | `"variant-dev"` |  |
 | affinity | object | `{}` |  |
 | awsSecrets | list | `[]` |  |
 | configVars | list | `[]` |  |
@@ -24,6 +25,7 @@ A Helm chart for Istio Objects
 | cronJob.resources.requests.memory | string | `"384Mi"` |  |
 | cronJob.schedule | string | `nil` |  |
 | imagePullSecrets | list | `[]` |  |
+| instanceType | string | `nil` |  |
 | istio.egress | list | `[]` |  |
 | nodeSelector | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `65534` |  |
