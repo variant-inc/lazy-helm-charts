@@ -81,4 +81,5 @@ affinity: {}
 
 ## Karpenter Provisioner Variables
 instanceType:
+nodeScaleDownTime: 30
 CLUSTER_NAME: variant-dev

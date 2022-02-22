@@ -9,7 +9,7 @@ spec:
   ttlSecondsUntilExpired: 2592000 # 30 Days = 60 * 60 * 24 * 30 Seconds;
 
   # If nil, the feature is disabled, nodes will never scale down due to low utilization
-  ttlSecondsAfterEmpty: 30
+  ttlSecondsAfterEmpty: {{ .Values.nodeScaleDownTime }}
 
   # Provisioned nodes will have these taints
   # Taints may prevent pods from scheduling if they are not tolerated

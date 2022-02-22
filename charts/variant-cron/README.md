@@ -27,6 +27,7 @@ A Helm chart for Istio Objects
 | imagePullSecrets | list | `[]` |  |
 | instanceType | string | `nil` |  |
 | istio.egress | list | `[]` |  |
+| nodeScaleDownTime | int | `30` |  |
 | nodeSelector | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `65534` |  |
 | revision | string | `nil` |  |
