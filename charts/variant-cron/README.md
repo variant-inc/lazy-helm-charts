@@ -25,9 +25,11 @@ A Helm chart for Istio Objects
 | cronJob.resources.requests.memory | string | `"384Mi"` |  |
 | cronJob.schedule | string | `nil` |  |
 | imagePullSecrets | list | `[]` |  |
-| instanceType | string | `nil` |  |
 | istio.egress | list | `[]` |  |
-| nodeScaleDownTime | int | `30` |  |
+| node.create | bool | `false` |  |
+| node.instanceType | string | `"r5.xlarge"` |  |
+| node.ttlSecondsAfterEmpty | int | `1800` |  |
+| node.ttlSecondsUntilExpired | int | `2592000` |  |
 | nodeSelector | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `65534` |  |
 | revision | string | `nil` |  |
@@ -109,6 +111,21 @@ EOF
 | istio.egress[N].ports | ServiceEntry | A list of ports for the corresponding `istio.egress[N].hosts` or `istio.egress[N].addresses` to be whitelisted | [x] | [] |
 | istio.egress[N].ports[M].number | ServiceEntry | A port number | [x] | |
 | istio.egress[N].ports[M].protocol | ServiceEntry | Any of the protocols listed [here](https://istio.io/latest/docs/reference/config/networking/gateway/#Port) | [x] | |
+
+### Custom Node Configuration
+
+To create custom nodes for your Cron Job add the following configurations to your values.yaml
+```yaml
+node:
+  # Set to true to create custom nodes. Default is false
+  create: true
+  # EC2 Instance type for your cusom node. Default is r5.xlarge
+  instanceType: r5.xlarge
+  # If nil, the feature is disabled, nodes will never expire
+  ttlSecondsUntilExpired: 2592000 # 30 Days = 60 * 60 * 24 * 30 Seconds;
+  # If nil, the feature is disabled, nodes will never scale down due to low utilization. Default 30 minutes
+  ttlSecondsAfterEmpty: 1800
+```
 
 ### Infrastructure Permissions
 

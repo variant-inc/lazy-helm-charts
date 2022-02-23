@@ -57,5 +57,10 @@ tolerations:
 
 affinity: {}
 
-instanceType: t3.medium
+node:
+  create: false
+  instanceType: t3.medium
+  ttlSecondsUntilExpired: 2592000
+  ttlSecondsAfterEmpty: 1800
+
 CLUSTER_NAME: devops-playground
