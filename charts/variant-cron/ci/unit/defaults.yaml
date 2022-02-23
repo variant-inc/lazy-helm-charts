@@ -20,3 +20,31 @@ tests:
       - template: cron.yaml
         hasDocuments:
           count: 1
+  - it: should have provisioner
+    release:
+      name: test
+    set:
+      cronJob.image.tag: busybox:latest
+      cronJob.schedule: "*/2 * * * *"
+      revision: revision
+      cronJob.command:
+        - "/bin/sh"
+        - "-c"
+        - "date; echo Hello from unit test"
+      node:
+        create: true
+        instanceType: t3.medium
+      tolerations:
+        - key: "lee-test"
+      nodeSelector:
+        purpose: unit-test
+        env: dpl
+    asserts:
+      - template: provisioner.yaml
+        containsDocument:
+          apiVersion: karpenter.sh/v1alpha5
+          kind: Provisioner
+          name: test
+      - template: provisioner.yaml
+        hasDocuments:
+          count: 1

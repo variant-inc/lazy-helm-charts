@@ -25,9 +25,11 @@ A Helm chart for Istio Objects
 | cronJob.resources.requests.memory | string | `"384Mi"` |  |
 | cronJob.schedule | string | `nil` |  |
 | imagePullSecrets | list | `[]` |  |
-| instanceType | string | `nil` |  |
 | istio.egress | list | `[]` |  |
-| nodeScaleDownTime | int | `30` |  |
+| node.create | bool | `false` |  |
+| node.instanceType | string | `"r5.xlarge"` |  |
+| node.ttlSecondsAfterEmpty | int | `1800` |  |
+| node.ttlSecondsUntilExpired | int | `2592000` |  |
 | nodeSelector | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `65534` |  |
 | revision | string | `nil` |  |
