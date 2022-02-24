@@ -13,7 +13,7 @@ A Helm chart for Istio Objects
 | CLUSTER_NAME | string | `"variant-dev"` |  |
 | affinity | object | `{}` |  |
 | awsSecrets | list | `[]` |  |
-| configVars | list | `[]` |  |
+| configVars | object | `{}` |  |
 | cronJob.args | list | `[]` |  |
 | cronJob.command | list | `[]` |  |
 | cronJob.image.pullPolicy | string | `"Always"` |  |
@@ -33,12 +33,11 @@ A Helm chart for Istio Objects
 | nodeSelector | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `65534` |  |
 | revision | string | `nil` |  |
-| secretVars | list | `[]` |  |
+| secretVars | object | `{}` |  |
 | securityContext.allowPrivilegeEscalation | bool | `false` |  |
 | securityContext.capabilities.drop[0] | string | `"ALL"` |  |
-| securityContext.readOnlyRootFilesystem | bool | `true` |  |
+| securityContext.readOnlyRootFilesystem | bool | `false` |  |
 | securityContext.runAsNonRoot | bool | `true` |  |
-| securityContext.runAsUser | int | `1000` |  |
 | serviceAccount.roleArn | string | `nil` |  |
 | tolerations | list | `[]` |  |
 

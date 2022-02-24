@@ -1,7 +1,9 @@
 {{- $fullName := (include "chart.fullname" .) -}}
 {{- $labels := (include "chart.labels" .) -}}
 {{- $selectorLabels := (include "chart.selectorLabels" .) -}}
-{{- $secrets := .Values.secrets -}}
+{{- $secrets := .Values.awsSecrets -}}
+{{- $secretEnv := .Values.secretVars -}}
+{{- $configEnv := .Values.configVars -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -114,6 +116,42 @@ spec:
             {{- range $secrets }}
             - name: {{ .name }}
               readOnly: true
-              mountPath: {{ .mountPath }}
+              mountPath: /app/secrets
             {{- end }}
           {{- end }}
+          {{ if or (len $secretEnv) (len $configEnv) -}}
+          envFrom:
+            {{ if len $secretEnv -}}
+            - secretRef:
+                name: {{ include "chart.fullname" . }}-env
+            {{- end }}
+            {{ if len $configEnv -}}
+            - configMapRef:
+                name: {{ include "chart.fullname" . }}-config-env
+            {{- end }}
+          {{- end }}
+          {{- if len .Values.nodeSelector }}
+          nodeSelector:
+            {{- range $key, $value := .Values.nodeSelector }}
+            {{ $key }}: {{ $value }}
+            {{- end }}
+          {{- end }}
+          {{- if len .Values.affinity }}
+          affinity:
+            {{- range $key, $value := .Values.affinity }}
+            {{ $key }}: {{ toYaml $value | nindent 14 }}
+            {{- end }}
+          {{- end }}
+          {{- if len .Values.tolerations }}
+          tolerations:
+            {{- range .Values.tolerations }}
+            - key: {{ required "Key is required for tolerations" .key | quote }}
+              operator: {{ .operator | default "Exists" | quote }}
+              {{- if hasKey . "value"  }}
+              value: {{ .value | quote }}
+              {{- end }}
+              effect: {{ .effect | default "NoSchedule" | quote }}
+            {{- end }}
+          {{- end }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}

@@ -1,6 +1,6 @@
 deployment:
   image:
-    tag: 064859874041.dkr.ecr.us-east-2.amazonaws.com/lazy-helm-charts/variant-api:v0.1
+    tag: 064859874041.dkr.ecr.us-east-2.amazonaws.com/lazy-helm-charts/variant-api:v0.3
 revision: testing
 
 istio:
@@ -10,3 +10,12 @@ istio:
 service:
   targetPort: 5000
 
+configVars:
+  PLAIN_CONFIG: foo
+
+secretVars:
+  SECRET_CONFIG: secret
+  SOMETHING: else
+
+awsSecrets:
+  - name: devops-playground-rds-creds

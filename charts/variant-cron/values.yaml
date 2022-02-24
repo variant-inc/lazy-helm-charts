@@ -25,12 +25,11 @@ podSecurityContext:
 
 securityContext:
   runAsNonRoot: true
-  runAsUser: 1000
   capabilities:
     drop:
     - ALL
   allowPrivilegeEscalation: false
-  readOnlyRootFilesystem: true
+  readOnlyRootFilesystem: false
 
 cronJob:
   schedule:
@@ -55,10 +54,10 @@ cronJob:
 awsSecrets: []
   # - name: eng-secret-in-aws
 
-secretVars: []
+secretVars: {}
   # key: value
 
-configVars: []
+configVars: {}
   # key: value
 
 revision:

@@ -131,8 +131,6 @@ When using public ingess, the following URL prefixes are rerouted to the root UR
 | - | - | - | - |
 | secrets | ExternalSecret | A list of secrets to configure to make available to your API. Create your secret in AWS Secrets Manager as plain text. Full contents of this secret will be mounted as a file your application can read. | [] |
 | secrets[N].name | ExternalSecret | Name of the AWS Secrets Manager secret |
-| secrets[N].fileName | ExternalSecret, Deployment | Desired file name which will contain all contents of the AWS secret |
-| secrets[N].mountPath | Deployment | Directory (no trailing slash) where the above secrets[N].fileName will be mounted (e.g. if fileName = secret.json and mountPath = /app/secrets then secret will be available at /app/secrets/secret.json) | |
 
 ## Kubernetes Object Reference
 
