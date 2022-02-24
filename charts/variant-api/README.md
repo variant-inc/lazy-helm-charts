@@ -1,6 +1,6 @@
 # Variant API Helm Chart
 
-![Version: 2.0.0-beta6](https://img.shields.io/badge/Version-2.0.0--beta6-informational?style=flat-square)
+![Version: 2.0.0](https://img.shields.io/badge/Version-2.0.0-informational?style=flat-square)
 
 A Helm chart for APIs to Variant clusters
 
@@ -8,10 +8,15 @@ A Helm chart for APIs to Variant clusters
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| affinity | object | `{}` |  |
+| authentication.enabled | bool | `false` |  |
+| authorization.rules.to | list | `[]` |  |
 | autoscaling.maxReplicas | int | `5` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | autoscaling.targetMemoryUtilizationPercentage | string | `nil` |  |
+| awsSecrets | list | `[]` | A list of secrets to configure to make available to your API. Create your secret in AWS Secrets Manager as plain text.  Full contents of this secret will be mounted as a file your application can read to /app/secrets/{name} See [secrets](#secrets) for more details. |
+| configVars | object | `{}` |  |
 | deployment.args | list | `[]` |  |
 | deployment.conditionalEnvVars | list | `[]` |  |
 | deployment.envVars | list | `[]` |  |
@@ -27,8 +32,13 @@ A Helm chart for APIs to Variant clusters
 | istio.ingress.host | string | `nil` | The base domain that will be used to construct URLs that point to your API. This should almost always be the Octopus Variable named `DOMAIN` in the  [AWS Access Keys](https://octopus.apps.ops-drivevariant.com/app#/Spaces-22/library/variables/) |
 | istio.ingress.public | bool | `false` | When `false`, an internal URL will be created that will expose your application *via OpenVPN-only*. When `true`, an additional publicly accesible URL will be created.  This API should be secured behind some authentication method when set to `true`. |
 | istio.ingress.redirects | list | `[]` | Optional paths that will always redirect to internal/VPN endpoints |
+| nodeSelector | object | `{}` |  |
 | revision | string | `nil` | Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision`  that will be applied to all objects created by a specific chart installation.  Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version |
-| secrets | list | `[]` | A list of secrets to configure to make available to your API. Create your secret in AWS Secrets Manager as plain text.  Full contents of this secret will be mounted as a file your application can read. See [secrets](#secrets) for more details. |
+| secretVars | object | `{}` |  |
+| securityContext.allowPrivilegeEscalation | bool | `false` |  |
+| securityContext.capabilities.drop[0] | string | `"ALL"` |  |
+| securityContext.readOnlyRootFilesystem | bool | `false` |  |
+| securityContext.runAsNonRoot | bool | `true` |  |
 | service.healthCheckPort | string | `nil` | Optional port which serves a health check endpoint at `/health` Defaults to value of `service.targetPort` if not defined. |
 | service.metricsPort | string | `nil` | Optional port which serves prometheus metrics endpoint at `/metrics` Defaults to value of `service.targetPort` if not defined. |
 | service.port | int | `80` | Port for internal services to access your API |
@@ -36,6 +46,7 @@ A Helm chart for APIs to Variant clusters
 | serviceAccount.roleArn | string | `nil` | Optional ARN of the IAM role to be assumed by your application.  If your API requires access to any AWS services, a role should be created in AWS IAM. This role should have an inline policy that describes the permissions your API needs (connect to RDS, publish to an SNS topic, read from an SQS queue, etc.). |
 | serviceMonitor.interval | string | `"10s"` | Frequency at which Prometheus metrics will be collected from your service |
 | serviceMonitor.scrapeTimeout | string | `"10s"` | Maximum wait duration for Prometheus metrics response from your service |
+| tolerations | list | `[]` |  |
 
 ## TL;DR
 
@@ -160,8 +171,6 @@ When using public ingess, the following URL prefixes are rerouted to the root UR
 | - | - | - | - |
 | secrets | ExternalSecret | A list of secrets to configure to make available to your API. Create your secret in AWS Secrets Manager as plain text. Full contents of this secret will be mounted as a file your application can read. | [] |
 | secrets[N].name | ExternalSecret | Name of the AWS Secrets Manager secret |
-| secrets[N].fileName | ExternalSecret, Deployment | Desired file name which will contain all contents of the AWS secret |
-| secrets[N].mountPath | Deployment | Directory (no trailing slash) where the above secrets[N].fileName will be mounted (e.g. if fileName = secret.json and mountPath = /app/secrets then secret will be available at /app/secrets/secret.json) | |
 
 ## Kubernetes Object Reference
 

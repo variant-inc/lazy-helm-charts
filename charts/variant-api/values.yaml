@@ -94,14 +94,46 @@ deployment:
 
 # -- A list of secrets to configure to make available to your API.
 # Create your secret in AWS Secrets Manager as plain text. 
-# Full contents of this secret will be mounted as a file your application can read.
+# Full contents of this secret will be mounted as a file your application can read to /app/secrets/{name}
 # See [secrets](#secrets) for more details.
-secrets: []
+awsSecrets: []
   # - name: eng-secret-in-aws
-  #   mountPath: /app/secrets
-  #   fileName: aws-secret.json
 
 # -- (string) Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision` 
 # that will be applied to all objects created by a specific chart installation. 
 # Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version
 revision:
+
+authentication:
+  enabled: false
+
+authorization:
+  rules:
+    to: []
+      # - operation:
+      #     methods: "GET"
+      #     paths: "/swagger"
+
+secretVars: {}
+  # foo: bar
+configVars: {}
+  # bar: foo
+
+#Node labels for pod assignment
+#ref: https://kubernetes.io/docs/user-guide/node-selection/
+nodeSelector: {}
+#Tolerations for pod assignment
+#ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+tolerations: []
+
+# Affinity for pod assignment
+# ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+affinity: {}
+
+securityContext:
+  runAsNonRoot: true
+  capabilities:
+    drop:
+    - ALL
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: false
