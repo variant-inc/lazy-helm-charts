@@ -28,6 +28,25 @@ spec:
             host: {{ $fullName }}
             port:
               number: {{ .Values.service.port }}
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ $fullName }}-int
+  labels: {{ $labels | nindent 4 }}
+spec:
+  gateways:
+    - default/default
+  hosts:
+    - {{ $fullName }}.internal.apps.{{ $host }}
+  http:
+    - name: Private Ingress
+      route:
+        - destination:
+            host: {{ $fullName }}
+            port:
+              number: {{ .Values.service.port }}
+---
 {{- if .Values.istio.ingress.public }}
 {{- $fullName := (include "chart.fullname" .) -}}
 {{- $labels := (include "chart.labels" .) -}}
@@ -75,6 +94,45 @@ spec:
       rewrite:
         uri: /
       {{ end -}}
+      route:
+        - destination:
+            host: {{ $fullName }}
+            port:
+              number: {{ .Values.service.port }}
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ $fullName }}-public
+  labels: {{ $labels | nindent 4 }}
+spec:
+  gateways:
+    - default/default
+  hosts:
+    - {{ $fullName }}.apps.{{ $host }}
+  http:
+    - name: Private Path Redirects
+      match:
+      {{- if .Values.istio.ingress.redirects}}
+        {{- range .Values.istio.ingress.redirects }}
+        - uri:
+            prefix: {{ .prefix  }}
+        {{- end }}
+      {{- end }}
+        - uri:
+            prefix: /health
+        - uri:
+            prefix: /docs
+        - uri:
+            prefix: /redoc
+        - uri:
+            prefix: /swagger
+        - uri:
+            prefix: /swaggerui
+      redirect:
+        authority: {{ $fullName }}.internal.apps.{{ $host }}
+        redirectCode: 307
+    - name: Default Ingress
       route:
         - destination:
             host: {{ $fullName }}

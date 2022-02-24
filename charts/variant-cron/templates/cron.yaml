@@ -101,7 +101,10 @@ spec:
           tolerations:
             {{- range .Values.tolerations }}
             - key: {{ required "Key is required for tolerations" .key | quote }}
-              operator: {{ .operator | default "Equal" | quote }}
+              operator: {{ .operator | default "Exists" | quote }}
+              {{- if hasKey . "value"  }}
+              value: {{ .value | quote }}
+              {{- end }}
               effect: {{ .effect | default "NoSchedule" | quote }}
             {{- end }}
           {{- end }}

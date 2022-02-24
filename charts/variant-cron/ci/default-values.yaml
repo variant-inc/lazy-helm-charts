@@ -48,8 +48,19 @@ configVars:
 
 revision: "test-latest"
 
-nodeSelector: {}
+nodeSelector:
+  purpose: prime-test
+  env: dpl
 
-tolerations: []
+tolerations:
+  - key: "lee-test"
 
 affinity: {}
+
+node:
+  create: false
+  instanceType: t3.medium
+  ttlSecondsUntilExpired: 2592000
+  ttlSecondsAfterEmpty: 1800
+
+CLUSTER_NAME: devops-playground

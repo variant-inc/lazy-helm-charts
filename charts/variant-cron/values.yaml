@@ -78,3 +78,12 @@ tolerations: []
 ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 ##
 affinity: {}
+
+## Karpenter Provisioner Variables
+node:
+  create: false
+  instanceType: r5.xlarge
+  ttlSecondsUntilExpired: 2592000
+  ttlSecondsAfterEmpty: 1800
+
+CLUSTER_NAME: variant-dev
