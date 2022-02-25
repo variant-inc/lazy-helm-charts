@@ -86,3 +86,6 @@ node:
   ttlSecondsAfterEmpty: 1800
 
 CLUSTER_NAME: variant-dev
+
+## Tags to be applied to custom node provisioner
+tags:

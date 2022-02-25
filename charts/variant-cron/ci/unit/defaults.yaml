@@ -39,6 +39,8 @@ tests:
       nodeSelector:
         purpose: unit-test
         env: dpl
+      tags:
+        owner: platform-infrastructure
     asserts:
       - template: provisioner.yaml
         containsDocument:

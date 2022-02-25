@@ -29,15 +29,12 @@ spec:
   requirements:
     - key: "node.kubernetes.io/instance-type"
       operator: In
-      values: [{{ .Values.instanceType | quote }}]
+      values: [{{ .Values.node.instanceType | quote }}]
   # These fields vary per cloud provider, see your cloud provider specific documentation
   provider:
     subnetSelector:
       kubernetes.io/role/internal-elb: '1'
     securityGroupSelector:
       kubernetes.io/cluster/{{ .Values.CLUSTER_NAME }}: '*'
-    tags:
-      owner: engineering
-      team: engineering
-      owner: engineering
+    tags: {{ required "Tags are required to create custom nodes" .Values.tags | toYaml | nindent 6 }}
 {{- end }}
