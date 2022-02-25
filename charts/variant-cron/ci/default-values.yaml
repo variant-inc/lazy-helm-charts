@@ -64,3 +64,6 @@ node:
   ttlSecondsAfterEmpty: 1800
 
 CLUSTER_NAME: devops-playground
+
+tags:
+  owner: platform-infrastructure

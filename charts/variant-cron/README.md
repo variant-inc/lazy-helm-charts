@@ -39,6 +39,7 @@ A Helm chart for Istio Objects
 | securityContext.readOnlyRootFilesystem | bool | `false` |  |
 | securityContext.runAsNonRoot | bool | `true` |  |
 | serviceAccount.roleArn | string | `nil` |  |
+| tags | string | `nil` |  |
 | tolerations | list | `[]` |  |
 
 ## TL;DR
