@@ -128,10 +128,10 @@ spec:
           envFrom:
             {{ if len $secretEnv -}}
             - secretRef:
-                name: {{ include "chart.fullname" . }}-env
+                name: {{ include "chart.fullname" . }}
             {{- end }}
             {{ if len $configEnv -}}
             - configMapRef:
-                name: {{ include "chart.fullname" . }}-config-env
+                name: {{ include "chart.fullname" . }}
             {{- end }}
           {{- end }}
