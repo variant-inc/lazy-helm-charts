@@ -2,6 +2,8 @@
 {{- $labels := (include "chart.labels" .) -}}
 {{- $selectorLabels := (include "chart.selectorLabels" .) -}}
 {{- $secrets := .Values.awsSecrets -}}
+{{- $secretEnv := .Values.secretVars -}}
+{{- $configEnv := .Values.configVars -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -120,5 +122,16 @@ spec:
             - name: {{ .name }}
               readOnly: true
               mountPath: /app/secrets
+            {{- end }}
+          {{- end }}
+          {{ if or (len $secretEnv) (len $configEnv) -}}
+          envFrom:
+            {{ if len $secretEnv -}}
+            - secretRef:
+                name: {{ include "chart.fullname" . }}-env
+            {{- end }}
+            {{ if len $configEnv -}}
+            - configMapRef:
+                name: {{ include "chart.fullname" . }}-config-env
             {{- end }}
           {{- end }}
