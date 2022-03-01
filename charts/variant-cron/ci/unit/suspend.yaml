@@ -7,12 +7,10 @@ tests:
       cronJob.image.tag: busybox:latest
       cronJob.schedule: "*/2 * * * *"
       revision: revision
-      cronJob.command:
-        - "/bin/sh"
-        - "-c"
-        - "date; echo Hello from unit test"
+      cronJob.script: /bin/sh -c date; echo Hello from unit test"
     asserts:
       - template: cron.yaml
+        documentIndex: 0
         equal:
           # https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/cron-job-v1/#CronJobSpec
           path: spec.suspend
@@ -24,13 +22,11 @@ tests:
       cronJob.image.tag: busybox:latest
       cronJob.schedule: "*/2 * * * *"
       revision: revision
-      cronJob.command:
-        - "/bin/sh"
-        - "-c"
-        - "date; echo Hello from unit test"
+      cronJob.script: /bin/sh -c date; echo Hello from unit test"
       cronJob.suspend: true
     asserts:
       - template: cron.yaml
+        documentIndex: 0
         equal:
           # https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/cron-job-v1/#CronJobSpec
           path: spec.suspend

@@ -33,16 +33,14 @@ template:
         securityContext:
           {{- toYaml .Values.securityContext | nindent 10 }}
         imagePullPolicy: {{ .Values.cronJob.image.pullPolicy }}
-        {{- if len .Values.cronJob.args }}
-        args: 
-          {{- range .Values.cronJob.args }}
-          - {{ . }}
-          {{- end }}
-        {{- end }}
-        {{- if len .Values.cronJob.command }}
         command:
-          {{- toYaml (required "cronJob.command is required" .Values.cronJob.command) | nindent 10 }}
-        {{- end }}
+          - /bin/sh
+          - -c
+          - |
+            until curl -fsI http://localhost:15021/healthz/ready; do echo \"Waiting for Sidecar...\"; sleep 3; done;
+            echo \"Sidecar available. Running the command...\";
+            {{ required "Absolute path to job script must be provided" .Values.cronJob.script }};
+            x=$(echo $?); curl -fsI -X POST http://localhost:15020/quitquitquit && exit $x
         resources:
           {{- toYaml (required "Resources is required" .Values.cronJob.resources) | nindent 10 }}
         {{ if or (len $secretEnv) (len $configEnv) -}}

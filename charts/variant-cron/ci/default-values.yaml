@@ -22,7 +22,7 @@ cronJob:
   schedule: "*/2 * * * *"
   image:
     pullPolicy: IfNotPresent
-    tag: busybox:latest
+    tag: curlimages/curl
   resources:
     limits:
       cpu: 1
@@ -32,10 +32,8 @@ cronJob:
       memory: 384Mi
   args: []
   podAnnotations: {}
-  command:
-    - "/bin/sh"
-    - "-c"
-    - "date; echo Hello from the K8s cluster"
+  script: /bin/echo "Hello from the K8s cluster"
+  suspend: true
 
 secrets: []
   #- name: eng-secret-in-aws
@@ -67,3 +65,6 @@ CLUSTER_NAME: devops-playground
 
 tags:
   owner: platform-infrastructure
+
+securityContext:
+  runAsUser: 1001

@@ -2,7 +2,7 @@
 
 Use this chart to deploy a CronJob image to Kubernetes -- the Variant, CloudOps-approved way.
 
-![Version: 1.0.1](https://img.shields.io/badge/Version-1.0.1-informational?style=flat-square)
+![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-informational?style=flat-square)
 
 A Helm chart for Istio Objects
 
@@ -14,8 +14,6 @@ A Helm chart for Istio Objects
 | affinity | object | `{}` |  |
 | awsSecrets | list | `[]` |  |
 | configVars | object | `{}` |  |
-| cronJob.args | list | `[]` |  |
-| cronJob.command | list | `[]` |  |
 | cronJob.image.pullPolicy | string | `"Always"` |  |
 | cronJob.image.tag | string | `nil` |  |
 | cronJob.podAnnotations | object | `{}` |  |
@@ -24,6 +22,7 @@ A Helm chart for Istio Objects
 | cronJob.resources.requests.cpu | float | `0.1` |  |
 | cronJob.resources.requests.memory | string | `"384Mi"` |  |
 | cronJob.schedule | string | `nil` |  |
+| cronJob.script | string | `nil` | full path to the job script to execute |
 | cronJob.suspend | bool | `false` |  |
 | imagePullSecrets | list | `[]` |  |
 | istio.egress | list | `[]` |  |
@@ -39,6 +38,7 @@ A Helm chart for Istio Objects
 | securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | securityContext.readOnlyRootFilesystem | bool | `false` |  |
 | securityContext.runAsNonRoot | bool | `true` |  |
+| securityContext.runAsUser | int | `nil` | Optional. Used for integration testing. If provided, will override the `USER` command in your Dockerfile |
 | serviceAccount.roleArn | string | `nil` |  |
 | tags | string | `nil` |  |
 | tolerations | list | `[]` |  |

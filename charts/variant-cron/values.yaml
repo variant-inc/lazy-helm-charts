@@ -25,6 +25,8 @@ podSecurityContext:
 
 securityContext:
   runAsNonRoot: true
+  # -- (int) Optional. Used for integration testing. If provided, will override the `USER` command in your Dockerfile
+  runAsUser:
   capabilities:
     drop:
     - ALL
@@ -44,12 +46,9 @@ cronJob:
     requests:
       cpu: .1
       memory: 384Mi
-  args: []
   podAnnotations: {}
-  command: []
-    # - "/bin/sh"
-    # - "-c"
-    # - "date; echo Hello from the K8s cluster"
+  # -- (string) full path to the job script to execute
+  script:
   suspend: false
 
 awsSecrets: []

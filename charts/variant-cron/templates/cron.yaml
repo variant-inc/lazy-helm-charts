@@ -16,3 +16,14 @@ spec:
   failedJobsHistoryLimit: 1
   jobTemplate:
     spec: {{ include "chart.jobspec" . | nindent 6 }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ $fullName }}-test
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": hook-succeeded
+  labels:
+    {{- $labels | nindent 4 }}
+spec: {{ include "chart.jobspec" . | nindent 2 }}
