@@ -24,6 +24,7 @@ A Helm chart for Istio Objects
 | cronJob.resources.requests.cpu | float | `0.1` |  |
 | cronJob.resources.requests.memory | string | `"384Mi"` |  |
 | cronJob.schedule | string | `nil` |  |
+| cronJob.suspend | bool | `false` |  |
 | imagePullSecrets | list | `[]` |  |
 | istio.egress | list | `[]` |  |
 | node.create | bool | `false` |  |

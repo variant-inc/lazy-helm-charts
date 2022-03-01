@@ -50,6 +50,7 @@ cronJob:
     # - "/bin/sh"
     # - "-c"
     # - "date; echo Hello from the K8s cluster"
+  suspend: false
 
 awsSecrets: []
   # - name: eng-secret-in-aws
