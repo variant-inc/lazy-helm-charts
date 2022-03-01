@@ -47,8 +47,8 @@ cronJob:
       cpu: .1
       memory: 384Mi
   podAnnotations: {}
-  # -- (string) full path to the job script to execute
-  script:
+  # -- (list) full path to the job script to execute
+  command:
   suspend: false
 
 awsSecrets: []

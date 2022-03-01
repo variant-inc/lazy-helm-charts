@@ -7,7 +7,9 @@ tests:
       cronJob.image.tag: busybox:latest
       cronJob.schedule: "*/2 * * * *"
       revision: revision
-      cronJob.script: /bin/sh -c date; echo Hello from unit test"
+      cronJob.command: 
+        - /bin/echo
+        - "Hello from unit test"
     asserts:
       - template: cron.yaml
         documentIndex: 0
@@ -22,7 +24,9 @@ tests:
       cronJob.image.tag: busybox:latest
       cronJob.schedule: "*/2 * * * *"
       revision: revision
-      cronJob.script: /bin/sh -c date; echo Hello from unit test"
+      cronJob.command: 
+        - /bin/echo
+        - "Hello from unit test"
       cronJob.suspend: true
     asserts:
       - template: cron.yaml

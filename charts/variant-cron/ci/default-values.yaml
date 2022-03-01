@@ -32,7 +32,9 @@ cronJob:
       memory: 384Mi
   args: []
   podAnnotations: {}
-  script: /bin/echo "Hello from the K8s cluster"
+  command: 
+    - /bin/echo 
+    - Hello from the K8s cluster
   suspend: true
 
 secrets: []

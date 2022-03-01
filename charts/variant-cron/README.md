@@ -14,6 +14,7 @@ A Helm chart for Istio Objects
 | affinity | object | `{}` |  |
 | awsSecrets | list | `[]` |  |
 | configVars | object | `{}` |  |
+| cronJob.command | list | `nil` | full path to the job script to execute |
 | cronJob.image.pullPolicy | string | `"Always"` |  |
 | cronJob.image.tag | string | `nil` |  |
 | cronJob.podAnnotations | object | `{}` |  |
@@ -22,7 +23,6 @@ A Helm chart for Istio Objects
 | cronJob.resources.requests.cpu | float | `0.1` |  |
 | cronJob.resources.requests.memory | string | `"384Mi"` |  |
 | cronJob.schedule | string | `nil` |  |
-| cronJob.script | string | `nil` | full path to the job script to execute |
 | cronJob.suspend | bool | `false` |  |
 | imagePullSecrets | list | `[]` |  |
 | istio.egress | list | `[]` |  |
