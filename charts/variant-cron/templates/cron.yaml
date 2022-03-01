@@ -1,9 +1,6 @@
 {{- $fullName := (include "chart.fullname" .) -}}
 {{- $labels := (include "chart.labels" .) -}}
 {{- $selectorLabels := (include "chart.selectorLabels" .) -}}
-{{- $secrets := .Values.awsSecrets -}}
-{{- $secretEnv := .Values.secretVars -}}
-{{- $configEnv := .Values.configVars -}}
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
@@ -18,95 +15,4 @@ spec:
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 1
   jobTemplate:
-    spec:
-      template:
-        metadata:
-          labels:
-            {{- $selectorLabels | nindent 12 }}
-          {{- with .Values.cronJob.podAnnotations }}
-          annotations:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-        spec:
-          {{- with .Values.imagePullSecrets }}
-          imagePullSecrets:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          securityContext:
-            {{- toYaml .Values.podSecurityContext | nindent 12 }}
-          {{- if len $secrets }}
-          volumes:
-            {{- range $secrets }}
-            - name: {{ .name }}
-              secret:
-                secretName: {{ $fullName}}-{{ .name }}
-            {{- end }}
-          {{- end }}
-          containers:
-            - name: {{ $fullName }}
-              image: {{ required "cronJob.image.tag is required" .Values.cronJob.image.tag }}
-              securityContext:
-                {{- toYaml .Values.securityContext | nindent 16 }}
-              imagePullPolicy: {{ .Values.cronJob.image.pullPolicy }}
-              {{- if len .Values.cronJob.args }}
-              args: 
-                {{- range .Values.cronJob.args }}
-                - {{ . }}
-                {{- end }}
-              {{- end }}
-              {{- if len .Values.cronJob.command }}
-              command:
-                {{- toYaml (required "cronJob.command is required" .Values.cronJob.command) | nindent 14 }}
-              {{- end }}
-              resources:
-                {{- toYaml (required "Resources is required" .Values.cronJob.resources) | nindent 16 }}
-              {{ if or (len $secretEnv) (len $configEnv) -}}
-              envFrom:
-                {{ if len $secretEnv -}}
-                - secretRef:
-                    name: {{ include "chart.fullname" . }}-env
-                {{- end }}
-                {{ if len $configEnv -}}
-                - configMapRef:
-                    name: {{ include "chart.fullname" . }}-config-env
-                {{- end }}
-              {{- end }}
-              {{ if len $secrets}}
-              volumeMounts:
-                {{- range $secrets }}
-                - name: {{ .name }}
-                  readOnly: true
-                  mountPath: /app/secrets
-                {{- end }}
-              {{- end}}
-              env:
-                - name: REVISION
-                  value: {{ required "revision is required" .Values.revision | quote }}
-          restartPolicy: OnFailure
-          serviceAccountName: {{ $fullName }}
-          automountServiceAccountToken: true
-          {{- if len .Values.nodeSelector }}
-          nodeSelector:
-            {{- range $key, $value := .Values.nodeSelector }}
-            {{ $key }}: {{ $value }}
-            {{- end }}
-          {{- end }}
-          {{- if len .Values.affinity }}
-          affinity:
-            {{- range $key, $value := .Values.affinity }}
-            {{ $key }}: {{ toYaml $value | nindent 14 }}
-            {{- end }}
-          {{- end }}
-          {{- if len .Values.tolerations }}
-          tolerations:
-            {{- range .Values.tolerations }}
-            - key: {{ required "Key is required for tolerations" .key | quote }}
-              operator: {{ .operator | default "Exists" | quote }}
-              {{- if hasKey . "value"  }}
-              value: {{ .value | quote }}
-              {{- end }}
-              effect: {{ .effect | default "NoSchedule" | quote }}
-            {{- end }}
-          {{- end }}
-      parallelism: 1
-      backoffLimit: 2
+    spec: {{ include "chart.jobspec" . | nindent 6 }}
