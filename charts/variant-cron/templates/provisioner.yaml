@@ -3,7 +3,7 @@
 apiVersion: karpenter.sh/v1alpha5
 kind: Provisioner
 metadata:
-  name: {{ $fullName }}
+  name: {{ .Release.Namespace }}-{{ $fullName }}
 spec:
   # If nil, the feature is disabled, nodes will never expire
   # 30 Days Default = 60 * 60 * 24 * 30 Seconds;
@@ -15,6 +15,9 @@ spec:
   # Provisioned nodes will have these taints
   # Taints may prevent pods from scheduling if they are not tolerated
   taints:
+    - key: "namespace"
+      value: {{ .Release.Namespace | quote }}
+      effect: "NoSchedule"
     {{- range .Values.tolerations }}
     - key: {{ required "Key is required for tolerations" .key | quote }}
       effect: {{ .effect | default "NoSchedule" | quote }}
