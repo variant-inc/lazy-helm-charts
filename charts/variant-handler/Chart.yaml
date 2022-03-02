@@ -2,7 +2,7 @@ apiVersion: v2
 name: variant-handler
 description: A Helm chart for kubernetes handler
 
-version: 1.0.1
+version: 1.0.2-beta1
 
 kubeVersion: "^1.7.1-0"
 home: https://www.drivevariant.com/
