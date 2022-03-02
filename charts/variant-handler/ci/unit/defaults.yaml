@@ -6,6 +6,16 @@ tests:
     set:
       deployment.image.tag: tag
       revision: abc
+      livenessProbe:
+        exec:
+          command:
+            - /bin/echo
+            - "hello liveness"
+      readinessProbe:
+        exec:
+          command:
+            - /bin/echo
+            - "hello readiness"
     asserts:
       - template: service.yaml
         containsDocument:

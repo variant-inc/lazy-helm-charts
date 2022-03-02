@@ -78,40 +78,13 @@ spec:
               containerPort: {{ .Values.service.healthCheckPort }}
               protocol: TCP
             {{- end }}
-          {{ $port := ternary "http" "health" (empty .Values.service.healthCheckPort) }}
-          livenessProbe:
-            httpGet:
-              path: {{ .Values.service.healthCheckPath }}
-              port: {{ $port }}
-            initialDelaySeconds: 10
-            periodSeconds: 10
-          readinessProbe:
-            httpGet:
-              path: {{ .Values.service.healthCheckPath }}
-              port: {{ $port }}
-            initialDelaySeconds: 10
-            periodSeconds: 10
+          livenessProbe: {{ required "livenessProbe is required" .Values.livenessProbe | toYaml | nindent 12 }}
+          readinessProbe: {{ required "readinessProbe is required" .Values.readinessProbe | toYaml | nindent 12 }}
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
           env:
             - name: REVISION
               value: {{ required "revision is required" .Values.revision | quote }}
-            {{- $secretName := (printf "%s-%s" (include "chart.fullname" .) "secret") -}}
-            {{- range $key, $value := .Values.secretVars }}
-            - name: {{ $key | quote }}
-              valueFrom:
-                secretKeyRef:
-                  name: {{ $secretName }}
-                  key: {{ $key }}
-            {{- end }}
-            {{- $configMapName := (printf "%s-%s" (include "chart.fullname" .) "config") -}}
-            {{- range $key, $value := .Values.configsVars }}
-            - name: {{ $key | quote }}
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ $configMapName }}
-                  key: {{ $key }}
-            {{- end }}
           {{- if len $secrets }}
           volumeMounts:
             {{- range $secrets }}

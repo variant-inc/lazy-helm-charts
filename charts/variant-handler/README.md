@@ -1,6 +1,6 @@
 # Variant Handler Helm Chart
 
-![Version: 1.1.1](https://img.shields.io/badge/Version-1.1.1-informational?style=flat-square)
+![Version: 1.1.2](https://img.shields.io/badge/Version-1.1.2-informational?style=flat-square)
 
 A Helm chart for kubernetes handler
 
@@ -24,8 +24,10 @@ A Helm chart for kubernetes handler
 | deployment.resources.limits.memory | string | `"768Mi"` | (string) Limits Memory |
 | deployment.resources.requests.cpu | float | `0.1` | (float) Requests CPU |
 | deployment.resources.requests.memory | string | `"384Mi"` | (string) Request memory |
+| livenessProbe | string | `nil` | See [Probe](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe) docs |
 | nodeSelector | object | `{}` | (map) Node labels for pod assignment |
 | podSecurityContext.fsGroup | int | `65534` | Groups of nobody |
+| readinessProbe | string | `nil` | See [Probe](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe) docs |
 | replicaCount | int | `1` | replicatCount |
 | revision | string | `"abc"` | (string) Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision`  that will be applied to all objects created by a specific chart installation. Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version |
 | secretVars | object | `{}` | (map) User defined secret variables are implemented here. |
