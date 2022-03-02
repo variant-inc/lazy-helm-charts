@@ -94,7 +94,7 @@ tolerations: []
 affinity: {}
 
 # -- See [Probe](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe) docs
-readinessProbe: {}
+readinessProbe:
 
 # -- See [Probe](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe) docs
-livenessProbe: {}
+livenessProbe:

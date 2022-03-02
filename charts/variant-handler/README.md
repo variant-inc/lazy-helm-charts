@@ -1,6 +1,6 @@
 # Variant Handler Helm Chart
 
-![Version: 1.0.2-beta2](https://img.shields.io/badge/Version-1.0.2--beta2-informational?style=flat-square)
+![Version: 1.0.2-beta3](https://img.shields.io/badge/Version-1.0.2--beta3-informational?style=flat-square)
 
 A Helm chart for kubernetes handler
 
@@ -24,10 +24,10 @@ A Helm chart for kubernetes handler
 | deployment.resources.limits.memory | string | `"768Mi"` |  |
 | deployment.resources.requests.cpu | float | `0.1` |  |
 | deployment.resources.requests.memory | string | `"384Mi"` |  |
-| livenessProbe | object | `{}` | See [Probe](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe) docs |
+| livenessProbe | string | `nil` | See [Probe](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe) docs |
 | nodeSelector | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `65534` |  |
-| readinessProbe | object | `{}` | See [Probe](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe) docs |
+| readinessProbe | string | `nil` | See [Probe](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe) docs |
 | replicaCount | int | `1` |  |
 | revision | string | `"abc"` | (string) Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision`  that will be applied to all objects created by a specific chart installation. Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version |
 | secretVars | list | `[]` |  |
