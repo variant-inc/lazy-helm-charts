@@ -378,6 +378,26 @@ entries:
     version: 1.0.0
   variant-handler:
   - apiVersion: v2
+    created: "2022-03-02T22:27:07.287756519Z"
+    description: A Helm chart for kubernetes handler
+    digest: c4bf80093eb4024275bc977f25bb38964993562d112cd8db0d175dfbde3ae50f
+    home: https://www.drivevariant.com/
+    icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
+    kubeVersion: ^1.7.1-0
+    maintainers:
+    - email: vibind@drivevariant.com
+      name: vibindaniel
+    - email: samira@drivevariant.com
+      name: samiralyateem
+    - email: naveenp@drivevariant.com
+      name: naveenpaka
+    name: variant-handler
+    sources:
+    - https://github.com/variant-inc
+    urls:
+    - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-handler-1.0.2-beta1/variant-handler-1.0.2-beta1.tgz
+    version: 1.0.2-beta1
+  - apiVersion: v2
     created: "2022-03-01T16:10:03.590592361Z"
     description: A Helm chart for kubernetes handler
     digest: 05c8c4626ab06f633373e4a1fecb4a7e24271eef71d4692e79d0d069cc1f53b6
@@ -683,4 +703,4 @@ entries:
     urls:
     - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-ui-1.0.0/variant-ui-1.0.0.tgz
     version: 1.0.0
-generated: "2022-03-02T19:54:36.804261663Z"
+generated: "2022-03-02T22:27:07.287871534Z"
