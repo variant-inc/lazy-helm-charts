@@ -82,8 +82,8 @@ affinity: {}
 node:
   create: false
   instanceType: r5.xlarge
-  ttlSecondsUntilExpired: 2592000
-  ttlSecondsAfterEmpty: 1800
+  ttlSecondsUntilExpired:
+  ttlSecondsAfterEmpty: 3600
 
 CLUSTER_NAME: variant-dev
 

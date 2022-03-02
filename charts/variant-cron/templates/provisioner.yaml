@@ -15,6 +15,9 @@ spec:
   # Provisioned nodes will have these taints
   # Taints may prevent pods from scheduling if they are not tolerated
   taints:
+    - key: "namespace"
+      value: {{ .Release.Namespace | quote }}
+      effect: "NoSchedule"
     {{- range .Values.tolerations }}
     - key: {{ required "Key is required for tolerations" .key | quote }}
       effect: {{ .effect | default "NoSchedule" | quote }}
@@ -22,6 +25,7 @@ spec:
 
   # Labels are arbitrary key-values that are applied to all nodes
   labels:
+    namespace: {{ .Release.Namespace | quote }}
     {{- range $key, $value := .Values.nodeSelector }}
     {{ $key }}: {{ $value }}
     {{- end }}

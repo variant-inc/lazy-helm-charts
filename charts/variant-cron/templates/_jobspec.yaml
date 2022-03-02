@@ -68,20 +68,26 @@ template:
     restartPolicy: OnFailure
     serviceAccountName: {{ $fullName }}
     automountServiceAccountToken: true
-    {{- if len .Values.nodeSelector }}
     nodeSelector:
+    {{- if .Values.node.create }}
+      namespace: {{ .Release.Namespace | quote }}
+    {{- end }}
       {{- range $key, $value := .Values.nodeSelector }}
       {{ $key }}: {{ $value }}
       {{- end }}
-    {{- end }}
     {{- if len .Values.affinity }}
     affinity:
       {{- range $key, $value := .Values.affinity }}
       {{ $key }}: {{ toYaml $value }}
       {{- end }}
     {{- end }}
-    {{- if len .Values.tolerations }}
     tolerations:
+    {{- if .Values.node.create }}
+      - key: "namespace"
+        value: {{ .Release.Namespace | quote }}
+        operator: "Equal"
+        effect: "NoSchedule"
+    {{- end }}
       {{- range .Values.tolerations }}
       - key: {{ required "Key is required for tolerations" .key | quote }}
         operator: {{ .operator | default "Exists" | quote }}
@@ -90,7 +96,6 @@ template:
         {{- end }}
         effect: {{ .effect | default "NoSchedule" | quote }}
       {{- end }}
-    {{- end }}
 parallelism: 1
 backoffLimit: 2
 {{- end}}
