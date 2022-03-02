@@ -100,22 +100,6 @@ spec:
           env:
             - name: REVISION
               value: {{ required "revision is required" .Values.revision | quote }}
-            {{- $secretName := (printf "%s-%s" (include "chart.fullname" .) "secret") -}}
-            {{- range $key, $value := .Values.secretVars }}
-            - name: {{ $key | quote }}
-              valueFrom:
-                secretKeyRef:
-                  name: {{ $secretName }}
-                  key: {{ $key }}
-            {{- end }}
-            {{- $configMapName := (printf "%s-%s" (include "chart.fullname" .) "config") -}}
-            {{- range $key, $value := .Values.configsVars }}
-            - name: {{ $key | quote }}
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ $configMapName }}
-                  key: {{ $key }}
-            {{- end }}
           {{- if len $secrets }}
           volumeMounts:
             {{- range $secrets }}
