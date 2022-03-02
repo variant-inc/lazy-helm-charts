@@ -82,19 +82,8 @@ spec:
               containerPort: {{ .Values.service.healthCheckPort }}
               protocol: TCP
             {{- end }}
-          {{ $port := ternary "http" "health" (empty .Values.service.healthCheckPort) }}
-          livenessProbe:
-            httpGet:
-              path: {{ .Values.service.healthCheckPath }}
-              port: {{ $port }}
-            initialDelaySeconds: 10
-            periodSeconds: 10
-          readinessProbe:
-            httpGet:
-              path: {{ .Values.service.healthCheckPath }}
-              port: {{ $port }}
-            initialDelaySeconds: 10
-            periodSeconds: 10
+          livenessProbe: {{ .Values.livenessProbe | toYaml | nindent 12 }}
+          readinessProbe: {{ .Values.readinessProbe | toYaml | nindent 12 }}
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
           env:
