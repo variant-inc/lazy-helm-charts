@@ -1,0 +1,91 @@
+suite: Karpenter Node Provisioner
+tests:
+  - it: creates no provisioner by default, does not set nodeSelector on job
+    release:
+      name: test
+    set:
+      cronJob.image.tag: busybox:latest
+      cronJob.schedule: "*/2 * * * *"
+      revision: revision
+      cronJob.command: 
+        - /bin/echo
+        - "Hello from unit test"
+    asserts:
+      - template: provisioner.yaml
+        hasDocuments:
+          count: 0
+      - template: cron.yaml
+        documentIndex: 0
+        equal:
+          path: spec.jobTemplate.spec.template.spec.nodeSelector
+          value: {}
+  - it: creates no provisioner by default, allows custom nodeSelector
+    release:
+      name: test
+    set:
+      cronJob.image.tag: busybox:latest
+      cronJob.schedule: "*/2 * * * *"
+      revision: revision
+      cronJob.command: 
+        - /bin/echo
+        - "Hello from unit test"
+      nodeSelector:
+        my-node-label: my-node-value
+    asserts:
+      - template: provisioner.yaml
+        hasDocuments:
+          count: 0
+      - template: cron.yaml
+        documentIndex: 0
+        equal:
+          path: spec.jobTemplate.spec.template.spec.nodeSelector
+          value:
+            my-node-label: my-node-value
+  - it: requires an instance type when node.create is true
+    release:
+      name: test
+    set:
+      cronJob.image.tag: busybox:latest
+      cronJob.schedule: "*/2 * * * *"
+      revision: revision
+      cronJob.command: 
+        - /bin/echo
+        - "Hello from unit test"
+      node:
+        create: true
+    asserts:
+      - template: provisioner.yaml
+        failedTemplate:
+          errorMessage: ".Values.node.instanceType must be set when .Value.node.create is true"
+  - it: creates a tagged provisoner with selector labels, and jobspec with selector labels as nodeSelector 
+    release:
+      name: provisioner-label-test
+    set:
+      cronJob.image.tag: busybox:latest
+      cronJob.schedule: "*/2 * * * *"
+      revision: revision
+      cronJob.command: 
+        - /bin/echo
+        - "Hello from unit test"
+      node:
+        create: true
+        instanceType: t4g.nano
+      tags:
+        owner: unit-tests
+    asserts:
+      - template: provisioner.yaml
+        hasDocuments:
+          count: 1
+      - template: provisioner.yaml
+        equal:
+          path: spec.labels
+          value:
+            app.kubernetes.io/name: variant-cron
+            app.kubernetes.io/instance: provisioner-label-test
+      - template: cron.yaml
+        documentIndex: 0
+        equal:
+          path: spec.jobTemplate.spec.template.spec.nodeSelector
+          value:
+            app.kubernetes.io/name: variant-cron
+            app.kubernetes.io/instance: provisioner-label-test

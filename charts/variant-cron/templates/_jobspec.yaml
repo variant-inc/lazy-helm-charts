@@ -68,12 +68,7 @@ template:
     restartPolicy: OnFailure
     serviceAccountName: {{ $fullName }}
     automountServiceAccountToken: true
-    {{- if len .Values.nodeSelector }}
-    nodeSelector:
-      {{- range $key, $value := .Values.nodeSelector }}
-      {{ $key }}: {{ $value }}
-      {{- end }}
-    {{- end }}
+    nodeSelector: {{ ternary ($selectorLabels | nindent 6) (.Values.nodeSelector | toYaml | nindent 6) .Values.node.create }}
     {{- if len .Values.affinity }}
     affinity:
       {{- range $key, $value := .Values.affinity }}

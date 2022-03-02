@@ -27,7 +27,7 @@ A Helm chart for Istio Objects
 | imagePullSecrets | list | `[]` |  |
 | istio.egress | list | `[]` |  |
 | node.create | bool | `false` |  |
-| node.instanceType | string | `"r5.xlarge"` |  |
+| node.instanceType | string | `nil` | When `node.create` is `true`, must be a valid [EC2 Instance Type](https://aws.amazon.com/ec2/instance-types/) |
 | node.ttlSecondsAfterEmpty | int | `1800` |  |
 | node.ttlSecondsUntilExpired | int | `2592000` |  |
 | nodeSelector | object | `{}` |  |

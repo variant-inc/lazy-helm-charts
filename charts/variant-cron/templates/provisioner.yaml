@@ -1,5 +1,6 @@
 {{- if .Values.node.create }}
 {{- $fullName := (include "chart.fullname" .) -}}
+{{- $selectorLabels := (include "chart.selectorLabels" .) -}}
 apiVersion: karpenter.sh/v1alpha5
 kind: Provisioner
 metadata:
@@ -21,15 +22,12 @@ spec:
     {{- end }}
 
   # Labels are arbitrary key-values that are applied to all nodes
-  labels:
-    {{- range $key, $value := .Values.nodeSelector }}
-    {{ $key }}: {{ $value }}
-    {{- end }}
+  labels: {{ $selectorLabels | nindent 4 }}
 
   requirements:
     - key: "node.kubernetes.io/instance-type"
       operator: In
-      values: [{{ .Values.node.instanceType | quote }}]
+      values: [{{ required ".Values.node.instanceType must be set when .Value.node.create is true" .Values.node.instanceType | quote }}]
   # These fields vary per cloud provider, see your cloud provider specific documentation
   provider:
     subnetSelector:
