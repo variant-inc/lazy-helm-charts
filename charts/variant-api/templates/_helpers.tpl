@@ -48,7 +48,7 @@ checksum/secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha
 {{- end }}
 checksum/serviceaccount: {{ include (print $.Template.BasePath "/serviceaccount.yaml") . | sha256sum }}
 {{- range .Values.configMaps }}
-checksum/{{ . }}: {{ print (lookup "v1" "ConfigMap" $.Release.Namespace . ) | sha256sum }}
+checksum/{{ . | trunc 53 | trimSuffix "-" }}: {{ print (lookup "v1" "ConfigMap" $.Release.Namespace . ) | sha256sum }}
 {{- end }}
 {{- with .Values.deployment.podAnnotations }}
 {{ toYaml . }}
