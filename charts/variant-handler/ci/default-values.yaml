@@ -11,3 +11,9 @@ podSecurityContext:
   fsGroup: 65534
 
 securityContext: {}
+
+livenessProbe:
+  exec:
+    command:
+      - /bin/echo
+      - "hello world"
