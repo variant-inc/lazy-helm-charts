@@ -7,10 +7,9 @@ tests:
       cronJob.image.tag: busybox:latest
       cronJob.schedule: "*/2 * * * *"
       revision: revision
-      cronJob.command:
-        - "/bin/sh"
-        - "-c"
-        - "date; echo Hello from unit test"
+      cronJob.command: 
+        - /bin/echo
+        - "Hello from unit test"
     asserts:
       - template: cron.yaml
         containsDocument:
@@ -19,18 +18,18 @@ tests:
           name: test
       - template: cron.yaml
         hasDocuments:
-          count: 1
+          count: 2
   - it: should have provisioner
     release:
       name: test
+      namespace: test
     set:
       cronJob.image.tag: busybox:latest
       cronJob.schedule: "*/2 * * * *"
       revision: revision
-      cronJob.command:
-        - "/bin/sh"
-        - "-c"
-        - "date; echo Hello from unit test"
+      cronJob.command: 
+        - /bin/echo
+        - "Hello from unit test"
       node:
         create: true
         instanceType: t3.medium
@@ -46,7 +45,7 @@ tests:
         containsDocument:
           apiVersion: karpenter.sh/v1alpha5
           kind: Provisioner
-          name: test
+          name: test-test
       - template: provisioner.yaml
         hasDocuments:
           count: 1

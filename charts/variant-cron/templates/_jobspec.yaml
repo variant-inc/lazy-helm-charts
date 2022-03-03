@@ -1,0 +1,101 @@
+{{- define "chart.jobspec" }}
+{{- $fullName := (include "chart.fullname" .) -}}
+{{- $selectorLabels := (include "chart.selectorLabels" .) -}}
+{{- $secrets := .Values.awsSecrets -}}
+{{- $secretEnv := .Values.secretVars -}}
+{{- $configEnv := .Values.configVars -}}
+template:
+  metadata:
+    labels:
+      {{- $selectorLabels | nindent 6 }}
+    {{- with .Values.cronJob.podAnnotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    {{- with .Values.imagePullSecrets }}
+    imagePullSecrets:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    securityContext:
+      {{- toYaml .Values.podSecurityContext | nindent 6 }}
+    {{- if len $secrets }}
+    volumes:
+      {{- range $secrets }}
+      - name: {{ .name }}
+        secret:
+          secretName: {{ $fullName}}-{{ .name }}
+      {{- end }}
+    {{- end }}
+    containers:
+      - name: {{ $fullName }}
+        image: {{ required "cronJob.image.tag is required" .Values.cronJob.image.tag }}
+        securityContext:
+          {{- toYaml .Values.securityContext | nindent 10 }}
+        imagePullPolicy: {{ .Values.cronJob.image.pullPolicy }}
+        command:
+          - /bin/sh
+          - -c
+          - |
+            until curl -fsI http://localhost:15021/healthz/ready; do echo \"Waiting for Sidecar...\"; sleep 3; done;
+            echo \"Sidecar available. Running the command...\";
+            {{ required "Command list must be provided" (join " " .Values.cronJob.command) }};
+            x=$(echo $?); curl -fsI -X POST http://localhost:15020/quitquitquit && exit $x
+        resources:
+          {{- toYaml (required "Resources is required" .Values.cronJob.resources) | nindent 10 }}
+        {{ if or (len $secretEnv) (len $configEnv) -}}
+        envFrom:
+          {{ if len $secretEnv -}}
+          - secretRef:
+              name: {{ include "chart.fullname" . }}-env
+          {{- end }}
+          {{ if len $configEnv -}}
+          - configMapRef:
+              name: {{ include "chart.fullname" . }}-config-env
+          {{- end }}
+        {{- end }}
+        {{ if len $secrets}}
+        volumeMounts:
+          {{- range $secrets }}
+          - name: {{ .name }}
+            readOnly: true
+            mountPath: /app/secrets
+          {{- end }}
+        {{- end}}
+        env:
+          - name: REVISION
+            value: {{ required "revision is required" .Values.revision | quote }}
+    restartPolicy: OnFailure
+    serviceAccountName: {{ $fullName }}
+    automountServiceAccountToken: true
+    nodeSelector:
+    {{- if .Values.node.create }}
+      node.kubernetes.io/instance-type: {{ .Values.node.instanceType | quote }}
+    {{- end }}
+      {{- range $key, $value := .Values.nodeSelector }}
+      {{ $key }}: {{ $value }}
+      {{- end }}
+    {{- if len .Values.affinity }}
+    affinity:
+      {{- range $key, $value := .Values.affinity }}
+      {{ $key }}: {{ toYaml $value }}
+      {{- end }}
+    {{- end }}
+    tolerations:
+    {{- if .Values.node.create }}
+      - key: "namespace"
+        value: {{ .Release.Namespace | quote }}
+        operator: "Equal"
+        effect: "NoSchedule"
+    {{- end }}
+      {{- range .Values.tolerations }}
+      - key: {{ required "Key is required for tolerations" .key | quote }}
+        operator: {{ .operator | default "Exists" | quote }}
+        {{- if hasKey . "value"  }}
+        value: {{ .value | quote }}
+        {{- end }}
+        effect: {{ .effect | default "NoSchedule" | quote }}
+      {{- end }}
+parallelism: 1
+backoffLimit: 2
+{{- end}}

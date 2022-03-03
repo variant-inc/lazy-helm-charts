@@ -25,6 +25,8 @@ podSecurityContext:
 
 securityContext:
   runAsNonRoot: true
+  # -- (int) Optional. Used for integration testing. If provided, will override the `USER` command in your Dockerfile
+  runAsUser:
   capabilities:
     drop:
     - ALL
@@ -44,12 +46,10 @@ cronJob:
     requests:
       cpu: .1
       memory: 384Mi
-  args: []
   podAnnotations: {}
-  command: []
-    # - "/bin/sh"
-    # - "-c"
-    # - "date; echo Hello from the K8s cluster"
+  # -- (list) full path to the job script to execute
+  command:
+  suspend: false
 
 awsSecrets: []
   # - name: eng-secret-in-aws
@@ -82,8 +82,8 @@ affinity: {}
 node:
   create: false
   instanceType: r5.xlarge
-  ttlSecondsUntilExpired: 2592000
-  ttlSecondsAfterEmpty: 1800
+  ttlSecondsUntilExpired:
+  ttlSecondsAfterEmpty: 3600
 
 CLUSTER_NAME: variant-dev
 

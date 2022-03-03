@@ -1,0 +1,37 @@
+suite: Suspension
+tests:
+  - it: by default should not be suspended
+    release:
+      name: test
+    set:
+      cronJob.image.tag: busybox:latest
+      cronJob.schedule: "*/2 * * * *"
+      revision: revision
+      cronJob.command: 
+        - /bin/echo
+        - "Hello from unit test"
+    asserts:
+      - template: cron.yaml
+        documentIndex: 0
+        equal:
+          # https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/cron-job-v1/#CronJobSpec
+          path: spec.suspend
+          value: false
+  - it: allows cronjob to be suspended
+    release:
+      name: test
+    set:
+      cronJob.image.tag: busybox:latest
+      cronJob.schedule: "*/2 * * * *"
+      revision: revision
+      cronJob.command: 
+        - /bin/echo
+        - "Hello from unit test"
+      cronJob.suspend: true
+    asserts:
+      - template: cron.yaml
+        documentIndex: 0
+        equal:
+          # https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/cron-job-v1/#CronJobSpec
+          path: spec.suspend
+          value: true
