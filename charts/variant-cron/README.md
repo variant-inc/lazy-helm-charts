@@ -2,7 +2,7 @@
 
 Use this chart to deploy a CronJob image to Kubernetes -- the Variant, CloudOps-approved way.
 
-![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-informational?style=flat-square)
+![Version: 1.1.1](https://img.shields.io/badge/Version-1.1.1-informational?style=flat-square)
 
 A Helm chart for Istio Objects
 
@@ -32,6 +32,7 @@ A Helm chart for Istio Objects
 | node.ttlSecondsUntilExpired | string | `nil` |  |
 | nodeSelector | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `65534` |  |
+| restartPolicy | string | `"Never"` | Use Never by default for jobs so new pod is created on failure instead of restarting containers |
 | revision | string | `nil` |  |
 | secretVars | object | `{}` |  |
 | securityContext.allowPrivilegeEscalation | bool | `false` |  |

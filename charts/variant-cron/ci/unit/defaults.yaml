@@ -49,3 +49,19 @@ tests:
       - template: provisioner.yaml
         hasDocuments:
           count: 1
+  - it: defaults to Never restart policy
+    release:
+      name: test
+    set:
+      cronJob.image.tag: busybox:latest
+      cronJob.schedule: "*/2 * * * *"
+      revision: revision
+      cronJob.command: 
+        - /bin/echo
+        - "Hello from unit test"
+    asserts:
+      - template: cron.yaml
+        documentIndex: 0
+        equal:
+          path: spec.jobTemplate.spec.template.spec.restartPolicy
+          value: Never

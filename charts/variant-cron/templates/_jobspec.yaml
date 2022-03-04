@@ -65,7 +65,7 @@ template:
         env:
           - name: REVISION
             value: {{ required "revision is required" .Values.revision | quote }}
-    restartPolicy: OnFailure
+    restartPolicy: {{ .Values.restartPolicy }}
     serviceAccountName: {{ $fullName }}
     automountServiceAccountToken: true
     nodeSelector:
