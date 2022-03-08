@@ -2,7 +2,7 @@
 
 Use this chart to deploy a CronJob image to Kubernetes -- the Variant, CloudOps-approved way.
 
-![Version: 1.1.1](https://img.shields.io/badge/Version-1.1.1-informational?style=flat-square)
+![Version: 1.1.2](https://img.shields.io/badge/Version-1.1.2-informational?style=flat-square)
 
 A Helm chart for Istio Objects
 
@@ -10,39 +10,39 @@ A Helm chart for Istio Objects
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| CLUSTER_NAME | string | `"variant-dev"` |  |
-| affinity | object | `{}` |  |
-| awsSecrets | list | `[]` |  |
-| configVars | object | `{}` |  |
-| cronJob.command | list | `nil` | full path to the job script to execute |
-| cronJob.image.pullPolicy | string | `"Always"` |  |
-| cronJob.image.tag | string | `nil` |  |
-| cronJob.podAnnotations | object | `{}` |  |
-| cronJob.resources.limits.cpu | int | `1` |  |
-| cronJob.resources.limits.memory | string | `"768Mi"` |  |
-| cronJob.resources.requests.cpu | float | `0.1` |  |
-| cronJob.resources.requests.memory | string | `"384Mi"` |  |
-| cronJob.schedule | string | `nil` |  |
-| cronJob.suspend | bool | `false` |  |
-| imagePullSecrets | list | `[]` |  |
-| istio.egress | list | `[]` |  |
-| node.create | bool | `false` |  |
-| node.instanceType | string | `"r5.xlarge"` |  |
-| node.ttlSecondsAfterEmpty | int | `3600` |  |
-| node.ttlSecondsUntilExpired | string | `nil` |  |
-| nodeSelector | object | `{}` |  |
-| podSecurityContext.fsGroup | int | `65534` |  |
+| CLUSTER_NAME | string | `"variant-dev"` | For securityGroupSelector in provisioner.yaml |
+| affinity | object | `{}` | Affinity for pod assignment ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity |
+| awsSecrets | list | `[]` | A list of secrets to configure to make available to your API. Create your secret in AWS Secrets Manager as plain text.  Full contents of this secret will be mounted as a file your application can read to /app/secrets/{name} See [secrets](#secrets) for more details. |
+| configVars | object | `{}` | (map) User defined environment variables are implemented here. |
+| cronJob.command | list | `nil` | full path to the job script to execute. https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/ |
+| cronJob.image.pullPolicy | string | `"Always"` | (string) IfNotPresent, Always, Never |
+| cronJob.image.tag | string | `nil` | The full URL of the image to be deployed containing the HTTP API application |
+| cronJob.podAnnotations | object | `{}` | (map) https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/ |
+| cronJob.resources.limits.cpu | int | `1` | (int) Limits CPU |
+| cronJob.resources.limits.memory | string | `"768Mi"` | (string) Limits Memory |
+| cronJob.resources.requests.cpu | float | `0.1` | (float) Requests CPU |
+| cronJob.resources.requests.memory | string | `"384Mi"` | (string) Request memory |
+| cronJob.schedule | string | `nil` | Cron Style Schedule. For help check https://crontab.guru/ |
+| cronJob.suspend | bool | `false` | (bool) https://kubernetes.io/blog/2021/04/12/introducing-suspended-jobs/ |
+| imagePullSecrets | list | `[]` | (list) https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod |
+| istio.egress | list | `[]` | A whitelist of external services that your API requires connection to. The whitelist applies to the entire namespace in which this chart is installed.  [These services](https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8) are globally whitelisted and do not require declaration. See [egress](#egress-configuration) for more details. |
+| node.create | bool | `false` | Flag to determine whether or not custom nodes will be provisioned. |
+| node.instanceType | string | `"r5.xlarge"` | The EC2 Instance Type for your custom nodes. |
+| node.ttlSecondsAfterEmpty | int | `3600` | Number of seconds before custom nodes will be removed if nothing is running on them. |
+| node.ttlSecondsUntilExpired | string | `nil` | If nil, the feature is disabled, nodes will never expire |
+| nodeSelector | object | `{}` | Node labels for pod assignment ref: https://kubernetes.io/docs/user-guide/node-selection/ |
+| podSecurityContext.fsGroup | int | `65534` | Groups of nobody |
 | restartPolicy | string | `"Never"` | Use Never by default for jobs so new pod is created on failure instead of restarting containers |
-| revision | string | `nil` |  |
-| secretVars | object | `{}` |  |
-| securityContext.allowPrivilegeEscalation | bool | `false` |  |
-| securityContext.capabilities.drop[0] | string | `"ALL"` |  |
-| securityContext.readOnlyRootFilesystem | bool | `false` |  |
-| securityContext.runAsNonRoot | bool | `true` |  |
-| securityContext.runAsUser | int | `nil` | Optional. Used for integration testing. If provided, will override the `USER` command in your Dockerfile |
-| serviceAccount.roleArn | string | `nil` |  |
-| tags | string | `nil` |  |
-| tolerations | list | `[]` |  |
+| revision | string | `nil` | Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision`  that will be applied to all objects created by a specific chart installation.  Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version |
+| secretVars | object | `{}` | (map) User defined secret variables are implemented here. |
+| securityContext.allowPrivilegeEscalation | bool | `false` | (bool) Setting it to false ensures that no child process of a container can gain more privileges than its parent |
+| securityContext.capabilities | object | `{"drop":["ALL"]}` | Drop All capabilities |
+| securityContext.readOnlyRootFilesystem | bool | `false` | (bool) Requires that containers must run with a read-only root filesystem (i.e. no writable layer) |
+| securityContext.runAsNonRoot | bool | `true` | Runs as non root. Must use numeric User in container |
+| securityContext.runAsUser | int | `nil` | Runs as numeric user |
+| serviceAccount.roleArn | string | `nil` | Optional ARN of the IAM role to be assumed by your application.  If your API requires access to any AWS services, a role should be created in AWS IAM. This role should have an inline policy that describes the permissions your API needs (connect to RDS, publish to an SNS topic, read from an SQS queue, etc.). |
+| tags | string | `nil` | Tags to be applied to custom node provisioner |
+| tolerations | list | `[]` | Tolerations for pod assignment ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/ |
 
 ## TL;DR
 

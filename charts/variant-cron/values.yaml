@@ -1,6 +1,10 @@
 # This file contains the defaults for all optional, overridable values
 
 istio:
+  # -- A whitelist of external services that your API requires connection to.
+  # The whitelist applies to the entire namespace in which this chart is installed. 
+  # [These services](https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8) are globally whitelisted and do not require declaration.
+  # See [egress](#egress-configuration) for more details.
   egress: []
     # - name: some-external-api
     #   hosts:
@@ -15,79 +19,108 @@ istio:
     #     - number: 5432
     #       protocol: TCP
 
+# -- (list) https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod
 imagePullSecrets: []
 
 serviceAccount:
+  # -- (string) Optional ARN of the IAM role to be assumed by your application. 
+  # If your API requires access to any AWS services, a role should be created in AWS IAM.
+  # This role should have an inline policy that describes the permissions your API needs (connect to RDS, publish to an SNS topic, read from an SQS queue, etc.).
   roleArn:
 
 podSecurityContext:
-    fsGroup: 65534
+  # -- Groups of nobody
+  fsGroup: 65534
 
 securityContext:
+  # -- Runs as non root. Must use numeric User in container
   runAsNonRoot: true
-  # -- (int) Optional. Used for integration testing. If provided, will override the `USER` command in your Dockerfile
+  # -- (int) Runs as numeric user
   runAsUser:
+  # -- Drop All capabilities
   capabilities:
     drop:
     - ALL
+  # -- (bool) Setting it to false ensures that no child process of a container can gain more privileges than its parent
   allowPrivilegeEscalation: false
+  # -- (bool) Requires that containers must run with a read-only root filesystem (i.e. no writable layer)
   readOnlyRootFilesystem: false
 
 cronJob:
+  # -- Cron Style Schedule. For help check https://crontab.guru/
   schedule:
-  # Cron Style Schedule. For help check https://crontab.guru/
   image:
+    # -- (string) IfNotPresent, Always, Never
     pullPolicy: Always
+    # -- (string) The full URL of the image to be deployed containing the HTTP API application
     tag:
+  # https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/  
   resources:
     limits:
+      # -- (int) Limits CPU
       cpu: 1
+      # -- (string) Limits Memory
       memory: 768Mi
     requests:
+      # -- (float) Requests CPU
       cpu: .1
+      # -- (string) Request memory
       memory: 384Mi
+  # -- (map) https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   podAnnotations: {}
-  # -- (list) full path to the job script to execute
+  # -- (list) full path to the job script to execute. https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/
   command:
+  # -- (bool) https://kubernetes.io/blog/2021/04/12/introducing-suspended-jobs/
   suspend: false
 
+# -- A list of secrets to configure to make available to your API.
+# Create your secret in AWS Secrets Manager as plain text. 
+# Full contents of this secret will be mounted as a file your application can read to /app/secrets/{name}
+# See [secrets](#secrets) for more details.
 awsSecrets: []
   # - name: eng-secret-in-aws
 
+# -- (map) User defined secret variables are implemented here.
 secretVars: {}
   # key: value
 
+# -- (map) User defined environment variables are implemented here.
 configVars: {}
   # key: value
 
+# -- (string) Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision` 
+# that will be applied to all objects created by a specific chart installation. 
+# Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version
 revision:
   # test-latest
 
-## Node labels for pod assignment
-## ref: https://kubernetes.io/docs/user-guide/node-selection/
-#
+# -- Node labels for pod assignment
+# ref: https://kubernetes.io/docs/user-guide/node-selection/
 nodeSelector: {}
 
-## Tolerations for pod assignment
-## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-##
+# --  Tolerations for pod assignment
+# ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 tolerations: []
 
-## Affinity for pod assignment
-## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-##
+# -- Affinity for pod assignment
+# ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 affinity: {}
 
-## Karpenter Provisioner Variables
+# Karpenter Provisioner Variables. https://karpenter.sh/v0.6.0/provisioner/
 node:
+  # -- Flag to determine whether or not custom nodes will be provisioned.
   create: false
+  # -- The EC2 Instance Type for your custom nodes.
   instanceType: r5.xlarge
+  # -- If nil, the feature is disabled, nodes will never expire
   ttlSecondsUntilExpired:
+  # -- Number of seconds before custom nodes will be removed if nothing is running on them.
   ttlSecondsAfterEmpty: 3600
 
+# -- For securityGroupSelector in provisioner.yaml
 CLUSTER_NAME: variant-dev
 
-## Tags to be applied to custom node provisioner
+# -- Tags to be applied to custom node provisioner
 tags:
 
 # -- Use Never by default for jobs so new pod is created on failure instead of restarting containers

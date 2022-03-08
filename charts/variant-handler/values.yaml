@@ -17,7 +17,7 @@ service:
   # -- Optional port which serves prometheus metrics endpoint at `/metrics`
   # Defaults to value of `service.targetPort` if not defined.
   metricsPort:
-  # Health check URI, This will be used in probes to check container status
+  # -- Health check URI, This will be used in probes to check container status
   healthCheckPath: /health
 
 serviceAccount:
@@ -27,8 +27,10 @@ serviceAccount:
   roleArn:
 
 podSecurityContext:
+    # -- Groups of nobody
     fsGroup: 65534
 
+# -- (map) Security Context for containers
 securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
@@ -38,31 +40,42 @@ securityContext: {}
   # allowPrivilegeEscalation: false
   # readOnlyRootFilesystem: true
 
+# -- replicatCount
 replicaCount: 1
 
 autoscaling:
-  # Flag to trigger HPA, Allowd values true or false
+  # -- Flag to trigger HPA, Allowd values true or false
   enabled: false
-  # Minimum replicas of pod
+  # -- Minimum replicas of pod
   minReplicas: 1
-  # Maximum replicas of pod
+  # -- Maximum replicas of pod
   maxReplicas: 5
+  # -- (int) CPU Utilization Percentage.
   targetCPUUtilizationPercentage: 80
+  # -- (int) Memory Utilization Percentage.
   targetMemoryUtilizationPercentage:
 
 deployment:
   image:
     # -- (string) The full URL of the image to be deployed containing the tag
     tag: "tag"
+    # -- (string) IfNotPresent, Always, Never
     pullPolicy: IfNotPresent
+  # https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/  
   resources:
     limits:
+      # -- (int) Limits CPU
       cpu: 1
+      # -- (string) Limits Memory
       memory: 768Mi
     requests:
+      # -- (float) Requests CPU
       cpu: .1
+      # -- (string) Request memory
       memory: 384Mi
+  # -- (list) List of arguments that can be passed in the image.
   args: []
+  # -- (map) https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   podAnnotations: {}
 
 # -- (string) Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision` 
@@ -77,18 +90,22 @@ revision: abc
 awsSecrets: []
   # - name: testKey
 
-secretVars: []
+# -- (map) User defined secret variables are implemented here.
+secretVars: {}
   # foo: bar
-configVars: []
+
+# -- (map) User defined environment variables are implemented here.
+configVars: {}
   # bar: foo
 
-#Node labels for pod assignment
+# -- (map) Node labels for pod assignment
 #ref: https://kubernetes.io/docs/user-guide/node-selection/
 nodeSelector: {}
-#Tolerations for pod assignment
+
+# -- (list) Tolerations for pod assignment
 #ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 tolerations: []
 
-# Affinity for pod assignment
+# -- (map) Affinity for pod assignment
 # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 affinity: {}

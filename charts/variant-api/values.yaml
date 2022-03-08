@@ -58,27 +58,37 @@ serviceAccount:
   roleArn:
 
 autoscaling:
+  # -- (int) Minimum Number of Replicas.
   minReplicas: 1
+  # -- (int) Maximum Number of Replicas.
   maxReplicas: 5
+  # -- (int) CPU Utilization Percentage.
   targetCPUUtilizationPercentage: 80
+  # -- (int) Memory Utilization Percentage.
   targetMemoryUtilizationPercentage:
 
 deployment:
   image:
+    # -- (string) IfNotPresent, Always, Never
     pullPolicy: IfNotPresent
     # -- (string) The full URL of the image to be deployed containing the HTTP API application
     tag:
+  # https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
   resources:
     limits:
+      # -- (int) Limits CPU
       cpu: 1
+      # -- (string) Limits Memory
       memory: 768Mi
     requests:
+      # -- (float) Requests CPU
       cpu: .1
+      # -- (string) Request memory
       memory: 384Mi
+  # -- (list) List of arguments that can be passed in the image.
   args: []
-  envVars: []
-    # - name: required_env_var
-    #   value: required_env_var
+
+  # -- (list) List of Conditional Env Vars denoted by conditional (bool) and envVars (list)
   conditionalEnvVars: []
     # - condition: false
     #   envVars:
@@ -90,6 +100,7 @@ deployment:
     #       value: true_conditional_1
     #     - name: true_conditional_2
     #       value: true_conditional_2
+  # -- (map) https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   podAnnotations: {}
 
 # -- A list of secrets to configure to make available to your API.
@@ -104,9 +115,13 @@ awsSecrets: []
 # Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version
 revision:
 
+# -- (bool) selecting authentication: true when defining an api resource, Istio RBAC resources are created to require a valid JWT
+# token before forwarding a request to your API.
 authentication:
   enabled: false
 
+# -- (list) List of operation objects with methods and paths key values allowing certain methods and paths to be whitelisted within the cluster
+# GET /health and Get /metrics are set by default in authorization.yaml
 authorization:
   rules:
     to: []
@@ -114,26 +129,36 @@ authorization:
       #     methods: "GET"
       #     paths: "/swagger"
 
+# -- (map) User defined secret variables are implemented here.
 secretVars: {}
   # foo: bar
+
+# -- (map) User defined environment variables are implemented here.
 configVars: {}
   # bar: foo
 
-#Node labels for pod assignment
+# -- (map) Node labels for pod assignment
 #ref: https://kubernetes.io/docs/user-guide/node-selection/
 nodeSelector: {}
-#Tolerations for pod assignment
+
+# -- (list) Tolerations for pod assignment
 #ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 tolerations: []
 
-# Affinity for pod assignment
+# -- (map) Affinity for pod assignment
 # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 affinity: {}
 
 securityContext:
+  # -- Runs as non root. Must use numeric User in container
   runAsNonRoot: true
+  # -- (int) Runs as numeric user
+  runAsUser:
+  # -- Drop All capabilities
   capabilities:
     drop:
     - ALL
+  # -- (bool) Setting it to false ensures that no child process of a container can gain more privileges than its parent
   allowPrivilegeEscalation: false
+  # -- (bool) Requires that containers must run with a read-only root filesystem (i.e. no writable layer)
   readOnlyRootFilesystem: false
