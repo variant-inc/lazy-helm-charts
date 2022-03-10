@@ -16,3 +16,8 @@ maintainers:
     email: samira@drivevariant.com
   - name: naveenpaka
     email: naveenp@drivevariant.com
+
+dependencies:
+  - name: library
+    repository: file://../library
+    version: 0.1.0
