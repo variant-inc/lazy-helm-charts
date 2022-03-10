@@ -14,3 +14,8 @@ maintainers:
     email: vibind@drivevariant.com
   - name: samiralyateem
     email: samira@drivevariant.com
+
+dependencies:
+  - name: library
+    repository: file://../library
+    version: 0.1.0

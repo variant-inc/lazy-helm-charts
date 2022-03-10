@@ -9,7 +9,7 @@ Process:
         Properties:
           Octopus.Action.Script.ScriptSource: Package
           Octopus.Action.RunOnServer: true
-          Octopus.Action.Script.ScriptFileName: "scripts/test.ps1"
+          Octopus.Action.Script.ScriptFileName: "scripts/integration_test.ps1"
           Octopus.Action.Script.ScriptParameters: "../charts/variant-api"
   - Name: variant-cron
     Actions:
@@ -18,7 +18,7 @@ Process:
         Properties:
           Octopus.Action.Script.ScriptSource: Package
           Octopus.Action.RunOnServer: true
-          Octopus.Action.Script.ScriptFileName: "scripts/test.ps1"
+          Octopus.Action.Script.ScriptFileName: "scripts/integration_test.ps1"
           Octopus.Action.Script.ScriptParameters: "../charts/variant-cron"
   - Name: variant-handler
     Actions:
@@ -27,5 +27,5 @@ Process:
         Properties:
           Octopus.Action.Script.ScriptSource: Package
           Octopus.Action.RunOnServer: true
-          Octopus.Action.Script.ScriptFileName: "scripts/test.ps1"
+          Octopus.Action.Script.ScriptFileName: "scripts/integration_test.ps1"
           Octopus.Action.Script.ScriptParameters: "../charts/variant-handler"

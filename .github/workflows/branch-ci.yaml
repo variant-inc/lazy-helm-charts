@@ -23,16 +23,9 @@ jobs:
       # - name: Lint
       #   run: |
       #     helm lint --strict ./charts/*
-      - name: Set up Unit Test
-        run: |
-          if helm plugin list | grep unit; then
-              echo "Plugin already installed"
-          else
-              helm plugin install https://github.com/quintush/helm-unittest
-          fi
       - name: Unit Test
-        run: |
-          helm unittest -3 --strict -f ci/unit/*.yaml ./charts/*
+        shell: pwsh
+        run: ./scripts/unit_test.ps1
       - name: Lazy Action Octopus
         uses: variant-inc/actions-octopus@v2
         with:
