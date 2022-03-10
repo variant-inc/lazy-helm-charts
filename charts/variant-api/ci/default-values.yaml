@@ -17,5 +17,8 @@ secretVars:
   SECRET_CONFIG: secret
   SOMETHING: else
 
+configMaps:
+  - test-existing
+
 awsSecrets:
   - name: devops-playground-rds-creds
