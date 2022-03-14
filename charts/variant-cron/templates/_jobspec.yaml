@@ -2,8 +2,6 @@
 {{- $fullName := (include "chart.fullname" .) -}}
 {{- $selectorLabels := (include "chart.selectorLabels" .) -}}
 {{- $secrets := .Values.awsSecrets -}}
-{{- $secretEnv := .Values.secretVars -}}
-{{- $configEnv := .Values.configVars -}}
 template:
   metadata:
     labels:
@@ -43,17 +41,7 @@ template:
             x=$(echo $?); curl -fsI -X POST http://localhost:15020/quitquitquit && exit $x
         resources:
           {{- toYaml (required "Resources is required" .Values.cronJob.resources) | nindent 10 }}
-        {{ if or (len $secretEnv) (len $configEnv) -}}
-        envFrom:
-          {{ if len $secretEnv -}}
-          - secretRef:
-              name: {{ include "chart.fullname" . }}-env
-          {{- end }}
-          {{ if len $configEnv -}}
-          - configMapRef:
-              name: {{ include "chart.fullname" . }}-config-env
-          {{- end }}
-        {{- end }}
+        envFrom: {{ include "library.container.envFrom.tpl" . | nindent 10 }}
         {{ if len $secrets}}
         volumeMounts:
           {{- range $secrets }}

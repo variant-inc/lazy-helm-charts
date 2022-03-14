@@ -2,7 +2,7 @@ apiVersion: v2
 name: variant-api
 description: A Helm chart for APIs to Variant clusters
 
-version: 2.0.1
+version: 2.1.0
 
 kubeVersion: "^1.7.1-0"
 home: https://www.drivevariant.com/
@@ -14,3 +14,8 @@ maintainers:
     email: vibind@drivevariant.com
   - name: samiralyateem
     email: samira@drivevariant.com
+
+dependencies:
+  - name: library
+    repository: file://../library
+    version: 0.1.0

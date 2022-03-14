@@ -2,8 +2,6 @@
 {{- $labels := (include "chart.labels" .) -}}
 {{- $selectorLabels := (include "chart.selectorLabels" .) -}}
 {{- $secrets := .Values.awsSecrets -}}
-{{- $secretEnv := .Values.secretVars -}}
-{{- $configEnv := .Values.configVars -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -124,14 +122,4 @@ spec:
               mountPath: /app/secrets
             {{- end }}
           {{- end }}
-          {{ if or (len $secretEnv) (len $configEnv) -}}
-          envFrom:
-            {{ if len $secretEnv -}}
-            - secretRef:
-                name: {{ include "chart.fullname" . }}
-            {{- end }}
-            {{ if len $configEnv -}}
-            - configMapRef:
-                name: {{ include "chart.fullname" . }}
-            {{- end }}
-          {{- end }}
+          envFrom: {{ include "library.container.envFrom.tpl" . | nindent 12 }}
