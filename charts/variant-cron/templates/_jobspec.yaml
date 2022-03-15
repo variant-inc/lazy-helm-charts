@@ -6,10 +6,8 @@ template:
   metadata:
     labels:
       {{- $selectorLabels | nindent 6 }}
-    {{- with .Values.cronJob.podAnnotations }}
     annotations:
-      {{- toYaml . | nindent 6 }}
-    {{- end }}
+      {{- include "chart.podAnnotations" . | indent 6 }}
   spec:
     {{- with .Values.imagePullSecrets }}
     imagePullSecrets:

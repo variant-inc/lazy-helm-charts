@@ -38,3 +38,19 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- define "chart.ingressHostname" -}}
 {{- required "istio.ingress.host is required" .Values.istio.ingress.host }}
 {{- end }}
+
+{{- define "chart.podAnnotations" -}}
+{{- if len .Values.configVars }}
+checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+{{- end }}
+{{- if len .Values.awsSecrets }}
+checksum/secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
+{{- end }}
+checksum/serviceaccount: {{ include (print $.Template.BasePath "/serviceaccount.yaml") . | sha256sum }}
+{{- range .Values.configMaps }}
+checksum/{{ . }}: {{ print (lookup "v1" "ConfigMap" $.Release.Namespace . ) | sha256sum }}
+{{- end }}
+{{- with .Values.deployment.podAnnotations }}
+{{ toYaml . }}
+{{- end }}
+{{- end }}
