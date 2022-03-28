@@ -1,0 +1,55 @@
+suite: Chart defaults
+tests:
+  - it: should be public and internal
+    release:
+      name: test
+    set:
+      deployment.image.tag: tag
+      revision: abc
+      livenessProbe:
+        exec:
+          command:
+            - /bin/echo
+            - "hello liveness"
+      readinessProbe:
+        exec:
+          command:
+            - /bin/echo
+            - "hello readiness"
+      istio.ingress.public: true
+      istio.ingress.host: dpl-drivevariant.com
+    asserts:
+      - template: virtual-service.yaml
+        containsDocument:
+          kind: VirtualService
+          apiVersion: networking.istio.io/v1alpha3
+          name: test-variant-ui-internal
+      - template: virtual-service.yaml
+        hasDocuments:
+          count: 2
+  - it: should be public and internal
+    release:
+      name: test
+    set:
+      deployment.image.tag: tag
+      revision: abc
+      istio.ingress.host: dpl-drivevariant.com
+      livenessProbe:
+        exec:
+          command:
+            - /bin/echo
+            - "hello liveness"
+      readinessProbe:
+        exec:
+          command:
+            - /bin/echo
+            - "hello readiness"
+    asserts:
+      - template: virtual-service.yaml
+        containsDocument:
+          kind: VirtualService
+          apiVersion: networking.istio.io/v1alpha3
+          name: test-variant-ui-internal
+      - template: virtual-service.yaml
+        hasDocuments:
+          count: 1

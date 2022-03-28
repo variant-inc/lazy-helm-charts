@@ -29,3 +29,12 @@ Process:
           Octopus.Action.RunOnServer: true
           Octopus.Action.Script.ScriptFileName: "scripts/integration_test.ps1"
           Octopus.Action.Script.ScriptParameters: "../charts/variant-handler"
+  - Name: variant-ui
+    Actions:
+      - Name: Test variant-ui chart
+        ActionType: Octopus.Script
+        Properties:
+          Octopus.Action.Script.ScriptSource: Package
+          Octopus.Action.RunOnServer: true
+          Octopus.Action.Script.ScriptFileName: "scripts/integration_test.ps1"
+          Octopus.Action.Script.ScriptParameters: "../charts/variant-ui"
