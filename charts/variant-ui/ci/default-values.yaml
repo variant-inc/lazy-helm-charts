@@ -1,0 +1,23 @@
+revision: testing
+deployment:
+  image:
+    tag: 064859874041.dkr.ecr.us-east-2.amazonaws.com/lazy-helm-charts/variant-api:v0.3
+
+service:
+  targetPort: 5000
+
+istio:
+  enabled: true
+  ingress:
+    host: dpl-drivevariant.com
+
+livenessProbe:
+  exec:
+    command:
+      - /bin/echo
+      - "hello liveness"
+
+readinessProbe:
+  exec:
+    command:
+      - /bin/echo

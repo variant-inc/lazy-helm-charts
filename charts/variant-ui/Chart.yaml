@@ -2,8 +2,7 @@ apiVersion: v2
 name: variant-ui
 description: A Helm chart for a web UI configuration
 
-version: 1.0.4
-
+version: 1.2.0
 
 kubeVersion: "^1.7.1-0"
 home: https://www.drivevariant.com/
@@ -15,4 +14,10 @@ maintainers:
     email: vibind@drivevariant.com
   - name: salyateem13
     email: samira@drivevariant.com
+  - name: LeeHughsVariant
+    email: leeh@drivevariant.com
 
+dependencies:
+  - name: library
+    repository: file://../library
+    version: 0.1.0

@@ -49,25 +49,3 @@ Selector labels
 app.kubernetes.io/name: {{ include "chart.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
-
-{{/*
-Internal Hosts
-*/}}
-{{- define "chart.internalHosts" -}}
-{{- range .Values.istio.ingress.hosts }}
-{{- if contains "internal" .url }}
-    - {{ .url }}
-{{- end }}
-{{- end }}
-{{- end }}
-
-{{/*
-Public Hosts
-*/}}
-{{- define "chart.publicHosts" -}}
-{{- range .Values.istio.ingress.hosts }}
-{{- if contains "internal" .url | not }}
-    - {{ .url }}
-{{- end }}
-{{- end }}
-{{- end }}
