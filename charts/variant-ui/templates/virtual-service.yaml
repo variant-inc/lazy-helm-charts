@@ -1,9 +1,6 @@
-{{- if .Values.istio.enabled -}}
 {{- $fullName := (include "chart.fullname" .) -}}
 {{- $labels := (include "chart.labels" .) -}}
-{{- $internalHosts := (include "chart.internalHosts" .) -}}
-{{- if .Values.istio.ingress }}
-{{- if empty $internalHosts | not}}
+{{- $host := required "Host is required" .Values.istio.ingress.host -}}
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -13,13 +10,30 @@ metadata:
 spec:
   gateways:
     - default/default
-  hosts: {{ $internalHosts }}
+  hosts:
+    - {{ $fullName }}.internal.apps.{{ $host }}
   http:
     - route:
         - destination:
-            host: {{ tpl .Values.istio.ingress.backend.service.name $ }}
+            host: {{ $fullName }}
             port:
-              number: {{ int (tpl (.Values.istio.ingress.backend.service.port | toString) $) }}
-{{- end }}
-{{- end }}
-{{- end }}
+              number: {{ .Values.service.port }}
+{{ if .Values.istio.ingress.public }}
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ $fullName }}-public
+  labels: {{ $labels | nindent 4 }}
+spec:
+  gateways:
+    - default/default
+  hosts:
+    - {{ $fullName }}.apps.{{ $host }}
+  http:
+    - route:
+        - destination:
+            host: {{ $fullName }}
+            port:
+              number: {{ .Values.service.port }}
+{{ end }}
