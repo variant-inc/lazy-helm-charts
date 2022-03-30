@@ -52,6 +52,9 @@ spec:
           secret:
             secretName: {{ $fullName}}-{{ .name }}
         {{- end }}
+        - name: config-file
+          configMap:
+            name: {{ $fullName }}-chart-json
       {{ end }}
       containers:
         - name: {{ $fullName }}
@@ -106,6 +109,9 @@ spec:
               readOnly: true
               mountPath: /app/secrets
             {{- end }}
+            - name: config-file
+              readOnly: true
+              mountPath: /app/config
           {{ end }}
           envFrom: {{ include "library.container.envFrom.tpl" . | nindent 12 }}
           {{- if len .Values.nodeSelector }}
