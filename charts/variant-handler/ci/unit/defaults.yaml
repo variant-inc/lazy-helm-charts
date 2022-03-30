@@ -17,11 +17,11 @@ tests:
             - /bin/echo
             - "hello readiness"
     asserts:
-      - template: service.yaml
+      - template: deployment.yaml
         containsDocument:
-          kind: Service
-          apiVersion: v1
+          kind: Deployment
+          apiVersion: apps/v1
           name: test
-      - template: service.yaml
+      - template: deployment.yaml
         hasDocuments:
           count: 1

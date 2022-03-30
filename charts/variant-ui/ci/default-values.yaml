@@ -21,3 +21,4 @@ readinessProbe:
   exec:
     command:
       - /bin/echo
+      - "hello liveness"
