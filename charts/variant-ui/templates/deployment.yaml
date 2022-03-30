@@ -45,7 +45,6 @@ spec:
       ###
       securityContext:
         fsGroup: 65534
-      {{ if len $secrets }}
       volumes:
         {{- range $secrets }}
         - name: {{ .name }}
@@ -55,7 +54,6 @@ spec:
         - name: config-file
           configMap:
             name: {{ $fullName }}-chart-json
-      {{ end }}
       containers:
         - name: {{ $fullName }}
           image: {{ required "deployment.image.tag is required" .Values.deployment.image.tag }}
@@ -102,7 +100,6 @@ spec:
             {{- end }}
             {{- end }}
             {{- end }}
-          {{ if len $secrets }}
           volumeMounts:
             {{- range $secrets }}
             - name: {{ .name }}
@@ -112,7 +109,6 @@ spec:
             - name: config-file
               readOnly: true
               mountPath: /app/config
-          {{ end }}
           envFrom: {{ include "library.container.envFrom.tpl" . | nindent 12 }}
           {{- if len .Values.nodeSelector }}
           nodeSelector:
