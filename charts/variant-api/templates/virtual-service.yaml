@@ -46,7 +46,6 @@ spec:
             host: {{ $fullName }}
             port:
               number: {{ .Values.service.port }}
----
 {{- if .Values.istio.ingress.public }}
 {{- $fullName := (include "chart.fullname" .) -}}
 {{- $labels := (include "chart.labels" .) -}}
