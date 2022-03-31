@@ -49,3 +49,19 @@ Selector labels
 app.kubernetes.io/name: {{ include "chart.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
+
+{{- define "chart.podAnnotations" -}}
+{{- if len .Values.configVars }}
+checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+{{- end }}
+{{- if len .Values.awsSecrets }}
+checksum/secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
+{{- end }}
+checksum/serviceaccount: {{ include (print $.Template.BasePath "/serviceaccount.yaml") . | sha256sum }}
+{{- range .Values.configMaps }}
+checksum/{{ . | trunc 53 | trimSuffix "-" }}: {{ print (lookup "v1" "ConfigMap" $.Release.Namespace . ) | sha256sum }}
+{{- end }}
+{{- with .Values.deployment.podAnnotations }}
+{{ toYaml . }}
+{{- end }}
+{{- end }}
