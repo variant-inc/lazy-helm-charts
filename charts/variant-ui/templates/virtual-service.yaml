@@ -31,7 +31,29 @@ spec:
   hosts:
     - {{ $fullName }}.apps.{{ $host }}
   http:
-    - route:
+    - name: Private Path Redirects
+      match:
+      {{- if .Values.istio.ingress.redirects}}
+        {{- range .Values.istio.ingress.redirects }}
+        - uri:
+            prefix: {{ .prefix  }}
+        {{- end }}
+      {{- end }}
+        - uri:
+            prefix: /health
+        - uri:
+            prefix: /docs
+        - uri:
+            prefix: /redoc
+        - uri:
+            prefix: /swagger
+        - uri:
+            prefix: /swaggerui
+      redirect:
+        authority: {{ $fullName }}.internal.apps.{{ $host }}
+        redirectCode: 307
+    - name: Default Ingress
+      route:
         - destination:
             host: {{ $fullName }}
             port:
