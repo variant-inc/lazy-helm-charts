@@ -1,7 +1,7 @@
 {{- define "library.serviceaccount.tpl" }}
----
 {{- $fullName := (include "library.chart.fullname" .) -}}
 {{- $labels := (include "library.chart.labels" .) -}}
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:

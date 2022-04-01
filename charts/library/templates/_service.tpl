@@ -1,8 +1,8 @@
 {{- define "library.service.tpl" }}
----
 {{- $fullName := (include "library.chart.fullname" .) -}}
 {{- $labels := (include "library.chart.labels" .) -}}
 {{- $selectorLabels := (include "library.chart.selectorLabels" .) -}}
+---
 apiVersion: v1
 kind: Service
 metadata:
