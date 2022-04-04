@@ -21,6 +21,7 @@ readinessProbe:
   exec:
     command:
       - /bin/echo
+      - "hello liveness"
 
 configVars:
   foo: bar

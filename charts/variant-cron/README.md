@@ -2,7 +2,7 @@
 
 Use this chart to deploy a CronJob image to Kubernetes -- the Variant, CloudOps-approved way.
 
-![Version: 1.2.1](https://img.shields.io/badge/Version-1.2.1-informational?style=flat-square)
+![Version: 1.2.3](https://img.shields.io/badge/Version-1.2.3-informational?style=flat-square)
 
 A Helm chart for Istio Objects
 

@@ -1,6 +1,6 @@
 suite: Chart defaults
 tests:
-  - it: should be public and internal
+  - it: should be internal
     release:
       name: test
     set:
@@ -26,7 +26,7 @@ tests:
         containsDocument:
           kind: VirtualService
           apiVersion: networking.istio.io/v1alpha3
-          name: test-variant-ui-internal
+          name: test-internal
       - template: virtual-service.yaml
         hasDocuments:
           count: 2
@@ -52,7 +52,7 @@ tests:
         containsDocument:
           kind: VirtualService
           apiVersion: networking.istio.io/v1alpha3
-          name: test-variant-ui-internal
+          name: test-internal
       - template: virtual-service.yaml
         hasDocuments:
           count: 1
