@@ -22,3 +22,7 @@ readinessProbe:
     command:
       - /bin/echo
       - "hello liveness"
+
+configVars:
+  foo: bar
+  color: blue

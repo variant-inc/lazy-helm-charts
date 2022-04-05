@@ -18,6 +18,9 @@ tests:
             - "hello readiness"
       istio.ingress.public: true
       istio.ingress.host: dpl-drivevariant.com
+      configVars:
+        foo: bar
+        color: red
     asserts:
       - template: virtual-service.yaml
         containsDocument:
