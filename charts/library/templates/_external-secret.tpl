@@ -1,3 +1,4 @@
+{{- define "library.external-secret.tpl" }}
 {{- $fullName := (include "library.chart.fullname" .) -}}
 {{- $labels := (include "library.chart.labels" .) -}}
 {{- $secrets := .Values.awsSecrets -}}
@@ -14,3 +15,4 @@ spec:
   dataFrom:
     - {{.name}}
 {{- end -}}
+{{- end }}
