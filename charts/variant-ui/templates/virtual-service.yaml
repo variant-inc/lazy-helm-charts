@@ -11,7 +11,7 @@ spec:
   gateways:
     - default/default
   hosts:
-    - {{ $fullName }}.internal.apps.{{ $host }}
+    - {{ .Release.Namespace }}-{{ $fullName }}.internal.apps.{{ $host }}
   http:
     - route:
         - destination:
@@ -29,7 +29,7 @@ spec:
   gateways:
     - default/default
   hosts:
-    - {{ $fullName }}.apps.{{ $host }}
+    - {{ .Release.Namespace }}-{{ $fullName }}.apps.{{ $host }}
   http:
     - name: Private Path Redirects
       match:
@@ -50,7 +50,7 @@ spec:
         - uri:
             prefix: /swaggerui
       redirect:
-        authority: {{ $fullName }}.internal.apps.{{ $host }}
+        authority: {{ .Release.Namespace }}-{{ $fullName }}.internal.apps.{{ $host }}
         redirectCode: 307
     - name: Default Ingress
       route:
