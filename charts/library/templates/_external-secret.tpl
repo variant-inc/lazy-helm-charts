@@ -12,8 +12,7 @@ metadata:
     {{- $labels | nindent 4 }}
 spec:
   backendType: secretsManager
-  data:
-    - key: {{ required "name is required for each secret" .name }}
-      name: {{ .name }}
+  dataFrom:
+    - {{.name}}
 {{- end -}}
 {{- end }}
