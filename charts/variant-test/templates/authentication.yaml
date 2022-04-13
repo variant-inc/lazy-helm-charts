@@ -1,0 +1,18 @@
+{{- if .Values.authentication.enabled }}
+{{- $fullName := (include "chart.fullname" .) -}}
+{{- $labels := (include "chart.labels" .) -}}
+{{- $selectorLabels := (include "chart.selectorLabels" .) -}}
+apiVersion: security.istio.io/v1beta1
+kind: RequestAuthentication
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- $labels | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- $selectorLabels | nindent 6 }}
+  jwtRules:
+  - issuer: {{ required ".Values.authentication.server is required when .Values.authentication.enabled" .Values.authentication.server }}
+    jwksUri: {{ required ".Values.authentication.server is required when .Values.authentication.enabled" .Values.authentication.server }}/v1/keys
+{{- end }}

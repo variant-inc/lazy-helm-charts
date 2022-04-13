@@ -1,0 +1,18 @@
+suite: Chart defaults
+tests:
+  - it: should be internal only
+    release:
+      name: test
+    set:
+      deployment.image.tag: tag
+      revision: revision
+      istio.ingress.host: host
+    asserts:
+      - template: virtual-service.yaml
+        containsDocument:
+          apiVersion: networking.istio.io/v1alpha3
+          kind: VirtualService
+          name: test-internal
+      - template: virtual-service.yaml
+        hasDocuments:
+          count: 2

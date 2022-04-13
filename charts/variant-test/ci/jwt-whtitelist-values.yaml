@@ -1,0 +1,19 @@
+deployment:
+  image:
+    tag: 064859874041.dkr.ecr.us-east-2.amazonaws.com/lazy-helm-charts/variant-api:v0.3
+revision: testing
+istio:
+  ingress:
+    public: true
+    host: dpl-drivevariant.com
+service:
+  targetPort: 5000
+authentication:
+  enabled: true
+  server: trustme.com
+authorization:
+  rules:
+    to:
+      - operation:
+          methods: "GET"
+          paths: "/swagger"
