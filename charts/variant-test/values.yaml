@@ -138,7 +138,7 @@ configVars: {}
   # bar: foo
 
 # -- (map) Node labels for pod assignment
-#ref: https://kubernetes.io/docs/user-guide/node-selection/
+# ref: https://kubernetes.io/docs/user-guide/node-selection/
 nodeSelector: {}
 
 # -- (list) Tolerations for pod assignment
