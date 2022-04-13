@@ -1,4 +1,4 @@
-#Defaults and documentation of chart values
+# Defaults and documentation of chart values
 
 istio:
   ingress:
