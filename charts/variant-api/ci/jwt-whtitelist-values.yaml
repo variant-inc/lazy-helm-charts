@@ -17,3 +17,14 @@ authorization:
       - operation:
           methods: "GET"
           paths: "/swagger"
+livenessProbe:
+  exec:
+    command:
+      - /bin/echo
+      - "hello liveness"
+
+readinessProbe:
+  exec:
+    command:
+      - /bin/echo
+      - "hello liveness"
