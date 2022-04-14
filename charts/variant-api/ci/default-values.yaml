@@ -28,9 +28,11 @@ livenessProbe:
     command:
       - /bin/echo
       - "hello liveness"
+  httpGet:
 
 readinessProbe:
   exec:
     command:
       - /bin/echo
       - "hello liveness"
+  httpGet:
