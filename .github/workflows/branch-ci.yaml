@@ -19,10 +19,10 @@ jobs:
         uses: variant-inc/actions-setup@v1
       - name: Pre-commit
         run: pre-commit run -a --show-diff-on-failure
-      # TODO - Re-enable linting after cluster is upgraded to 1.22+
-      # - name: Lint
-      #   run: |
-      #     helm lint --strict ./charts/*
+      - name: Lint
+        run: |
+          for i in `find charts -name Chart.yaml | sed 's/Chart.yaml//g'`; do helm dependency update "$i"; done
+          helm lint --strict ./charts/*
       - name: Unit Test
         shell: pwsh
         run: ./scripts/unit_test.ps1
