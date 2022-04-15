@@ -75,8 +75,6 @@ spec:
             {{- end }}
           livenessProbe: {{ .Values.livenessProbe | toYaml | nindent 12 }}
           readinessProbe: {{ .Values.readinessProbe | toYaml | nindent 12 }}
-            initialDelaySeconds: 10
-            periodSeconds: 10
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
           env:

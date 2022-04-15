@@ -33,7 +33,7 @@ A Helm chart for APIs to Variant clusters
 | istio.ingress.redirects | list | `[]` | Optional paths that will always redirect to internal/VPN endpoints |
 | livenessProbe | object | `{"httpGet":{"path":"/health","port":80},"initialDelaySeconds":10,"periodSeconds":10}` | See [Probe](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe) docs |
 | nodeSelector | object | `{}` | (map) Node labels for pod assignment |
-| readinessProbe | object | `{"httpGet":{"path":"/health","port":80}}` | See [Probe](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe) docs |
+| readinessProbe | object | `{"httpGet":{"path":"/health"},"initialDelaySeconds":10,"periodSeconds":10}` | See [Probe](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe) docs |
 | revision | string | `nil` | Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision`  that will be applied to all objects created by a specific chart installation.  Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version |
 | secretVars | object | `{}` | (map) User defined secret variables are implemented here. |
 | securityContext.allowPrivilegeEscalation | bool | `false` | (bool) Setting it to false ensures that no child process of a container can gain more privileges than its parent |

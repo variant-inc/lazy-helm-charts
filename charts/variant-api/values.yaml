@@ -167,7 +167,8 @@ securityContext:
 readinessProbe:
   httpGet:
     path: /health
-    port: 80
+  initialDelaySeconds: 10
+  periodSeconds: 10
 
 # -- See [Probe](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe) docs
 livenessProbe:
