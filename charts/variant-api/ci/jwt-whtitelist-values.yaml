@@ -17,17 +17,6 @@ authorization:
       - operation:
           methods: "GET"
           paths: "/swagger"
-livenessProbe:
-  exec:
-    command:
-      - /bin/echo
-      - "hello liveness"
-  httpGet:
 
-readinessProbe:
-  exec:
-    command:
-      - /bin/echo
-      - "hello liveness"
-  httpGet:
+
 
