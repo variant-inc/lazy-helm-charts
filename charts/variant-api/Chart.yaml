@@ -2,7 +2,7 @@ apiVersion: v2
 name: variant-api
 description: A Helm chart for APIs to Variant clusters
 
-version: 2.1.5
+version: 2.1.6
 
 kubeVersion: "^1.7.1-0"
 home: https://www.drivevariant.com/
