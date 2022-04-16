@@ -55,7 +55,7 @@ template:
     serviceAccountName: {{ $fullName }}
     automountServiceAccountToken: true
     nodeSelector:
-    {{- if .Values.node.create }}
+    {{- if .Values.node.instanceType }}
       node.kubernetes.io/instance-type: {{ .Values.node.instanceType | quote }}
     {{- end }}
       {{- range $key, $value := .Values.nodeSelector }}
@@ -68,20 +68,20 @@ template:
       {{- end }}
     {{- end }}
     tolerations:
-    {{- if .Values.node.create }}
+    {{- if .Values.node.instanceType }}
       - key: "namespace"
         value: {{ .Release.Namespace | quote }}
         operator: "Equal"
         effect: "NoSchedule"
     {{- end }}
-      {{- range .Values.tolerations }}
+    {{- range .Values.tolerations }}
       - key: {{ required "Key is required for tolerations" .key | quote }}
         operator: {{ .operator | default "Exists" | quote }}
         {{- if hasKey . "value"  }}
         value: {{ .value | quote }}
         {{- end }}
         effect: {{ .effect | default "NoSchedule" | quote }}
-      {{- end }}
+    {{- end }}
 parallelism: 1
 backoffLimit: 2
 {{- end}}
