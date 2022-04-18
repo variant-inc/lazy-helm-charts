@@ -133,7 +133,7 @@ octopusTags:
   # -- Octopus space name
   space:
   # -- Octopus environment name
-  environment: 
+  environment:
   # -- Octopus project group
   project_group:
   # -- Octopus release name

@@ -1,5 +1,20 @@
 # This file contains the defaults for all optional, overridable values
 
+istio:
+  egress: []
+    # - name: some-external-api
+    #   hosts:
+    #     - "test.example.com"
+    #   ports:
+    #     - number: 443
+    #       protocol: HTTPS
+    # - name: some-external-database
+    #   addresses:
+    #     - "10.0.0.1"
+    #   ports:
+    #     - number: 5432
+    #       protocol: TCP
+
 serviceMonitor:
   # -- Frequency at which Prometheus metrics will be collected from your service
   interval: 10s

@@ -165,10 +165,9 @@ securityContext:
 
 # -- See [Probe](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe) docs
 readinessProbe:
-  httpGet:
-    path: /health
-  initialDelaySeconds: 10
-  periodSeconds: 10
+#   httpGet:
+#     path: /health
+#     port: 5000
 
 # -- See [Probe](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe) docs
 livenessProbe:
@@ -177,6 +176,9 @@ livenessProbe:
     port: 80
   initialDelaySeconds: 10
   periodSeconds: 10
+#   httpGet:
+#     path: /health
+#     port: 5000
 
 # -- Octopus tags
 octopusTags:
@@ -185,12 +187,11 @@ octopusTags:
   # -- Octopus space name
   space:
   # -- Octopus environment name
-  environment: 
+  environment:
   # -- Octopus project group
   project_group:
   # -- Octopus release name
   release_channel:
-
 
 # -- User tags
 userTags:

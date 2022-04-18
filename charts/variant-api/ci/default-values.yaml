@@ -23,16 +23,13 @@ configMaps:
 awsSecrets:
   - name: devops-playground-rds-creds
 
+
 livenessProbe:
-  exec:
-    command:
-      - /bin/echo
-      - "hello liveness"
   httpGet:
+    path: /health
+    port: 5000
 
 readinessProbe:
-  exec:
-    command:
-      - /bin/echo
-      - "hello liveness"
   httpGet:
+    path: /health
+    port: 5000

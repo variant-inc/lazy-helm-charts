@@ -1,6 +1,6 @@
 # Variant API Helm Chart
 
-![Version: 2.1.7](https://img.shields.io/badge/Version-2.1.7-informational?style=flat-square)
+![Version: 2.1.8](https://img.shields.io/badge/Version-2.1.8-informational?style=flat-square)
 
 A Helm chart for APIs to Variant clusters
 
@@ -39,7 +39,7 @@ A Helm chart for APIs to Variant clusters
 | octopusTags.project_group | string | `nil` | Octopus project group |
 | octopusTags.release_channel | string | `nil` | Octopus release name |
 | octopusTags.space | string | `nil` | Octopus space name |
-| readinessProbe | object | `{"httpGet":{"path":"/health"},"initialDelaySeconds":10,"periodSeconds":10}` | See [Probe](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe) docs |
+| readinessProbe | string | `nil` | See [Probe](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe) docs |
 | revision | string | `nil` | Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision`  that will be applied to all objects created by a specific chart installation.  Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version |
 | secretVars | object | `{}` | (map) User defined secret variables are implemented here. |
 | securityContext.allowPrivilegeEscalation | bool | `false` | (bool) Setting it to false ensures that no child process of a container can gain more privileges than its parent |
