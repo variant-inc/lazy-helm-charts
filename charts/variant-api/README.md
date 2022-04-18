@@ -1,6 +1,6 @@
 # Variant API Helm Chart
 
-![Version: 2.1.6](https://img.shields.io/badge/Version-2.1.6-informational?style=flat-square)
+![Version: 2.1.7](https://img.shields.io/badge/Version-2.1.7-informational?style=flat-square)
 
 A Helm chart for APIs to Variant clusters
 
@@ -33,6 +33,12 @@ A Helm chart for APIs to Variant clusters
 | istio.ingress.redirects | list | `[]` | Optional paths that will always redirect to internal/VPN endpoints |
 | livenessProbe | object | `{"httpGet":{"path":"/health","port":80},"initialDelaySeconds":10,"periodSeconds":10}` | See [Probe](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe) docs |
 | nodeSelector | object | `{}` | (map) Node labels for pod assignment |
+| octopusTags | object | `{"environment":null,"project":null,"project_group":null,"release_channel":null,"space":null}` | Octopus tags |
+| octopusTags.environment | string | `nil` | Octopus environment name |
+| octopusTags.project | string | `nil` | Octopus project name |
+| octopusTags.project_group | string | `nil` | Octopus project group |
+| octopusTags.release_channel | string | `nil` | Octopus release name |
+| octopusTags.space | string | `nil` | Octopus space name |
 | readinessProbe | object | `{"httpGet":{"path":"/health"},"initialDelaySeconds":10,"periodSeconds":10}` | See [Probe](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe) docs |
 | revision | string | `nil` | Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision`  that will be applied to all objects created by a specific chart installation.  Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version |
 | secretVars | object | `{}` | (map) User defined secret variables are implemented here. |
@@ -49,6 +55,10 @@ A Helm chart for APIs to Variant clusters
 | serviceMonitor.interval | string | `"10s"` | Frequency at which Prometheus metrics will be collected from your service |
 | serviceMonitor.scrapeTimeout | string | `"10s"` | Maximum wait duration for Prometheus metrics response from your service |
 | tolerations | list | `[]` | (list) Tolerations for pod assignment |
+| userTags | object | `{"owner":null,"purpose":null,"team":null}` | User tags |
+| userTags.owner | string | `nil` | owner of the project |
+| userTags.purpose | string | `nil` | purpose of the project |
+| userTags.team | string | `nil` | Team |
 
 ## TL;DR
 

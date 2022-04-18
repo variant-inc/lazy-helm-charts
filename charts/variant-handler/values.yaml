@@ -115,3 +115,25 @@ readinessProbe:
 
 # -- See [Probe](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe) docs
 livenessProbe:
+
+# -- Octopus tags
+octopusTags:
+  # -- Octopus project name
+  project:
+  # -- Octopus space name
+  space:
+  # -- Octopus environment name
+  environment:
+  # -- Octopus project group
+  project_group:
+  # -- Octopus release name
+  release_channel:
+
+# -- User tags
+userTags:
+  # -- Team
+  team:
+  # -- purpose of the project
+  purpose:
+  # -- owner of the project
+  owner:

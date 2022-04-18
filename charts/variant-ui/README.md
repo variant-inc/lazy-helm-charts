@@ -33,6 +33,11 @@ A Helm chart for a web UI configuration
 | livenessProbe | string | `nil` | See [Probe](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe) docs |
 | nameOverride | string | `nil` | nameOverride replaces the name of the chart in the Chart.yaml file |
 | nodeSelector | object | `{}` | (map) Node labels for pod assignment |
+| octopusTags.environment | string | `nil` | Octopus environment name |
+| octopusTags.project | string | `nil` | Octopus project name |
+| octopusTags.project_group | string | `nil` | Octopus project group |
+| octopusTags.release_channel | string | `nil` | Octopus release name |
+| octopusTags.space | string | `nil` | Octopus space name |
 | readinessProbe | string | `nil` | See [Probe](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe) docs |
 | revision | string | `nil` | Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision`  that will be applied to all objects created by a specific chart installation.  Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version |
 | secretVars | object | `{}` | (map) User defined secret variables are implemented here. |
@@ -52,6 +57,10 @@ A Helm chart for a web UI configuration
 | serviceMonitor.selector | object | `{}` | (map) Any label selector |
 | serviceMonitor.targetPort | int | `9090` | Service Monitor Target Port |
 | tolerations | list | `[]` | (list) Tolerations for pod assignment |
+| userTags | object | `{"owner":null,"purpose":null,"team":null}` | User tags |
+| userTags.owner | string | `nil` | owner of the project |
+| userTags.purpose | string | `nil` | purpose of the project |
+| userTags.team | string | `nil` | Team |
 
 ## Install
 

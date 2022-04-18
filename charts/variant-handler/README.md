@@ -26,6 +26,12 @@ A Helm chart for kubernetes handler
 | deployment.resources.requests.memory | string | `"384Mi"` | (string) Request memory |
 | livenessProbe | string | `nil` | See [Probe](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe) docs |
 | nodeSelector | object | `{}` | (map) Node labels for pod assignment |
+| octopusTags | object | `{"environment":null,"project":null,"project_group":null,"release_channel":null,"space":null}` | Octopus tags |
+| octopusTags.environment | string | `nil` | Octopus environment name |
+| octopusTags.project | string | `nil` | Octopus project name |
+| octopusTags.project_group | string | `nil` | Octopus project group |
+| octopusTags.release_channel | string | `nil` | Octopus release name |
+| octopusTags.space | string | `nil` | Octopus space name |
 | podSecurityContext.fsGroup | int | `65534` | Groups of nobody |
 | readinessProbe | string | `nil` | See [Probe](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe) docs |
 | replicaCount | int | `1` | replicatCount |
@@ -41,6 +47,10 @@ A Helm chart for kubernetes handler
 | serviceMonitor.interval | string | `"10s"` | Frequency at which Prometheus metrics will be collected from your service |
 | serviceMonitor.scrapeTimeout | string | `"10s"` | Maximum wait duration for Prometheus metrics response from your service |
 | tolerations | list | `[]` | (list) Tolerations for pod assignment |
+| userTags | object | `{"owner":null,"purpose":null,"team":null}` | User tags |
+| userTags.owner | string | `nil` | owner of the project |
+| userTags.purpose | string | `nil` | purpose of the project |
+| userTags.team | string | `nil` | Team |
 
 Use this chart to deploy an handler image to Kubernetes -- the Variant, CloudOps-approved way.
 

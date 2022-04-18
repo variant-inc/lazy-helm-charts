@@ -25,6 +25,14 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 revision: {{ required "revision is required" .Values.revision | quote }}
+cloudops.io/octopus/project: {{ required "revision is required" .Values.octopusTags.project | quote }}
+cloudops.io/octopus/space:  {{ required "revision is required" .Values.octopusTags.space  | quote }}
+cloudops.io/octopus/environment: {{ required "revision is required" .Values.octopusTags.environment | quote }}
+cloudops.io/octopus/project_group: {{ required "revision is required" .Values.octopusTags.project_group| quote }}
+cloudops.io/octopus/release_channel: {{ required "revision is required" .Values.octopusTags.release_channel| quote }}
+cloudops.io/user/team: {{ required "revision is required" .Values.userTags.team | quote }}
+cloudops.io/user/purpose: {{ required "revision is required" .Values.userTags.purpose | quote }}
+cloudops.io/user/owner: {{ required "revision is required" .Values.userTags.owner | quote }}
 {{- end }}
 
 {{/*
