@@ -1,6 +1,6 @@
 # Variant Handler Helm Chart
 
-![Version: 1.1.4](https://img.shields.io/badge/Version-1.1.4-informational?style=flat-square)
+![Version: 1.1.5](https://img.shields.io/badge/Version-1.1.5-informational?style=flat-square)
 
 A Helm chart for kubernetes handler
 
@@ -24,6 +24,7 @@ A Helm chart for kubernetes handler
 | deployment.resources.limits.memory | string | `"768Mi"` | (string) Limits Memory |
 | deployment.resources.requests.cpu | float | `0.1` | (float) Requests CPU |
 | deployment.resources.requests.memory | string | `"384Mi"` | (string) Request memory |
+| istio.egress | list | `[]` |  |
 | livenessProbe | string | `nil` | See [Probe](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe) docs |
 | nodeSelector | object | `{}` | (map) Node labels for pod assignment |
 | podSecurityContext.fsGroup | int | `65534` | Groups of nobody |
