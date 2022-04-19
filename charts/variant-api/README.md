@@ -33,12 +33,6 @@ A Helm chart for APIs to Variant clusters
 | istio.ingress.redirects | list | `[]` | Optional paths that will always redirect to internal/VPN endpoints |
 | livenessProbe | object | `{"httpGet":{"path":"/health","port":80},"initialDelaySeconds":10,"periodSeconds":10}` | See [Probe](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe) docs |
 | nodeSelector | object | `{}` | (map) Node labels for pod assignment |
-| octopusTags | object | `{"environment":null,"project":null,"project_group":null,"release_channel":null,"space":null}` | Octopus tags |
-| octopusTags.environment | string | `nil` | Octopus environment name |
-| octopusTags.project | string | `nil` | Octopus project name |
-| octopusTags.project_group | string | `nil` | Octopus project group |
-| octopusTags.release_channel | string | `nil` | Octopus release name |
-| octopusTags.space | string | `nil` | Octopus space name |
 | readinessProbe | string | `nil` | See [Probe](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe) docs |
 | revision | string | `nil` | Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision`  that will be applied to all objects created by a specific chart installation.  Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version |
 | secretVars | object | `{}` | (map) User defined secret variables are implemented here. |
@@ -54,11 +48,18 @@ A Helm chart for APIs to Variant clusters
 | serviceAccount.roleArn | string | `nil` | Optional ARN of the IAM role to be assumed by your application.  If your API requires access to any AWS services, a role should be created in AWS IAM. This role should have an inline policy that describes the permissions your API needs (connect to RDS, publish to an SNS topic, read from an SQS queue, etc.). |
 | serviceMonitor.interval | string | `"10s"` | Frequency at which Prometheus metrics will be collected from your service |
 | serviceMonitor.scrapeTimeout | string | `"10s"` | Maximum wait duration for Prometheus metrics response from your service |
+| tags | object | `{"octopusTags":{"environment":null,"project":null,"project_group":null,"release_channel":null,"space":null},"userTags":{"owner":null,"purpose":null,"team":null}}` | deployment tags |
+| tags.octopusTags | object | `{"environment":null,"project":null,"project_group":null,"release_channel":null,"space":null}` | Octopus tags |
+| tags.octopusTags.environment | string | `nil` | Octopus environment name |
+| tags.octopusTags.project | string | `nil` | Octopus project name |
+| tags.octopusTags.project_group | string | `nil` | Octopus project group |
+| tags.octopusTags.release_channel | string | `nil` | Octopus release name |
+| tags.octopusTags.space | string | `nil` | Octopus space name |
+| tags.userTags | object | `{"owner":null,"purpose":null,"team":null}` | User tags |
+| tags.userTags.owner | string | `nil` | owner of the project |
+| tags.userTags.purpose | string | `nil` | purpose of the project |
+| tags.userTags.team | string | `nil` | Team |
 | tolerations | list | `[]` | (list) Tolerations for pod assignment |
-| userTags | object | `{"owner":null,"purpose":null,"team":null}` | User tags |
-| userTags.owner | string | `nil` | owner of the project |
-| userTags.purpose | string | `nil` | purpose of the project |
-| userTags.team | string | `nil` | Team |
 
 ## TL;DR
 

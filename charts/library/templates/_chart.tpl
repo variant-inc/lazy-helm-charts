@@ -25,14 +25,14 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 revision: {{ required "revision is required" .Values.revision | quote }}
-cloudops.io/octopus/project: {{ required "revision is required" .Values.octopusTags.project | quote }}
-cloudops.io/octopus/space:  {{ required "revision is required" .Values.octopusTags.space  | quote }}
-cloudops.io/octopus/environment: {{ required "revision is required" .Values.octopusTags.environment | quote }}
-cloudops.io/octopus/project_group: {{ required "revision is required" .Values.octopusTags.project_group| quote }}
-cloudops.io/octopus/release_channel: {{ required "revision is required" .Values.octopusTags.release_channel| quote }}
-cloudops.io/user/team: {{ required "revision is required" .Values.userTags.team | quote }}
-cloudops.io/user/purpose: {{ required "revision is required" .Values.userTags.purpose | quote }}
-cloudops.io/user/owner: {{ required "revision is required" .Values.userTags.owner | quote }}
+cloudops.io/octopus/project: {{ required "project is required" .Values.tags.octopus_tags.project | quote }}
+cloudops.io/octopus/space:  {{ required "space is required" .Values.tags.octopus_tags.space  | quote }}
+cloudops.io/octopus/environment: {{ required "environment is required" .Values.tags.octopus_tags.environment | quote }}
+cloudops.io/octopus/project_group: {{ required "project group is required" .Values.tags.octopus_tags.project_group| quote }}
+cloudops.io/octopus/release_channel: {{ required "release channel is required" .Values.tags.octopus_tags.release_channel| quote }}
+cloudops.io/user/team: {{ required "user team is required" .Values.tags.user_tags.team | quote }}
+cloudops.io/user/purpose: {{ required "user purpose is required" .Values.tags.user_tags.purpose | quote }}
+cloudops.io/user/owner: {{ required "user owner is required" .Values.tags.user_tags.owner | quote }}
 {{- end }}
 
 {{/*

@@ -31,12 +31,6 @@ A Helm chart for Istio Objects
 | node.ttlSecondsAfterEmpty | int | `3600` | Number of seconds before custom nodes will be removed if nothing is running on them. |
 | node.ttlSecondsUntilExpired | string | `nil` | If nil, the feature is disabled, nodes will never expire |
 | nodeSelector | object | `{}` | Node labels for pod assignment ref: https://kubernetes.io/docs/user-guide/node-selection/ |
-| octopusTags | object | `{"environment":null,"project":null,"project_group":null,"release_channel":null,"space":null}` | Octopus tags |
-| octopusTags.environment | string | `nil` | Octopus environment name |
-| octopusTags.project | string | `nil` | Octopus project name |
-| octopusTags.project_group | string | `nil` | Octopus project group |
-| octopusTags.release_channel | string | `nil` | Octopus release name |
-| octopusTags.space | string | `nil` | Octopus space name |
 | podSecurityContext.fsGroup | int | `65534` | Groups of nobody |
 | restartPolicy | string | `"Never"` | Use Never by default for jobs so new pod is created on failure instead of restarting containers |
 | revision | string | `nil` | Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision`  that will be applied to all objects created by a specific chart installation.  Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version |
@@ -47,12 +41,18 @@ A Helm chart for Istio Objects
 | securityContext.runAsNonRoot | bool | `true` | Runs as non root. Must use numeric User in container |
 | securityContext.runAsUser | int | `nil` | Runs as numeric user |
 | serviceAccount.roleArn | string | `nil` | Optional ARN of the IAM role to be assumed by your application.  If your API requires access to any AWS services, a role should be created in AWS IAM. This role should have an inline policy that describes the permissions your API needs (connect to RDS, publish to an SNS topic, read from an SQS queue, etc.). |
-| tags | string | `nil` | Tags to be applied to custom node provisioner |
+| tags | object | `{"octopusTags":{"environment":null,"project":null,"project_group":null,"release_channel":null,"space":null},"userTags":{"owner":null,"purpose":null,"team":null}}` | Tags to be applied to custom node provisioner |
+| tags.octopusTags | object | `{"environment":null,"project":null,"project_group":null,"release_channel":null,"space":null}` | Octopus tags |
+| tags.octopusTags.environment | string | `nil` | Octopus environment name |
+| tags.octopusTags.project | string | `nil` | Octopus project name |
+| tags.octopusTags.project_group | string | `nil` | Octopus project group |
+| tags.octopusTags.release_channel | string | `nil` | Octopus release name |
+| tags.octopusTags.space | string | `nil` | Octopus space name |
+| tags.userTags | object | `{"owner":null,"purpose":null,"team":null}` | User tags |
+| tags.userTags.owner | string | `nil` | owner of the project |
+| tags.userTags.purpose | string | `nil` | purpose of the project |
+| tags.userTags.team | string | `nil` | Team |
 | tolerations | list | `[]` | Tolerations for pod assignment ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/ |
-| userTags | object | `{"owner":null,"purpose":null,"team":null}` | User tags |
-| userTags.owner | string | `nil` | owner of the project |
-| userTags.purpose | string | `nil` | purpose of the project |
-| userTags.team | string | `nil` | Team |
 
 ## TL;DR
 
