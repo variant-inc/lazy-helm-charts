@@ -111,7 +111,7 @@ node:
   # -- Flag to determine whether or not custom nodes will be provisioned.
   create: false
   # -- The EC2 Instance Type for your custom nodes.
-  instanceType: r5.xlarge
+  instanceType:
   # -- If nil, the feature is disabled, nodes will never expire
   ttlSecondsUntilExpired:
   # -- Number of seconds before custom nodes will be removed if nothing is running on them.
