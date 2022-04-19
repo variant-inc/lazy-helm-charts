@@ -14,21 +14,46 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+
       - name: Lazy Actions Setup
         id: lazy-setup
         uses: variant-inc/actions-setup@v1
-      - name: Pre-commit
-        run: pre-commit run -a --show-diff-on-failure
-      - name: Lint
+
+      - name: pre-commit dependencies
         run: |
           for i in `find charts -name Chart.yaml | sed 's/Chart.yaml//g'`; do helm dependency update "$i"; done
-          helm lint --strict ./charts/*
+          helm lint charts/* # add the --strict option later
+
+      - name: Pre-commit
+        run: pre-commit run -a --show-diff-on-failure
+
       - name: Unit Test
         shell: pwsh
         run: ./scripts/unit_test.ps1
+
       - name: Lazy Action Octopus
         uses: variant-inc/actions-octopus@v2
         with:
           default_branch: master
           version: ${{ steps.lazy-setup.outputs.image_version }}
           charts_dir_path: charts/variant-api
+
+
+      - name: Checkout Checkov repo
+        uses: actions/checkout@v2
+      - name: Run Checkov action
+        id: checkov
+        uses: bridgecrewio/checkov-action@v12.1347.0 # can be master or a version
+        with:
+          directory: charts/
+          check: CKV_AWS_1 # optional: run only a specific check_id. can be comma separated list
+          # skip_check: CKV_AWS_2 # optional: skip a specific check_id. can be comma separated list
+          quiet: true # optional: display only failed checks
+          soft_fail: false # optional: do not return an error code if there are failed checks
+          framework: kubernetes # optional: run only on a specific infrastructure {cloudformation,terraform,kubernetes,all}
+          output_format: sarif # optional: the output format, one of: cli, json, junitxml, github_failed_only, or sarif. Default: sarif
+          # download_external_modules: true # optional: download external terraform modules from public git repositories and terraform registry
+          log_level: DEBUG # optional: set log level. Default WARNING
+          # config_file: path/this_file
+          # baseline: cloudformation/.checkov.baseline # optional: Path to a generated baseline file. Will only report results not in the baseline.
+          # container_user: 1000 # optional: Define what UID and / or what GID to run the container under to prevent permission issues
