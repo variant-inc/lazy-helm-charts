@@ -22,7 +22,9 @@ jobs:
       - name: pre-commit dependencies
         run: |
           for i in `find charts -name Chart.yaml | sed 's/Chart.yaml//g'`; do helm dependency update "$i"; done
-          helm lint charts/* # add the --strict option later
+
+      - name: Helm Lint
+        run: helm lint charts/* # add the --strict option later
 
       - name: Pre-commit
         run: pre-commit run -a --show-diff-on-failure
