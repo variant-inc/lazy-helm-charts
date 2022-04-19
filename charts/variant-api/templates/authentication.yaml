@@ -1,6 +1,6 @@
 {{- if .Values.authentication.enabled }}
 {{- $fullName := (include "chart.fullname" .) -}}
-{{- $labels := (include "chart.labels" .) -}}
+{{- $labels := (include "library.chart.labels" .) -}}
 {{- $selectorLabels := (include "chart.selectorLabels" .) -}}
 apiVersion: security.istio.io/v1beta1
 kind: RequestAuthentication

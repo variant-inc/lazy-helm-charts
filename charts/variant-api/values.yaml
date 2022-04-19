@@ -171,30 +171,22 @@ readinessProbe:
 
 # -- See [Probe](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe) docs
 livenessProbe:
-  httpGet:
-    path: /health
-    port: 80
-  initialDelaySeconds: 10
-  periodSeconds: 10
 #   httpGet:
 #     path: /health
 #     port: 5000
 
-# -- Octopus tags
-octopusTags:
+# -- deployment tags
+tags:
   # -- Octopus project name
-  project:
+  octopus_project:
   # -- Octopus space name
-  space:
+  octopus_space:
   # -- Octopus environment name
-  environment:
+  octopus_environment:
   # -- Octopus project group
-  project_group:
+  octopus_project_group:
   # -- Octopus release name
-  release_channel:
-
-# -- User tags
-userTags:
+  octopus_release_channel:
   # -- Team
   team:
   # -- purpose of the project

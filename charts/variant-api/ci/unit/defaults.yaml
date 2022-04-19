@@ -7,6 +7,15 @@ tests:
       deployment.image.tag: tag
       revision: revision
       istio.ingress.host: host
+      tags:
+        octopus_project: test
+        octopus_space: default
+        octopus_environment: dev
+        octopus_project_group: default group
+        octopus_release_channel: test
+        team: devops
+        purpose: test
+        owner: devops
     asserts:
       - template: virtual-service.yaml
         containsDocument:

@@ -1,6 +1,6 @@
 # Variant Handler Helm Chart
 
-![Version: 1.1.6](https://img.shields.io/badge/Version-1.1.6-informational?style=flat-square)
+![Version: 1.1.6-beta3](https://img.shields.io/badge/Version-1.1.6--beta3-informational?style=flat-square)
 
 A Helm chart for kubernetes handler
 
@@ -27,12 +27,6 @@ A Helm chart for kubernetes handler
 | istio.egress | list | `[]` |  |
 | livenessProbe | string | `nil` | See [Probe](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe) docs |
 | nodeSelector | object | `{}` | (map) Node labels for pod assignment |
-| octopusTags | object | `{"environment":null,"project":null,"project_group":null,"release_channel":null,"space":null}` | Octopus tags |
-| octopusTags.environment | string | `nil` | Octopus environment name |
-| octopusTags.project | string | `nil` | Octopus project name |
-| octopusTags.project_group | string | `nil` | Octopus project group |
-| octopusTags.release_channel | string | `nil` | Octopus release name |
-| octopusTags.space | string | `nil` | Octopus space name |
 | podSecurityContext.fsGroup | int | `65534` | Groups of nobody |
 | readinessProbe | string | `nil` | See [Probe](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe) docs |
 | replicaCount | int | `1` | replicatCount |
@@ -47,11 +41,16 @@ A Helm chart for kubernetes handler
 | serviceAccount.roleArn | string | `nil` | Optional ARN of the IAM role to be assumed by your application.  If your API requires access to any AWS services, a role should be created in AWS IAM. This role should have an inline policy that describes the permissions your API needs (connect to RDS, publish to an SNS topic, read from an SQS queue, etc.). |
 | serviceMonitor.interval | string | `"10s"` | Frequency at which Prometheus metrics will be collected from your service |
 | serviceMonitor.scrapeTimeout | string | `"10s"` | Maximum wait duration for Prometheus metrics response from your service |
+| tags | object | `{"octopus_environment":null,"octopus_project":null,"octopus_project_group":null,"octopus_release_channel":null,"octopus_space":null,"owner":null,"purpose":null,"team":null}` | deployment tags |
+| tags.octopus_environment | string | `nil` | Octopus environment name |
+| tags.octopus_project | string | `nil` | Octopus project name |
+| tags.octopus_project_group | string | `nil` | Octopus project group |
+| tags.octopus_release_channel | string | `nil` | Octopus release name |
+| tags.octopus_space | string | `nil` | Octopus space name |
+| tags.owner | string | `nil` | owner of the project |
+| tags.purpose | string | `nil` | purpose of the project |
+| tags.team | string | `nil` | Team |
 | tolerations | list | `[]` | (list) Tolerations for pod assignment |
-| userTags | object | `{"owner":null,"purpose":null,"team":null}` | User tags |
-| userTags.owner | string | `nil` | owner of the project |
-| userTags.purpose | string | `nil` | purpose of the project |
-| userTags.team | string | `nil` | Team |
 
 Use this chart to deploy an handler image to Kubernetes -- the Variant, CloudOps-approved way.
 

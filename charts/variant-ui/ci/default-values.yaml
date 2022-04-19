@@ -26,3 +26,13 @@ readinessProbe:
 configVars:
   foo: bar
   color: blue
+
+tags:
+  owner: platform-infrastructure
+  octopus_project: test
+  octopus_space: default
+  octopus_environment: dev
+  octopus_project_group: default group
+  octopus_release_channel: test
+  team: devops
+  purpose: test

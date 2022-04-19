@@ -1,6 +1,6 @@
 # Variant UI Helm Chart
 
-![Version: 1.4.2](https://img.shields.io/badge/Version-1.4.2-informational?style=flat-square)
+![Version: 1.4.2-beta3](https://img.shields.io/badge/Version-1.4.2--beta3-informational?style=flat-square)
 
 A Helm chart for a web UI configuration
 
@@ -33,11 +33,6 @@ A Helm chart for a web UI configuration
 | livenessProbe | string | `nil` | See [Probe](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe) docs |
 | nameOverride | string | `nil` | nameOverride replaces the name of the chart in the Chart.yaml file |
 | nodeSelector | object | `{}` | (map) Node labels for pod assignment |
-| octopusTags.environment | string | `nil` | Octopus environment name |
-| octopusTags.project | string | `nil` | Octopus project name |
-| octopusTags.project_group | string | `nil` | Octopus project group |
-| octopusTags.release_channel | string | `nil` | Octopus release name |
-| octopusTags.space | string | `nil` | Octopus space name |
 | readinessProbe | string | `nil` | See [Probe](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Probe) docs |
 | revision | string | `nil` | Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision`  that will be applied to all objects created by a specific chart installation.  Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version |
 | secretVars | object | `{}` | (map) User defined secret variables are implemented here. |
@@ -56,11 +51,16 @@ A Helm chart for a web UI configuration
 | serviceMonitor.scrapeTimeout | string | `"10s"` | Scrape Timeout |
 | serviceMonitor.selector | object | `{}` | (map) Any label selector |
 | serviceMonitor.targetPort | int | `9090` | Service Monitor Target Port |
+| tags | object | `{"octopus_environment":null,"octopus_project":null,"octopus_project_group":null,"octopus_release_channel":null,"octopus_space":null,"owner":null,"purpose":null,"team":null}` | deployment tags |
+| tags.octopus_environment | string | `nil` | Octopus environment name |
+| tags.octopus_project | string | `nil` | Octopus project name |
+| tags.octopus_project_group | string | `nil` | Octopus project group |
+| tags.octopus_release_channel | string | `nil` | Octopus release name |
+| tags.octopus_space | string | `nil` | Octopus space name |
+| tags.owner | string | `nil` | owner of the project |
+| tags.purpose | string | `nil` | purpose of the project |
+| tags.team | string | `nil` | Team |
 | tolerations | list | `[]` | (list) Tolerations for pod assignment |
-| userTags | object | `{"owner":null,"purpose":null,"team":null}` | User tags |
-| userTags.owner | string | `nil` | owner of the project |
-| userTags.purpose | string | `nil` | purpose of the project |
-| userTags.team | string | `nil` | Team |
 
 ## Install
 

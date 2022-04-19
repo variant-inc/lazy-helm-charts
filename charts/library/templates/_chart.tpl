@@ -24,15 +24,16 @@ helm.sh/chart: {{ include "library.chart.chart" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+app: {{ .Release.Name }}
 revision: {{ required "revision is required" .Values.revision | quote }}
-cloudops.io/octopus/project: {{ required "revision is required" .Values.octopusTags.project | quote }}
-cloudops.io/octopus/space:  {{ required "revision is required" .Values.octopusTags.space  | quote }}
-cloudops.io/octopus/environment: {{ required "revision is required" .Values.octopusTags.environment | quote }}
-cloudops.io/octopus/project_group: {{ required "revision is required" .Values.octopusTags.project_group| quote }}
-cloudops.io/octopus/release_channel: {{ required "revision is required" .Values.octopusTags.release_channel| quote }}
-cloudops.io/user/team: {{ required "revision is required" .Values.userTags.team | quote }}
-cloudops.io/user/purpose: {{ required "revision is required" .Values.userTags.purpose | quote }}
-cloudops.io/user/owner: {{ required "revision is required" .Values.userTags.owner | quote }}
+cloudops.io/octopus-project: {{ required "project is required" .Values.tags.octopus_project | replace " " "-" | quote }}
+cloudops.io/octopus-space:  {{ required "space is required" .Values.tags.octopus_space | replace " " "-" | quote }}
+cloudops/octopus-environment: {{ required "environment is required" .Values.tags.octopus_environment | replace " " "-" | quote }}
+cloudops/octopus-project-group: {{ required "project group is required" .Values.tags.octopus_project_group | replace " " "-" | quote }}
+cloudops/octopus-release-channel: {{ required "release channel is required" .Values.tags.octopus_release_channel | replace " " "-" | quote }}
+cloudops/user-team: {{ required "user team is required" .Values.tags.team | replace " " "-" | quote }}
+cloudops/user-purpose: {{ required "user purpose is required" .Values.tags.purpose | replace " " "-" | quote }}
+cloudops/user-owner: {{ required "user owner is required" .Values.tags.owner | replace " " "-" | quote }}
 {{- end }}
 
 {{/*

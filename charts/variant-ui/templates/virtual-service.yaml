@@ -1,5 +1,5 @@
 {{- $fullName := (include "chart.fullname" .) -}}
-{{- $labels := (include "chart.labels" .) -}}
+{{- $labels := (include "library.chart.labels" .) -}}
 {{- $host := required "Host is required" .Values.istio.ingress.host -}}
 ---
 apiVersion: networking.istio.io/v1alpha3

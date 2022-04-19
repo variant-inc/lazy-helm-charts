@@ -7,7 +7,16 @@ tests:
       cronJob.image.tag: busybox:latest
       cronJob.schedule: "*/2 * * * *"
       revision: revision
-      cronJob.command: 
+      tags:
+        octopus_project: test
+        octopus_space: default
+        octopus_environment: dev
+        octopus_project_group: default group
+        octopus_release_channel: test
+        team: devops
+        purpose: test
+        owner: devops
+      cronJob.command:
         - /bin/echo
         - "Hello from unit test"
     asserts:
@@ -24,7 +33,16 @@ tests:
       cronJob.image.tag: busybox:latest
       cronJob.schedule: "*/2 * * * *"
       revision: revision
-      cronJob.command: 
+      tags:
+        octopus_project: test
+        octopus_space: default
+        octopus_environment: dev
+        octopus_project_group: default group
+        octopus_release_channel: test
+        team: devops
+        purpose: test
+        owner: devops
+      cronJob.command:
         - /bin/echo
         - "Hello from unit test"
       cronJob.suspend: true

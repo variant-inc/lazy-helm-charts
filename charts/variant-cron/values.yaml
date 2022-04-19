@@ -121,29 +121,25 @@ node:
 CLUSTER_NAME: variant-dev
 
 # -- Tags to be applied to custom node provisioner
+# -- deployment tags
 tags:
-
-# -- Use Never by default for jobs so new pod is created on failure instead of restarting containers
-restartPolicy: Never
-
-# -- Octopus tags
-octopusTags:
   # -- Octopus project name
-  project:
+  octopus_project:
   # -- Octopus space name
-  space:
+  octopus_space:
   # -- Octopus environment name
-  environment:
+  octopus_environment:
   # -- Octopus project group
-  project_group:
+  octopus_project_group:
   # -- Octopus release name
-  release_channel:
-
-# -- User tags
-userTags:
+  octopus_release_channel:
   # -- Team
   team:
   # -- purpose of the project
   purpose:
   # -- owner of the project
   owner:
+
+# -- Use Never by default for jobs so new pod is created on failure instead of restarting containers
+restartPolicy: Never
+
