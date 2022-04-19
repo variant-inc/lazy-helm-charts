@@ -57,6 +57,28 @@ CLUSTER_NAME: devops-playground
 
 tags:
   owner: platform-infrastructure
+  octopusTags:
+    # -- Octopus project name
+    project: test
+    # -- Octopus space name
+    space: default
+    # -- Octopus environment name
+    environment: dev
+    # -- Octopus project group
+    project_group: default group
+    # -- Octopus release name
+    release_channel: test
+
+  # -- User tags
+  userTags:
+    # -- Team
+    team: devops
+    # -- purpose of the project
+    purpose: test
+    # -- owner of the project
+    owner: devops
 
 securityContext:
   runAsUser: 1001
+
+
