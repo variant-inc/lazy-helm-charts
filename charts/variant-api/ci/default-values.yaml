@@ -36,7 +36,7 @@ readinessProbe:
 
 tags:
   # -- Octopus tags
-  octopusTags:
+  octopus_tags:
     # -- Octopus project name
     project: test
     # -- Octopus space name
@@ -49,7 +49,7 @@ tags:
     release_channel: test
 
   # -- User tags
-  userTags:
+  user_tags:
     # -- Team
     team: devops
     # -- purpose of the project

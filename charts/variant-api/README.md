@@ -48,17 +48,17 @@ A Helm chart for APIs to Variant clusters
 | serviceAccount.roleArn | string | `nil` | Optional ARN of the IAM role to be assumed by your application.  If your API requires access to any AWS services, a role should be created in AWS IAM. This role should have an inline policy that describes the permissions your API needs (connect to RDS, publish to an SNS topic, read from an SQS queue, etc.). |
 | serviceMonitor.interval | string | `"10s"` | Frequency at which Prometheus metrics will be collected from your service |
 | serviceMonitor.scrapeTimeout | string | `"10s"` | Maximum wait duration for Prometheus metrics response from your service |
-| tags | object | `{"octopusTags":{"environment":null,"project":null,"project_group":null,"release_channel":null,"space":null},"userTags":{"owner":null,"purpose":null,"team":null}}` | deployment tags |
-| tags.octopusTags | object | `{"environment":null,"project":null,"project_group":null,"release_channel":null,"space":null}` | Octopus tags |
-| tags.octopusTags.environment | string | `nil` | Octopus environment name |
-| tags.octopusTags.project | string | `nil` | Octopus project name |
-| tags.octopusTags.project_group | string | `nil` | Octopus project group |
-| tags.octopusTags.release_channel | string | `nil` | Octopus release name |
-| tags.octopusTags.space | string | `nil` | Octopus space name |
-| tags.userTags | object | `{"owner":null,"purpose":null,"team":null}` | User tags |
-| tags.userTags.owner | string | `nil` | owner of the project |
-| tags.userTags.purpose | string | `nil` | purpose of the project |
-| tags.userTags.team | string | `nil` | Team |
+| tags | object | `{"octopus_tags":{"environment":null,"project":null,"project_group":null,"release_channel":null,"space":null},"user_tags":{"owner":null,"purpose":null,"team":null}}` | deployment tags |
+| tags.octopus_tags | object | `{"environment":null,"project":null,"project_group":null,"release_channel":null,"space":null}` | Octopus tags |
+| tags.octopus_tags.environment | string | `nil` | Octopus environment name |
+| tags.octopus_tags.project | string | `nil` | Octopus project name |
+| tags.octopus_tags.project_group | string | `nil` | Octopus project group |
+| tags.octopus_tags.release_channel | string | `nil` | Octopus release name |
+| tags.octopus_tags.space | string | `nil` | Octopus space name |
+| tags.user_tags | object | `{"owner":null,"purpose":null,"team":null}` | User tags |
+| tags.user_tags.owner | string | `nil` | owner of the project |
+| tags.user_tags.purpose | string | `nil` | purpose of the project |
+| tags.user_tags.team | string | `nil` | Team |
 | tolerations | list | `[]` | (list) Tolerations for pod assignment |
 
 ## TL;DR

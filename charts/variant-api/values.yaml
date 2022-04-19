@@ -183,7 +183,7 @@ livenessProbe:
 # -- deployment tags
 tags:
   # -- Octopus tags
-  octopusTags:
+  octopus_tags:
     # -- Octopus project name
     project:
     # -- Octopus space name
@@ -196,7 +196,7 @@ tags:
     release_channel:
 
   # -- User tags
-  userTags:
+  user_tags:
     # -- Team
     team:
     # -- purpose of the project
