@@ -22,9 +22,7 @@ jobs:
       - name: pre-commit dependencies
         run: |
           for i in `find charts -name Chart.yaml | sed 's/Chart.yaml//g'`; do helm dependency update "$i"; done
-
-      - name: Helm Lint
-        run: helm lint charts/* # add the --strict option later
+          pip3 install checkov
 
       - name: Pre-commit
         run: pre-commit run -a --show-diff-on-failure
@@ -39,22 +37,3 @@ jobs:
           default_branch: master
           version: ${{ steps.lazy-setup.outputs.image_version }}
           charts_dir_path: charts/variant-api
-
-
-      - name: Checkout Checkov repo
-        uses: actions/checkout@v2
-      - name: Run Checkov action
-        id: checkov
-        uses: bridgecrewio/checkov-action@v12.1347.0 # can be master or a version
-        with:
-          directory: charts/
-          # check: CKV_AWS_1 # optional: run only a specific check_id. can be comma separated list
-          # skip_check: CKV_AWS_2 # optional: skip a specific check_id. can be comma separated list
-          quiet: true # optional: display only failed checks
-          soft_fail: false # optional: do not return an error code if there are failed checks
-          framework:
-            kubernetes
-            helm
-            json
-          output_format: sarif
-          log_level: DEBUG

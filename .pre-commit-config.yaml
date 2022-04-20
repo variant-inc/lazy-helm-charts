@@ -3,3 +3,16 @@ repos:
     rev: v1.7.0
     hooks:
       - id: helm-docs
+
+  - repo: https://github.com/gruntwork-io/pre-commit
+    rev: v0.1.17
+    hooks:
+      - id: helmlint
+
+  - repo: local
+    hooks:
+      - id: checkov
+        name: checkov
+        description: runs checkov
+        entry: bash -c 'checkov -d . --framework helm kubernetes json'
+        language: system
