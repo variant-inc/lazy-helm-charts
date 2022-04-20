@@ -97,6 +97,10 @@ EOF
 2. cronJob.image.tag
 3. cronJob.schedule
 
+## Prerequisites
+
+- Make sure curl utility is available in the image.
+
 ### Release name
 
 - Provide the `name` [argument](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release#name) argument in the `helm_release` resource
