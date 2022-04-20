@@ -22,7 +22,7 @@ jobs:
       - name: pre-commit dependencies
         run: |
           for i in `find charts -name Chart.yaml | sed 's/Chart.yaml//g'`; do helm dependency update "$i"; done
-          pip3 install checkov
+          pip3 install -U checkov
 
       - name: Pre-commit
         run: pre-commit run -a --show-diff-on-failure
