@@ -7,6 +7,17 @@ tests:
       cronJob.image.tag: busybox:latest
       cronJob.schedule: "*/2 * * * *"
       revision: revision
+      tags:
+        octopus_tags:
+          project: test
+          space: default
+          environment: dev
+          project_group: default group
+          release_channel: test
+        user_tags:
+          team: devops
+          purpose: test
+          owner: devops
       cronJob.command: 
         - /bin/echo
         - "Hello from unit test"
@@ -27,6 +38,18 @@ tests:
       cronJob.image.tag: busybox:latest
       cronJob.schedule: "*/2 * * * *"
       revision: revision
+      tags:
+        owner: platform-infrastructure
+        octopus_tags:
+          project: test
+          space: default
+          environment: dev
+          project_group: default group
+          release_channel: test
+        user_tags:
+          team: devops
+          purpose: test
+          owner: devops
       cronJob.command: 
         - /bin/echo
         - "Hello from unit test"
@@ -38,8 +61,6 @@ tests:
       nodeSelector:
         purpose: unit-test
         env: dpl
-      tags:
-        owner: platform-infrastructure
     asserts:
       - template: provisioner.yaml
         containsDocument:
@@ -56,6 +77,18 @@ tests:
       cronJob.image.tag: busybox:latest
       cronJob.schedule: "*/2 * * * *"
       revision: revision
+      tags:
+        owner: platform-infrastructure
+        octopus_tags:
+          project: test
+          space: default
+          environment: dev
+          project_group: default group
+          release_channel: test
+        user_tags:
+          team: devops
+          purpose: test
+          owner: devops
       cronJob.command: 
         - /bin/echo
         - "Hello from unit test"
