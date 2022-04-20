@@ -97,6 +97,22 @@ EOF
 2. cronJob.image.tag
 3. cronJob.schedule
 
+## Prerequisites
+
+1. Make sure curl utility is available in the image as it is used to check the status of the sidecar container. If not available, Based on the image you use add below commands in the Dockerfile.
+    - Ubuntu / Debian OS
+      ```bash
+      RUN apt-get install curl
+      ```
+    - RHEL / CentOS / Fedora OS
+      ```bash
+      RUN yum install curl
+      ```
+    - Alpine OS
+      ```bash
+      RUN apk --no-cache add curl
+      ```
+
 ### Release name
 
 - Provide the `name` [argument](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release#name) argument in the `helm_release` resource
