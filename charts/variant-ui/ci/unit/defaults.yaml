@@ -6,6 +6,17 @@ tests:
     set:
       deployment.image.tag: tag
       revision: abc
+      tags:
+        octopus_tags:
+          project: test
+          space: default
+          environment: dev
+          project_group: default group
+          release_channel: test
+        user_tags:
+          team: devops
+          purpose: test
+          owner: devops
       livenessProbe:
         exec:
           command:
@@ -36,6 +47,17 @@ tests:
     set:
       deployment.image.tag: tag
       revision: abc
+      tags:
+        octopus_tags:
+          project: test
+          space: default
+          environment: dev
+          project_group: default group
+          release_channel: test
+        user_tags:
+          team: devops
+          purpose: test
+          owner: devops
       istio.ingress.host: dpl-drivevariant.com
       livenessProbe:
         exec:
