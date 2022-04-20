@@ -35,24 +35,13 @@ readinessProbe:
     port: 5000
 
 tags:
-  # -- Octopus tags
   octopus_tags:
-    # -- Octopus project name
     project: test
-    # -- Octopus space name
     space: default
-    # -- Octopus environment name
     environment: dev
-    # -- Octopus project group
     project_group: default group
-    # -- Octopus release name
     release_channel: test
-
-  # -- User tags
   user_tags:
-    # -- Team
     team: devops
-    # -- purpose of the project
     purpose: test
-    # -- owner of the project
     owner: devops
