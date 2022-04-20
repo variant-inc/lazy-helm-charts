@@ -34,23 +34,11 @@ istio:
           protocol: HTTPS
 
 tags:
-  octopus_tags:
-    # -- Octopus project name
-    project: test
-    # -- Octopus space name
-    space: default
-    # -- Octopus environment name
-    environment: dev
-    # -- Octopus project group
-    project_group: default group
-    # -- Octopus release name
-    release_channel: test
-
-  # -- User tags
-  user_tags:
-    # -- Team
-    team: devops
-    # -- purpose of the project
-    purpose: test
-    # -- owner of the project
-    owner: devops
+  owner: platform-infrastructure
+  octopus_project: test
+  octopus_space: default
+  octopus_environment: dev
+  octopus_project_group: default group
+  octopus_release_channel: test
+  team: devops
+  purpose: test

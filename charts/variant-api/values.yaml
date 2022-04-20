@@ -182,24 +182,19 @@ livenessProbe:
 
 # -- deployment tags
 tags:
-  # -- Octopus tags
-  octopus_tags:
-    # -- Octopus project name
-    project:
-    # -- Octopus space name
-    space:
-    # -- Octopus environment name
-    environment:
-    # -- Octopus project group
-    project_group:
-    # -- Octopus release name
-    release_channel:
-
-  # -- User tags
-  user_tags:
-    # -- Team
-    team:
-    # -- purpose of the project
-    purpose:
-    # -- owner of the project
-    owner:
+  # -- Octopus project name
+  octopus_project:
+  # -- Octopus space name
+  octopus_space:
+  # -- Octopus environment name
+  octopus_environment:
+  # -- Octopus project group
+  octopus_project_group:
+  # -- Octopus release name
+  octopus_release_channel:
+  # -- Team
+  team:
+  # -- purpose of the project
+  purpose:
+  # -- owner of the project
+  owner:

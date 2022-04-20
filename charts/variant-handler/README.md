@@ -41,17 +41,15 @@ A Helm chart for kubernetes handler
 | serviceAccount.roleArn | string | `nil` | Optional ARN of the IAM role to be assumed by your application.  If your API requires access to any AWS services, a role should be created in AWS IAM. This role should have an inline policy that describes the permissions your API needs (connect to RDS, publish to an SNS topic, read from an SQS queue, etc.). |
 | serviceMonitor.interval | string | `"10s"` | Frequency at which Prometheus metrics will be collected from your service |
 | serviceMonitor.scrapeTimeout | string | `"10s"` | Maximum wait duration for Prometheus metrics response from your service |
-| tags | object | `{"octopus_tags":{"environment":null,"project":null,"project_group":null,"release_channel":null,"space":null},"user_tags":{"owner":null,"purpose":null,"team":null}}` | deployment tags |
-| tags.octopus_tags | object | `{"environment":null,"project":null,"project_group":null,"release_channel":null,"space":null}` | Octopus tags |
-| tags.octopus_tags.environment | string | `nil` | Octopus environment name |
-| tags.octopus_tags.project | string | `nil` | Octopus project name |
-| tags.octopus_tags.project_group | string | `nil` | Octopus project group |
-| tags.octopus_tags.release_channel | string | `nil` | Octopus release name |
-| tags.octopus_tags.space | string | `nil` | Octopus space name |
-| tags.user_tags | object | `{"owner":null,"purpose":null,"team":null}` | User tags |
-| tags.user_tags.owner | string | `nil` | owner of the project |
-| tags.user_tags.purpose | string | `nil` | purpose of the project |
-| tags.user_tags.team | string | `nil` | Team |
+| tags | object | `{"octopus_environment":null,"octopus_project":null,"octopus_project_group":null,"octopus_release_channel":null,"octopus_space":null,"owner":null,"purpose":null,"team":null}` | deployment tags |
+| tags.octopus_environment | string | `nil` | Octopus environment name |
+| tags.octopus_project | string | `nil` | Octopus project name |
+| tags.octopus_project_group | string | `nil` | Octopus project group |
+| tags.octopus_release_channel | string | `nil` | Octopus release name |
+| tags.octopus_space | string | `nil` | Octopus space name |
+| tags.owner | string | `nil` | owner of the project |
+| tags.purpose | string | `nil` | purpose of the project |
+| tags.team | string | `nil` | Team |
 | tolerations | list | `[]` | (list) Tolerations for pod assignment |
 
 Use this chart to deploy an handler image to Kubernetes -- the Variant, CloudOps-approved way.
