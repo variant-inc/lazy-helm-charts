@@ -33,7 +33,7 @@ cloudops/octopus-project-group: {{ required "project group is required" .Values.
 cloudops/octopus-release-channel: {{ required "release channel is required" .Values.tags.octopus_release_channel | replace " " "-" | quote }}
 cloudops/user-team: {{ required "user team is required" .Values.tags.team | replace " " "-" | quote }}
 cloudops/user-purpose: {{ required "user purpose is required" .Values.tags.purpose | replace " " "-" | quote }}
-cloudops/user-owner: {{ required "user owner is required" .Values.tags.owner | replace " " "-" | | quote }}
+cloudops/user-owner: {{ required "user owner is required" .Values.tags.owner | replace " " "-" | quote }}
 {{- end }}
 
 {{/*
