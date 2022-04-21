@@ -23,6 +23,16 @@ entries:
     version: 0.1.0-beta2
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2022-04-21T21:22:52.934209359Z"
+    description: DRY library for Variant helm charts
+    digest: 924090f1feae885762a7181c91f4700bb4bb67e94007903ab4c2e4a8bb58e720
+    name: library
+    type: library
+    urls:
+    - https://github.com/variant-inc/lazy-helm-charts/releases/download/library-0.1.0-beta2/library-0.1.0-beta2.tgz
+    version: 0.1.0-beta2
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2022-04-20T21:04:36.459219488Z"
     description: DRY library for Variant helm charts
     digest: 138e108e7a2059d415d25d74db9649c6083d79e4e44ece2f1d0ee7b8a6eedfab
@@ -2178,4 +2188,4 @@ entries:
     urls:
     - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-ui-1.0.0/variant-ui-1.0.0.tgz
     version: 1.0.0
-generated: "2022-04-21T20:51:29.83969394Z"
+generated: "2022-04-21T21:22:52.934603874Z"
