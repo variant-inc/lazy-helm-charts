@@ -6,6 +6,13 @@ istio:
   ingress:
     public: true
     host: dpl-drivevariant.com
+  egress:
+    - name: google
+      hosts:
+        - "google.com"
+      ports:
+        - number: 443
+          protocol: HTTPS
 service:
   targetPort: 5000
 authentication:
@@ -17,3 +24,6 @@ authorization:
       - operation:
           methods: "GET"
           paths: "/swagger"
+
+
+

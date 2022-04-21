@@ -2,7 +2,7 @@
 
 Use this chart to deploy a CronJob image to Kubernetes -- the Variant, CloudOps-approved way.
 
-![Version: 1.2.4](https://img.shields.io/badge/Version-1.2.4-informational?style=flat-square)
+![Version: 1.2.6](https://img.shields.io/badge/Version-1.2.6-informational?style=flat-square)
 
 A Helm chart for Istio Objects
 
@@ -27,7 +27,7 @@ A Helm chart for Istio Objects
 | imagePullSecrets | list | `[]` | (list) https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod |
 | istio.egress | list | `[]` | A whitelist of external services that your API requires connection to. The whitelist applies to the entire namespace in which this chart is installed.  [These services](https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8) are globally whitelisted and do not require declaration. See [egress](#egress-configuration) for more details. |
 | node.create | bool | `false` | Flag to determine whether or not custom nodes will be provisioned. |
-| node.instanceType | string | `"r5.xlarge"` | The EC2 Instance Type for your custom nodes. |
+| node.instanceType | string | `nil` | The EC2 Instance Type for your custom nodes. |
 | node.ttlSecondsAfterEmpty | int | `3600` | Number of seconds before custom nodes will be removed if nothing is running on them. |
 | node.ttlSecondsUntilExpired | string | `nil` | If nil, the feature is disabled, nodes will never expire |
 | nodeSelector | object | `{}` | Node labels for pod assignment ref: https://kubernetes.io/docs/user-guide/node-selection/ |

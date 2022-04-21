@@ -11,15 +11,15 @@ Process:
           Octopus.Action.RunOnServer: true
           Octopus.Action.Script.ScriptFileName: "scripts/integration_test.ps1"
           Octopus.Action.Script.ScriptParameters: "../charts/variant-api"
-  - Name: variant-cron
-    Actions:
-      - Name: Test variant-cron chart
-        ActionType: Octopus.Script
-        Properties:
-          Octopus.Action.Script.ScriptSource: Package
-          Octopus.Action.RunOnServer: true
-          Octopus.Action.Script.ScriptFileName: "scripts/integration_test.ps1"
-          Octopus.Action.Script.ScriptParameters: "../charts/variant-cron"
+  # - Name: variant-cron
+  #   Actions:
+  #     - Name: Test variant-cron chart
+  #       ActionType: Octopus.Script
+  #       Properties:
+  #         Octopus.Action.Script.ScriptSource: Package
+  #         Octopus.Action.RunOnServer: true
+  #         Octopus.Action.Script.ScriptFileName: "scripts/integration_test.ps1"
+  #         Octopus.Action.Script.ScriptParameters: "../charts/variant-cron"
   - Name: variant-handler
     Actions:
       - Name: Test variant-handler chart

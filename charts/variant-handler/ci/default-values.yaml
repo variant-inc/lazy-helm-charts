@@ -23,3 +23,12 @@ readinessProbe:
     command:
       - /bin/echo
       - "hello readiness"
+
+istio:
+  egress:
+    - name: google
+      hosts:
+        - "google.com"
+      ports:
+        - number: 443
+          protocol: HTTPS

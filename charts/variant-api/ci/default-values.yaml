@@ -22,3 +22,14 @@ configMaps:
 
 awsSecrets:
   - name: devops-playground-rds-creds
+
+
+livenessProbe:
+  httpGet:
+    path: /health
+    port: 5000
+
+readinessProbe:
+  httpGet:
+    path: /health
+    port: 5000
