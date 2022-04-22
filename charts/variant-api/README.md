@@ -159,8 +159,6 @@ URL Formats
 When using public ingess, the following URL prefixes are rerouted to the root URL and are essentially blocked. They must be accessed internally, or through VPN. You can add to this list in Values.istio.ingress.redirects.
 
 - health
-- docs
-- redoc
 - swagger
 - swaggerui
 

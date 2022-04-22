@@ -17,8 +17,6 @@ The folowing endpoints are being redirected to /{{ $.Release.Namespace }}/{{ $fu
 {{- end }}
 {{- end }}
 /{{ .Release.Namespace }}/{{ $fullName }}/health
-/{{ .Release.Namespace }}/{{ $fullName }}/docs
-/{{ .Release.Namespace }}/{{ $fullName }}/redoc
 /{{ .Release.Namespace }}/{{ $fullName }}/swagger
 /{{ .Release.Namespace }}/{{ $fullName }}/swaggerui
 {{- end}}
