@@ -42,10 +42,6 @@ spec:
         - uri:
             prefix: /health
         - uri:
-            prefix: /docs
-        - uri:
-            prefix: /redoc
-        - uri:
             prefix: /swagger
         - uri:
             prefix: /swaggerui
