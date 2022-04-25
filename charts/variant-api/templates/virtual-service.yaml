@@ -75,10 +75,6 @@ spec:
         - uri:
             prefix: /{{ $release.Namespace }}/{{ $release.Name }}/health
         - uri:
-            prefix: /{{ $release.Namespace }}/{{ $release.Name }}/docs
-        - uri:
-            prefix: /{{ $release.Namespace }}/{{ $release.Name }}/redoc
-        - uri:
             prefix: /{{ $release.Namespace }}/{{ $release.Name }}/swagger
         - uri:
             prefix: /{{ $release.Namespace }}/{{ $release.Name }}/swaggerui
@@ -120,10 +116,6 @@ spec:
       {{- end }}
         - uri:
             prefix: /health
-        - uri:
-            prefix: /docs
-        - uri:
-            prefix: /redoc
         - uri:
             prefix: /swagger
         - uri:
