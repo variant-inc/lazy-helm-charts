@@ -27,14 +27,9 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 revision: {{ required "revision is required" .Values.revision | quote }}
 app: {{ .Release.Name }}
 revision: {{ required "revision is required" .Values.revision | quote }}
-cloudops.io/octopus-project: {{ .Values.tags.octopus/project | quote }}
-cloudops.io/octopus-space:  {{ .Values.tags.octopus/space | quote }}
-cloudops.io/octopus-environment: {{ .Values.tags.octopus/environment | quote }}
-cloudops.io/octopus-project-group: {{ .Values.tags.octopus/project_group | quote }}
-cloudops.io/octopus-release-channel: {{ .Values.tags.octopus/release_channel | quote }}
-cloudops.io/user-team: {{ .Values.tags.team | quote }}
-cloudops.io/user-purpose: {{ .Values.tags.purpose | quote }}
-cloudops.io/user-owner: {{ .Values.tags.owner | quote }}
+{{- range $key, $value := .Values.tags }}
+cloudops.io.{{ $key }}: {{ $value | replace " " "-"| quote }}
+{{- end }}
 {{- end }}
 
 {{/*
