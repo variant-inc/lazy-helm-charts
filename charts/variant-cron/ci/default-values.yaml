@@ -57,6 +57,13 @@ CLUSTER_NAME: devops-playground
 
 tags:
   owner: platform-infrastructure
+  octopus/project: test
+  octopus/space: default
+  octopus/environment: dev
+  octopus/project_group: default group
+  octopus/release_channel: test
+  team: devops
+  purpose: test
 
 securityContext:
   runAsUser: 1001

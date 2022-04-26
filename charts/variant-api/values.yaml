@@ -174,3 +174,6 @@ livenessProbe:
 #   httpGet:
 #     path: /health
 #     port: 5000
+
+# -- deployment tags
+tags:

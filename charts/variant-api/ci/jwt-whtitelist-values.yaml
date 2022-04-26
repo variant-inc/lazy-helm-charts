@@ -25,5 +25,13 @@ authorization:
           methods: "GET"
           paths: "/swagger"
 
-
+tags:
+  octopus/project: test
+  octopus/space: default
+  octopus/environment: dev
+  octopus/project_group: default group
+  octopus/release_channel: test
+  team: devops
+  purpose: test
+  owner: devops
 

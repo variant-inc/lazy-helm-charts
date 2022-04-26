@@ -2,7 +2,7 @@
 
 Use this chart to deploy a CronJob image to Kubernetes -- the Variant, CloudOps-approved way.
 
-![Version: 1.2.6](https://img.shields.io/badge/Version-1.2.6-informational?style=flat-square)
+![Version: 1.2.6-beta4](https://img.shields.io/badge/Version-1.2.6--beta4-informational?style=flat-square)
 
 A Helm chart for Istio Objects
 
@@ -41,7 +41,7 @@ A Helm chart for Istio Objects
 | securityContext.runAsNonRoot | bool | `true` | Runs as non root. Must use numeric User in container |
 | securityContext.runAsUser | int | `nil` | Runs as numeric user |
 | serviceAccount.roleArn | string | `nil` | Optional ARN of the IAM role to be assumed by your application.  If your API requires access to any AWS services, a role should be created in AWS IAM. This role should have an inline policy that describes the permissions your API needs (connect to RDS, publish to an SNS topic, read from an SQS queue, etc.). |
-| tags | string | `nil` | Tags to be applied to custom node provisioner |
+| tags | string | `nil` | Tags to be applied to custom node provisioner and labels |
 | tolerations | list | `[]` | Tolerations for pod assignment ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/ |
 
 ## TL;DR

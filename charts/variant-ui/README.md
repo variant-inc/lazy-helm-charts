@@ -1,6 +1,6 @@
 # Variant UI Helm Chart
 
-![Version: 1.4.1](https://img.shields.io/badge/Version-1.4.1-informational?style=flat-square)
+![Version: 1.4.2-beta4](https://img.shields.io/badge/Version-1.4.2--beta4-informational?style=flat-square)
 
 A Helm chart for a web UI configuration
 
@@ -51,6 +51,7 @@ A Helm chart for a web UI configuration
 | serviceMonitor.scrapeTimeout | string | `"10s"` | Scrape Timeout |
 | serviceMonitor.selector | object | `{}` | (map) Any label selector |
 | serviceMonitor.targetPort | int | `9090` | Service Monitor Target Port |
+| tags | string | `nil` |  |
 | tolerations | list | `[]` | (list) Tolerations for pod assignment |
 
 ## Install
