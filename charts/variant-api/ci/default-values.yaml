@@ -39,7 +39,7 @@ tags:
   octopus_space: default
   octopus_environment: dev
   octopus_project_group: default group
-  octopus_release_channel: test
+  octopus_release_channel: test1
   team: devops
   purpose: test
   owner: devops
