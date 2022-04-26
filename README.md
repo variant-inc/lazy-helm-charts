@@ -6,7 +6,7 @@ This repository holds all helm charts that are used by DevOps
 
 To import the chart repository, do
 
-`helm repo add variant-inc-helm-charts https://variant-inc.github.io/lazy-helm-charts/`
+`helm repo add variant-inc-helm-charts https://variant-inc.github.io/lazy-helm-charts/ --password <token>`
 
 ## Using a lazy-helm-chart as a Subchart
 
@@ -58,4 +58,4 @@ dependencies:
 
 `helm template coolapi  . -n cool-test --values values.yaml`
 
-`helm install coolapi  . -n cool-test --values values.yaml --render-subchart-notes`
+`helm upgrade --install coolapi  . -n cool-test --values values.yaml --render-subchart-notes`
