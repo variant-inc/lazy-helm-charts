@@ -32,3 +32,13 @@ istio:
       ports:
         - number: 443
           protocol: HTTPS
+
+tags:
+  owner: platform-infrastructure
+  octopus/project: test
+  octopus/space: default
+  octopus/environment: dev
+  octopus/project_group: default group
+  octopus/release_channel: test
+  team: devops
+  purpose: test

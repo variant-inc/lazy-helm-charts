@@ -1,6 +1,6 @@
 {{- $egress := .Values.istio.egress -}}
 {{- $fullName := (include "chart.fullname" .) -}}
-{{- $labels := (include "chart.labels" .) -}}
+{{- $labels := (include "library.chart.labels" .) -}}
 {{- range $egress }}
 {{- $name := printf "%s-%s" $fullName (required "A valid name is required for each ServiceEntry!" .name) }}
 {{ $hosts := .hosts }}

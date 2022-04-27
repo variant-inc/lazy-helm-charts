@@ -1,6 +1,6 @@
 # Variant Handler Helm Chart
 
-![Version: 1.1.5](https://img.shields.io/badge/Version-1.1.5-informational?style=flat-square)
+![Version: 1.1.6](https://img.shields.io/badge/Version-1.1.6-informational?style=flat-square)
 
 A Helm chart for kubernetes handler
 
@@ -111,4 +111,5 @@ All possible objects created by this chart:
 | serviceAccount.roleArn | string | `nil` | Optional ARN of the IAM role to be assumed by your application.  If your API requires access to any AWS services, a role should be created in AWS IAM. This role should have an inline policy that describes the permissions your API needs (connect to RDS, publish to an SNS topic, read from an SQS queue, etc.). [RoleArn](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/rolearn.md) |
 | serviceMonitor.interval | string | `"10s"` | Frequency at which Prometheus metrics will be collected from your service |
 | serviceMonitor.scrapeTimeout | string | `"10s"` | Maximum wait duration for Prometheus metrics response from your service |
+| tags | string | `nil` | deployment tags |
 | tolerations | list | `[]` | (list) Tolerations for pod assignment [Tolerations](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/tolerations.md) |
