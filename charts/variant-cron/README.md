@@ -31,15 +31,15 @@ A Helm chart for Istio Objects
 - To create custom nodes for your Cron Job add the following configurations to your values.yaml
 
 ```yaml
-node:
-  # Set to true to create custom nodes. Default is false
-  create: true
-  # EC2 Instance type for your cusom node. Default is r5.xlarge
-  instanceType: r5.xlarge
-  # If nil, the feature is disabled, nodes will never expire
-  ttlSecondsUntilExpired: 2592000 # 30 Days = 60 * 60 * 24 * 30 Seconds;
-  # If nil, the feature is disabled, nodes will never scale down due to low utilization. Default 30 minutes
-  ttlSecondsAfterEmpty: 1800
+  node:
+    # Set to true to create custom nodes. Default is false
+    create: true
+    # EC2 Instance type for your cusom node. Default is r5.xlarge
+    instanceType: r5.xlarge
+    # If nil, the feature is disabled, nodes will never expire
+    ttlSecondsUntilExpired: 2592000 # 30 Days = 60 * 60 * 24 * 30 Seconds;
+    # If nil, the feature is disabled, nodes will never scale down due to low utilization. Default 30 minutes
+    ttlSecondsAfterEmpty: 1800
 ```
 
 #### [Infrastructure Permissions]([RoleArn](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/rolearn.md))
