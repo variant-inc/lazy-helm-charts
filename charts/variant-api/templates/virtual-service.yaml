@@ -1,5 +1,5 @@
 {{- $fullName := (include "chart.fullname" .) -}}
-{{- $labels := (include "chart.labels" .) -}}
+{{- $labels := (include "library.chart.labels" .) -}}
 {{- $release := .Release -}}
 {{- $host := (include "chart.ingressHostname" .) -}}
 ---
@@ -48,7 +48,7 @@ spec:
               number: {{ .Values.service.port }}
 {{- if .Values.istio.ingress.public }}
 {{- $fullName := (include "chart.fullname" .) -}}
-{{- $labels := (include "chart.labels" .) -}}
+{{- $labels := (include "library.chart.labels" .) -}}
 {{- $release := .Release -}}
 {{- $host := (include "chart.ingressHostname" .) -}}
 ---

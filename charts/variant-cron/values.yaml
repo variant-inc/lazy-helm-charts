@@ -124,7 +124,7 @@ node:
 # -- For securityGroupSelector in provisioner.yaml
 CLUSTER_NAME: variant-dev
 
-# -- Tags to be applied to custom node provisioner
+# -- Tags to be applied to custom node provisioner and labels
 tags:
 
 # -- Use Never by default for jobs so new pod is created on failure instead of restarting containers
