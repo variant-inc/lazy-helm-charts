@@ -16,7 +16,7 @@ A Helm chart for Istio Objects
    - [.NET](https://github.com/variant-inc/actions-dotnet)
    - [Node](https://github.com/variant-inc/actions-nodejs)
    - [Python](https://github.com/variant-inc/actions-python)
-2. Make sure curl utility is available in the image as it is used to check the status of the sidecar container. If not available, Based on the image you use add below commands in the Dockerfile. 
+2. Make sure curl utility is available in the image as it is used to check the status of the sidecar container. If not available, Based on the image you use add below commands in the Dockerfile.
    - Ubuntu / Debian OS
       ```bash
       RUN apt-get install curl
