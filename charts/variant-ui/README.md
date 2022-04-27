@@ -10,7 +10,7 @@ A Helm chart for a web UI configuration
 
 ## Before you start
 
-### Prequisites
+### Prerequisites
 
 1. Use a CloudOps Github CI workflow that publishes an image
    - [.NET](https://github.com/variant-inc/actions-dotnet)
