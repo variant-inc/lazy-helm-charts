@@ -64,7 +64,7 @@ When using public ingess, the following URL prefixes are rerouted to the root UR
 - swagger
 - swaggerui
 
-#### [Infrastructure Permissions]([RoleArn](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/rolearn.md))
+#### [Infrastructure Permissions](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/rolearn.md)
 
 #### [Egress Configuration](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/egress.md) (*how your service will access external resources*)
 

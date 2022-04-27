@@ -54,7 +54,7 @@ A Helm chart for Istio Objects
     ttlSecondsAfterEmpty: 1800
 ```
 
-#### [Infrastructure Permissions]([RoleArn](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/rolearn.md))
+#### [Infrastructure Permissions](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/rolearn.md)
 
 #### [Egress Configuration](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/egress.md) (*how your Cron Job will access external resources*)
 
