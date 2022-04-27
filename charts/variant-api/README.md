@@ -1,6 +1,6 @@
 # Variant API Helm Chart
 
-![Version: 2.1.7](https://img.shields.io/badge/Version-2.1.7-informational?style=flat-square)
+![Version: 2.1.8](https://img.shields.io/badge/Version-2.1.8-informational?style=flat-square)
 
 A Helm chart for APIs to Variant clusters
 
@@ -33,7 +33,7 @@ A Helm chart for APIs to Variant clusters
 
 ## Before you start
 
-### Prequisites
+### Prerequisites
 
 1. Use a CloudOps Github CI workflow that publishes an image
    - [.NET](https://github.com/variant-inc/actions-dotnet)
@@ -152,4 +152,5 @@ All possible objects created by this chart:
 | serviceAccount.roleArn | string | `nil` | Optional ARN of the IAM role to be assumed by your application. If your API requires access to any AWS services, a role should be created in AWS IAM. This role should have an inline policy that describes the permissions your API needs (connect to RDS, publish to an SNS topic, read from an SQS queue, etc.). [RoleArn](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/rolearn.md) |
 | serviceMonitor.interval | string | `"10s"` | Frequency at which Prometheus metrics will be collected from your service |
 | serviceMonitor.scrapeTimeout | string | `"10s"` | Maximum wait duration for Prometheus metrics response from your service |
+| tags | string | `nil` | deployment tags |
 | tolerations | list | `[]` | (list) Tolerations for pod assignment. [Tolerations](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/tolerations.md) |

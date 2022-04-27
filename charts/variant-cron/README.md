@@ -1,6 +1,6 @@
 # Variant CronJob Helm Chart
 
-![Version: 1.2.6](https://img.shields.io/badge/Version-1.2.6-informational?style=flat-square)
+![Version: 1.2.7](https://img.shields.io/badge/Version-1.2.7-informational?style=flat-square)
 
 A Helm chart for Istio Objects
 
@@ -10,13 +10,25 @@ A Helm chart for Istio Objects
 
 ## Before you start
 
-### Prequisites
+### Prerequisites
 
 1. Use a CloudOps Github CI workflow that publishes an image
    - [.NET](https://github.com/variant-inc/actions-dotnet)
    - [Node](https://github.com/variant-inc/actions-nodejs)
    - [Python](https://github.com/variant-inc/actions-python)
-
+2. Make sure curl utility is available in the image as it is used to check the status of the sidecar container. If not available, Based on the image you use add below commands in the Dockerfile.
+   - Ubuntu / Debian OS
+     ```bash
+     RUN apt-get install curl
+     ```
+   - RHEL / CentOS / Fedora OS
+     ```bash
+     RUN yum install curl
+     ```
+   - Alpine OS
+     ```bash
+     RUN apk --no-cache add curl
+     ```
 ***
 
 # Create Your Chart
@@ -93,5 +105,5 @@ All possible objects created by this chart:
 | securityContext.runAsNonRoot | bool | `true` | Runs as non root. Must use numeric User in container |
 | securityContext.runAsUser | int | `nil` | Runs as numeric user |
 | serviceAccount.roleArn | string | `nil` | Optional ARN of the IAM role to be assumed by your application. If your API requires access to any AWS services, a role should be created in AWS IAM. This role should have an inline policy that describes the permissions your API needs (connect to RDS, publish to an SNS topic, read from an SQS queue, etc.). [RoleArn](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/rolearn.md) |
-| tags | string | `nil` | Tags to be applied to custom node provisioner |
+| tags | string | `nil` | Tags to be applied to custom node provisioner and labels |
 | tolerations | list | `[]` | Tolerations for pod assignment [Tolerations](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/tolerations.md) |

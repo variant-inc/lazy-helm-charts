@@ -1,5 +1,5 @@
 {{- $fullName := (include "chart.fullname" .) -}}
-{{- $labels := (include "chart.labels" .) -}}
+{{- $labels := (include "library.chart.labels" .) -}}
 {{- $selectorLabels := (include "chart.selectorLabels" .) -}}
 {{- $secrets := .Values.awsSecrets -}}
 {{- $secretEnv := .Values.secretVars -}}

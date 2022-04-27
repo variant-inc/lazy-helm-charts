@@ -33,3 +33,13 @@ readinessProbe:
   httpGet:
     path: /health
     port: 5000
+
+tags:
+  octopus/project: test
+  octopus/pace: default
+  octopus/environment: dev
+  octopus/project_group: default group
+  octopus/release_channel: test1
+  team: devops
+  purpose: test
+  owner: devops

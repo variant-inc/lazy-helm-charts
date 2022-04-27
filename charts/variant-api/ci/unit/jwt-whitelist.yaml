@@ -10,6 +10,15 @@ tests:
       revision: revision
       istio.ingress.host: host
       deployment.image.tag: tag
+      tags:
+        octopus/project: test
+        octopus/space: default
+        octopus/environment: dev
+        octopus/project_group: default group
+        octopus/release_channel: test
+        team: devops
+        purpose: test
+        owner: devops
       authentication:
         enabled: true
         server: trustme.com

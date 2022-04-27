@@ -143,3 +143,6 @@ readinessProbe:
 
 # -- See [Probe](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/probes.md)
 livenessProbe:
+
+# -- deployment tags
+tags:

@@ -1,6 +1,6 @@
 # Variant UI Helm Chart
 
-![Version: 1.4.1](https://img.shields.io/badge/Version-1.4.1-informational?style=flat-square)
+![Version: 1.4.2](https://img.shields.io/badge/Version-1.4.2-informational?style=flat-square)
 
 A Helm chart for a web UI configuration
 
@@ -10,7 +10,7 @@ A Helm chart for a web UI configuration
 
 ## Before you start
 
-### Prequisites
+### Prerequisites
 
 1. Use a CloudOps Github CI workflow that publishes an image
    - [.NET](https://github.com/variant-inc/actions-dotnet)
@@ -146,4 +146,5 @@ All possible objects created by this chart:
 | serviceMonitor.scrapeTimeout | string | `"10s"` | Scrape Timeout |
 | serviceMonitor.selector | object | `{}` | (map) Any label selector |
 | serviceMonitor.targetPort | int | `9090` | Service Monitor Target Port |
+| tags | string | `nil` |  |
 | tolerations | list | `[]` | (list) Tolerations for pod assignment [Tolerations](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/tolerations.md) |

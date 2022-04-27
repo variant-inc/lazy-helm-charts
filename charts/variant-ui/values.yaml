@@ -169,3 +169,6 @@ securityContext:
   allowPrivilegeEscalation: false
   # -- (bool) Requires that containers must run with a read-only root filesystem (i.e. no writable layer)
   readOnlyRootFilesystem: false
+
+  # -- deployment tags
+tags:
