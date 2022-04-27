@@ -14,5 +14,5 @@ repos:
       - id: checkov
         name: checkov
         description: runs checkov
-        entry: bash -c 'checkov -d . --framework helm kubernetes json'
-        language: system
+        entry: scripts/linters/checkov.sh
+        language: script
