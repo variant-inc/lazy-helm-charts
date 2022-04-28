@@ -64,7 +64,7 @@ When using public ingess, the following URL prefixes are rerouted to the root UR
 - swagger
 - swaggerui
 
-#### [Infrastructure Permissions]([RoleArn](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/rolearn.md))
+#### [Infrastructure Permissions](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/rolearn.md)
 
 #### [Egress Configuration](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/egress.md) (*how your service will access external resources*)
 
@@ -125,10 +125,10 @@ All possible objects created by this chart:
 | istio.ingress.host | string | `nil` | The base domain that will be used to construct URLs that point to your API. This should almost always be the Octopus Variable named `DOMAIN` in the [AWS Access Keys](https://octopus.apps.ops-drivevariant.com/app#/Spaces-22/library/variables/) See [Istio](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/istio.md) for more Istio details. |
 | istio.ingress.public | bool | `false` | When `false`, an internal URL will be created that will expose your application *via OpenVPN-only*. When `true`, an additional publicly accessible URL will be created. This API should be secured behind some authentication method when set to `true`. |
 | istio.ingress.redirects | list | `[]` | Optional paths that will always redirect to internal/VPN endpoints |
-| livenessProbe | string | `nil` | See [Probe](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/probes.md) |
+| livenessProbe | object | `{}` | (map) Indicates whether container is running. See [Probe](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/probes.md) |
 | nameOverride | string | `nil` | nameOverride replaces the name of the chart in the Chart.yaml file |
 | nodeSelector | object | `{}` | (map) Node labels for pod assignment [NodeSelector](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/nodeselector.md) |
-| readinessProbe | string | `nil` | See [Probe](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/probes.md) |
+| readinessProbe | object | `{}` | (map) Indicates whether container is ready for requests. See [Probe](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/probes.md) |
 | revision | string | `nil` | Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision` that will be applied to all objects created by a specific chart installation. Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version |
 | secretVars | object | `{}` | (map) User defined secret variables are implemented here. [More Information](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/secrets.md) |
 | securityContext.allowPrivilegeEscalation | bool | `false` | (bool) Setting it to false ensures that no child process of a container can gain more privileges than its parent |
@@ -146,5 +146,5 @@ All possible objects created by this chart:
 | serviceMonitor.scrapeTimeout | string | `"10s"` | Scrape Timeout |
 | serviceMonitor.selector | object | `{}` | (map) Any label selector |
 | serviceMonitor.targetPort | int | `9090` | Service Monitor Target Port |
-| tags | string | `nil` |  |
+| tags | object | `{}` | (map) Deployment tags |
 | tolerations | list | `[]` | (list) Tolerations for pod assignment [Tolerations](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/tolerations.md) |
