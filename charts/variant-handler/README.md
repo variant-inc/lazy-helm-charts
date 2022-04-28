@@ -95,10 +95,10 @@ All possible objects created by this chart:
 | deployment.resources.requests.cpu | float | `0.1` | (float) Requests CPU |
 | deployment.resources.requests.memory | string | `"384Mi"` | (string) Request memory |
 | istio.egress | list | `[]` | A whitelist of external services that your API requires connection to. The whitelist applies to the entire namespace in which this chart is installed. [These services](https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8) are globally whitelisted and do not require declaration. See [egress](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/egress.md) and [Istio](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/istio.md) for more details. |
-| livenessProbe | string | `nil` | See [Probe](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/probes.md) |
+| livenessProbe | object | `{}` | (map) Indicates whether container is running. See [Probe](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/probes.md) |
 | nodeSelector | object | `{}` | (map) Node labels for pod assignment [NodeSelector](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/nodeselector.md) |
 | podSecurityContext.fsGroup | int | `65534` | Groups of nobody |
-| readinessProbe | string | `nil` | See [Probe](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/probes.md) |
+| readinessProbe | object | `{}` | (map) Indicates whether container is ready for requests. See [Probe](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/probes.md) |
 | replicaCount | int | `1` | replicaCount |
 | revision | string | `"abc"` | (string) Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision` that will be applied to all objects created by a specific chart installation. Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version |
 | secretVars | object | `{}` | (map) User defined secret variables are implemented here. [More Information](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/secrets.md) |
@@ -111,5 +111,5 @@ All possible objects created by this chart:
 | serviceAccount.roleArn | string | `nil` | Optional ARN of the IAM role to be assumed by your application.  If your API requires access to any AWS services, a role should be created in AWS IAM. This role should have an inline policy that describes the permissions your API needs (connect to RDS, publish to an SNS topic, read from an SQS queue, etc.). [RoleArn](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/rolearn.md) |
 | serviceMonitor.interval | string | `"10s"` | Frequency at which Prometheus metrics will be collected from your service |
 | serviceMonitor.scrapeTimeout | string | `"10s"` | Maximum wait duration for Prometheus metrics response from your service |
-| tags | string | `nil` | deployment tags |
+| tags | object | `{}` | (map) Deployment tags |
 | tolerations | list | `[]` | (list) Tolerations for pod assignment [Tolerations](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/tolerations.md) |

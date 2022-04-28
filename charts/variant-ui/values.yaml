@@ -150,11 +150,13 @@ tolerations: []
 # [Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity)
 affinity: {}
 
-# -- See [Probe](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/probes.md)
-readinessProbe:
+# -- (map) Indicates whether container is ready for requests.
+# See [Probe](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/probes.md)
+readinessProbe: {}
 
-# -- See [Probe](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/probes.md)
-livenessProbe:
+# -- (map) Indicates whether container is running.
+# See [Probe](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/probes.md)
+livenessProbe: {}
 
 securityContext:
   # -- Runs as non root. Must use numeric User in container
@@ -170,5 +172,5 @@ securityContext:
   # -- (bool) Requires that containers must run with a read-only root filesystem (i.e. no writable layer)
   readOnlyRootFilesystem: false
 
-  # -- deployment tags
-tags:
+# -- (map) Deployment tags
+tags: {}
