@@ -29,14 +29,11 @@ skip_checks=(
 
 # join the array of checks to skipchecks with a comma
 printf -v skipchecks "%s," "${skip_checks[@]}"
-$skipchecks=${skipchecks%?} #we remove the last newline if needed
 
 # execute checkov
 for c in "${charts[@]}"; do
     checkov -d "$c" --var-file "$c/ci/default-values.yaml" \
     --framework helm \
     --quiet \
-    --skip-check $skipchecks
+    --skip-check "$skipchecks"
 done;
-
-exit 0
