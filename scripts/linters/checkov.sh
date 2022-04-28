@@ -35,5 +35,5 @@ for c in "${charts[@]}"; do
     checkov -d "$c" --var-file "$c/ci/default-values.yaml" \
     --framework helm \
     --quiet \
-    --skip-check $skipchecks && true
+    --skip-check $skipchecks 2> /dev/null
 done;
