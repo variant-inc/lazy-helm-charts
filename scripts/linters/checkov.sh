@@ -30,10 +30,23 @@ skip_checks=(
 # join the array of checks to skipchecks with a comma
 printf -v skipchecks "%s," "${skip_checks[@]}"
 
+error_sum=0 # total of all all error codes
+
 # execute checkov
 for c in "${charts[@]}"; do
     checkov -d "$c" --var-file "$c/ci/default-values.yaml" \
     --framework helm \
     --quiet \
-    --skip-check $skipchecks 2> /dev/null
+    --skip-check $skipchecks
+
+    #track any checkov errors
+    ((error_sum=error_sum+$?))
 done;
+
+if [ $error_sum -ne 0 ]; then
+    echo "Checkov failed for some charts"
+    exit 1
+fi
+
+# exit cleanly if no checkov errors occurred
+exit 0
