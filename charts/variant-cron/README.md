@@ -32,7 +32,7 @@ A Helm chart for Istio Objects
 ***
 
 # Create Your Chart
-**Follow This Quick Example:** [Using a lazy-helm-chart as a Subchart](../../README.md)
+**Follow This Quick Example:** [Using a lazy-helm-chart as a Subchart](https://github.com/variant-inc/lazy-helm-charts/blob/master/README.md#using-a-lazy-helm-chart-as-a-subchart)
 
 ***
 
@@ -46,7 +46,7 @@ A Helm chart for Istio Objects
   node:
     # Set to true to create custom nodes. Default is false
     create: true
-    # EC2 Instance type for your cusom node. Default is r5.xlarge
+    # EC2 Instance type for your custom node. Default is r5.xlarge
     instanceType: r5.xlarge
     # If nil, the feature is disabled, nodes will never expire
     ttlSecondsUntilExpired: 2592000 # 30 Days = 60 * 60 * 24 * 30 Seconds;
@@ -54,11 +54,12 @@ A Helm chart for Istio Objects
     ttlSecondsAfterEmpty: 1800
 ```
 
-#### [Infrastructure Permissions](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/rolearn.md)
+#### [Infrastructure Permissions](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/rolearn/)
 
-#### [Egress Configuration](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/egress.md) (*how your Cron Job will access external resources*)
+#### [Egress Configuration](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/egress/)
+(*how your Cron Job will access external resources*)
 
-#### [Secrets Configuration](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/secrets.md)
+#### [Secrets Configuration](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/secrets/)
 
 ## Kubernetes Object Reference
 
@@ -76,8 +77,8 @@ All possible objects created by this chart:
 |-----|------|---------|-------------|
 | CLUSTER_NAME | string | `"variant-dev"` | For securityGroupSelector in provisioner.yaml |
 | affinity | object | `{}` | Affinity for pod assignment [Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity) |
-| awsSecrets | list | `[]` | A list of secrets to configure to make available to your API. Create your secret in AWS Secrets Manager as plain text. Full contents of this secret will be mounted as a file your application can read to /app/secrets/{name} See [AWS Secrets](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/secrets.md) for more details. |
-| configVars | object | `{}` | (map) User defined environment variables are implemented here. [More Information](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/secrets.md) |
+| awsSecrets | list | `[]` | A list of secrets to configure to make available to your API. Create your secret in AWS Secrets Manager as plain text. Full contents of this secret will be mounted as a file your application can read to /app/secrets/{name} See [AWS Secrets](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/secrets) for more details. |
+| configVars | object | `{}` | (map) User defined environment variables are implemented here. [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/secrets) |
 | cronJob.command | list | `nil` | full path to the job script to execute. https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/ |
 | cronJob.image.pullPolicy | string | `"Always"` | (string) IfNotPresent, Always, Never |
 | cronJob.image.tag | string | `nil` | The full URL of the image to be deployed containing the HTTP API application |
@@ -89,21 +90,21 @@ All possible objects created by this chart:
 | cronJob.schedule | string | `nil` | Cron Style Schedule. For help check https://crontab.guru/ |
 | cronJob.suspend | bool | `false` | (bool) https://kubernetes.io/blog/2021/04/12/introducing-suspended-jobs/ |
 | imagePullSecrets | list | `[]` | (list) https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod |
-| istio.egress | list | `[]` | A whitelist of external services that your API requires connection to. The whitelist applies to the entire namespace in which this chart is installed. [These services](https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8) are globally whitelisted and do not require declaration. See [egress](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/egress.md). See [Istio](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/istio.md) for more Istio details. |
+| istio.egress | list | `[]` | A whitelist of external services that your API requires connection to. The whitelist applies to the entire namespace in which this chart is installed. [These services](https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8) are globally whitelisted and do not require declaration. See [egress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/egress). See [Istio](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/istio) for more Istio details. |
 | node.create | bool | `false` | Flag to determine whether or not custom nodes will be provisioned. |
 | node.instanceType | string | `nil` | The EC2 Instance Type for your custom nodes. |
 | node.ttlSecondsAfterEmpty | int | `3600` | Number of seconds before custom nodes will be removed if nothing is running on them. |
 | node.ttlSecondsUntilExpired | string | `nil` | If nil, the feature is disabled, nodes will never expire |
-| nodeSelector | object | `{}` | Node labels for pod assignment [NodeSelector](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/nodeselector.md) |
+| nodeSelector | object | `{}` | Node labels for pod assignment [NodeSelector](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/nodeselector) |
 | podSecurityContext.fsGroup | int | `65534` | Groups of nobody |
 | restartPolicy | string | `"Never"` | Use Never by default for jobs so new pod is created on failure instead of restarting containers |
 | revision | string | `nil` | Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision` that will be applied to all objects created by a specific chart installation. Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version |
-| secretVars | object | `{}` | (map) User defined secret variables are implemented here. [More Information](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/secrets.md) |
+| secretVars | object | `{}` | (map) User defined secret variables are implemented here. [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/secrets) |
 | securityContext.allowPrivilegeEscalation | bool | `false` | (bool) Setting it to false ensures that no child process of a container can gain more privileges than its parent |
 | securityContext.capabilities | object | `{"drop":["ALL"]}` | Drop All capabilities |
 | securityContext.readOnlyRootFilesystem | bool | `false` | (bool) Requires that containers must run with a read-only root filesystem (i.e. no writable layer) |
 | securityContext.runAsNonRoot | bool | `true` | Runs as non root. Must use numeric User in container |
 | securityContext.runAsUser | int | `nil` | Runs as numeric user |
-| serviceAccount.roleArn | string | `nil` | Optional ARN of the IAM role to be assumed by your application. If your API requires access to any AWS services, a role should be created in AWS IAM. This role should have an inline policy that describes the permissions your API needs (connect to RDS, publish to an SNS topic, read from an SQS queue, etc.). [RoleArn](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/rolearn.md) |
-| tags | string | `nil` | Tags to be applied to custom node provisioner and labels |
-| tolerations | list | `[]` | Tolerations for pod assignment [Tolerations](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/tolerations.md) |
+| serviceAccount.roleArn | string | `nil` | Optional ARN of the IAM role to be assumed by your application. If your API requires access to any AWS services, a role should be created in AWS IAM. This role should have an inline policy that describes the permissions your API needs (connect to RDS, publish to an SNS topic, read from an SQS queue, etc.). [RoleArn](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/rolearn) |
+| tags | object | `{}` | Tags to be applied to custom node provisioner and labels |
+| tolerations | list | `[]` | Tolerations for pod assignment [Tolerations](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/tolerations) |

@@ -18,7 +18,7 @@
    - [.NET](https://github.com/variant-inc/actions-dotnet)
    - [Node](https://github.com/variant-inc/actions-nodejs)
    - [Python](https://github.com/variant-inc/actions-python)
-2. Make sure curl utility is available in the image as it is used to check the status of the sidecar container. If not available, Based on the image you use add below commands in the Dockerfile. 
+2. Make sure curl utility is available in the image as it is used to check the status of the sidecar container. If not available, Based on the image you use add below commands in the Dockerfile.
    - Ubuntu / Debian OS
      ```bash
      RUN apt-get install curl
@@ -34,7 +34,7 @@
 ***
 
 # Create Your Chart
-**Follow This Quick Example:** [Using a lazy-helm-chart as a Subchart](../../README.md)
+**Follow This Quick Example:** [Using a lazy-helm-chart as a Subchart](https://github.com/variant-inc/lazy-helm-charts/blob/master/README.md#using-a-lazy-helm-chart-as-a-subchart)
 
 ***
 
@@ -48,7 +48,7 @@
   node:
     # Set to true to create custom nodes. Default is false
     create: true
-    # EC2 Instance type for your cusom node. Default is r5.xlarge
+    # EC2 Instance type for your custom node. Default is r5.xlarge
     instanceType: r5.xlarge
     # If nil, the feature is disabled, nodes will never expire
     ttlSecondsUntilExpired: 2592000 # 30 Days = 60 * 60 * 24 * 30 Seconds;
@@ -56,11 +56,12 @@
     ttlSecondsAfterEmpty: 1800
 ```
 
-#### [Infrastructure Permissions](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/rolearn.md)
+#### [Infrastructure Permissions](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/rolearn/)
 
-#### [Egress Configuration](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/egress.md) (*how your Cron Job will access external resources*)
+#### [Egress Configuration](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/egress/)
+(*how your Cron Job will access external resources*)
 
-#### [Secrets Configuration](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/secrets.md)
+#### [Secrets Configuration](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/secrets/)
 
 ## Kubernetes Object Reference
 

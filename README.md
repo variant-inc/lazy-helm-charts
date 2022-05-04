@@ -52,7 +52,7 @@ dependencies:
           port: "{{ .Values.global.port }}"
 ```
 
-### Pull the depency chart and Install
+### Pull the dependency chart and Install
 
 `helm dependency update`
 
