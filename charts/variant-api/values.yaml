@@ -5,12 +5,12 @@ istio:
     # -- (string) The base domain that will be used to construct URLs that point to your API.
     # This should almost always be the Octopus Variable named `DOMAIN` in the
     # [AWS Access Keys](https://octopus.apps.ops-drivevariant.com/app#/Spaces-22/library/variables/).
-    # See [Istio](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/istio.md) for more Istio details.
+    # See [Istio](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/istio/) for more Istio details.
     host:
     # -- When `false`, an internal URL will be created that will expose your application *via OpenVPN-only*.
     # When `true`, an additional publicly accessible URL will be created.
     # This API should be secured behind some authentication method when set to `true`.
-    # See [Istio](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/istio.md) for more Istio details.
+    # See [Istio](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/istio/) for more Istio details.
     public: false
     # -- When `true`, the path `/{target-namespace}/{helm-release-name}` will be preserved in requests to your application, else rewritten to `/` when `false`
     disableRewrite: false
@@ -20,8 +20,8 @@ istio:
   # -- A whitelist of external services that your API requires connection to.
   # The whitelist applies to the entire namespace in which this chart is installed.
   # [These services](https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8) are globally whitelisted and do not require declaration.
-  # See [egress](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/egress.md) and
-  # [Istio](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/istio.md) for more details.
+  # See [egress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/egress/) and
+  # [Istio](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/istio/) for more details.
   egress: []
     # - name: some-external-api
     #   hosts:
@@ -58,18 +58,18 @@ serviceAccount:
   # -- (string) Optional ARN of the IAM role to be assumed by your application.
   # If your API requires access to any AWS services, a role should be created in AWS IAM.
   # This role should have an inline policy that describes the permissions your API needs (connect to RDS, publish to an SNS topic, read from an SQS queue, etc.).
-  # [RoleArn](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/rolearn.md)
+  # [RoleArn](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/rolearn/)
   roleArn:
 
 
 autoscaling:
-  # -- (int) Minimum Number of Replicas. [Autoscaling](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/autoscaling.md)
+  # -- (int) Minimum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/autoscaling/)
   minReplicas: 1
-  # -- (int) Maximum Number of Replicas. [Autoscaling](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/autoscaling.md)
+  # -- (int) Maximum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/autoscaling/)
   maxReplicas: 5
-  # -- (int) CPU Utilization Percentage. [Autoscaling](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/autoscaling.md)
+  # -- (int) CPU Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/autoscaling/)
   targetCPUUtilizationPercentage: 80
-  # -- (int) Memory Utilization Percentage. [Autoscaling](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/autoscaling.md)
+  # -- (int) Memory Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/autoscaling/)
   targetMemoryUtilizationPercentage:
 
 deployment:
@@ -111,7 +111,7 @@ deployment:
 # -- A list of secrets to configure to make available to your API.
 # Create your secret in AWS Secrets Manager as plain text.
 # Full contents of this secret will be mounted as a file your application can read to /app/secrets/{name}.
-# See [AWS Secrets](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/secrets.md) for more details.
+# See [AWS Secrets](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/secrets/) for more details.
 awsSecrets: []
   # - name: eng-secret-in-aws
 
@@ -123,7 +123,7 @@ revision:
 # -- (bool) selecting authentication: true when defining an api resource,
 # [Istio RBAC](https://istio.io/v1.3/docs/reference/config/authorization/istio.rbac.v1alpha1/) resources are created
 #  to require a valid JWT token before forwarding a request to your API.
-# [Istio](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/istio.md)
+# [Istio](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/istio/)
 authentication:
   enabled: false
 
@@ -137,21 +137,21 @@ authorization:
       #     paths: "/swagger"
 
 # -- (map) User defined secret variables are implemented here.
-# [More Information](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/secrets.md)
+# [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/secrets/)
 secretVars: {}
   # foo: bar
 
 # -- (map) User defined environment variables are implemented here.
-# [More Information](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/secrets.md)
+# [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/secrets/)
 configVars: {}
   # bar: foo
 
 # -- (map) Node labels for pod assignment.
-# [NodeSelector](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/nodeselector.md)
+# [NodeSelector](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/nodeselector/)
 nodeSelector: {}
 
 # -- (list) Tolerations for pod assignment.
-# [Tolerations](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/tolerations.md)
+# [Tolerations](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/tolerations/)
 tolerations: []
 
 # -- (map) Affinity for pod assignment.
@@ -173,14 +173,14 @@ securityContext:
   readOnlyRootFilesystem: false
 
 # -- (map) Indicates whether container is ready for requests.
-# See [Probe](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/probes.md)
+# See [Probe](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/probes/)
 readinessProbe: {}
 #   httpGet:
 #     path: /health
 #     port: 5000
 
 # -- (map) Indicates whether container is running.
-# See [Probe](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/probes.md)
+# See [Probe](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/probes/)
 livenessProbe: {}
 #   httpGet:
 #     path: /health

@@ -9,11 +9,11 @@
 ### What this chart provides to you by default
 
 - An API that is reachable only via [OpenVPN](https://usxtech.atlassian.net/wiki/spaces/CLOUD/pages/1332445185/How+to+configure+OpenVPN+using+Okta+SSO+to+access+USX+Variant+Resources), or by other services inside the same cluster
-  - See [ingress confguration](#ingress-configuration) to make it public, and for information regarding the generated URLs
+  - See [ingress configuration](#ingress-configuration) to make it public, and for information regarding the generated URLs
 - An API that can only reach [these services](https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8) or other services inside the same cluster, **by default**
-  - See [egress configuration](#egress-configuration) to whitelist services you need to reach outside of the cluster
+  - See [egress configuration](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/egress) to whitelist services you need to reach outside of the cluster
 - An API that is isolated from infrastructure access - Amazon services are firewall whitelisted by default, but you still need an AWS role if you need access to AWS services (SQS, SNS, RDS, etc.)
-  - See [infrastructure permissions](#infrastructure-permissions)
+  - See [infrastructure permissions](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/rolearn)
 
 ### How do I access my API?
 
@@ -43,7 +43,7 @@
    - [Python](https://github.com/variant-inc/actions-python)
 1. Host a health check endpoint via `GET /health` which returns a status code < 400 when healthy or >= 400 when unhealthy
 1. Host a Prometheus metrics collection endpoint via `GET /metrics`
-   - This chart configures a ServiceMonitor (see [Object Reference](#object-reference)) to collect metrics from your API
+   - This chart configures a ServiceMonitor (see [Application Configuration](#application-configuration)) to collect metrics from your API
    - Middleware exists for most major API frameworks that provide a useful out-of-the box HTTP server metrics, and simple tools to push custom metrics for your product:
      - [.NET](https://github.com/prometheus-net/prometheus-net)
      - Node - [NestJS](https://github.com/digikare/nestjs-prom), [Express](https://github.com/joao-fontenele/express-prometheus-middleware)
@@ -61,7 +61,7 @@
 
 # Create Your Chart
 
-**Follow This Quick Example:** [Using a lazy-helm-chart as a Subchart](../../README.md)
+**Follow This Quick Example:** [Using a lazy-helm-chart as a Subchart](https://github.com/variant-inc/lazy-helm-charts/blob/master/README.md#using-a-lazy-helm-chart-as-a-subchart)
 
 ***
 
@@ -80,7 +80,8 @@
 | deployment.envVars | Deployment | List variables defined in a Pod configuration that overrides any environment variables specified in the container image. | [] |
 | deployment.conditionalEnvVars | Deployment | List of Conditional Env Vars denoted by conditional (bool) | [] |
 
-#### Ingress Configuration (*how resources will access your API*)
+#### Ingress Configuration
+(*how resources will access your API*)
 
 URL Formats
 
@@ -93,11 +94,12 @@ When using public ingess, the following URL prefixes are rerouted to the root UR
 - swagger
 - swaggerui
 
-#### [Infrastructure Permissions](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/rolearn.md)
+#### [Infrastructure Permissions](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/rolearn)
 
-#### [Egress Configuration](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/egress.md) (*how your API will access external resources*)
+#### [Egress Configuration](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/egress)
+(*how your API will access external resources*)
 
-#### [Secrets Configuration](https://github.com/variant-inc/terragrunt-variant-apps/tree/master/docs/secrets.md)
+#### [Secrets Configuration](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/secrets)
 
 ## Kubernetes Object Reference
 
