@@ -37,7 +37,7 @@ Charts should start at `1.0.0`. Any breaking (backwards incompatible) changes to
 
   ```bash
     brew install pre-commit terraform-docs tflint tfsec checkov terrascan infracost tfupdate jq
-    pre-commit update
+    pre-commit autoupdate
   ```
 
 ***
@@ -205,4 +205,3 @@ Charts should start at `1.0.0`. Any breaking (backwards incompatible) changes to
     ]
     }
 ```
-

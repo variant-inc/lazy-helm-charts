@@ -39,11 +39,6 @@ A Helm chart for kubernetes handler
 
 ***
 
-# Create Your Chart
-**Follow This Quick Example:** [Using a lazy-helm-chart as a Subchart](https://github.com/variant-inc/lazy-helm-charts/blob/master/README.md#using-a-lazy-helm-chart-as-a-subchart)
-
-***
-
 ### *OPTIONAL* Configuration Inputs
 
 #### Application Configuration
@@ -61,6 +56,7 @@ A Helm chart for kubernetes handler
 #### [Infrastructure Permissions](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/rolearn)
 
 #### [Egress Configuration](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/egress)
+
 (*how your service will access external resources*)
 
 #### [Secrets Configuration](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/secrets)
@@ -79,31 +75,31 @@ All possible objects created by this chart:
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| affinity | object | `{}` | (map) Affinity for pod assignment [Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity) |
+| affinity | map | `{}` | Affinity for pod assignment [Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity) |
 | autoscaling.enabled | bool | `false` | Flag to trigger HPA, Allowed values true or false. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/autoscaling) |
-| autoscaling.maxReplicas | int | `5` | (int) Maximum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/autoscaling) |
-| autoscaling.minReplicas | int | `1` | (int) Minimum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/autoscaling) |
-| autoscaling.targetCPUUtilizationPercentage | int | `80` | (int) CPU Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/autoscaling) |
+| autoscaling.maxReplicas | int | `5` | Maximum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/autoscaling) |
+| autoscaling.minReplicas | int | `1` | Minimum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/autoscaling) |
+| autoscaling.targetCPUUtilizationPercentage | int | `80` | CPU Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/autoscaling) |
 | autoscaling.targetMemoryUtilizationPercentage | int | `nil` | Memory Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/autoscaling) |
 | awsSecrets | list | `[]` | A list of secrets to configure to make available to your API. Create your secret in AWS Secrets Manager as plain text. Full contents of this secret will be mounted as a file your application can read. See [AWS Secrets](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/secrets) for more details. |
-| configVars | object | `{}` | (map) User defined environment variables are implemented here. [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/secrets) |
-| deployment.args | list | `[]` | (list) List of arguments that can be passed in the image. |
-| deployment.image.pullPolicy | string | `"IfNotPresent"` | (string) IfNotPresent, Always, Never |
-| deployment.image.tag | string | `"tag"` | (string) The full URL of the image to be deployed containing the tag |
-| deployment.podAnnotations | object | `{}` | (map) https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/ |
-| deployment.resources.limits.cpu | int | `1` | (int) Limits CPU |
-| deployment.resources.limits.memory | string | `"768Mi"` | (string) Limits Memory |
-| deployment.resources.requests.cpu | float | `0.1` | (float) Requests CPU |
-| deployment.resources.requests.memory | string | `"384Mi"` | (string) Request memory |
+| configVars | map | `{}` | User defined environment variables are implemented here. [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/secrets) |
+| deployment.args | list | `[]` | List of arguments that can be passed in the image. |
+| deployment.image.pullPolicy | string | `"IfNotPresent"` | IfNotPresent, Always, Never |
+| deployment.image.tag | string | `"tag"` | The full URL of the image to be deployed containing the tag |
+| deployment.podAnnotations | map | `{}` | https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/ |
+| deployment.resources.limits.cpu | int | `1` | Limits CPU |
+| deployment.resources.limits.memory | string | `"768Mi"` | Limits Memory |
+| deployment.resources.requests.cpu | float | `0.1` | Requests CPU |
+| deployment.resources.requests.memory | string | `"384Mi"` | Request memory |
 | istio.egress | list | `[]` | A whitelist of external services that your API requires connection to. The whitelist applies to the entire namespace in which this chart is installed. [These services](https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8) are globally whitelisted and do not require declaration. See [egress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/egress) and [Istio](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/istio) for more details. |
-| livenessProbe | object | `{}` | (map) Indicates whether container is running. See [Probe](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/probes) |
-| nodeSelector | object | `{}` | (map) Node labels for pod assignment [NodeSelector](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/nodeselector) |
+| livenessProbe | map | `{}` | Indicates whether container is running. See [Probe](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/probes) |
+| nodeSelector | map | `{}` | Node labels for pod assignment [NodeSelector](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/nodeselector) |
 | podSecurityContext.fsGroup | int | `65534` | Groups of nobody |
-| readinessProbe | object | `{}` | (map) Indicates whether container is ready for requests. See [Probe](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/probes) |
+| readinessProbe | map | `{}` | Indicates whether container is ready for requests. See [Probe](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/probes) |
 | replicaCount | int | `1` | replicaCount |
-| revision | string | `"abc"` | (string) Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision` that will be applied to all objects created by a specific chart installation. Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version |
-| secretVars | object | `{}` | (map) User defined secret variables are implemented here. [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/secrets) |
-| securityContext | object | `{}` | (map) Security Context for containers |
+| revision | string | `"abc"` | Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision` that will be applied to all objects created by a specific chart installation. Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version |
+| secretVars | map | `{}` | User defined secret variables are implemented here. [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/secrets) |
+| securityContext | map | `{}` | Security Context for containers |
 | service.healthCheckPath | string | `"/health"` | Health check URI, This will be used in probes to check container status |
 | service.healthCheckPort | string | `nil` | Optional port which serves a health check endpoint at `/health` Defaults to value of `service.targetPort` if not defined. |
 | service.metricsPort | string | `nil` | Optional port which serves prometheus metrics endpoint at `/metrics` Defaults to value of `service.targetPort` if not defined. |
@@ -112,5 +108,5 @@ All possible objects created by this chart:
 | serviceAccount.roleArn | string | `nil` | Optional ARN of the IAM role to be assumed by your application.  If your API requires access to any AWS services, a role should be created in AWS IAM. This role should have an inline policy that describes the permissions your API needs (connect to RDS, publish to an SNS topic, read from an SQS queue, etc.). [RoleArn](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/rolearn) |
 | serviceMonitor.interval | string | `"10s"` | Frequency at which Prometheus metrics will be collected from your service |
 | serviceMonitor.scrapeTimeout | string | `"10s"` | Maximum wait duration for Prometheus metrics response from your service |
-| tags | object | `{}` | (map) Deployment tags |
-| tolerations | list | `[]` | (list) Tolerations for pod assignment [Tolerations](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/tolerations) |
+| tags | map | `{}` | Deployment tags |
+| tolerations | list | `[]` | Tolerations for pod assignment [Tolerations](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/tolerations) |
