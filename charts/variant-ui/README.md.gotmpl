@@ -34,12 +34,6 @@
 1. Your container executes without any required arguments (i.e can be executed as `docker run [image]`)
 1. There is no required environment variable for your UI to function
 
-
-***
-
-# Create Your Chart
-**Follow This Quick Example:** [Using a lazy-helm-chart as a Subchart](https://github.com/variant-inc/lazy-helm-charts/blob/master/README.md#using-a-lazy-helm-chart-as-a-subchart)
-
 ***
 
 #### Application Configuration
@@ -55,6 +49,7 @@
 | deployment.conditionalEnvVars | Deployment | List of Conditional Env Vars denoted by conditional (bool) | [] |
 
 #### Ingress Configuration
+
 (*how resources will access your service*)
 
 URL Formats
@@ -71,6 +66,7 @@ When using public ingess, the following URL prefixes are rerouted to the root UR
 #### [Infrastructure Permissions](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/rolearn)
 
 #### [Egress Configuration](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/egress)
+
 (*how your service will access external resources*)
 
 #### [Secrets Configuration](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/secrets)
