@@ -11,9 +11,9 @@
 - An API that is reachable only via [OpenVPN](https://usxtech.atlassian.net/wiki/spaces/CLOUD/pages/1332445185/How+to+configure+OpenVPN+using+Okta+SSO+to+access+USX+Variant+Resources), or by other services inside the same cluster
   - See [ingress configuration](#ingress-configuration) to make it public, and for information regarding the generated URLs
 - An API that can only reach [these services](https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8) or other services inside the same cluster, **by default**
-  - See [egress configuration](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/egress) to whitelist services you need to reach outside of the cluster
+  - See [egress configuration](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/egress) to whitelist services you need to reach outside of the cluster
 - An API that is isolated from infrastructure access - Amazon services are firewall whitelisted by default, but you still need an AWS role if you need access to AWS services (SQS, SNS, RDS, etc.)
-  - See [infrastructure permissions](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/rolearn)
+  - See [infrastructure permissions](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/rolearn)
 
 ### How do I access my API?
 
@@ -89,12 +89,12 @@ When using public ingess, the following URL prefixes are rerouted to the root UR
 - swagger
 - swaggerui
 
-#### [Infrastructure Permissions](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/rolearn)
+#### [Infrastructure Permissions](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/rolearn)
 
-#### [Egress Configuration](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/egress)
+#### [Egress Configuration](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/egress)
 (*how your API will access external resources*)
 
-#### [Secrets Configuration](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/secrets)
+#### [Environment Variables](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables)
 
 ## Kubernetes Object Reference
 
