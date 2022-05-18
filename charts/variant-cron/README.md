@@ -49,13 +49,13 @@ A Helm chart for Istio Objects
     ttlSecondsAfterEmpty: 1800
 ```
 
-#### [Infrastructure Permissions](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/rolearn/)
+#### [Infrastructure Permissions](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/rolearn/)
 
-#### [Egress Configuration](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/egress/)
+#### [Egress Configuration](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/egress/)
 
 (*how your Cron Job will access external resources*)
 
-#### [Secrets Configuration](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/secrets/)
+#### [Environment Variables](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables/)
 
 ## Kubernetes Object Reference
 
@@ -73,8 +73,8 @@ All possible objects created by this chart:
 |-----|------|---------|-------------|
 | CLUSTER_NAME | string | `"variant-dev"` | For securityGroupSelector in provisioner.yaml |
 | affinity | object | `{}` | Affinity for pod assignment [Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity) |
-| awsSecrets | list | `[]` | A list of secrets to configure to make available to your API. Create your secret in AWS Secrets Manager as plain text. Full contents of this secret will be mounted as a file your application can read to /app/secrets/{name} See [AWS Secrets](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/secrets) for more details. |
-| configVars | map | `{}` | User defined environment variables are implemented here. [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/secrets) |
+| awsSecrets | list | `[]` | A list of secrets to configure to make available to your API. Create your secret in AWS Secrets Manager as plain text. Full contents of this secret will be mounted as a file your application can read to /app/secrets/{name} See [AWS Secrets](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) for more details. |
+| configVars | map | `{}` | User defined environment variables are implemented here. [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) |
 | cronJob.command | list | `nil` | full path to the job script to execute. https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/ |
 | cronJob.image.pullPolicy | string | `"Always"` | IfNotPresent, Always, Never |
 | cronJob.image.tag | string | `nil` | The full URL of the image to be deployed containing the HTTP API application |
@@ -86,21 +86,21 @@ All possible objects created by this chart:
 | cronJob.schedule | string | `nil` | Cron Style Schedule. For help check https://crontab.guru/ |
 | cronJob.suspend | bool | `false` | https://kubernetes.io/blog/2021/04/12/introducing-suspended-jobs/ |
 | imagePullSecrets | list | `[]` | https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod |
-| istio.egress | list | `[]` | A whitelist of external services that your API requires connection to. The whitelist applies to the entire namespace in which this chart is installed. [These services](https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8) are globally whitelisted and do not require declaration. See [egress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/egress). See [Istio](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/istio) for more Istio details. |
+| istio.egress | list | `[]` | A whitelist of external services that your API requires connection to. The whitelist applies to the entire namespace in which this chart is installed. [These services](https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8) are globally whitelisted and do not require declaration. See [egress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/egress). See [Ingress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/ingress) for more Istio details. |
 | node.create | bool | `false` | Flag to determine whether or not custom nodes will be provisioned. |
 | node.instanceType | string | `nil` | The EC2 Instance Type for your custom nodes. |
 | node.ttlSecondsAfterEmpty | int | `3600` | Number of seconds before custom nodes will be removed if nothing is running on them. |
 | node.ttlSecondsUntilExpired | string | `nil` | If nil, the feature is disabled, nodes will never expire |
-| nodeSelector | object | `{}` | Node labels for pod assignment [NodeSelector](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/nodeselector) |
+| nodeSelector | object | `{}` | Node labels for pod assignment [NodeSelector](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/nodeselector) |
 | podSecurityContext.fsGroup | int | `65534` | Groups of nobody |
 | restartPolicy | string | `"Never"` | Use Never by default for jobs so new pod is created on failure instead of restarting containers |
 | revision | string | `nil` | Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision` that will be applied to all objects created by a specific chart installation. Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version |
-| secretVars | map | `{}` | User defined secret variables are implemented here. [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/secrets) |
+| secretVars | map | `{}` | User defined secret variables are implemented here. [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) |
 | securityContext.allowPrivilegeEscalation | bool | `false` | Setting it to false ensures that no child process of a container can gain more privileges than its parent |
 | securityContext.capabilities | object | `{"drop":["ALL"]}` | Drop All capabilities |
 | securityContext.readOnlyRootFilesystem | bool | `false` | Requires that containers must run with a read-only root filesystem (i.e. no writable layer) |
 | securityContext.runAsNonRoot | bool | `true` | Runs as non root. Must use numeric User in container |
 | securityContext.runAsUser | int | `nil` | Runs as numeric user |
-| serviceAccount.roleArn | string | `nil` | Optional ARN of the IAM role to be assumed by your application. If your API requires access to any AWS services, a role should be created in AWS IAM. This role should have an inline policy that describes the permissions your API needs (connect to RDS, publish to an SNS topic, read from an SQS queue, etc.). [RoleArn](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/rolearn) |
+| serviceAccount.roleArn | string | `nil` | Optional ARN of the IAM role to be assumed by your application. If your API requires access to any AWS services, a role should be created in AWS IAM. This role should have an inline policy that describes the permissions your API needs (connect to RDS, publish to an SNS topic, read from an SQS queue, etc.). [RoleArn](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/rolearn) |
 | tags | object | `{}` | Tags to be applied to custom node provisioner and labels |
-| tolerations | list | `[]` | Tolerations for pod assignment [Tolerations](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/apps/common/tolerations) |
+| tolerations | list | `[]` | Tolerations for pod assignment [Tolerations](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/tolerations) |
