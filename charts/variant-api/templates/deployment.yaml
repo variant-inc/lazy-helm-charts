@@ -1,5 +1,6 @@
 {{- $fullName := (include "chart.fullname" .) -}}
 {{- $labels := (include "library.chart.labels" .) -}}
+{{- $selectorLabels := (include "library.chart.selectorLabels" .) -}}
 {{- $secrets := .Values.awsSecrets -}}
 apiVersion: apps/v1
 kind: Deployment
@@ -10,11 +11,11 @@ metadata:
 spec:
   selector:
     matchLabels:
-      {{- $labels | nindent 6 }}
+      {{- $selectorLabels | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- $labels | nindent 8 }}
+        {{- $selectorLabels | nindent 8 }}
       annotations:
         {{- include "chart.podAnnotations" . | indent 8 }}
     spec:

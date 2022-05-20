@@ -25,11 +25,6 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 revision: {{ required "revision is required" .Values.revision | quote }}
-app: {{ .Release.Name }}
-revision: {{ required "revision is required" .Values.revision | quote }}
-{{- range $key, $value := .Values.tags }}
-cloudops.io.{{ $key }}: {{ $value | replace " " "-"| quote }}
-{{- end }}
 {{- end }}
 
 {{/*
@@ -38,4 +33,8 @@ Selector labels
 {{- define "library.chart.selectorLabels" -}}
 app.kubernetes.io/name: {{ .Chart.Name }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+app: {{ .Release.Name }}
+{{- range $key, $value := .Values.tags }}
+cloudops.io.{{ $key }}: {{ $value | replace " " "-"| quote }}
+{{- end }}
 {{- end }}
