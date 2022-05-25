@@ -64,7 +64,7 @@ serviceAccount:
 
 autoscaling:
   # -- (int) Minimum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/)
-  minReplicas: 1
+  minReplicas: 2
   # -- (int) Maximum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/)
   maxReplicas: 5
   # -- (int) CPU Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/)
@@ -188,3 +188,7 @@ livenessProbe: {}
 
 # -- (map) Deployment tags
 tags: {}
+
+# -- (int) Minimum number of pods that should be available after an eviction
+# See [Pod Disruption Budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/)
+minAvailable: 1
