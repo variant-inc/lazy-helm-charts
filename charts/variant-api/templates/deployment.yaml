@@ -131,12 +131,25 @@ spec:
             {{ $key }}: {{ $value }}
             {{- end }}
           {{- end }}
-          {{- if len .Values.affinity }}
           affinity:
-            {{- range $key, $value := .Values.affinity }}
-            {{ $key }}: {{ toYaml $value | nindent 14 }}
+            {{- if len .Values.affinity }}
+              {{- range $key, $value := .Values.affinity }}
+              {{ $key }}: {{ toYaml $value | nindent 14 }}
+              {{- end }}
+            {{- else }}
+            podAntiAffinity:
+              preferredDuringSchedulingIgnoredDuringExecution:
+                labelSelector:
+                  matchExpressions:
+                  - key : app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - {{ $fullName }}
+                  - key : app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - {{ .Chart.Name }}
             {{- end }}
-          {{- end }}
           {{- if len .Values.tolerations }}
           tolerations:
             {{- range .Values.tolerations }}
