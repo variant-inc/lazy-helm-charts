@@ -148,3 +148,7 @@ livenessProbe: {}
 
 # -- (map) Deployment tags
 tags: {}
+
+# -- (int) Minimum number of pods that should be available after an eviction
+# See [Pod Disruption Budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/)
+minAvailable: 1

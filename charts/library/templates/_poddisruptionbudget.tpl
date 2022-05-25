@@ -1,6 +1,6 @@
 {{- define "library.poddisruptionbudget.tpl" }}
 ---
-{{- if gt .Values.autoscaling.minReplicas 1 }}
+{{- if gt (.Values.autoscaling.minReplicas | int) 1 }}
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
