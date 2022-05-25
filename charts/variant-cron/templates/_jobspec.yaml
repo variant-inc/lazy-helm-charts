@@ -1,6 +1,6 @@
 {{- define "chart.jobspec" }}
 {{- $fullName := (include "chart.fullname" .) -}}
-{{- $selectorLabels := (include "chart.selectorLabels" .) -}}
+{{- $selectorLabels := (include "library.chart.selectorLabels" .) -}}
 {{- $secrets := .Values.awsSecrets -}}
 template:
   metadata:

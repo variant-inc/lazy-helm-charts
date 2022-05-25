@@ -1,6 +1,6 @@
 {{- $fullName := (include "chart.fullname" .) -}}
 {{- $labels := (include "library.chart.labels" .) -}}
-{{- $selectorLabels := (include "chart.selectorLabels" .) -}}
+{{- $selectorLabels := (include "library.chart.selectorLabels" .) -}}
 {{- $secrets := .Values.awsSecrets -}}
 apiVersion: apps/v1
 kind: Deployment

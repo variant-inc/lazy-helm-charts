@@ -1,7 +1,7 @@
 {{- if .Values.authentication.enabled }}
 {{- $fullName := (include "chart.fullname" .) -}}
 {{- $labels := (include "library.chart.labels" .) -}}
-{{- $selectorLabels := (include "chart.selectorLabels" .) -}}
+{{- $selectorLabels := (include "library.chart.selectorLabels" .) -}}
 {{- $host := (include "chart.ingressHostname" .) -}}
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
