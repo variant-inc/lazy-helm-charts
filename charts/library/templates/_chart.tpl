@@ -39,3 +39,24 @@ Selector labels
 app.kubernetes.io/name: {{ .Chart.Name }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
+
+{{/*
+Pod AntiAffinity
+*/}}
+{{- define "library.chart.podAntiAffinity" -}}
+podAntiAffinity:
+  preferredDuringSchedulingIgnoredDuringExecution:
+  - weight: 100
+    podAffinityTerm:
+      labelSelector:
+        matchExpressions:
+        - key : app.kubernetes.io/instance
+          operator: In
+          values:
+          - {{ .Release.Name }}
+        - key : app.kubernetes.io/name
+          operator: In
+          values:
+          - {{ .Release.Name }}
+      topologyKey: topology.kubernetes.io/zone
+{{- end }}
