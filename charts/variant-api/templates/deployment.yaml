@@ -148,7 +148,7 @@ spec:
                   - key : app.kubernetes.io/name
                     operator: In
                     values:
-                      - {{ .Chart.Name }}
+                      - {{ .Release.Name }}
             {{- end }}
           {{- if len .Values.tolerations }}
           tolerations:
