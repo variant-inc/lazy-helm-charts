@@ -1,6 +1,5 @@
 {{- $fullName := (include "chart.fullname" .) -}}
 {{- $labels := (include "library.chart.labels" .) -}}
-{{- $selectorLabels := (include "chart.selectorLabels" .) -}}
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
