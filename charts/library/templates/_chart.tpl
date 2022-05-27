@@ -56,6 +56,6 @@ podAntiAffinity:
         - key : app.kubernetes.io/name
           operator: In
           values:
-          - {{ .Release.Name }}
+          - {{ .Chart.Name }}
       topologyKey: topology.kubernetes.io/zone
 {{- end }}
