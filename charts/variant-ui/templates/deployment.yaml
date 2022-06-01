@@ -1,6 +1,7 @@
 {{- $fullName := (include "chart.fullname" .) -}}
 {{- $labels := (include "library.chart.labels" .) -}}
 {{- $selectorLabels := (include "library.chart.selectorLabels" .) -}}
+{{- $podLabels := (include "library.chart.podLabels" .) -}}
 {{- $secrets := .Values.awsSecrets -}}
 {{- $secretEnv := .Values.secretVars -}}
 {{- $configEnv := .Values.configVars -}}
@@ -17,7 +18,7 @@ spec:
   template:
     metadata:
       labels:
-        {{- $selectorLabels | nindent 8 }}
+        {{- $podLabels | nindent 8 }}
       annotations:
         {{- include "chart.podAnnotations" . | indent 8 }}
     spec:
