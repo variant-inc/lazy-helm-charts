@@ -107,7 +107,7 @@ spec:
             {{- end }}
             - name: config-file
               readOnly: true
-              mountPath: /app/config
+              mountPath: {{ .Values.configMountPath }}
           envFrom: {{ include "library.container.envFrom.tpl" . | nindent 12 }}
           {{- if len .Values.nodeSelector }}
           nodeSelector:
