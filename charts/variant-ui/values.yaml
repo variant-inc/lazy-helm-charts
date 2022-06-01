@@ -138,6 +138,9 @@ secretVars: {}
 configVars: {}
   # bar: foo
 
+# -- (string) Mount path for configVars JSON file. Default /app/config. Config file full path would be /app/config/config.json
+configMountPath: /app/config
+
 # -- (map) Node labels for pod assignment
 # [NodeSelector](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/nodeselector)
 nodeSelector: {}
