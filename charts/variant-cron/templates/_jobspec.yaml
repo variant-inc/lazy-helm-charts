@@ -1,11 +1,11 @@
 {{- define "chart.jobspec" }}
 {{- $fullName := (include "chart.fullname" .) -}}
-{{- $selectorLabels := (include "library.chart.selectorLabels" .) -}}
+{{- $podLabels := (include "library.chart.podLabels" .) -}}
 {{- $secrets := .Values.awsSecrets -}}
 template:
   metadata:
     labels:
-      {{- $selectorLabels | nindent 6 }}
+      {{- $podLabels | nindent 6 }}
     annotations:
       {{- include "chart.podAnnotations" . | indent 6 }}
   spec:
