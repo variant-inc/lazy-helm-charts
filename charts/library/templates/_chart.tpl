@@ -65,5 +65,5 @@ podAntiAffinity:
           operator: In
           values:
           - {{ .Chart.Name }}
-      topologyKey: topology.kubernetes.io/zone
+      topologyKey: kubernetes.io/hostname
 {{- end }}
