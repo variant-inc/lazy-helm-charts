@@ -1,6 +1,6 @@
 # Variant UI Helm Chart
 
-![Version: 1.4.5](https://img.shields.io/badge/Version-1.4.5-informational?style=flat-square)
+![Version: 1.4.6](https://img.shields.io/badge/Version-1.4.6-informational?style=flat-square)
 
 A Helm chart for a web UI configuration
 
@@ -126,6 +126,7 @@ All possible objects created by this chart:
 | istio.ingress.public | bool | `false` | When `false`, an internal URL will be created that will expose your application *via OpenVPN-only*. When `true`, an additional publicly accessible URL will be created. This API should be secured behind some authentication method when set to `true`. |
 | istio.ingress.redirects | list | `[]` | Optional paths that will always redirect to internal/VPN endpoints |
 | livenessProbe | map | `{}` | Indicates whether container is running. See [Probe](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/probes) |
+| minAvailable | int | `1` | Minimum number of pods that should be available after an eviction See [Pod Disruption Budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) |
 | nameOverride | string | `nil` | nameOverride replaces the name of the chart in the Chart.yaml file |
 | nodeSelector | map | `{}` | Node labels for pod assignment [NodeSelector](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/nodeselector) |
 | readinessProbe | map | `{}` | Indicates whether container is ready for requests. See [Probe](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/probes) |

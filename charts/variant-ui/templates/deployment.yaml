@@ -24,6 +24,31 @@ spec:
     spec:
       serviceAccountName: {{ $fullName }}
       automountServiceAccountToken: true
+      {{- if len .Values.nodeSelector }}
+      nodeSelector:
+        {{- range $key, $value := .Values.nodeSelector }}
+        {{ $key }}: {{ $value }}
+        {{- end }}
+      {{- end }}
+      affinity:
+        {{- if len .Values.affinity }}
+          {{- range $key, $value := .Values.affinity }}
+          {{ $key }}: {{ toYaml $value | nindent 8 }}
+          {{- end }}
+        {{- else }}
+        {{- include "library.chart.podAntiAffinity" . | nindent 8 }}
+        {{- end }}
+      {{- if len .Values.tolerations }}
+      tolerations:
+        {{- range .Values.tolerations }}
+        - key: {{ required "Key is required for tolerations" .key | quote }}
+          operator: {{ .operator | default "Exists" | quote }}
+          {{- if hasKey . "value"  }}
+          value: {{ .value | quote }}
+          {{- end }}
+          effect: {{ .effect | default "NoSchedule" | quote }}
+        {{- end }}
+      {{- end }}
       ### Behold! Long explanation for why securityContext is set here:
       #
       # When the "eks.amazonaws.com/role-arn" annotation is applied to the ServiceAccount used by this Deployment, 
@@ -109,28 +134,5 @@ spec:
               readOnly: true
               mountPath: {{ .Values.configMountPath }}
           envFrom: {{ include "library.container.envFrom.tpl" . | nindent 12 }}
-          {{- if len .Values.nodeSelector }}
-          nodeSelector:
-            {{- range $key, $value := .Values.nodeSelector }}
-            {{ $key }}: {{ $value }}
-            {{- end }}
-          {{- end }}
-          {{- if len .Values.affinity }}
-          affinity:
-            {{- range $key, $value := .Values.affinity }}
-            {{ $key }}: {{ toYaml $value | nindent 14 }}
-            {{- end }}
-          {{- end }}
-          {{- if len .Values.tolerations }}
-          tolerations:
-            {{- range .Values.tolerations }}
-            - key: {{ required "Key is required for tolerations" .key | quote }}
-              operator: {{ .operator | default "Exists" | quote }}
-              {{- if hasKey . "value"  }}
-              value: {{ .value | quote }}
-              {{- end }}
-              effect: {{ .effect | default "NoSchedule" | quote }}
-            {{- end }}
-          {{- end }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
