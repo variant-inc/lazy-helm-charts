@@ -10,7 +10,6 @@ spec:
   schedule: {{  required "cronJob.schedule is required" .Values.cronJob.schedule | quote }}
   concurrencyPolicy: {{  .Values.cronJob.concurrencyPolicy  }}
   startingDeadlineSeconds: {{ .Values.cronJob.startingDeadlineSeconds  }}
-  activeDeadlineSeconds: {{ .Values.cronJob.activeDeadlineSeconds  }}
   suspend: {{ .Values.cronJob.suspend }}
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 1
