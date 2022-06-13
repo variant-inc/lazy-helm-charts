@@ -1,6 +1,6 @@
 # Variant CronJob Helm Chart
 
-![Version: 1.2.9](https://img.shields.io/badge/Version-1.2.9-informational?style=flat-square)
+![Version: 1.3.0-beta](https://img.shields.io/badge/Version-1.3.0--beta-informational?style=flat-square)
 
 A Helm chart for Istio Objects
 
@@ -74,18 +74,19 @@ All possible objects created by this chart:
 | CLUSTER_NAME | string | `"variant-dev"` | For securityGroupSelector in provisioner.yaml |
 | affinity | object | `{}` | Affinity for pod assignment [Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity) |
 | awsSecrets | list | `[]` | A list of secrets to configure to make available to your API. Create your secret in AWS Secrets Manager as plain text. Full contents of this secret will be mounted as a file your application can read to /app/secrets/{name} See [AWS Secrets](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) for more details. |
-| configVars | map | `{}` | User defined environment variables are implemented here. [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) |
+| configVars | object | `{}` | (map) User defined environment variables are implemented here. [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) |
+| cronJob.activeDeadlineSeconds | int | `600` | (int) https://kubernetes.io/docs/concepts/workloads/controllers/job/ |
 | cronJob.command | list | `nil` | full path to the job script to execute. https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/ |
-| cronJob.image.pullPolicy | string | `"Always"` | IfNotPresent, Always, Never |
+| cronJob.image.pullPolicy | string | `"Always"` | (string) IfNotPresent, Always, Never |
 | cronJob.image.tag | string | `nil` | The full URL of the image to be deployed containing the HTTP API application |
-| cronJob.podAnnotations | map | `{}` | https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/ |
-| cronJob.resources.limits.cpu | int | `1` | Limits CPU |
-| cronJob.resources.limits.memory | string | `"768Mi"` | Limits Memory |
-| cronJob.resources.requests.cpu | float | `0.1` | Requests CPU |
-| cronJob.resources.requests.memory | string | `"384Mi"` | Request memory |
+| cronJob.podAnnotations | object | `{}` | (map) https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/ |
+| cronJob.resources.limits.cpu | int | `1` | (int) Limits CPU |
+| cronJob.resources.limits.memory | string | `"768Mi"` | (string) Limits Memory |
+| cronJob.resources.requests.cpu | float | `0.1` | (float) Requests CPU |
+| cronJob.resources.requests.memory | string | `"384Mi"` | (string) Request memory |
 | cronJob.schedule | string | `nil` | Cron Style Schedule. For help check https://crontab.guru/ |
-| cronJob.suspend | bool | `false` | https://kubernetes.io/blog/2021/04/12/introducing-suspended-jobs/ |
-| imagePullSecrets | list | `[]` | https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod |
+| cronJob.suspend | bool | `false` | (bool) https://kubernetes.io/blog/2021/04/12/introducing-suspended-jobs/ |
+| imagePullSecrets | list | `[]` | (list) https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod |
 | istio.egress | list | `[]` | A whitelist of external services that your API requires connection to. The whitelist applies to the entire namespace in which this chart is installed. [These services](https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8) are globally whitelisted and do not require declaration. See [egress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/egress). See [Ingress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/ingress) for more Istio details. |
 | node.create | bool | `false` | Flag to determine whether or not custom nodes will be provisioned. |
 | node.instanceType | string | `nil` | The EC2 Instance Type for your custom nodes. |
@@ -95,10 +96,10 @@ All possible objects created by this chart:
 | podSecurityContext.fsGroup | int | `65534` | Groups of nobody |
 | restartPolicy | string | `"Never"` | Use Never by default for jobs so new pod is created on failure instead of restarting containers |
 | revision | string | `nil` | Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision` that will be applied to all objects created by a specific chart installation. Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version |
-| secretVars | map | `{}` | User defined secret variables are implemented here. [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) |
-| securityContext.allowPrivilegeEscalation | bool | `false` | Setting it to false ensures that no child process of a container can gain more privileges than its parent |
+| secretVars | object | `{}` | (map) User defined secret variables are implemented here. [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) |
+| securityContext.allowPrivilegeEscalation | bool | `false` | (bool) Setting it to false ensures that no child process of a container can gain more privileges than its parent |
 | securityContext.capabilities | object | `{"drop":["ALL"]}` | Drop All capabilities |
-| securityContext.readOnlyRootFilesystem | bool | `false` | Requires that containers must run with a read-only root filesystem (i.e. no writable layer) |
+| securityContext.readOnlyRootFilesystem | bool | `false` | (bool) Requires that containers must run with a read-only root filesystem (i.e. no writable layer) |
 | securityContext.runAsNonRoot | bool | `true` | Runs as non root. Must use numeric User in container |
 | securityContext.runAsUser | int | `nil` | Runs as numeric user |
 | serviceAccount.roleArn | string | `nil` | Optional ARN of the IAM role to be assumed by your application. If your API requires access to any AWS services, a role should be created in AWS IAM. This role should have an inline policy that describes the permissions your API needs (connect to RDS, publish to an SNS topic, read from an SQS queue, etc.). [RoleArn](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/rolearn) |
