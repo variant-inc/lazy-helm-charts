@@ -8,7 +8,7 @@ metadata:
     {{- $labels | nindent 4 }}
 spec:
   schedule: {{  required "cronJob.schedule is required" .Values.cronJob.schedule | quote }}
-  concurrencyPolicy: Replace
+  concurrencyPolicy: {{ .Values.cronJob.concurrencyPolicy }}
   startingDeadlineSeconds: {{ .Values.cronJob.startingDeadlineSeconds  }}
   suspend: {{ .Values.cronJob.suspend }}
   successfulJobsHistoryLimit: 3
