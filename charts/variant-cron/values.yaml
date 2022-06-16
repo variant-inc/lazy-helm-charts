@@ -68,6 +68,8 @@ cronJob:
       cpu: .1
       # -- (string) Request memory
       memory: 384Mi
+  # -- (string) https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/#concurrency-policy
+  concurrencyPolicy: Replace
   # -- (map) https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   podAnnotations: {}
   # -- (list) full path to the job script to execute. https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/
