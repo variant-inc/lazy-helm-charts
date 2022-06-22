@@ -101,6 +101,19 @@ deployment:
       memory: 384Mi
   # -- (list) List of arguments that can be passed in the image.
   args: []
+  # -- (list) List of Conditional Env Vars denoted by conditional (bool) and envVars (list)
+  conditionalEnvVars: []
+    # - condition: false
+    #   envVars:
+    #     - name: false_conditional
+    #       value: false_conditional
+    # - condition: true
+    #   envVars:
+    #     - name: true_conditional_1
+    #       value: true_conditional_1
+    #     - name: true_conditional_2
+    #       value: true_conditional_2
+  # -- (map) https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   # -- (map) https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   podAnnotations: {}
 
