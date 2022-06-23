@@ -49,12 +49,17 @@ spec:
     ###
   securityContext:
     fsGroup: 65534
-  {{- if len $secrets }}
+  {{- if or (len $secrets) (eq .Chart.Name "variant-ui") }}
   volumes:
   {{- range $secrets }}
     - name: {{ .name }}
       secret:
         secretName: {{ $fullName}}-{{ .name }}
+  {{- end }}
+  {{- if eq .Chart.Name "variant-ui" }}
+    - name: config-file
+      configMap:
+        name: {{ $fullName }}-chart-json
   {{- end }}
   {{- end }}
   containers:
