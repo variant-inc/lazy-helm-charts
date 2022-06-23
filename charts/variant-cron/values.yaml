@@ -76,6 +76,8 @@ cronJob:
   command:
   # -- (bool) https://kubernetes.io/blog/2021/04/12/introducing-suspended-jobs/
   suspend: false
+  # -- (int) https://kubernetes.io/docs/concepts/workloads/controllers/job/
+  activeDeadlineSeconds: 600
 
 # -- A list of secrets to configure to make available to your API.
 # Create your secret in AWS Secrets Manager as plain text.
