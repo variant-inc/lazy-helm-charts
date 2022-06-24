@@ -1,5 +1,5 @@
 {{- $fullName := (include "chart.fullname" .) -}}
-{{- $labels := (include "chart.labels" .) -}}
+{{- $labels := (include "library.chart.labels" .) -}}
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:

@@ -1,6 +1,5 @@
 {{- $fullName := (include "chart.fullname" .) -}}
-{{- $labels := (include "chart.labels" .) -}}
-{{- $selectorLabels := (include "chart.selectorLabels" .) -}}
+{{- $labels := (include "library.chart.labels" .) -}}
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
@@ -9,7 +8,7 @@ metadata:
     {{- $labels | nindent 4 }}
 spec:
   schedule: {{  required "cronJob.schedule is required" .Values.cronJob.schedule | quote }}
-  concurrencyPolicy: {{  .Values.cronJob.concurrencyPolicy  }}
+  concurrencyPolicy: {{ .Values.cronJob.concurrencyPolicy }}
   startingDeadlineSeconds: {{ .Values.cronJob.startingDeadlineSeconds  }}
   suspend: {{ .Values.cronJob.suspend }}
   successfulJobsHistoryLimit: 3
