@@ -1,6 +1,6 @@
 # Variant Handler Helm Chart
 
-![Version: 1.1.9](https://img.shields.io/badge/Version-1.1.9-informational?style=flat-square)
+![Version: 1.1.10](https://img.shields.io/badge/Version-1.1.10-informational?style=flat-square)
 
 A Helm chart for kubernetes handler
 
@@ -84,6 +84,7 @@ All possible objects created by this chart:
 | awsSecrets | list | `[]` | A list of secrets to configure to make available to your API. Create your secret in AWS Secrets Manager as plain text. Full contents of this secret will be mounted as a file your application can read. See [AWS Secrets](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) for more details. |
 | configVars | map | `{}` | User defined environment variables are implemented here. [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) |
 | deployment.args | list | `[]` | List of arguments that can be passed in the image. |
+| deployment.conditionalEnvVars | list | `[]` | List of Conditional Env Vars denoted by conditional (bool) and envVars (list) |
 | deployment.image.pullPolicy | string | `"IfNotPresent"` | IfNotPresent, Always, Never |
 | deployment.image.tag | string | `"tag"` | The full URL of the image to be deployed containing the tag |
 | deployment.podAnnotations | map | `{}` | https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/ |
