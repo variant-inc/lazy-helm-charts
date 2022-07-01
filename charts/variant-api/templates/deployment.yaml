@@ -147,8 +147,7 @@ spec:
             {{- range $secrets }}
             - name: {{ .name }}
               readOnly: true
-              mountPath: /app/secrets/{{ .name }}
-              subPath: {{ .name }}
+              mountPath: /app/secrets
             {{- end }}
           {{- end }}
           envFrom: {{ include "library.container.envFrom.tpl" . | nindent 12 }}
