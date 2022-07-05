@@ -52,7 +52,7 @@ spec:
   {{- if or (len $secrets) (eq .Chart.Name "variant-ui") }}
   volumes:
   {{- range $secrets }}
-    - name: {{ .name }}
+    - name: {{ $fullName}}-{{ .name }}
       secret:
         secretName: {{ $fullName}}-{{ .name }}
   {{- end }}
@@ -132,9 +132,10 @@ spec:
       {{- if or (len $secrets) (eq .Chart.Name "variant-ui") }}
       volumeMounts:
       {{- range $secrets }}
-        - name: {{ .name }}
+        - name: {{ $fullName }}-{{ .name }}
           readOnly: true
-          mountPath: /app/secrets
+          mountPath: /app/secrets/{{ $fullName }}-{{ .name }}
+          subPath: {{ $fullName }}-{{ .name }}
       {{- end }}
       {{- if eq .Chart.Name "variant-ui" }}
         - name: config-file
