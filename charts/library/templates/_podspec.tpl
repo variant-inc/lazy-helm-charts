@@ -134,7 +134,8 @@ spec:
       {{- range $secrets }}
         - name: {{ .name }}
           readOnly: true
-          mountPath: /app/secrets
+          mountPath: /app/secrets/{{ .name }}
+          subPath: {{ .name }}
       {{- end }}
       {{- if eq .Chart.Name "variant-ui" }}
         - name: config-file
