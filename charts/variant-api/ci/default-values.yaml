@@ -22,6 +22,8 @@ configMaps:
 
 awsSecrets:
   - name: devops-playground-rds-creds
+  - name: postgres-secret-test-db-36
+  - name: postgres-secret-test-db-inverse-05
 
 
 livenessProbe:
