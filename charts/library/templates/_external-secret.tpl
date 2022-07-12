@@ -21,7 +21,7 @@ spec:
       {{.name}}-host: "<%= JSON.parse(data.data).host %>"
       {{.name}}-dbname: "<%= JSON.parse(data.data).dbname %>"
       {{.name}}-username: "<%= JSON.parse(data.data).username %>"
-      {{.name}}-passowrd: "<%= JSON.parse(data.data).password %>"
+      {{.name}}-password: "<%= JSON.parse(data.data).password %>"
       {{.name}}-engine: "<%= JSON.parse(data.data).engine %>"
   {{ else }}
   backendType: secretsManager
