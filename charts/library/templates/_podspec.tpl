@@ -95,7 +95,8 @@ spec:
           path: /health
           port: {{ $port }}
         initialDelaySeconds: 10
-        periodSeconds: 10
+        periodSeconds: 30
+        failureThreshold: 15
       {{- end }}
       {{- if .Values.readinessProbe }}
       readinessProbe: {{ .Values.readinessProbe | toYaml | nindent 12 }}
@@ -106,7 +107,8 @@ spec:
           path: /health
           port: {{ $port }}
         initialDelaySeconds: 10
-        periodSeconds: 10
+        periodSeconds: 30
+        failureThreshold: 15
       {{- end }}
       resources:
       {{- toYaml .Values.deployment.resources | nindent 12 }}
