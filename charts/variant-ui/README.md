@@ -1,6 +1,6 @@
 # Variant UI Helm Chart
 
-![Version: 1.4.8-beta](https://img.shields.io/badge/Version-1.4.8--beta-informational?style=flat-square)
+![Version: 1.4.10-beta](https://img.shields.io/badge/Version-1.4.10--beta-informational?style=flat-square)
 
 A Helm chart for a web UI configuration
 
