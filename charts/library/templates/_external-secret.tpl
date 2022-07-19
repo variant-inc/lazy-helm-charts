@@ -24,6 +24,7 @@ spec:
       DATABASE__{{.name}}__password: "<%= JSON.parse(data.data).password %>"
       DATABASE__{{.name}}__engine: "<%= JSON.parse(data.data).engine %>"
   {{ else }}
+  template:
   backendType: secretsManager
   dataFrom:
     - {{ .name }}
