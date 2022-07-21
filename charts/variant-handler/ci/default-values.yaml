@@ -10,7 +10,9 @@ service:
 podSecurityContext:
   fsGroup: 65534
 
-securityContext: {}
+securityContext:
+  runAsNonRoot: true
+  allowPrivilegeEscalation: false
 
 livenessProbe:
   exec:
