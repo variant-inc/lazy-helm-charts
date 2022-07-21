@@ -86,27 +86,43 @@ spec:
           containerPort: {{ .Values.service.healthCheckPort }}
           protocol: TCP
       {{- end }}
+      {{ $failureThresholdDefault := 15 }}
+      {{ $periodSecondsDefault := 30 }}
       {{- if .Values.livenessProbe }}
-      livenessProbe: {{ .Values.livenessProbe | toYaml | nindent 12 }}
-      {{- else }}
+      livenessProbe: {{ .Values.livenessProbe | toYaml | nindent 12 -}}
+            {{- if not .Values.livenessProbe.failureThreshold }}
+            failureThreshold: {{ $failureThresholdDefault }}
+            {{- end }}
+            {{- if not .Values.livenessProbe.periodSeconds }}
+            periodSeconds: 30
+            {{- end }}
+      {{- else -}}
       {{ $port := ternary "http" "health" (empty .Values.service.healthCheckPort) }}
       livenessProbe:
         httpGet:
           path: /health
           port: {{ $port }}
         initialDelaySeconds: 10
-        periodSeconds: 10
+        periodSeconds: {{ $periodSecondsDefault }}
+        failureThreshold: {{ $failureThresholdDefault }}
       {{- end }}
       {{- if .Values.readinessProbe }}
-      readinessProbe: {{ .Values.readinessProbe | toYaml | nindent 12 }}
-      {{- else }}
+      readinessProbe: {{ .Values.readinessProbe | toYaml | nindent 12 -}}
+            {{- if not .Values.readinessProbe.failureThreshold }}
+            failureThreshold: {{ $failureThresholdDefault }}
+            {{- end }}
+            {{- if not .Values.readinessProbe.periodSeconds }}
+            periodSeconds: {{ $periodSecondsDefault }}
+            {{- end }}
+      {{- else -}}
       {{ $port := ternary "http" "health" (empty .Values.service.healthCheckPort) }}
       readinessProbe:
         httpGet:
           path: /health
           port: {{ $port }}
         initialDelaySeconds: 10
-        periodSeconds: 10
+        periodSeconds: {{ $periodSecondsDefault }}
+        failureThreshold: {{ $failureThresholdDefault }}
       {{- end }}
       resources:
       {{- toYaml .Values.deployment.resources | nindent 12 }}
