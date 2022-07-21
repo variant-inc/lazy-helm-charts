@@ -33,4 +33,5 @@ checksum/{{ . | trunc 53 | trimSuffix "-" }}: {{ print (lookup "v1" "ConfigMap" 
 {{- with .Values.deployment.podAnnotations }}
 {{ toYaml . }}
 {{- end }}
+reloader.stakater.com/auto: "true"
 {{- end }}

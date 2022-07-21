@@ -67,10 +67,3 @@ podAntiAffinity:
           - {{ .Chart.Name }}
       topologyKey: kubernetes.io/hostname
 {{- end }}
-
-{{/*
-Reloader annotation
-*/}}
-{{- define "library.chart.reloaderAnnotation" -}}
-reloader.stakater.com/auto: "true"
-{{- end }}
