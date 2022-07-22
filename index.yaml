@@ -83,6 +83,28 @@ entries:
     version: 0.1.0-beta
   variant-api:
   - apiVersion: v2
+    created: "2022-07-22T15:52:24.793370444Z"
+    dependencies:
+    - name: library
+      repository: file://../library
+      version: 0.1.0
+    description: A Helm chart for APIs to Variant clusters
+    digest: c13ee94ddc50a38493fc9bc04e3d580eeb8827eed445493dbd35cf3f992482e5
+    home: https://www.drivevariant.com/
+    icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
+    kubeVersion: ^1.7.1-0
+    maintainers:
+    - email: vibind@drivevariant.com
+      name: vibindaniel
+    - email: samira@drivevariant.com
+      name: samiralyateem
+    name: variant-api
+    sources:
+    - https://github.com/variant-inc
+    urls:
+    - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-api-2.1.15/variant-api-2.1.15.tgz
+    version: 2.1.15
+  - apiVersion: v2
     created: "2022-07-18T18:10:11.070287259Z"
     dependencies:
     - name: library
@@ -259,13 +281,13 @@ entries:
     - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-api-2.1.12/variant-api-2.1.12.tgz
     version: 2.1.12
   - apiVersion: v2
-    created: "2022-06-22T12:21:07.372661033Z"
+    created: "2022-06-23T11:24:10.699503169Z"
     dependencies:
     - name: library
       repository: file://../library
       version: 0.1.0
     description: A Helm chart for APIs to Variant clusters
-    digest: 9431ba63c1b0f318cc03a26b6b6d7fbee7a241e59a8e4c12947e3294b53cab69
+    digest: 3834454d7a34fb65a2f453cf93ba12256fa8dd89868857e255374778bb4fecd9
     home: https://www.drivevariant.com/
     icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
     kubeVersion: ^1.7.1-0
@@ -281,13 +303,13 @@ entries:
     - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-api-2.1.12-beta/variant-api-2.1.12-beta.tgz
     version: 2.1.12-beta
   - apiVersion: v2
-    created: "2022-06-23T11:24:10.699503169Z"
+    created: "2022-06-22T12:21:07.372661033Z"
     dependencies:
     - name: library
       repository: file://../library
       version: 0.1.0
     description: A Helm chart for APIs to Variant clusters
-    digest: 3834454d7a34fb65a2f453cf93ba12256fa8dd89868857e255374778bb4fecd9
+    digest: 9431ba63c1b0f318cc03a26b6b6d7fbee7a241e59a8e4c12947e3294b53cab69
     home: https://www.drivevariant.com/
     icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
     kubeVersion: ^1.7.1-0
@@ -391,13 +413,13 @@ entries:
     - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-api-2.1.11-beta/variant-api-2.1.11-beta.tgz
     version: 2.1.11-beta
   - apiVersion: v2
-    created: "2022-06-06T15:18:39.743398657Z"
+    created: "2022-06-06T16:32:50.908816333Z"
     dependencies:
     - name: library
       repository: file://../library
       version: 0.1.0
     description: A Helm chart for APIs to Variant clusters
-    digest: 19a6e89df37d54c175379eecfebcf6e50d25ee69388c5355db88de9821c3e8dc
+    digest: 2249ea47e035b5ea7292edd3cf9f73afde40ec661434e859cf44b6aa3b7756ea
     home: https://www.drivevariant.com/
     icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
     kubeVersion: ^1.7.1-0
@@ -413,13 +435,13 @@ entries:
     - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-api-2.1.11-beta/variant-api-2.1.11-beta.tgz
     version: 2.1.11-beta
   - apiVersion: v2
-    created: "2022-06-06T16:32:50.908816333Z"
+    created: "2022-06-06T15:18:39.743398657Z"
     dependencies:
     - name: library
       repository: file://../library
       version: 0.1.0
     description: A Helm chart for APIs to Variant clusters
-    digest: 2249ea47e035b5ea7292edd3cf9f73afde40ec661434e859cf44b6aa3b7756ea
+    digest: 19a6e89df37d54c175379eecfebcf6e50d25ee69388c5355db88de9821c3e8dc
     home: https://www.drivevariant.com/
     icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
     kubeVersion: ^1.7.1-0
@@ -897,13 +919,13 @@ entries:
     - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-api-2.1.3-beta/variant-api-2.1.3-beta.tgz
     version: 2.1.3-beta
   - apiVersion: v2
-    created: "2022-03-30T18:23:13.17419243Z"
+    created: "2022-03-30T17:58:50.992199638Z"
     dependencies:
     - name: library
       repository: file://../library
       version: 0.1.0
     description: A Helm chart for APIs to Variant clusters
-    digest: 2af50d815c66271b4950de4915c1df0b51bca73905bdca4dbe22f5ccef320edc
+    digest: db622cc374bf80ff53f8bb125bfd3eb1e6aa5c97bbedf35dda2d2ecbb0be98dc
     home: https://www.drivevariant.com/
     icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
     kubeVersion: ^1.7.1-0
@@ -919,13 +941,13 @@ entries:
     - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-api-2.1.2-beta/variant-api-2.1.2-beta.tgz
     version: 2.1.2-beta
   - apiVersion: v2
-    created: "2022-03-30T17:58:50.992199638Z"
+    created: "2022-03-30T18:23:13.17419243Z"
     dependencies:
     - name: library
       repository: file://../library
       version: 0.1.0
     description: A Helm chart for APIs to Variant clusters
-    digest: db622cc374bf80ff53f8bb125bfd3eb1e6aa5c97bbedf35dda2d2ecbb0be98dc
+    digest: 2af50d815c66271b4950de4915c1df0b51bca73905bdca4dbe22f5ccef320edc
     home: https://www.drivevariant.com/
     icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
     kubeVersion: ^1.7.1-0
@@ -1061,27 +1083,9 @@ entries:
     - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-api-2.0.0-beta7/variant-api-2.0.0-beta7.tgz
     version: 2.0.0-beta7
   - apiVersion: v2
-    created: "2022-02-14T15:30:38.983664494Z"
+    created: "2022-02-23T18:27:40.608519503Z"
     description: A Helm chart for APIs to Variant clusters
-    digest: 642f6a9d2278be98279bcec41a4f66dc308e987637ebb4f508b9f90d39cf3ff0
-    home: https://www.drivevariant.com/
-    icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
-    kubeVersion: ^1.7.1-0
-    maintainers:
-    - email: vibind@drivevariant.com
-      name: vibindaniel
-    - email: samira@drivevariant.com
-      name: samiralyateem
-    name: variant-api
-    sources:
-    - https://github.com/variant-inc
-    urls:
-    - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-api-2.0.0-beta6/variant-api-2.0.0-beta6.tgz
-    version: 2.0.0-beta6
-  - apiVersion: v2
-    created: "2022-02-16T19:34:42.571106451Z"
-    description: A Helm chart for APIs to Variant clusters
-    digest: a0ce641c09bef2234f2244f35e1f6cf743cdeb2db60709b30ad487a16c4b6899
+    digest: 6b8c52a3136fc500e8916ea43813e28cd95ca78d895d7b5ccb63d3ac15a97885
     home: https://www.drivevariant.com/
     icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
     kubeVersion: ^1.7.1-0
@@ -1115,9 +1119,27 @@ entries:
     - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-api-2.0.0-beta6/variant-api-2.0.0-beta6.tgz
     version: 2.0.0-beta6
   - apiVersion: v2
-    created: "2022-02-23T18:27:40.608519503Z"
+    created: "2022-02-16T19:34:42.571106451Z"
     description: A Helm chart for APIs to Variant clusters
-    digest: 6b8c52a3136fc500e8916ea43813e28cd95ca78d895d7b5ccb63d3ac15a97885
+    digest: a0ce641c09bef2234f2244f35e1f6cf743cdeb2db60709b30ad487a16c4b6899
+    home: https://www.drivevariant.com/
+    icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
+    kubeVersion: ^1.7.1-0
+    maintainers:
+    - email: vibind@drivevariant.com
+      name: vibindaniel
+    - email: samira@drivevariant.com
+      name: samiralyateem
+    name: variant-api
+    sources:
+    - https://github.com/variant-inc
+    urls:
+    - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-api-2.0.0-beta6/variant-api-2.0.0-beta6.tgz
+    version: 2.0.0-beta6
+  - apiVersion: v2
+    created: "2022-02-14T15:30:38.983664494Z"
+    description: A Helm chart for APIs to Variant clusters
+    digest: 642f6a9d2278be98279bcec41a4f66dc308e987637ebb4f508b9f90d39cf3ff0
     home: https://www.drivevariant.com/
     icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
     kubeVersion: ^1.7.1-0
@@ -1314,32 +1336,6 @@ entries:
     version: 1.0.0
   variant-cron:
   - apiVersion: v2
-    created: "2022-06-13T18:34:34.553375738Z"
-    dependencies:
-    - name: library
-      repository: file://../library
-      version: 0.1.0
-    description: A Helm chart for Istio Objects
-    digest: 095a480d0668089ca5ca57ad631fe19be79e4456ddcb1d47be5bc0ec05e28c19
-    home: https://www.drivevariant.com/
-    icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
-    kubeVersion: ^1.7.1-0
-    maintainers:
-    - email: vibind@drivevariant.com
-      name: vibindaniel
-    - email: samira@drivevariant.com
-      name: samiralyateem
-    - email: leeh@drivevariant.com
-      name: LeeHughsVariant
-    - email: naveenp@drivevariant.com
-      name: naveenp
-    name: variant-cron
-    sources:
-    - https://github.com/variant-inc
-    urls:
-    - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-cron-1.3.0-beta/variant-cron-1.3.0-beta.tgz
-    version: 1.3.0-beta
-  - apiVersion: v2
     created: "2022-06-13T18:51:01.808628134Z"
     dependencies:
     - name: library
@@ -1391,6 +1387,58 @@ entries:
     urls:
     - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-cron-1.3.0-beta/variant-cron-1.3.0-beta.tgz
     version: 1.3.0-beta
+  - apiVersion: v2
+    created: "2022-06-13T18:34:34.553375738Z"
+    dependencies:
+    - name: library
+      repository: file://../library
+      version: 0.1.0
+    description: A Helm chart for Istio Objects
+    digest: 095a480d0668089ca5ca57ad631fe19be79e4456ddcb1d47be5bc0ec05e28c19
+    home: https://www.drivevariant.com/
+    icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
+    kubeVersion: ^1.7.1-0
+    maintainers:
+    - email: vibind@drivevariant.com
+      name: vibindaniel
+    - email: samira@drivevariant.com
+      name: samiralyateem
+    - email: leeh@drivevariant.com
+      name: LeeHughsVariant
+    - email: naveenp@drivevariant.com
+      name: naveenp
+    name: variant-cron
+    sources:
+    - https://github.com/variant-inc
+    urls:
+    - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-cron-1.3.0-beta/variant-cron-1.3.0-beta.tgz
+    version: 1.3.0-beta
+  - apiVersion: v2
+    created: "2022-07-22T15:52:24.974721586Z"
+    dependencies:
+    - name: library
+      repository: file://../library
+      version: 0.1.0
+    description: A Helm chart for Istio Objects
+    digest: 294a23e3e546153f514ce357057a33d92a04c3f5b929a9744d2545fa124ab336
+    home: https://www.drivevariant.com/
+    icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
+    kubeVersion: ^1.7.1-0
+    maintainers:
+    - email: vibind@drivevariant.com
+      name: vibindaniel
+    - email: samira@drivevariant.com
+      name: samiralyateem
+    - email: leeh@drivevariant.com
+      name: LeeHughsVariant
+    - email: naveenp@drivevariant.com
+      name: naveenp
+    name: variant-cron
+    sources:
+    - https://github.com/variant-inc
+    urls:
+    - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-cron-1.2.12/variant-cron-1.2.12.tgz
+    version: 1.2.12
   - apiVersion: v2
     created: "2022-07-19T23:54:24.611555841Z"
     dependencies:
@@ -1548,13 +1596,13 @@ entries:
     - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-cron-1.2.10/variant-cron-1.2.10.tgz
     version: 1.2.10
   - apiVersion: v2
-    created: "2022-06-09T20:00:27.426733951Z"
+    created: "2022-06-14T14:35:34.979848475Z"
     dependencies:
     - name: library
       repository: file://../library
       version: 0.1.0
     description: A Helm chart for Istio Objects
-    digest: 20ac1b5eb1a17e98b48b6fbac4c8e670ddac659971e3bf3d17df26b3bacb1105
+    digest: 30ff679c9d82813d06aca5b27572fc2541dcb8aa556f641d2d4051430a1c6287
     home: https://www.drivevariant.com/
     icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
     kubeVersion: ^1.7.1-0
@@ -1574,13 +1622,13 @@ entries:
     - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-cron-1.2.10-beta/variant-cron-1.2.10-beta.tgz
     version: 1.2.10-beta
   - apiVersion: v2
-    created: "2022-06-14T14:35:34.979848475Z"
+    created: "2022-06-09T20:00:27.426733951Z"
     dependencies:
     - name: library
       repository: file://../library
       version: 0.1.0
     description: A Helm chart for Istio Objects
-    digest: 30ff679c9d82813d06aca5b27572fc2541dcb8aa556f641d2d4051430a1c6287
+    digest: 20ac1b5eb1a17e98b48b6fbac4c8e670ddac659971e3bf3d17df26b3bacb1105
     home: https://www.drivevariant.com/
     icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
     kubeVersion: ^1.7.1-0
@@ -1860,13 +1908,13 @@ entries:
     - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-cron-1.2.6-beta1/variant-cron-1.2.6-beta1.tgz
     version: 1.2.6-beta1
   - apiVersion: v2
-    created: "2022-04-20T19:49:25.575122765Z"
+    created: "2022-04-20T15:16:02.935727575Z"
     dependencies:
     - name: library
       repository: file://../library
       version: 0.1.0-beta
     description: A Helm chart for Istio Objects
-    digest: 0c210a6c60786939c99cf032949a4583369c307b5840cc6ec1642dc26902b50f
+    digest: d560cfca190b5d03390916f519e57e732abe19bd4bf1bd3e07a628d40f643c26
     home: https://www.drivevariant.com/
     icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
     kubeVersion: ^1.7.1-0
@@ -1886,13 +1934,13 @@ entries:
     - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-cron-1.2.6-beta/variant-cron-1.2.6-beta.tgz
     version: 1.2.6-beta
   - apiVersion: v2
-    created: "2022-04-20T15:16:02.935727575Z"
+    created: "2022-04-20T19:49:25.575122765Z"
     dependencies:
     - name: library
       repository: file://../library
       version: 0.1.0-beta
     description: A Helm chart for Istio Objects
-    digest: d560cfca190b5d03390916f519e57e732abe19bd4bf1bd3e07a628d40f643c26
+    digest: 0c210a6c60786939c99cf032949a4583369c307b5840cc6ec1642dc26902b50f
     home: https://www.drivevariant.com/
     icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
     kubeVersion: ^1.7.1-0
@@ -2247,6 +2295,30 @@ entries:
     version: 1.0.0
   variant-handler:
   - apiVersion: v2
+    created: "2022-07-22T15:52:25.15255508Z"
+    dependencies:
+    - name: library
+      repository: file://../library
+      version: 0.1.0
+    description: A Helm chart for kubernetes handler
+    digest: 1c2e66d809a6957a272849bc6f01f7720373564a906f662ead88035e0326ef0b
+    home: https://www.drivevariant.com/
+    icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
+    kubeVersion: ^1.7.1-0
+    maintainers:
+    - email: vibind@drivevariant.com
+      name: vibindaniel
+    - email: samira@drivevariant.com
+      name: samiralyateem
+    - email: naveenp@drivevariant.com
+      name: naveenpaka
+    name: variant-handler
+    sources:
+    - https://github.com/variant-inc
+    urls:
+    - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-handler-1.1.13/variant-handler-1.1.13.tgz
+    version: 1.1.13
+  - apiVersion: v2
     created: "2022-07-18T18:10:11.476031183Z"
     dependencies:
     - name: library
@@ -2511,37 +2583,13 @@ entries:
     - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-handler-1.1.9/variant-handler-1.1.9.tgz
     version: 1.1.9
   - apiVersion: v2
-    created: "2022-06-06T15:18:39.927280221Z"
+    created: "2022-06-06T14:36:36.659102716Z"
     dependencies:
     - name: library
       repository: file://../library
       version: 0.1.0
     description: A Helm chart for kubernetes handler
-    digest: 3fa12a1533d5da790813a8a5a188af46994d93dc4bf610d258596bb20196283c
-    home: https://www.drivevariant.com/
-    icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
-    kubeVersion: ^1.7.1-0
-    maintainers:
-    - email: vibind@drivevariant.com
-      name: vibindaniel
-    - email: samira@drivevariant.com
-      name: samiralyateem
-    - email: naveenp@drivevariant.com
-      name: naveenpaka
-    name: variant-handler
-    sources:
-    - https://github.com/variant-inc
-    urls:
-    - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-handler-1.1.9-beta/variant-handler-1.1.9-beta.tgz
-    version: 1.1.9-beta
-  - apiVersion: v2
-    created: "2022-06-06T16:32:51.088579554Z"
-    dependencies:
-    - name: library
-      repository: file://../library
-      version: 0.1.0
-    description: A Helm chart for kubernetes handler
-    digest: 16a238747230016f7bbc100f488abd13b4e35269719e9925f8d9f9b5fbe69980
+    digest: abd203ea68e314fbb67edf8346f014bc57238d905c2b7dcae2e0019cfddd209e
     home: https://www.drivevariant.com/
     icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
     kubeVersion: ^1.7.1-0
@@ -2607,13 +2655,37 @@ entries:
     - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-handler-1.1.9-beta/variant-handler-1.1.9-beta.tgz
     version: 1.1.9-beta
   - apiVersion: v2
-    created: "2022-06-06T14:36:36.659102716Z"
+    created: "2022-06-06T16:32:51.088579554Z"
     dependencies:
     - name: library
       repository: file://../library
       version: 0.1.0
     description: A Helm chart for kubernetes handler
-    digest: abd203ea68e314fbb67edf8346f014bc57238d905c2b7dcae2e0019cfddd209e
+    digest: 16a238747230016f7bbc100f488abd13b4e35269719e9925f8d9f9b5fbe69980
+    home: https://www.drivevariant.com/
+    icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
+    kubeVersion: ^1.7.1-0
+    maintainers:
+    - email: vibind@drivevariant.com
+      name: vibindaniel
+    - email: samira@drivevariant.com
+      name: samiralyateem
+    - email: naveenp@drivevariant.com
+      name: naveenpaka
+    name: variant-handler
+    sources:
+    - https://github.com/variant-inc
+    urls:
+    - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-handler-1.1.9-beta/variant-handler-1.1.9-beta.tgz
+    version: 1.1.9-beta
+  - apiVersion: v2
+    created: "2022-06-06T15:18:39.927280221Z"
+    dependencies:
+    - name: library
+      repository: file://../library
+      version: 0.1.0
+    description: A Helm chart for kubernetes handler
+    digest: 3fa12a1533d5da790813a8a5a188af46994d93dc4bf610d258596bb20196283c
     home: https://www.drivevariant.com/
     icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
     kubeVersion: ^1.7.1-0
@@ -3473,6 +3545,30 @@ entries:
     version: 0.1.0
   variant-ui:
   - apiVersion: v2
+    created: "2022-07-22T15:52:25.347585826Z"
+    dependencies:
+    - name: library
+      repository: file://../library
+      version: 0.1.0
+    description: A Helm chart for a web UI configuration
+    digest: a01be0f1820e24f9fbdec0ebce97113c0e5c6838b9ed04f2881d34ecb39ea580
+    home: https://www.drivevariant.com/
+    icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
+    kubeVersion: ^1.7.1-0
+    maintainers:
+    - email: vibind@drivevariant.com
+      name: vibindaniel
+    - email: samira@drivevariant.com
+      name: salyateem13
+    - email: leeh@drivevariant.com
+      name: LeeHughsVariant
+    name: variant-ui
+    sources:
+    - https://github.com/variant-inc
+    urls:
+    - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-ui-1.4.10/variant-ui-1.4.10.tgz
+    version: 1.4.10
+  - apiVersion: v2
     created: "2022-07-19T23:54:24.799842786Z"
     dependencies:
     - name: library
@@ -3593,6 +3689,30 @@ entries:
     - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-ui-1.4.9/variant-ui-1.4.9.tgz
     version: 1.4.9
   - apiVersion: v2
+    created: "2022-07-12T15:00:59.559411178Z"
+    dependencies:
+    - name: library
+      repository: file://../library
+      version: 0.1.0
+    description: A Helm chart for a web UI configuration
+    digest: 4941603e1af91182a92113b146283eab2c7cf4427e3a5c04c0c491d0bde43983
+    home: https://www.drivevariant.com/
+    icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
+    kubeVersion: ^1.7.1-0
+    maintainers:
+    - email: vibind@drivevariant.com
+      name: vibindaniel
+    - email: samira@drivevariant.com
+      name: salyateem13
+    - email: leeh@drivevariant.com
+      name: LeeHughsVariant
+    name: variant-ui
+    sources:
+    - https://github.com/variant-inc
+    urls:
+    - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-ui-1.4.9-beta/variant-ui-1.4.9-beta.tgz
+    version: 1.4.9-beta
+  - apiVersion: v2
     created: "2022-07-13T17:08:44.502533429Z"
     dependencies:
     - name: library
@@ -3641,37 +3761,13 @@ entries:
     - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-ui-1.4.9-beta/variant-ui-1.4.9-beta.tgz
     version: 1.4.9-beta
   - apiVersion: v2
-    created: "2022-07-12T15:00:59.559411178Z"
+    created: "2022-07-06T17:19:05.482060696Z"
     dependencies:
     - name: library
       repository: file://../library
       version: 0.1.0
     description: A Helm chart for a web UI configuration
-    digest: 4941603e1af91182a92113b146283eab2c7cf4427e3a5c04c0c491d0bde43983
-    home: https://www.drivevariant.com/
-    icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
-    kubeVersion: ^1.7.1-0
-    maintainers:
-    - email: vibind@drivevariant.com
-      name: vibindaniel
-    - email: samira@drivevariant.com
-      name: salyateem13
-    - email: leeh@drivevariant.com
-      name: LeeHughsVariant
-    name: variant-ui
-    sources:
-    - https://github.com/variant-inc
-    urls:
-    - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-ui-1.4.9-beta/variant-ui-1.4.9-beta.tgz
-    version: 1.4.9-beta
-  - apiVersion: v2
-    created: "2022-07-18T17:37:37.801970614Z"
-    dependencies:
-    - name: library
-      repository: file://../library
-      version: 0.1.0
-    description: A Helm chart for a web UI configuration
-    digest: c742263479af485fd5c59eb0b6ba90448019917e73ac367747336951a9adcd68
+    digest: 019a0d5e7004b6ebcad4b170f8813c4a6410b70057b305fae7822f3258ee4ff2
     home: https://www.drivevariant.com/
     icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
     kubeVersion: ^1.7.1-0
@@ -3689,13 +3785,13 @@ entries:
     - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-ui-1.4.8-beta/variant-ui-1.4.8-beta.tgz
     version: 1.4.8-beta
   - apiVersion: v2
-    created: "2022-07-06T17:19:05.482060696Z"
+    created: "2022-07-18T17:37:37.801970614Z"
     dependencies:
     - name: library
       repository: file://../library
       version: 0.1.0
     description: A Helm chart for a web UI configuration
-    digest: 019a0d5e7004b6ebcad4b170f8813c4a6410b70057b305fae7822f3258ee4ff2
+    digest: c742263479af485fd5c59eb0b6ba90448019917e73ac367747336951a9adcd68
     home: https://www.drivevariant.com/
     icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
     kubeVersion: ^1.7.1-0
@@ -3857,30 +3953,6 @@ entries:
     - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-ui-1.4.6-beta/variant-ui-1.4.6-beta.tgz
     version: 1.4.6-beta
   - apiVersion: v2
-    created: "2022-06-06T13:20:01.539417395Z"
-    dependencies:
-    - name: library
-      repository: file://../library
-      version: 0.1.0
-    description: A Helm chart for a web UI configuration
-    digest: 0ef96182f0c9b0c9d6ae65b28cc0590c7d7e4cfa3472c8771c9eb40acb3ffa42
-    home: https://www.drivevariant.com/
-    icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
-    kubeVersion: ^1.7.1-0
-    maintainers:
-    - email: vibind@drivevariant.com
-      name: vibindaniel
-    - email: samira@drivevariant.com
-      name: salyateem13
-    - email: leeh@drivevariant.com
-      name: LeeHughsVariant
-    name: variant-ui
-    sources:
-    - https://github.com/variant-inc
-    urls:
-    - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-ui-1.4.6-beta/variant-ui-1.4.6-beta.tgz
-    version: 1.4.6-beta
-  - apiVersion: v2
     created: "2022-06-06T14:36:36.855473507Z"
     dependencies:
     - name: library
@@ -3912,6 +3984,30 @@ entries:
       version: 0.1.0
     description: A Helm chart for a web UI configuration
     digest: 049e940fca80599802590d8908ad190c81fafa09a9f3487d8f04864dc90713c3
+    home: https://www.drivevariant.com/
+    icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
+    kubeVersion: ^1.7.1-0
+    maintainers:
+    - email: vibind@drivevariant.com
+      name: vibindaniel
+    - email: samira@drivevariant.com
+      name: salyateem13
+    - email: leeh@drivevariant.com
+      name: LeeHughsVariant
+    name: variant-ui
+    sources:
+    - https://github.com/variant-inc
+    urls:
+    - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-ui-1.4.6-beta/variant-ui-1.4.6-beta.tgz
+    version: 1.4.6-beta
+  - apiVersion: v2
+    created: "2022-06-06T13:20:01.539417395Z"
+    dependencies:
+    - name: library
+      repository: file://../library
+      version: 0.1.0
+    description: A Helm chart for a web UI configuration
+    digest: 0ef96182f0c9b0c9d6ae65b28cc0590c7d7e4cfa3472c8771c9eb40acb3ffa42
     home: https://www.drivevariant.com/
     icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
     kubeVersion: ^1.7.1-0
@@ -4498,4 +4594,4 @@ entries:
     urls:
     - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-ui-1.0.0/variant-ui-1.0.0.tgz
     version: 1.0.0
-generated: "2022-07-19T23:54:24.800996673Z"
+generated: "2022-07-22T15:52:25.34897024Z"
