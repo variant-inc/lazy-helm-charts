@@ -2,7 +2,7 @@ apiVersion: v2
 name: variant-ui
 description: A Helm chart for a web UI configuration
 
-version: 1.4.10-beta
+version: 1.4.10
 
 kubeVersion: "^1.7.1-0"
 home: https://www.drivevariant.com/
