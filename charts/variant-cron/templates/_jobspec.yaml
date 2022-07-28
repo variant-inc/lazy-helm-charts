@@ -18,7 +18,7 @@ template:
     {{- if len $secrets }}
     volumes:
       {{- range $secrets }}
-      - name: {{ .name }}
+      - name: {{ $fullName}}-{{ .name }}
         secret:
           secretName: {{ $fullName}}-{{ .name }}
       {{- end }}
@@ -43,9 +43,10 @@ template:
         {{ if len $secrets}}
         volumeMounts:
           {{- range $secrets }}
-          - name: {{ .name }}
+          - name: {{ $fullName }}-{{ .name }}
             readOnly: true
-            mountPath: /app/secrets
+            mountPath: /app/secrets/{{ $fullName }}-{{ .name }}
+            subPath: {{ $fullName }}-{{ .name }}
           {{- end }}
         {{- end}}
         env:
