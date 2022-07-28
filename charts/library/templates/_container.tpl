@@ -3,10 +3,15 @@
 {{- $secretEnv := .Values.secretVars }}
 {{- $configEnv := .Values.configVars }}
 {{- $configMaps := .Values.configMaps | default list }}
-{{- if or (len $secretEnv) (len $configEnv) (len $configMaps) }}
+{{- $awsSecrets := .Values.awsSecrets | default list }}
+{{- if or (len $secretEnv) (len $configEnv) (len $configMaps) (len $awsSecrets)}}
 {{- if len $secretEnv }}
 - secretRef:
     name: {{ $fullName }}-chart
+{{- end }}
+{{- range $awsSecrets }}
+- secretRef:
+    name: {{ $fullName }}-{{ .name }}
 {{- end }}
 {{- if len $configEnv }}
 - configMapRef:

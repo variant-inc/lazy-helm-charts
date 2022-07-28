@@ -2,8 +2,8 @@
 {{- $fullName := (include "library.chart.fullname" .) -}}
 {{- $labels := (include "library.chart.labels" .) -}}
 {{- $secrets := .Values.awsSecrets -}}
----
 {{- range $secrets }}
+---
 apiVersion: 'kubernetes-client.io/v1'
 kind: ExternalSecret
 metadata:
@@ -11,8 +11,23 @@ metadata:
   labels:
     {{- $labels | nindent 4 }}
 spec:
+  {{ if hasPrefix "postgres-secret-" .name }}
+  backendType: secretsManager
+  data:
+    - key: {{ .name }}
+      name: data
+  template:
+    stringData:
+      DATABASE__{{.name}}__host: "<%= JSON.parse(data.data).host %>"
+      DATABASE__{{.name}}__name: "<%= JSON.parse(data.data).dbname %>"
+      DATABASE__{{.name}}__user: "<%= JSON.parse(data.data).username %>"
+      DATABASE__{{.name}}__password: "<%= JSON.parse(data.data).password %>"
+      DATABASE__{{.name}}__engine: "<%= JSON.parse(data.data).engine %>"
+  {{ else }}
+  template:
   backendType: secretsManager
   dataFrom:
-    - {{.name}}
+    - {{ .name }}
+{{- end -}}
 {{- end -}}
 {{- end }}
