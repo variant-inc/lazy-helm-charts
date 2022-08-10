@@ -110,7 +110,7 @@ All possible objects created by this chart:
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | map | `{}` | Affinity for pod assignment. [Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity) |
-| authentication | bool | `{"enabled":false}` | selecting authentication: true when defining an api resource, [Istio RBAC](https://istio.io/v1.3/docs/reference/config/authorization/istio.rbac.v1alpha1/) resources are created  to require a valid JWT token before forwarding a request to your API. [Ingress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/ingress/) |
+| authentication | bool | `{"enabled":false,"jwksUri":null,"server":null}` | selecting authentication: true when defining an api resource, [Istio RBAC](https://istio.io/v1.3/docs/reference/config/authorization/istio.rbac.v1alpha1/) resources are created  to require a valid JWT token before forwarding a request to your API. [Ingress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/ingress/) |
 | authorization | list | `{"rules":{"to":[]}}` | List of operation objects with methods and paths key values allowing certain methods and paths to be whitelisted within the cluster GET /health and Get /metrics are set by default in authorization.yaml |
 | autoscaling.maxReplicas | int | `5` | Maximum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/) |
 | autoscaling.minReplicas | int | `1` | Minimum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/) |

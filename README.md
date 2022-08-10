@@ -58,4 +58,4 @@ dependencies:
 
 `helm template coolapi  . -n cool-test --values values.yaml`
 
-`helm upgrade --install coolapi  . -n cool-test --values values.yaml --render-subchart-notes`
+`helm upgrade --install coolapi  . -n cool-test --values values.yaml --render-subchart-notes --create-namespace`

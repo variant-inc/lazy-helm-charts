@@ -14,5 +14,5 @@ spec:
       {{- $selectorLabels | nindent 6 }}
   jwtRules:
   - issuer: {{ required ".Values.authentication.server is required when .Values.authentication.enabled" .Values.authentication.server }}
-    jwksUri: {{ required ".Values.authentication.server is required when .Values.authentication.enabled" .Values.authentication.server }}/v1/keys
+    jwksUri: {{ required ".Values.authentication.jwksUri is required when .Values.authentication.enabled" .Values.authentication.jwksUri }}
 {{- end }}

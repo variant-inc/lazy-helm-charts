@@ -23,6 +23,10 @@ spec:
         notPrincipals: ["cluster.local*"]
     to:
     - operation:
+        hosts: 
+          - "*.internal.{{ $host }}"
+          - "*.internal.apps.{{ $host }}"
+    - operation:
         methods: ["GET"]
         paths: ["/health"]
     - operation:

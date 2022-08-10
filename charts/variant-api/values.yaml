@@ -126,6 +126,8 @@ revision:
 # [Ingress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/ingress/)
 authentication:
   enabled: false
+  server:
+  jwksUri:
 
 # -- (list) List of operation objects with methods and paths key values allowing certain methods and paths to be whitelisted within the cluster
 # GET /health and Get /metrics are set by default in authorization.yaml
