@@ -52,7 +52,7 @@ podSecurityContext:
     fsGroup: 65534
 
 # -- (map) Security Context for containers
-securityContext: {}
+securityContext: {
   # -- Runs as non root. Must use numeric User in container
   # runAsNonRoot: true
   # -- (int) Runs as numeric user
@@ -62,9 +62,10 @@ securityContext: {}
   #   drop:
   #   - ALL
   # -- (bool) Setting it to false ensures that no child process of a container can gain more privileges than its parent
-  # allowPrivilegeEscalation: false
+  allowPrivilegeEscalation: false
   # -- (bool) Requires that containers must run with a read-only root filesystem (i.e. no writable layer)
   # readOnlyRootFilesystem: true
+}
 
 # -- replicaCount
 replicaCount: 1
