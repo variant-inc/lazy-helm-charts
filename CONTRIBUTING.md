@@ -163,7 +163,7 @@ Charts should start at `1.0.0`. Any breaking (backwards incompatible) changes to
   <!-- markdownlint-disable-next-line MD013 -->
   * Provide the `name` [argument](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release#name) argument in the `helm_release` resource
   <!-- markdownlint-disable-next-line MD013 -->
-  * According to the [Workload Naming Conventions](https://drivevariant.atlassian.net/wiki/spaces/CLOUD/pages/1665859671/Recommended+Conventions#Workload-Naming-Conventions), this name must end with `-api` such as `schedule-adherence-api` or `driver-api`
+  * According to the [Workload Naming Conventions](https://drivevariant.atlassian.net/wiki/spaces/CLOUD/pages/1665859671/Recommended+Conventions#Workload-Naming-Conventions), this name must end with `-handler` such as `schedule-adherence-handler` or `driver-handler`
   * This will be used as the base [object name](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/) that will be assigned to all Kubernetes objects created by this chart
 
 * Minimum required input table
