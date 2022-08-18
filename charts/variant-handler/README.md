@@ -1,6 +1,6 @@
 # Variant Handler Helm Chart
 
-![Version: 1.1.14](https://img.shields.io/badge/Version-1.1.14-informational?style=flat-square)
+![Version: 1.1.15](https://img.shields.io/badge/Version-1.1.15-informational?style=flat-square)
 
 A Helm chart for kubernetes handler
 
@@ -101,7 +101,8 @@ All possible objects created by this chart:
 | replicaCount | int | `1` | replicaCount |
 | revision | string | `"abc"` | Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision` that will be applied to all objects created by a specific chart installation. Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version |
 | secretVars | map | `{}` | User defined secret variables are implemented here. [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) |
-| securityContext | map | `{}` | Security Context for containers |
+| securityContext | map | `{"allowPrivilegeEscalation":false}` | Security Context for containers |
+| securityContext.allowPrivilegeEscalation | bool | `false` | Setting it to false ensures that no child process of a container can gain more privileges than its parent |
 | service.healthCheckPath | string | `"/health"` | Health check URI, This will be used in probes to check container status |
 | service.healthCheckPort | string | `nil` | Optional port which serves a health check endpoint at `/health` Defaults to value of `service.targetPort` if not defined. |
 | service.metricsPort | string | `nil` | Optional port which serves prometheus metrics endpoint at `/metrics` Defaults to value of `service.targetPort` if not defined. |
