@@ -1,6 +1,8 @@
 # Variant UI Helm Chart
 
-![Version: 1.4.11](https://img.shields.io/badge/Version-1.4.11-informational?style=flat-square)
+
+
+![Version: 1.4.12](https://img.shields.io/badge/Version-1.4.12-informational?style=flat-square) 
 
 A Helm chart for a web UI configuration
 
@@ -85,6 +87,7 @@ istio:
 ```
 
 The host must be setup as a SAN on the certificate of the cluster. Please create a [support request](http://cloudops.ops-drivevariant.com/support) to include your host name in our cluster's certificate.
+
 
 ## Kubernetes Object Reference
 
