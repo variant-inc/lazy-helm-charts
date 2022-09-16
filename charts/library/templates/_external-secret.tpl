@@ -18,11 +18,11 @@ spec:
       name: data
   template:
     stringData:
-      DATABASE__{{ .name | trimPrefix "postgres-secret-" }}__host: "<%= JSON.parse(data.data).host %>"
-      DATABASE__{{ .name | trimPrefix "postgres-secret-" }}__name: "<%= JSON.parse(data.data).dbname %>"
-      DATABASE__{{ .name | trimPrefix "postgres-secret-" }}__user: "<%= JSON.parse(data.data).username %>"
-      DATABASE__{{ .name | trimPrefix "postgres-secret-" }}__password: "<%= JSON.parse(data.data).password %>"
-      # DATABASE__{{ .name | trimPrefix "postgres-secret-" }}__engine: "<%= JSON.parse(data.data).engine %>"
+      DATABASE__{{ "<%= JSON.parse(data.data).reference %>" }}__host: "<%= JSON.parse(data.data).host %>"
+      DATABASE__{{ "<%= JSON.parse(data.data).reference %>" }}__name: "<%= JSON.parse(data.data).dbname %>"
+      DATABASE__{{ "<%= JSON.parse(data.data).reference %>" }}__user: "<%= JSON.parse(data.data).username %>"
+      DATABASE__{{ "<%= JSON.parse(data.data).reference %>" }}__password: "<%= JSON.parse(data.data).password %>"
+      # DATABASE__{{ "<%= JSON.parse(data.data).reference %>" }}__engine: "<%= JSON.parse(data.data).engine %>"
   {{ else }}
   template:
   backendType: secretsManager
