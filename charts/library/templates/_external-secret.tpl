@@ -18,11 +18,11 @@ spec:
       name: data
   template:
     stringData:
-      DATABASE__{{ "<%= JSON.parse(data.data).reference %>" }}__host: "<%= JSON.parse(data.data).host %>"
-      DATABASE__{{ "<%= JSON.parse(data.data).reference %>" }}__name: "<%= JSON.parse(data.data).dbname %>"
-      DATABASE__{{ "<%= JSON.parse(data.data).reference %>" }}__user: "<%= JSON.parse(data.data).username %>"
-      DATABASE__{{ "<%= JSON.parse(data.data).reference %>" }}__password: "<%= JSON.parse(data.data).password %>"
-      # DATABASE__{{ "<%= JSON.parse(data.data).reference %>" }}__engine: "<%= JSON.parse(data.data).engine %>"
+      DATABASE__{{ .reference }}__host: "<%= JSON.parse(data.data).host %>"
+      DATABASE__{{ .reference }}__name: "<%= JSON.parse(data.data).dbname %>"
+      DATABASE__{{ .reference }}__user: "<%= JSON.parse(data.data).username %>"
+      DATABASE__{{ .reference }}__password: "<%= JSON.parse(data.data).password %>"
+      # DATABASE__{{ .reference }}__engine: "<%= JSON.parse(data.data).engine %>"
   {{ else }}
   template:
   backendType: secretsManager

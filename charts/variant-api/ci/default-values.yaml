@@ -22,7 +22,7 @@ configMaps:
 
 awsSecrets:
   - name: devops-playground-rds-creds
-
+    reference: rdscreds
 
 livenessProbe:
   httpGet:
