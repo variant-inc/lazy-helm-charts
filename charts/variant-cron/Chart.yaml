@@ -2,7 +2,7 @@ apiVersion: v2
 name: variant-cron
 description: A Helm chart for Istio Objects
 
-version: 1.2.16-beta
+version: 1.2.16
 
 kubeVersion: "^1.7.1-0"
 home: https://www.drivevariant.com/
