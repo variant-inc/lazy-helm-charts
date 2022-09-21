@@ -82,7 +82,7 @@ deployment:
   resources:
     limits:
       # -- (int) Limits CPU
-      cpu: 1
+      cpu: .5
       # -- (string) Limits Memory
       memory: 768Mi
     requests:
