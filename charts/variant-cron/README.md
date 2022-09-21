@@ -1,6 +1,6 @@
 # Variant CronJob Helm Chart
 
-![Version: 1.2.15](https://img.shields.io/badge/Version-1.2.15-informational?style=flat-square)
+![Version: 1.2.16](https://img.shields.io/badge/Version-1.2.16-informational?style=flat-square)
 
 A Helm chart for Istio Objects
 
@@ -81,7 +81,7 @@ All possible objects created by this chart:
 | cronJob.image.pullPolicy | string | `"Always"` | IfNotPresent, Always, Never |
 | cronJob.image.tag | string | `nil` | The full URL of the image to be deployed containing the HTTP API application |
 | cronJob.podAnnotations | map | `{}` | https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/ |
-| cronJob.resources.limits.cpu | int | `1` | Limits CPU |
+| cronJob.resources.limits.cpu | int | `0.5` | Limits CPU |
 | cronJob.resources.limits.memory | string | `"768Mi"` | Limits Memory |
 | cronJob.resources.requests.cpu | float | `0.1` | Requests CPU |
 | cronJob.resources.requests.memory | string | `"384Mi"` | Request memory |

@@ -1,6 +1,6 @@
 # Variant Handler Helm Chart
 
-![Version: 1.1.18](https://img.shields.io/badge/Version-1.1.18-informational?style=flat-square)
+![Version: 1.1.19](https://img.shields.io/badge/Version-1.1.19-informational?style=flat-square)
 
 A Helm chart for kubernetes handler
 
@@ -88,7 +88,7 @@ All possible objects created by this chart:
 | deployment.image.pullPolicy | string | `"IfNotPresent"` | IfNotPresent, Always, Never |
 | deployment.image.tag | string | `"tag"` | The full URL of the image to be deployed containing the tag |
 | deployment.podAnnotations | map | `{}` | https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/ |
-| deployment.resources.limits.cpu | int | `1` | Limits CPU |
+| deployment.resources.limits.cpu | int | `0.5` | Limits CPU |
 | deployment.resources.limits.memory | string | `"768Mi"` | Limits Memory |
 | deployment.resources.requests.cpu | float | `0.1` | Requests CPU |
 | deployment.resources.requests.memory | string | `"384Mi"` | Request memory |
