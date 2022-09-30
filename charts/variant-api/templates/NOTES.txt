@@ -1,9 +1,11 @@
 {{- $fullName := (include "chart.fullname" .) -}}
 {{- if .Values.istio.ingress }}
 
-You can reach the application at through vpn-<env>-drivevariant.com
+You can reach the application at:
 
 https://api.internal.apps.{{ .Values.istio.ingress.host }}/{{ .Release.Namespace }}/{{ $fullName }}
+
+Through VPN: https://usxpress.atlassian.net/wiki/spaces/CLOUD/pages/2486470195/How+to+configure+OpenVPN+using+SSO+to+access+USX+Variant+Resources
 
 {{- if .Values.istio.ingress.public }}
 ....or
