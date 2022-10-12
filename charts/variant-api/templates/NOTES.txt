@@ -21,9 +21,9 @@ The folowing endpoints are being redirected to /{{ $.Release.Namespace }}/{{ $fu
 /{{ .Release.Namespace }}/{{ $fullName }}/health
 /{{ .Release.Namespace }}/{{ $fullName }}/swagger
 /{{ .Release.Namespace }}/{{ $fullName }}/swaggerui
-{{- end}}
-{{- end}}
 ======================================================
+{{- end}}
+{{- end}}
 {{- if .Values.configVars }}
 
 Config vars:
