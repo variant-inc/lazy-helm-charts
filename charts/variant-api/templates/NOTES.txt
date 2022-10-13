@@ -25,23 +25,20 @@ The folowing endpoints are being redirected to /{{ $.Release.Namespace }}/{{ $fu
 {{- end}}
 {{- end}}
 {{- if .Values.configVars }}
-
 Config vars:
 {{- range $key, $value := .Values.configVars }}
 {{ $key }}: {{ $value | quote }}
 {{- end }}
-======================================================
+.
 {{- end }}
 {{- if .Values.configMaps }}
-
 Config maps:
 {{- range .Values.configMaps }}
 {{ . }}
 {{- end }}
-======================================================
+.
 {{- end }}
 {{- if .Values.awsSecrets }}
-
 AWS Secrets
 {{- range .Values.awsSecrets }}
 {{ .reference }}: {{ .name }}
