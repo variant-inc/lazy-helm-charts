@@ -83,6 +83,28 @@ entries:
     version: 0.1.0-beta
   variant-api:
   - apiVersion: v2
+    created: "2022-11-04T07:15:02.781910764Z"
+    dependencies:
+    - name: library
+      repository: file://../library
+      version: 0.1.0
+    description: A Helm chart for APIs to Variant clusters
+    digest: 2d7cd99b2ee1f7e23d234f14de9c82cb54a7f5afae7ac8a9631347f0121447ff
+    home: https://www.drivevariant.com/
+    icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
+    kubeVersion: ^1.7.1-0
+    maintainers:
+    - email: vibind@drivevariant.com
+      name: vibindaniel
+    - email: samira@drivevariant.com
+      name: samiralyateem
+    name: variant-api
+    sources:
+    - https://github.com/variant-inc
+    urls:
+    - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-api-2.1.23/variant-api-2.1.23.tgz
+    version: 2.1.23
+  - apiVersion: v2
     created: "2022-10-13T14:24:08.117005627Z"
     dependencies:
     - name: library
@@ -4037,6 +4059,30 @@ entries:
     version: 0.1.0
   variant-ui:
   - apiVersion: v2
+    created: "2022-11-04T07:15:03.048766808Z"
+    dependencies:
+    - name: library
+      repository: file://../library
+      version: 0.1.0
+    description: A Helm chart for a web UI configuration
+    digest: 680f2b4e087d2ed1123f0e8f82096d739593106e95590c0784034f1362c10214
+    home: https://www.drivevariant.com/
+    icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
+    kubeVersion: ^1.7.1-0
+    maintainers:
+    - email: vibind@drivevariant.com
+      name: vibindaniel
+    - email: samira@drivevariant.com
+      name: salyateem13
+    - email: leeh@drivevariant.com
+      name: LeeHughsVariant
+    name: variant-ui
+    sources:
+    - https://github.com/variant-inc
+    urls:
+    - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-ui-1.4.17/variant-ui-1.4.17.tgz
+    version: 1.4.17
+  - apiVersion: v2
     created: "2022-09-21T14:29:58.706425408Z"
     dependencies:
     - name: library
@@ -5254,4 +5300,4 @@ entries:
     urls:
     - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-ui-1.0.0/variant-ui-1.0.0.tgz
     version: 1.0.0
-generated: "2022-10-13T14:24:08.117549067Z"
+generated: "2022-11-04T07:15:03.049375857Z"
