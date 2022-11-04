@@ -1,10 +1,16 @@
+======================================================
+{{- $fullName := (include "chart.fullname" .) -}}
 {{- if .Values.ingress }}
-
 You can reach the application at the following hosts:
-
+.
 {{- range .Values.istio.ingress.hosts }}
 - https://{{ tpl .url $ | quote }}
 {{- end }}
-
+.
 Make sure that the hosts added have a proper certificate in the EKS cluster
+======================================================
 {{- end}}
+Mount path for configVars JSON file:
+{{ .Values.configMountPath }}
+======================================================
+{{ include "library.notes.tpl" . }}
