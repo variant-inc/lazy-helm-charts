@@ -1,0 +1,36 @@
+======================================================
+schedule: {{  .Values.cronJob.schedule }}
+.
+concurrencyPolicy: {{ .Values.cronJob.concurrencyPolicy }}
+.
+startingDeadlineSeconds: {{ .Values.cronJob.startingDeadlineSeconds  }}
+.
+suspend: {{ .Values.cronJob.suspend }}
+.
+image: {{ .Values.cronJob.image.tag }}
+======================================================
+{{- $fullName := (include "chart.fullname" .) -}}
+{{- if .Values.configVars }}
+Config vars:
+{{- range $key, $value := .Values.configVars }}
+{{ $key }}: {{ $value | quote }}
+{{- end }}
+.
+{{- end }}
+{{- if .Values.configMaps }}
+Config maps:
+{{- range .Values.configMaps }}
+{{ . }}
+{{- end }}
+.
+{{- end }}
+{{- if .Values.awsSecrets }}
+AWS Secrets
+{{- range .Values.awsSecrets }}
+{{ .reference }}: {{ .name }}
+{{- end }}
+======================================================
+{{- end }}
+======================================================
+Checking for events and troubleshooting:
+https://backstage.apps.ops-drivevariant.com/docs/default/component/dx-docs/Troubleshooting/
