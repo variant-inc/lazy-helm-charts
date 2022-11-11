@@ -1578,32 +1578,6 @@ entries:
     version: 1.0.0
   variant-cron:
   - apiVersion: v2
-    created: "2022-06-14T14:06:47.505564207Z"
-    dependencies:
-    - name: library
-      repository: file://../library
-      version: 0.1.0
-    description: A Helm chart for Istio Objects
-    digest: 5efc38c3481739daeba897850ddeee81ff3d9398307e7a7d84c693e4a0659193
-    home: https://www.drivevariant.com/
-    icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
-    kubeVersion: ^1.7.1-0
-    maintainers:
-    - email: vibind@drivevariant.com
-      name: vibindaniel
-    - email: samira@drivevariant.com
-      name: samiralyateem
-    - email: leeh@drivevariant.com
-      name: LeeHughsVariant
-    - email: naveenp@drivevariant.com
-      name: naveenp
-    name: variant-cron
-    sources:
-    - https://github.com/variant-inc
-    urls:
-    - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-cron-1.3.0-beta/variant-cron-1.3.0-beta.tgz
-    version: 1.3.0-beta
-  - apiVersion: v2
     created: "2022-06-13T18:34:34.553375738Z"
     dependencies:
     - name: library
@@ -1655,6 +1629,58 @@ entries:
     urls:
     - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-cron-1.3.0-beta/variant-cron-1.3.0-beta.tgz
     version: 1.3.0-beta
+  - apiVersion: v2
+    created: "2022-06-14T14:06:47.505564207Z"
+    dependencies:
+    - name: library
+      repository: file://../library
+      version: 0.1.0
+    description: A Helm chart for Istio Objects
+    digest: 5efc38c3481739daeba897850ddeee81ff3d9398307e7a7d84c693e4a0659193
+    home: https://www.drivevariant.com/
+    icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
+    kubeVersion: ^1.7.1-0
+    maintainers:
+    - email: vibind@drivevariant.com
+      name: vibindaniel
+    - email: samira@drivevariant.com
+      name: samiralyateem
+    - email: leeh@drivevariant.com
+      name: LeeHughsVariant
+    - email: naveenp@drivevariant.com
+      name: naveenp
+    name: variant-cron
+    sources:
+    - https://github.com/variant-inc
+    urls:
+    - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-cron-1.3.0-beta/variant-cron-1.3.0-beta.tgz
+    version: 1.3.0-beta
+  - apiVersion: v2
+    created: "2022-11-11T15:12:25.258607659Z"
+    dependencies:
+    - name: library
+      repository: file://../library
+      version: 0.1.0
+    description: A Helm chart for Istio Objects
+    digest: 5f7eb55c6aea9cedce495fcaff1f4b7288bd9a9cc177bd21db55852c3e4a4ca7
+    home: https://www.drivevariant.com/
+    icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
+    kubeVersion: ^1.7.1-0
+    maintainers:
+    - email: vibind@drivevariant.com
+      name: vibindaniel
+    - email: samira@drivevariant.com
+      name: samiralyateem
+    - email: leeh@drivevariant.com
+      name: LeeHughsVariant
+    - email: naveenp@drivevariant.com
+      name: naveenp
+    name: variant-cron
+    sources:
+    - https://github.com/variant-inc
+    urls:
+    - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-cron-1.2.17/variant-cron-1.2.17.tgz
+    version: 1.2.17
   - apiVersion: v2
     created: "2022-09-21T14:29:58.200985777Z"
     dependencies:
@@ -1812,32 +1838,6 @@ entries:
     - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-cron-1.2.12-beta1/variant-cron-1.2.12-beta1.tgz
     version: 1.2.12-beta1
   - apiVersion: v2
-    created: "2022-07-06T17:19:05.027680152Z"
-    dependencies:
-    - name: library
-      repository: file://../library
-      version: 0.1.0
-    description: A Helm chart for Istio Objects
-    digest: 3b0678564954eb68494dd818c53181544c8578950c275eecad8b775fa584a02f
-    home: https://www.drivevariant.com/
-    icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
-    kubeVersion: ^1.7.1-0
-    maintainers:
-    - email: vibind@drivevariant.com
-      name: vibindaniel
-    - email: samira@drivevariant.com
-      name: samiralyateem
-    - email: leeh@drivevariant.com
-      name: LeeHughsVariant
-    - email: naveenp@drivevariant.com
-      name: naveenp
-    name: variant-cron
-    sources:
-    - https://github.com/variant-inc
-    urls:
-    - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-cron-1.2.12-beta/variant-cron-1.2.12-beta.tgz
-    version: 1.2.12-beta
-  - apiVersion: v2
     created: "2022-07-18T17:37:37.384624001Z"
     dependencies:
     - name: library
@@ -1871,6 +1871,32 @@ entries:
       version: 0.1.0
     description: A Helm chart for Istio Objects
     digest: 275ffda23fe57cbe1d9dd0a78c1a5f3407ba39587a4833771825f4d2343ea836
+    home: https://www.drivevariant.com/
+    icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
+    kubeVersion: ^1.7.1-0
+    maintainers:
+    - email: vibind@drivevariant.com
+      name: vibindaniel
+    - email: samira@drivevariant.com
+      name: samiralyateem
+    - email: leeh@drivevariant.com
+      name: LeeHughsVariant
+    - email: naveenp@drivevariant.com
+      name: naveenp
+    name: variant-cron
+    sources:
+    - https://github.com/variant-inc
+    urls:
+    - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-cron-1.2.12-beta/variant-cron-1.2.12-beta.tgz
+    version: 1.2.12-beta
+  - apiVersion: v2
+    created: "2022-07-06T17:19:05.027680152Z"
+    dependencies:
+    - name: library
+      repository: file://../library
+      version: 0.1.0
+    description: A Helm chart for Istio Objects
+    digest: 3b0678564954eb68494dd818c53181544c8578950c275eecad8b775fa584a02f
     home: https://www.drivevariant.com/
     icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
     kubeVersion: ^1.7.1-0
@@ -5300,4 +5326,4 @@ entries:
     urls:
     - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-ui-1.0.0/variant-ui-1.0.0.tgz
     version: 1.0.0
-generated: "2022-11-04T07:15:03.049375857Z"
+generated: "2022-11-11T15:12:25.259175094Z"
