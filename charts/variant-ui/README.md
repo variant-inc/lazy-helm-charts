@@ -115,7 +115,7 @@ All possible objects created by this chart:
 | deployment.image.pullPolicy | string | `"IfNotPresent"` | IfNotPresent, Always, Never |
 | deployment.image.tag | string | `nil` | The full URL of the image to be deployed containing the UI web application |
 | deployment.podAnnotations | map | `{}` | https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/ |
-| deployment.resources.limits.cpu | int | `null` | Limits CPU |
+| deployment.resources.limits.cpu | int | `nil` | Limits CPU |
 | deployment.resources.limits.memory | string | `"768Mi"` | Limits Memory |
 | deployment.resources.requests.cpu | float | `0.1` | Requests CPU |
 | deployment.resources.requests.memory | string | `"384Mi"` | Request memory |

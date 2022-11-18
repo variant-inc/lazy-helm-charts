@@ -87,7 +87,7 @@ deployment:
       memory: 768Mi
     requests:
       # -- (float) Requests CPU
-      cpu: .2
+      cpu: .1
       # -- (string) Request memory
       memory: 384Mi
   # -- (list) List of arguments that can be passed in the image.

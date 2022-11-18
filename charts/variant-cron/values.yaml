@@ -65,7 +65,7 @@ cronJob:
       memory: 768Mi
     requests:
       # -- (float) Requests CPU
-      cpu: .2
+      cpu: .1
       # -- (string) Request memory
       memory: 384Mi
   # -- (string) https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/#concurrency-policy
