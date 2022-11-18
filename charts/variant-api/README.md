@@ -1,6 +1,6 @@
 # Variant API Helm Chart
 
-![Version: 2.1.24](https://img.shields.io/badge/Version-2.1.24-informational?style=flat-square)
+![Version: 2.1.24-beta](https://img.shields.io/badge/Version-2.1.24--beta-informational?style=flat-square)
 
 A Helm chart for APIs to Variant clusters
 
@@ -123,7 +123,7 @@ All possible objects created by this chart:
 | deployment.image.pullPolicy | string | `"IfNotPresent"` | IfNotPresent, Always, Never |
 | deployment.image.tag | string | `nil` | The full URL of the image to be deployed containing the HTTP API application |
 | deployment.podAnnotations | map | `{}` | [annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) |
-| cronJob.resources.limits.cpu | int | `nil` | Limits CPU, intentionally set to null |
+| deployment.resources.limits.cpu | int | `nil` | Limits CPU, intentionally set to null |
 | deployment.resources.limits.memory | string | `"768Mi"` | Limits Memory |
 | deployment.resources.requests.cpu | float | `0.1` | Requests CPU |
 | deployment.resources.requests.memory | string | `"384Mi"` | Request memory |
