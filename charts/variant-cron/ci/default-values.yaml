@@ -23,13 +23,6 @@ cronJob:
   image:
     pullPolicy: IfNotPresent
     tag: curlimages/curl
-  resources:
-    limits:
-      cpu: 1
-      memory: 768Mi
-    requests:
-      cpu: .1
-      memory: 384Mi
   args: []
   podAnnotations: {}
   command: 

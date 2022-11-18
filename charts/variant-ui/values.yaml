@@ -90,13 +90,11 @@ deployment:
   # https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
   resources:
     limits:
-      # -- (int) Limits CPU
-      cpu: .5
       # -- (string) Limits Memory
       memory: 768Mi
     requests:
       # -- (float) Requests CPU
-      cpu: .1
+      cpu: .2
       # -- (string) Request memory
       memory: 384Mi
   # -- (list) List of arguments that can be passed in the image.

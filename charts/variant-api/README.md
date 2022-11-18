@@ -1,6 +1,6 @@
 # Variant API Helm Chart
 
-![Version: 2.1.23](https://img.shields.io/badge/Version-2.1.23-informational?style=flat-square)
+![Version: 2.1.24](https://img.shields.io/badge/Version-2.1.24-informational?style=flat-square)
 
 A Helm chart for APIs to Variant clusters
 
@@ -123,9 +123,8 @@ All possible objects created by this chart:
 | deployment.image.pullPolicy | string | `"IfNotPresent"` | IfNotPresent, Always, Never |
 | deployment.image.tag | string | `nil` | The full URL of the image to be deployed containing the HTTP API application |
 | deployment.podAnnotations | map | `{}` | [annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) |
-| deployment.resources.limits.cpu | int | `0.5` | Limits CPU |
 | deployment.resources.limits.memory | string | `"768Mi"` | Limits Memory |
-| deployment.resources.requests.cpu | float | `0.1` | Requests CPU |
+| deployment.resources.requests.cpu | float | `0.2` | Requests CPU |
 | deployment.resources.requests.memory | string | `"384Mi"` | Request memory |
 | istio.egress | list | `[]` | A whitelist of external services that your API requires connection to. The whitelist applies to the entire namespace in which this chart is installed. [These services](https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8) are globally whitelisted and do not require declaration. See [egress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/egress/) and [Ingress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/ingress/) for more details. |
 | istio.ingress.disableRewrite | bool | `false` | When `true`, the path `/{target-namespace}/{helm-release-name}` will be preserved in requests to your application, else rewritten to `/` when `false` |

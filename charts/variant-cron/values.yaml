@@ -59,13 +59,11 @@ cronJob:
   # https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
   resources:
     limits:
-      # -- (int) Limits CPU
-      cpu: .5
       # -- (string) Limits Memory
       memory: 768Mi
     requests:
       # -- (float) Requests CPU
-      cpu: .1
+      cpu: .2
       # -- (string) Request memory
       memory: 384Mi
   # -- (string) https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/#concurrency-policy
