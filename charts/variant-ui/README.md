@@ -115,8 +115,9 @@ All possible objects created by this chart:
 | deployment.image.pullPolicy | string | `"IfNotPresent"` | IfNotPresent, Always, Never |
 | deployment.image.tag | string | `nil` | The full URL of the image to be deployed containing the UI web application |
 | deployment.podAnnotations | map | `{}` | https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/ |
+| deployment.resources.limits.cpu | int | `null` | Limits CPU |
 | deployment.resources.limits.memory | string | `"768Mi"` | Limits Memory |
-| deployment.resources.requests.cpu | float | `0.2` | Requests CPU |
+| deployment.resources.requests.cpu | float | `0.1` | Requests CPU |
 | deployment.resources.requests.memory | string | `"384Mi"` | Request memory |
 | fullnameOverride | string | `nil` | fullnameOverride completely replaces the generated name. |
 | istio.egress | string | `nil` | A whitelist of external services that your API requires connection to. The whitelist applies to the entire namespace in which this chart is installed. [These services](https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8) are globally whitelisted and do not require declaration. See [Ingress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/ingress) for more Istio details. |

@@ -81,8 +81,9 @@ All possible objects created by this chart:
 | cronJob.image.pullPolicy | string | `"Always"` | IfNotPresent, Always, Never |
 | cronJob.image.tag | string | `nil` | The full URL of the image to be deployed containing the HTTP API application |
 | cronJob.podAnnotations | map | `{}` | https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/ |
+| deployment.resources.limits.cpu | int | `null` | Limits CPU |
 | cronJob.resources.limits.memory | string | `"768Mi"` | Limits Memory |
-| cronJob.resources.requests.cpu | float | `0.2` | Requests CPU |
+| cronJob.resources.requests.cpu | float | `0.1` | Requests CPU |
 | cronJob.resources.requests.memory | string | `"384Mi"` | Request memory |
 | cronJob.schedule | string | `nil` | Cron Style Schedule. For help check https://crontab.guru/ |
 | cronJob.suspend | bool | `false` | https://kubernetes.io/blog/2021/04/12/introducing-suspended-jobs/ |
