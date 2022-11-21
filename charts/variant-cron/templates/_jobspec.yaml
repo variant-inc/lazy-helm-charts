@@ -38,7 +38,10 @@ template:
             {{ required "Command list must be provided" (join " " .Values.cronJob.command) }};
             x=$(echo $?); curl -fsI -X POST http://localhost:15020/quitquitquit && exit $x
         resources:
-          {{- toYaml (required "Resources is required" .Values.cronJob.resources) | nindent 10 }}
+          limits:
+            memory: {{ .Values.cronJob.resources.limits.memory }}
+          requests:
+            {{- toYaml (required "Resources is required" .Values.cronJob.resources.requests) | nindent 12 }}
         envFrom: {{ include "library.container.envFrom.tpl" . | nindent 10 }}
         {{ if len $secrets}}
         volumeMounts:
