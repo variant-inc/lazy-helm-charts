@@ -90,8 +90,8 @@ deployment:
   # https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
   resources:
     limits:
-      # -- (int) Limits CPU
-      cpu: .5
+      # -- (int) Limits CPU, intentionally set to null, can't be overridden
+      cpu: null
       # -- (string) Limits Memory
       memory: 768Mi
     requests:

@@ -125,7 +125,10 @@ spec:
         failureThreshold: {{ $failureThresholdDefault }}
       {{- end }}
       resources:
-      {{- toYaml .Values.deployment.resources | nindent 12 }}
+        limits:
+          memory: {{ .Values.deployment.resources.limits.memory }}
+        requests:
+          {{- toYaml .Values.deployment.resources.requests | nindent 12 }}
       env:
         - name: REVISION
           value: {{ required "revision is required" .Values.revision | quote }}
