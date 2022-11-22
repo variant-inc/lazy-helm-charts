@@ -39,7 +39,7 @@ spec:
       operator: In
       values:
         - amd64
-    {{ -if .Values.node.instanceType }}
+    {{- if .Values.node.instanceType }}
     - key: "node.kubernetes.io/instance-type"
       operator: In
       values: [{{ .Values.node.instanceType | quote }}]
