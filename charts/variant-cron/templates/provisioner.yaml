@@ -28,7 +28,7 @@ spec:
     {{- range $key, $value := .Values.nodeSelector }}
     {{ $key }}: {{ $value }}
     {{- end }}
-    karpenter/namespace: {{ .Release.Namespace }}
+    cloudops.io/namespace: {{ .Release.Namespace }}
 
   requirements:
     - key: "karpenter.sh/capacity-type"
