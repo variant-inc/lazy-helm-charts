@@ -60,7 +60,7 @@ template:
     automountServiceAccountToken: true
     nodeSelector:
     {{- if .Values.node.create }}
-      karpenter.sh/namespace: {{ .Release.Namespace }}
+      karpenter/namespace: {{ .Release.Namespace }}
       {{- if .Values.node.instanceType }}
       node.kubernetes.io/instance-type: {{ .Values.node.instanceType | quote }}
       {{- end }}
@@ -72,7 +72,7 @@ template:
       {{- end }}
     {{- end }}
     tolerations:
-    {{- if .Values.node.instanceType }}
+    {{- if .Values.node.create }}
       - key: "namespace"
         value: {{ .Release.Namespace | quote }}
         operator: "Equal"
