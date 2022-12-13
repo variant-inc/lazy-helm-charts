@@ -1,6 +1,6 @@
 # Variant CronJob Helm Chart
 
-![Version: 1.2.19](https://img.shields.io/badge/Version-1.2.19-informational?style=flat-square)
+![Version: 1.2.20](https://img.shields.io/badge/Version-1.2.20-informational?style=flat-square)
 
 A Helm chart for Istio Objects
 
@@ -41,8 +41,8 @@ A Helm chart for Istio Objects
   node:
     # Set to true to create custom nodes. Default is false
     create: true
-    # EC2 Instance type for your custom node. Default is r5.xlarge
-    instanceType: r5.xlarge
+    # EC2 Instance type for your custom node if you want to specify it.
+    instanceType: r6a.xlarge
     # If nil, the feature is disabled, nodes will never expire
     ttlSecondsUntilExpired: 2592000 # 30 Days = 60 * 60 * 24 * 30 Seconds;
     # If nil, the feature is disabled, nodes will never scale down due to low utilization. Default 30 minutes
