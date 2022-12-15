@@ -1,6 +1,6 @@
 # Variant API Helm Chart
 
-![Version: 2.1.24](https://img.shields.io/badge/Version-2.1.24-informational?style=flat-square)
+![Version: 2.1.25](https://img.shields.io/badge/Version-2.1.25-informational?style=flat-square)
 
 A Helm chart for APIs to Variant clusters
 
@@ -152,3 +152,5 @@ All possible objects created by this chart:
 | serviceMonitor.scrapeTimeout | string | `"10s"` | Maximum wait duration for Prometheus metrics response from your service |
 | tags | map | `{}` | Deployment tags |
 | tolerations | list | `[]` | Tolerations for pod assignment. [Tolerations](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/tolerations/) |
+| usxpressCACertBundle.certMountPath | string | `"/etc/ssl/certs/"` | The cert is mounted to the default path mentioned. The path can also be changed. |
+| usxpressCACertBundle.enabled | bool | `true` | If set to true, volume mounts the certificate from the custom-ca-certs secret |

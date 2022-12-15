@@ -1,6 +1,6 @@
 # Variant UI Helm Chart
 
-![Version: 1.4.18](https://img.shields.io/badge/Version-1.4.18-informational?style=flat-square)
+![Version: 1.4.19](https://img.shields.io/badge/Version-1.4.19-informational?style=flat-square)
 
 A Helm chart for a web UI configuration
 
@@ -149,3 +149,5 @@ All possible objects created by this chart:
 | serviceMonitor.targetPort | int | `9090` | Service Monitor Target Port |
 | tags | map | `{}` | Deployment tags |
 | tolerations | list | `[]` | Tolerations for pod assignment [Tolerations](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/tolerations) |
+| usxpressCACertBundle.certMountPath | string | `"/etc/ssl/certs/"` | The cert is mounted to the default path mentioned. The path can also be changed. |
+| usxpressCACertBundle.enabled | bool | `true` | If set to true, volume mounts the certificate from the custom-ca-certs secret |
