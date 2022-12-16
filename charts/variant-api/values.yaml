@@ -194,3 +194,9 @@ tags: {}
 # -- (int) Minimum number of pods that should be available after an eviction
 # See [Pod Disruption Budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/)
 minAvailable: 1
+
+usxpressCACertBundle:
+  # -- (bool) If set to true, volume mounts the certificate from the custom-ca-certs secret
+  enabled: true
+  # -- (string)  The cert is mounted to the default path mentioned. The path can also be changed.
+  certMountPath: /etc/ssl/certs/

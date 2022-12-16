@@ -49,7 +49,7 @@ spec:
     ###
   securityContext:
     fsGroup: 65534
-  {{- if or (len $secrets) (eq .Chart.Name "variant-ui") }}
+  {{- if or (len $secrets) (eq .Chart.Name "variant-ui") (.Values.usxpressCACertBundle.enabled)}}
   volumes:
   {{- range $secrets }}
     - name: {{ $fullName}}-{{ .name }}
@@ -61,13 +61,18 @@ spec:
       configMap:
         name: {{ $fullName }}-chart-json
   {{- end }}
+  {{- if .Values.usxpressCACertBundle.enabled }}
+    - name: custom-ca-certs
+      secret:
+        secretName: custom-ca-certs
+  {{- end }}
   {{- end }}
   containers:
     - name: {{ $fullName }}
       image: {{ required "deployment.image.tag is required" .Values.deployment.image.tag }}
       imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
       {{- if len .Values.deployment.args }}
-      args: 
+      args:
       {{- range .Values.deployment.args }}
         - {{ . }}
       {{- end }}
@@ -148,7 +153,7 @@ spec:
         {{- end }}
         {{- end }}
         {{- end }}
-      {{- if or (len $secrets) (eq .Chart.Name "variant-ui") }}
+      {{- if or (len $secrets) (eq .Chart.Name "variant-ui") (.Values.usxpressCACertBundle.enabled)}}
       volumeMounts:
       {{- range $secrets }}
         - name: {{ $fullName }}-{{ .name }}
@@ -160,6 +165,11 @@ spec:
         - name: config-file
           readOnly: true
           mountPath: {{ .Values.configMountPath }}
+      {{- end }}
+      {{- if .Values.usxpressCACertBundle.enabled }}
+        - name: custom-ca-certs
+          readOnly: true
+          mountPath: {{ .Values.usxpressCACertBundle.certMountPath }}
       {{- end }}
       {{- end }}
       envFrom: {{ include "library.container.envFrom.tpl" . | nindent 12 }}

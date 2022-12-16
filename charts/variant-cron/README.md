@@ -1,6 +1,6 @@
 # Variant CronJob Helm Chart
 
-![Version: 1.2.20](https://img.shields.io/badge/Version-1.2.20-informational?style=flat-square)
+![Version: 1.2.21](https://img.shields.io/badge/Version-1.2.21-informational?style=flat-square)
 
 A Helm chart for Istio Objects
 
@@ -106,3 +106,5 @@ All possible objects created by this chart:
 | serviceAccount.roleArn | string | `nil` | Optional ARN of the IAM role to be assumed by your application. If your API requires access to any AWS services, a role should be created in AWS IAM. This role should have an inline policy that describes the permissions your API needs (connect to RDS, publish to an SNS topic, read from an SQS queue, etc.). [RoleArn](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/rolearn) |
 | tags | object | `{}` | Tags to be applied to custom node provisioner and labels |
 | tolerations | list | `[]` | Tolerations for pod assignment [Tolerations](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/tolerations) |
+| usxpressCACertBundle.certMountPath | string | `"/etc/ssl/certs/"` | The cert is mounted to the default path mentioned. The path can also be changed. |
+| usxpressCACertBundle.enabled | bool | `true` | If set to true, volume mounts the certificate from the custom-ca-certs secret |

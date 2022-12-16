@@ -133,3 +133,9 @@ tags: {}
 
 # -- Use Never by default for jobs so new pod is created on failure instead of restarting containers
 restartPolicy: Never
+
+usxpressCACertBundle:
+  # -- (bool) If set to true, volume mounts the certificate from the custom-ca-certs secret
+  enabled: true
+  # -- (string)  The cert is mounted to the default path mentioned. The path can also be changed.
+  certMountPath: /etc/ssl/certs/
