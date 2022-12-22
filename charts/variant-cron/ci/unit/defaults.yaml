@@ -22,7 +22,7 @@ tests:
     asserts:
       - template: cron.yaml
         containsDocument:
-          apiVersion: batch/v1beta1
+          apiVersion: batch/v1
           kind: CronJob
           name: test
       - template: cron.yaml
