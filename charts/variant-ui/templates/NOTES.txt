@@ -1,13 +1,14 @@
 ======================================================
 {{- $fullName := (include "chart.fullname" .) -}}
-{{- if .Values.ingress }}
+{{- if .Values.istio.ingress }}
 You can reach the application at the following hosts:
 .
-{{- range .Values.istio.ingress.hosts }}
-- https://{{ tpl .url $ | quote }}
+Through VPN: https://{{ $fullName }}.internal.apps.{{ .Values.istio.ingress.host }}
+{{- if .Values.istio.ingress.public }}
+Public: https://{{ $fullName }}.apps.{{ .Values.istio.ingress.host }}
 {{- end }}
 .
-Make sure that the hosts added have a proper certificate in the EKS cluster
+VPN setup: https://usxpress.atlassian.net/wiki/spaces/CLOUD/pages/2486470195/How+to+configure+OpenVPN+using+SSO+to+access+USX+Variant+Resources
 ======================================================
 {{- end}}
 Mount path for configVars JSON file:
