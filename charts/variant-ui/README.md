@@ -6,7 +6,8 @@ A Helm chart for a web UI configuration
 
 ### How do I access my UI?
 
-- Via VPN at `https://api.<DOMAIN>-drivevariant.com/my-namespace/my-ui/`
+- Via VPN at `https://my-ui.internal.apps.<DOMAIN>`
+- If set to public it can be accessed at `https://my-ui.apps.<DOMAIN>`
 
 ## Before you start
 

@@ -15,7 +15,8 @@ A Helm chart for APIs to Variant clusters
 
 ### How do I access my API?
 
-- Via VPN at `https://api.<DOMAIN>-drivevariant.com/my-namespace/my-api/`
+- Via VPN at `https://api.internal.apps.<DOMAIN>/my-namespace/my-api/`
+- If set to public it can be accessed at `https://api.apps.<DOMAIN>/my-namespace/my-api/`
 - To other services within the same cluster at `http://my-api.my-namespace.svc.cluster.local/`
 
 ### Port Forwarding
