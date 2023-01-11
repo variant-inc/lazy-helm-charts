@@ -3,9 +3,9 @@
 {{- if .Values.istio.ingress }}
 You can reach the application at the following hosts:
 .
-Through VPN: https://{{ $fullName }}.internal.apps.{{ .Values.istio.ingress.host }}
+Through VPN: https://{{ $.Release.Namespace }}-{{ $fullName }}.internal.apps.{{ .Values.istio.ingress.host }}
 {{- if .Values.istio.ingress.public }}
-Public: https://{{ $fullName }}.apps.{{ .Values.istio.ingress.host }}
+Public: https://{{ $.Release.Namespace }}-{{ $fullName }}.apps.{{ .Values.istio.ingress.host }}
 {{- end }}
 .
 VPN setup: https://usxpress.atlassian.net/wiki/spaces/CLOUD/pages/2486470195/How+to+configure+OpenVPN+using+SSO+to+access+USX+Variant+Resources
