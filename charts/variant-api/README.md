@@ -1,6 +1,6 @@
 # Variant API Helm Chart
 
-![Version: 2.1.25](https://img.shields.io/badge/Version-2.1.25-informational?style=flat-square)
+![Version: 2.1.26](https://img.shields.io/badge/Version-2.1.26-informational?style=flat-square)
 
 A Helm chart for APIs to Variant clusters
 
@@ -129,6 +129,12 @@ All possible objects created by this chart:
 | deployment.resources.requests.cpu | float | `0.1` | Requests CPU |
 | deployment.resources.requests.memory | string | `"384Mi"` | Request memory |
 | istio.egress | list | `[]` | A whitelist of external services that your API requires connection to. The whitelist applies to the entire namespace in which this chart is installed. [These services](https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8) are globally whitelisted and do not require declaration. See [egress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/egress/) and [Ingress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/ingress/) for more details. |
+| istio.ingress.additionalHosts | object | `{"private":[{"domain":null,"prefix":null}],"public":[{"domain":null,"prefix":null}]}` | Additional prefixes used to construct URLs that point to your API. |
+| istio.ingress.additionalHosts.private | list | `[{"domain":null,"prefix":null}]` | List of additional private endpoints, accessible only through VPN |
+| istio.ingress.additionalHosts.private[0] | string | `{"domain":null,"prefix":null}` | prefix used to construct the URL, will be appended by `istio.ingress.host` by default |
+| istio.ingress.additionalHosts.private[0].domain | string | `nil` | optional domain if it has to differ from `istio.ingress.host`. Not yet implemented! |
+| istio.ingress.additionalHosts.public[0] | string | `{"domain":null,"prefix":null}` | prefix used to construct the URL, will be appended by `istio.ingress.host` by default |
+| istio.ingress.additionalHosts.public[0].domain | string | `nil` | optional domain if it has to differ from `istio.ingress.host`. Not yet implemented! |
 | istio.ingress.disableRewrite | bool | `false` | When `true`, the path `/{target-namespace}/{helm-release-name}` will be preserved in requests to your application, else rewritten to `/` when `false` |
 | istio.ingress.host | string | `nil` | The base domain that will be used to construct URLs that point to your API. This should almost always be the Octopus Variable named `DOMAIN` in the [AWS Access Keys](https://octopus.apps.ops-drivevariant.com/app#/Spaces-22/library/variables/). See [Ingress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/ingress/) for more Istio details. |
 | istio.ingress.public | bool | `false` | When `false`, an internal URL will be created that will expose your application *via OpenVPN-only*. When `true`, an additional publicly accessible URL will be created. This API should be secured behind some authentication method when set to `true`. See [Ingress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/ingress/) for more Istio details. |

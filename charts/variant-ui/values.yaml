@@ -14,6 +14,21 @@ istio:
     # [AWS Access Keys](https://octopus.apps.ops-drivevariant.com/app#/Spaces-22/library/variables/)
     # See [Ingress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/ingress) for more Istio details.
     host:
+    # -- Additional prefixes used to construct URLs that point to your API.
+    additionalHosts:
+      # -- List of additional private endpoints, accessible only through VPN
+      private:
+          # -- (string) prefix used to construct the URL, will be appended by `istio.ingress.host` by default
+        - prefix:
+          # -- (string) optional domain if it has to differ from `istio.ingress.host`.
+          # Not yet implemented!
+          domain:
+      public:
+          # -- (string) prefix used to construct the URL, will be appended by `istio.ingress.host` by default
+        - prefix:
+          # -- (string) optional domain if it has to differ from `istio.ingress.host`.
+          # Not yet implemented!
+          domain:
     # -- When `false`, an internal URL will be created that will expose your application *via OpenVPN-only*.
     # When `true`, an additional publicly accessible URL will be created.
     # This API should be secured behind some authentication method when set to `true`.

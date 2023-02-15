@@ -39,6 +39,11 @@ spec:
     - default/default
   hosts:
     - {{ $fullName }}.internal.apps.{{ $host }}
+    {{- range .Values.istio.ingress.additionalHosts.private }}
+    {{- if .prefix }}
+    - {{ .prefix }}.internal.{{ $host }}
+    {{- end }}
+    {{- end }}
   http:
     - name: Private Ingress
       route:
@@ -105,6 +110,11 @@ spec:
     - default/default
   hosts:
     - {{ $fullName }}.apps.{{ $host }}
+    {{- range .Values.istio.ingress.additionalHosts.public }}
+    {{- if .prefix }}
+    - {{ .prefix }}.{{ $host }}
+    {{- end }}
+    {{- end }}
   http:
     - name: Private Path Redirects
       match:
