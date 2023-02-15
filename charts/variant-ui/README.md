@@ -122,11 +122,15 @@ All possible objects created by this chart:
 | deployment.resources.requests.memory | string | `"384Mi"` | Request memory |
 | fullnameOverride | string | `nil` | fullnameOverride completely replaces the generated name. |
 | istio.egress | string | `nil` | A whitelist of external services that your API requires connection to. The whitelist applies to the entire namespace in which this chart is installed. [These services](https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8) are globally whitelisted and do not require declaration. See [Ingress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/ingress) for more Istio details. |
+| istio.ingress.additionalHosts | object | `{"private":[{"domain":null,"prefix":null}],"public":[{"domain":null,"prefix":null}]}` | Additional prefixes used to construct URLs that point to your API. |
+| istio.ingress.additionalHosts.private | list | `[{"domain":null,"prefix":null}]` | List of additional private endpoints, accessible only through VPN |
+| istio.ingress.additionalHosts.private[0] | string | `{"domain":null,"prefix":null}` | prefix used to construct the URL, will be appended by `istio.ingress.host` by default |
+| istio.ingress.additionalHosts.private[0].domain | string | `nil` | optional domain if it has to differ from `istio.ingress.host`. Not yet implemented! |
+| istio.ingress.additionalHosts.public[0] | string | `{"domain":null,"prefix":null}` | prefix used to construct the URL, will be appended by `istio.ingress.host` by default |
+| istio.ingress.additionalHosts.public[0].domain | string | `nil` | optional domain if it has to differ from `istio.ingress.host`. Not yet implemented! |
 | istio.ingress.disableRewrite | bool | `false` | When `true`, the path `/{target-namespace}/{helm-release-name}` will be preserved in requests to your application, else rewritten to `/` when `false` |
 | istio.ingress.host | string | `nil` | The base domain that will be used to construct URLs that point to your API. This should almost always be the Octopus Variable named `DOMAIN` in the [AWS Access Keys](https://octopus.apps.ops-drivevariant.com/app#/Spaces-22/library/variables/) See [Ingress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/ingress) for more Istio details. |
 | istio.ingress.public | bool | `false` | When `false`, an internal URL will be created that will expose your application *via OpenVPN-only*. When `true`, an additional publicly accessible URL will be created. This API should be secured behind some authentication method when set to `true`. |
-| istio.ingress.additionalHosts.private | list | `[]` | List of additional private prefixes to get custom URL, they are combined with istio.ingress.host to create additional URLs. |
-| istio.ingress.additionalHosts.public | list | `[]` | List of additional public prefixes to get custom URL, they are combined with istio.ingress.host to create additional URLs. |
 | istio.ingress.redirects | list | `[]` | Optional paths that will always redirect to internal/VPN endpoints |
 | livenessProbe | map | `{}` | Indicates whether container is running. See [Probe](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/probes) |
 | minAvailable | int | `1` | Minimum number of pods that should be available after an eviction See [Pod Disruption Budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) |
