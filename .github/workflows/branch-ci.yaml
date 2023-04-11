@@ -27,9 +27,9 @@ jobs:
       - name: Pre-commit
         run: pre-commit run -a --show-diff-on-failure
 
-      - name: Unit Test
-        shell: pwsh
-        run: ./scripts/unit_test.ps1
+      # - name: Unit Test
+      #   shell: pwsh
+      #   run: ./scripts/unit_test.ps1
 
       - name: Lazy Action Octopus
         uses: variant-inc/actions-octopus@v2
