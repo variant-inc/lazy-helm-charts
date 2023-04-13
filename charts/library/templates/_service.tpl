@@ -16,6 +16,12 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
+    {{- if .Values.service.metricsPort }}
+    - port: {{ .Values.service.metricsPort }}
+      targetPort: metrics
+      protocol: TCP
+      name: metrics
+    {{- end }}
   selector:
     {{- $selectorLabels | nindent 4 }}
 {{- end }}
