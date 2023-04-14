@@ -37,7 +37,7 @@ spec:
   ports:
     {{- range .ports }}
     - number: {{ .number }}
-      name: {{ .protocol | quote | lower }}
+      name: {{ printf "%s-%d" .protocol ( .number | int ) | quote | lower }}
       protocol: {{ .protocol | quote | upper }}
     {{- end }}
   resolution: {{ .resolution | default "DNS" }}
