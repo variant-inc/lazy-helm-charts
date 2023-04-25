@@ -14,5 +14,5 @@ foreach ( $chartDir in $chartDirs )
     helm dependency update "./charts/${chartDir}"
 }
 
-helm unittest -3 --strict -f ci/unit/*.yaml ./charts/*
+helm unittest --strict -f ci/unit/*.yaml ./charts/*
 exit $LASTEXITCODE

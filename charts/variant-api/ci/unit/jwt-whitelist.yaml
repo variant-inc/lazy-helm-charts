@@ -22,6 +22,7 @@ tests:
       authentication:
         enabled: true
         server: trustme.com
+        jwksUri: "https://login.microsoftonline.com/common/discovery/keys"
       authorization:
         rules:
           to:
