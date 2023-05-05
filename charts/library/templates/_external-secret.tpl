@@ -11,22 +11,19 @@ metadata:
   labels:
     {{- $labels | nindent 4 }}
 spec:
-  refreshInterval: 1h
   secretStoreRef:
     name: default
     kind: ClusterSecretStore
   {{ if hasPrefix "postgres-secret-" .name }}
-  backendType: secretsManager
   data:
-    - key: {{ .name }}
-      name: data
-  template:
-    stringData:
-      DATABASE__{{ .reference }}__host: "<%= JSON.parse(data.data).host %>"
-      DATABASE__{{ .reference }}__name: "<%= JSON.parse(data.data).dbname %>"
-      DATABASE__{{ .reference }}__user: "<%= JSON.parse(data.data).username %>"
-      DATABASE__{{ .reference }}__password: "<%= JSON.parse(data.data).password %>"
-      # DATABASE__{{ .reference }}__engine: "<%= JSON.parse(data.data).engine %>"
+  - secretKey: {{ .name }}
+    remoteRef:
+      key: DATABASE__{{ .reference }}__host
+      property: host
+  - secretKey: {{ .name }}
+    remoteRef:
+      key: DATABASE__{{ .reference }}__name
+      property: dbname
   {{ else }}
   data:
   - secretKey: {{ .reference }}
