@@ -16,14 +16,25 @@ spec:
     kind: ClusterSecretStore
   {{ if hasPrefix "postgres-secret-" .name }}
   data:
-  - secretKey: {{ .name }}
+  - secretKey: DATABASE__{{ .reference }}__host
     remoteRef:
-      key: DATABASE__{{ .reference }}__host
+      key: {{ .name }}
       property: host
-  - secretKey: {{ .name }}
+  - secretKey: DATABASE__{{ .reference }}__name
     remoteRef:
-      key: DATABASE__{{ .reference }}__name
+      key: {{ .name }}
       property: dbname
+  - secretKey: DATABASE__{{ .reference }}__password
+    remoteRef:
+      key: {{ .name }}
+      property: password
+  - secretKey: DATABASE__{{ .reference }}__user
+    remoteRef:
+      key: {{ .name }}
+      property: username
+  - secretKey: data
+    remoteRef:
+      key: {{ .name }}
   {{ else }}
   data:
   - secretKey: {{ .reference }}
