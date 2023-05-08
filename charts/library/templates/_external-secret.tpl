@@ -15,30 +15,22 @@ spec:
     name: default
     kind: ClusterSecretStore
   {{ if hasPrefix "postgres-secret-" .name }}
-  data:
-  - secretKey: DATABASE__{{ .reference }}__host
-    remoteRef:
+  dataFrom:
+  - extract:
       key: {{ .name }}
-      property: host
-  - secretKey: DATABASE__{{ .reference }}__name
-    remoteRef:
-      key: {{ .name }}
-      property: dbname
-  - secretKey: DATABASE__{{ .reference }}__password
-    remoteRef:
-      key: {{ .name }}
-      property: password
-  - secretKey: DATABASE__{{ .reference }}__user
-    remoteRef:
-      key: {{ .name }}
-      property: username
-  - secretKey: data
-    remoteRef:
-      key: {{ .name }}
+    rewrite:
+    - regexp:
+        source: "(.*)"
+        target: "DATABASE__{{ .reference }}__$1"
+    - regexp:
+        source: "DATABASE__{{ .reference }}__username"
+        target: "DATABASE__{{ .reference }}__user"
+    - regexp:
+        source: "DATABASE__{{ .reference }}__dbname"
+        target: "DATABASE__{{ .reference }}__name"
   {{ else }}
-  data:
-  - secretKey: {{ .reference }}
-    remoteRef:
+  dataFrom:
+  - extract:
       key: {{ .name }}
 {{- end -}}
 {{- end -}}
