@@ -23,6 +23,8 @@ configMaps:
 awsSecrets:
   - name: devops-playground-rds-creds
     reference: rdscreds
+  - name: postgres-secret-backstage
+    reference: backstage_postgres
 
 livenessProbe:
   httpGet:

@@ -4,30 +4,34 @@
 {{- $secrets := .Values.awsSecrets -}}
 {{- range $secrets }}
 ---
-apiVersion: 'kubernetes-client.io/v1'
+apiVersion: 'external-secrets.io/v1beta1'
 kind: ExternalSecret
 metadata:
   name: {{ $fullName }}-{{ required "name is required for each secret" .name }}
   labels:
     {{- $labels | nindent 4 }}
 spec:
+  secretStoreRef:
+    name: default
+    kind: ClusterSecretStore
   {{ if hasPrefix "postgres-secret-" .name }}
-  backendType: secretsManager
-  data:
-    - key: {{ .name }}
-      name: data
-  template:
-    stringData:
-      DATABASE__{{ .reference }}__host: "<%= JSON.parse(data.data).host %>"
-      DATABASE__{{ .reference }}__name: "<%= JSON.parse(data.data).dbname %>"
-      DATABASE__{{ .reference }}__user: "<%= JSON.parse(data.data).username %>"
-      DATABASE__{{ .reference }}__password: "<%= JSON.parse(data.data).password %>"
-      # DATABASE__{{ .reference }}__engine: "<%= JSON.parse(data.data).engine %>"
-  {{ else }}
-  template:
-  backendType: secretsManager
   dataFrom:
-    - {{ .name }}
+  - extract:
+      key: {{ .name }}
+    rewrite:
+    - regexp:
+        source: "(.*)"
+        target: "DATABASE__{{ .reference }}__$1"
+    - regexp:
+        source: "DATABASE__{{ .reference }}__username"
+        target: "DATABASE__{{ .reference }}__user"
+    - regexp:
+        source: "DATABASE__{{ .reference }}__dbname"
+        target: "DATABASE__{{ .reference }}__name"
+  {{ else }}
+  dataFrom:
+  - extract:
+      key: {{ .name }}
 {{- end -}}
 {{- end -}}
 {{- end }}
