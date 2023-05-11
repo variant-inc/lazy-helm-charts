@@ -85,7 +85,7 @@ autoscaling:
   # -- (int) CPU Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/)
   targetCPUUtilizationPercentage: 80
   # -- (int) Memory Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/)
-  targetMemoryUtilizationPercentage:
+  targetMemoryUtilizationPercentage: 80
 
 deployment:
   image:
