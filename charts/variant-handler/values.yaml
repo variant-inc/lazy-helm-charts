@@ -70,6 +70,18 @@ securityContext: {
 # -- replicaCount
 replicaCount: 1
 
+autoscaling:
+  # -- Flag to trigger HPA, Allowed values true or false. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling)
+  enabled: false
+  # -- (int) Minimum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling)
+  minReplicas: 2
+ # -- (int) Maximum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling)
+  maxReplicas: 5
+  # -- (int) CPU Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling)
+  targetCPUUtilizationPercentage: 80
+  # -- (int) Memory Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling)
+  targetMemoryUtilizationPercentage: 80
+
 deployment:
   image:
     # -- (string) The full URL of the image to be deployed containing the tag

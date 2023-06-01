@@ -13,7 +13,9 @@ jobs:
       - uses: actions/checkout@v3
       - name: pre-commit dependencies
         run: |
-          for i in `find charts -name Chart.yaml | sed 's/Chart.yaml//g'`; do helm dependency update "$i"; done
+          for i in `find charts -name Chart.yaml | sed 's/Chart.yaml//g'`;
+            do helm dependency update --skip-refresh "$i";
+          done
           pip3 install -U checkov
       - uses: actions/setup-python@v3
       - uses: pre-commit/action@v3.0.0

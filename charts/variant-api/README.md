@@ -1,6 +1,6 @@
 # Variant API Helm Chart
 
-![Version: 2.1.31](https://img.shields.io/badge/Version-2.1.31-informational?style=flat-square)
+![Version: 2.2.0-beta1](https://img.shields.io/badge/Version-2.2.0--beta1-informational?style=flat-square) 
 
 A Helm chart for APIs to Variant clusters
 
@@ -60,6 +60,7 @@ A Helm chart for APIs to Variant clusters
 
 ### *OPTIONAL* Configuration Inputs
 
+
 #### Application Configuration
 
 | Input | [Kubernetes Object Type](https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/) | Description | Default Value |
@@ -111,12 +112,12 @@ All possible objects created by this chart:
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | map | `{}` | Affinity for pod assignment. [Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity) |
-| authentication | bool | `{"enabled":false,"jwksUri":null,"server":null}` | selecting authentication: true when defining an api resource, [Istio RBAC](https://istio.io/v1.3/docs/reference/config/authorization/istio.rbac.v1alpha1/) resources are created  to require a valid JWT token before forwarding a request to your API. [Ingress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/ingress/) |
+| authentication | bool | `{"clientId":null,"tenantId":null}` | selecting authentication: true when defining an api resource, [Istio RBAC](https://istio.io/v1.3/docs/reference/config/authorization/istio.rbac.v1alpha1/) resources are created  to require a valid JWT token before forwarding a request to your API. [Ingress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/ingress/) |
 | authorization | list | `{"rules":{"to":[]}}` | List of operation objects with methods and paths key values allowing certain methods and paths to be whitelisted within the cluster GET /health and Get /metrics are set by default in authorization.yaml |
 | autoscaling.maxReplicas | int | `5` | Maximum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/) |
-| autoscaling.minReplicas | int | `1` | Minimum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/) |
-| autoscaling.targetCPUUtilizationPercentage | int | `80` | CPU Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/) |
-| autoscaling.targetMemoryUtilizationPercentage | int | `80` | Memory Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/) |
+| autoscaling.minReplicas | int | `2` | Minimum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/) |
+| autoscaling.targetCPUUtilizationPercentage | int | `90` | CPU Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/) |
+| autoscaling.targetMemoryUtilizationPercentage | int | `90` | Memory Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/) |
 | awsSecrets | list | `[]` | A list of secrets to configure to make available to your API. Create your secret in AWS Secrets Manager as plain text. Full contents of this secret will be mounted as a file your application can read to /app/secrets/{name}. See [AWS Secrets](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables/) for more details. |
 | configVars | map | `{}` | User defined environment variables are implemented here. [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables/) |
 | deployment.args | list | `[]` | List of arguments that can be passed in the image. |
