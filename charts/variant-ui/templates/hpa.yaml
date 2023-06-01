@@ -1,1 +1,1 @@
-{{ include "library.external-secret.tpl"  . }}
+{{ include "library.hpa.tpl"  . }}
