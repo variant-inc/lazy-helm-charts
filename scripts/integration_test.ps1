@@ -5,7 +5,7 @@ param (
 aws eks update-kubeconfig `
     --name $OctopusParameters["CLUSTER_NAME"] `
     --region $OctopusParameters["CLUSTER_REGION"]
-helm dependency update $PackagePath
+helm dependency update $PackagePath --skip-refresh
 ct install `
     --charts $PackagePath `
     --namespace lazy-helm-charts

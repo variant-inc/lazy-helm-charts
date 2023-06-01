@@ -11,8 +11,8 @@ istio:
   ingress:
     # -- (string) The base domain that will be used to construct URLs that point to your API.
     # This should almost always be the Octopus Variable named `DOMAIN` in the
-    # [AWS Access Keys](https://octopus.apps.ops-drivevariant.com/app#/Spaces-22/library/variables/)
-    # See [Ingress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/ingress) for more Istio details.
+    # [AWS Access Keys](<https://octopus.apps.ops-drivevariant.com/app#/Spaces-22/library/variables/>)
+    # See [Ingress](<https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/ingress>) for more Istio details.
     host:
     # -- Additional prefixes used to construct URLs that point to your API.
     additionalHosts:
@@ -40,8 +40,8 @@ istio:
       # - prefix: /hidden
   # -- A whitelist of external services that your API requires connection to.
   # The whitelist applies to the entire namespace in which this chart is installed.
-  # [These services](https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8) are globally whitelisted and do not require declaration.
-  # See [Ingress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/ingress) for more Istio details.
+  # [These services](<https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8>) are globally whitelisted and do not require declaration.
+  # See [Ingress](<https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/ingress>) for more Istio details.
   egress:
     # ## List of hostnames and ports
     # # Hosts should be FQDN
@@ -83,17 +83,17 @@ serviceAccount:
   # -- (string) Optional ARN of the IAM role to be assumed by your application.
   # If your API requires access to any AWS services, a role should be created in AWS IAM.
   # This role should have an inline policy that describes the permissions your API needs (connect to RDS, publish to an SNS topic, read from an SQS queue, etc.).
-  # [RoleArn](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/rolearn)
+  # [RoleArn](<https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/rolearn>)
   roleArn:
 
 autoscaling:
-  # -- (int) Minimum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling)
+  # -- (int) Minimum Number of Replicas. [Autoscaling](<https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling>)
   minReplicas: 2
-  # -- (int) Maximum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling)
+  # -- (int) Maximum Number of Replicas. [Autoscaling](<https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling>)
   maxReplicas: 5
-  # -- (int) CPU Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling)
+  # -- (int) CPU Utilization Percentage. [Autoscaling](<https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling>)
   targetCPUUtilizationPercentage: 90
-  # -- (int) Memory Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling)
+  # -- (int) Memory Utilization Percentage. [Autoscaling](<https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling>)
   targetMemoryUtilizationPercentage: 90
 
 deployment:
@@ -135,21 +135,21 @@ deployment:
 # -- A list of secrets to configure to make available to your API.
 # Create your secret in AWS Secrets Manager as plain text.
 # Full contents of this secret will be mounted as a file your application can read to /app/secrets/{name}
-# See [AWS Secrets](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) for more details.
+# See [AWS Secrets](<https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables>) for more details.
 awsSecrets: []
   # - name: eng-secret-in-aws
 
-# -- (string) Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision`
+# -- (string) Value for a [label](<https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/>) named `revision`
 # that will be applied to all objects created by a specific chart installation.
 # Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version
 revision:
 
 # -- (map) User defined secret variables are implemented here.
-# [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables)
+# [More Information](<https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables>)
 secretVars: {}
   # foo: bar
 # -- (map) User defined environment variables are implemented here.
-# [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables)
+# [More Information](<https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables>)
 configVars: {}
   # bar: foo
 
@@ -157,23 +157,23 @@ configVars: {}
 configMountPath: /app/config
 
 # -- (map) Node labels for pod assignment
-# [NodeSelector](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/nodeselector)
+# [NodeSelector](<https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/nodeselector>)
 nodeSelector: {}
 
 # -- (list) Tolerations for pod assignment
-# [Tolerations](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/tolerations)
+# [Tolerations](<https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/tolerations>)
 tolerations: []
 
 # -- (map) Affinity for pod assignment
-# [Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity)
+# [Affinity](<https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity>)
 affinity: {}
 
 # -- (map) Indicates whether container is ready for requests.
-# See [Probe](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/probes)
+# See [Probe](<https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/probes>)
 readinessProbe: {}
 
 # -- (map) Indicates whether container is running.
-# See [Probe](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/probes)
+# See [Probe](<https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/probes>)
 livenessProbe: {}
 
 securityContext:
@@ -194,7 +194,7 @@ securityContext:
 tags: {}
 
 # -- (int) Minimum number of pods that should be available after an eviction
-# See [Pod Disruption Budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/)
+# See [Pod Disruption Budget](<https://kubernetes.io/docs/tasks/run-application/configure-pdb/>)
 minAvailable: 1
 
 usxpressCACertBundle:

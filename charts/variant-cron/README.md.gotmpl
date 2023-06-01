@@ -6,7 +6,7 @@
 
 {{ template "chart.description" . }}
 
-### What this chart provides to you by default
+## What this chart provides to you by default
 
 - A CronJob image deployed to Kubernetes -- the Variant, CloudOps-approved way.
 
@@ -15,22 +15,28 @@
 ### Prerequisites
 
 1. Use a CloudOps Github CI workflow that publishes an image
-   - [.NET](https://github.com/variant-inc/actions-dotnet)
-   - [Node](https://github.com/variant-inc/actions-nodejs)
-   - [Python](https://github.com/variant-inc/actions-python)
+   - [.NET](<https://github.com/variant-inc/actions-dotnet>)
+   - [Node](<https://github.com/variant-inc/actions-nodejs>)
+   - [Python](<https://github.com/variant-inc/actions-python>)
 2. Make sure curl utility is available in the image as it is used to check the status of the sidecar container. If not available, Based on the image you use add below commands in the Dockerfile.
    - Ubuntu / Debian OS
+
      ```bash
      RUN apt-get install curl
      ```
+
    - RHEL / CentOS / Fedora OS
+
      ```bash
      RUN yum install curl
      ```
+
    - Alpine OS
+
      ```bash
      RUN apk --no-cache add curl
      ```
+
 ***
 
 ### *OPTIONAL* Configuration Inputs
@@ -51,22 +57,22 @@
     ttlSecondsAfterEmpty: 1800
 ```
 
-#### [Infrastructure Permissions](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/rolearn/)
+#### [Infrastructure Permissions](<https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/rolearn/>)
 
-#### [Egress Configuration](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/egress/)
+#### [Egress Configuration](<https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/egress/>)
 
 (*how your Cron Job will access external resources*)
 
-#### [Environment Variables](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables/)
+#### [Environment Variables](<https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables/>)
 
 ## Kubernetes Object Reference
 
 All possible objects created by this chart:
 
-- [CronJob](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/cron-job-v1/)
-- [ServiceEntry](https://istio.io/latest/docs/reference/config/networking/service-entry/#ServiceEntry)
-- [ServiceAccount](https://kubernetes.io/docs/reference/kubernetes-api/authentication-resources/service-account-v1/)
-- [Secret](https://kubernetes.io/docs/reference/kubernetes-api/config-and-storage-resources/secret-v1/)
-- [ConfigMap](https://kubernetes.io/docs/reference/kubernetes-api/config-and-storage-resources/config-map-v1/)
+- [CronJob](<https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/cron-job-v1/>)
+- [ServiceEntry](<https://istio.io/latest/docs/reference/config/networking/service-entry/#ServiceEntry>)
+- [ServiceAccount](<https://kubernetes.io/docs/reference/kubernetes-api/authentication-resources/service-account-v1/>)
+- [Secret](<https://kubernetes.io/docs/reference/kubernetes-api/config-and-storage-resources/secret-v1/>)
+- [ConfigMap](<https://kubernetes.io/docs/reference/kubernetes-api/config-and-storage-resources/config-map-v1/>)
 
 {{ template "chart.valuesSection" . }}
