@@ -22,6 +22,17 @@ The folowing endpoints are being redirected to /{{ $.Release.Namespace }}/{{ $fu
 /{{ .Release.Namespace }}/{{ $fullName }}/swagger
 /{{ .Release.Namespace }}/{{ $fullName }}/swaggerui
 ======================================================
+{{- if .Values.authentication.clientId }}
+Proxy has been enabled.
+Make sure that Authentication is not done inside your app.
+The following roles are made available to your app:
+1. x-forwarded-roles: contains list of roles for the user
+1. x-forwarded-groups: contains list of groups assigned to user. Currently, it seems to provide the onPrem AD groups.
+2. x-forwarded-preferred-username: Usually it wil be same as email.
+3. x-forwarded-name: Full name of the user
+4. x-forwarded-email: Self Explanatory. If this needs to be explained, then you shouldn't be here.
+{{- end }}
+======================================================
 {{- end}}
 {{- end}}
 {{ include "library.notes.tpl" . }}

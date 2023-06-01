@@ -21,6 +21,8 @@ spec:
         https://login.microsoftonline.com/{{ .Values.authentication.tenantId }}/discovery/keys
       outputClaimToHeaders:
         - claim: roles
+          header: x-forwarded-roles
+        - claim: groups
           header: x-forwarded-groups
         - claim: preferred_username
           header: x-forwarded-preferred-username
