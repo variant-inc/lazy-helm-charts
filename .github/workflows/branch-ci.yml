@@ -1,0 +1,28 @@
+name: Branch CI
+
+on:
+  push:
+    branches-ignore:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    name: CI
+    steps:
+
+      - id: lazy-setup
+        uses: variant-inc/actions-setup@v2
+
+      - name: Unit Test
+        shell: pwsh
+        run: ./scripts/unit_test.ps1
+
+      - name: Lazy Action Octopus
+        uses: variant-inc/actions-octopus@v2
+        with:
+          default_branch: master
+          version: ${{ steps.lazy-setup.outputs.image_version }}

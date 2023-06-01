@@ -1,4 +1,8 @@
 {{- $fullName := (include "chart.fullname" .) -}}
+{{- $service := $fullName }}
+{{- if .Values.oauth2Proxy.enabled }}
+{{- $service = (printf "%s-%s" $fullName "oauth2-proxy" ) }}
+{{- end }}
 {{- $labels := (include "library.chart.labels" .) -}}
 {{- $host := required "Host is required" .Values.istio.ingress.host -}}
 ---
@@ -20,7 +24,7 @@ spec:
   http:
     - route:
         - destination:
-            host: {{ $fullName }}
+            host: {{ $service }}
             port:
               number: {{ .Values.service.port }}
 {{ if .Values.istio.ingress.public }}
@@ -61,7 +65,7 @@ spec:
     - name: Default Ingress
       route:
         - destination:
-            host: {{ $fullName }}
+            host: {{ $service }}
             port:
               number: {{ .Values.service.port }}
 {{ end }}

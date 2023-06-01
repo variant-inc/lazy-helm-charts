@@ -35,4 +35,6 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# End of https://www.toptal.com/developers/gitignore/api/helm 
+# End of https://www.toptal.com/developers/gitignore/api/helm
+
+oauth2-proxy/

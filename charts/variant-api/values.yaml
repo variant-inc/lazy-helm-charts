@@ -1,3 +1,4 @@
+---
 # Defaults and documentation of chart values
 
 istio:
@@ -79,13 +80,13 @@ serviceAccount:
 
 autoscaling:
   # -- (int) Minimum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/)
-  minReplicas: 1
+  minReplicas: 2
   # -- (int) Maximum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/)
   maxReplicas: 5
   # -- (int) CPU Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/)
-  targetCPUUtilizationPercentage: 80
+  targetCPUUtilizationPercentage: 90
   # -- (int) Memory Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/)
-  targetMemoryUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 90
 
 deployment:
   image:
@@ -140,9 +141,8 @@ revision:
 #  to require a valid JWT token before forwarding a request to your API.
 # [Ingress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/ingress/)
 authentication:
-  enabled: false
-  server:
-  jwksUri:
+  tenantId:
+  clientId:
 
 # -- (list) List of operation objects with methods and paths key values allowing certain methods and paths to be whitelisted within the cluster
 # GET /health and Get /metrics are set by default in authorization.yaml

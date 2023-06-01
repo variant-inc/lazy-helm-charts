@@ -8,7 +8,7 @@ metadata:
   labels:
     {{- include "library.chart.labels" . | nindent 4 }}
 spec:
-  minAvailable: {{ .Values.minAvailable }}
+  minAvailable: {{ .Values.minAvailable | default 1 }}
   selector:
     matchLabels:
       {{- include "library.chart.selectorLabels" . | nindent 6 }}

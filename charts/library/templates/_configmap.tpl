@@ -1,4 +1,5 @@
 {{- define "library.configMap.tpl" }}
+{{- if .Values.configVars }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -10,4 +11,5 @@ data:
   {{- range $key, $value := .Values.configVars }}
   {{ $key }}: {{ $value | quote }}
   {{- end }}
+{{- end }}
 {{- end }}

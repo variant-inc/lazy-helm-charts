@@ -1,4 +1,5 @@
 {{- define "library.secret.tpl" }}
+{{- if .Values.secretVars }}
 ---
 apiVersion: v1
 kind: Secret
@@ -11,4 +12,5 @@ stringData:
   {{- range $key, $value := .Values.secretVars }}
   {{ $key }}: {{ $value | quote }}
   {{- end }}
+{{- end }}
 {{- end }}
