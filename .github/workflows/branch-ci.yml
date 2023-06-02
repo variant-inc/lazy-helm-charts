@@ -21,8 +21,8 @@ jobs:
         shell: pwsh
         run: ./scripts/unit_test.ps1
 
-      - name: Lazy Action Octopus
-        uses: variant-inc/actions-octopus@v2
-        with:
-          default_branch: master
-          version: ${{ steps.lazy-setup.outputs.image_version }}
+      # - name: Lazy Action Octopus
+      #   uses: variant-inc/actions-octopus@v2
+      #   with:
+      #     default_branch: master
+      #     version: ${{ steps.lazy-setup.outputs.image_version }}

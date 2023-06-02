@@ -2,7 +2,7 @@
 
 {{ template "chart.deprecationWarning" . -}}
 
-{{ template "chart.badgesSection" . }}
+{{ template "chart.badgesSection" . -}}
 
 {{ template "chart.description" . }}
 
@@ -88,7 +88,6 @@ istio:
 ```
 
 The host must be setup as a SAN on the certificate of the cluster. Please create a [support request](http://cloudops.ops-drivevariant.com/support) to include your host name in our cluster's certificate.
-
 
 ## Kubernetes Object Reference
 
