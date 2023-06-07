@@ -8,7 +8,7 @@ Through VPN: https://{{ $.Release.Namespace }}-{{ $fullName }}.internal.apps.{{ 
 Public: https://{{ $.Release.Namespace }}-{{ $fullName }}.apps.{{ .Values.istio.ingress.host }}
 {{- end }}
 ======================================================
-{{- if .Values.oauth2Proxy.enabled }}
+{{- if (index .Values "oauth2-proxy").enabled }}
 Proxy has been enabled.
 Make sure that Authentication is not done inside your app.
 The following roles are made available to your app:

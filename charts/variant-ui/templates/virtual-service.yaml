@@ -1,6 +1,6 @@
 {{- $fullName := (include "chart.fullname" .) -}}
 {{- $service := $fullName }}
-{{- if .Values.oauth2Proxy.enabled }}
+{{- if (index .Values "oauth2-proxy").enabled }}
 {{- $service = (printf "%s-%s" $fullName "oauth2-proxy" ) }}
 {{- end }}
 {{- $labels := (include "library.chart.labels" .) -}}

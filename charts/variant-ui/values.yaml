@@ -204,5 +204,102 @@ usxpressCACertBundle:
   certMountPath: /etc/ssl/certs/
 
 # @ignored
-oauth2Proxy:
+oauth2-proxy:
   enabled: false
+  securityContext:
+    enabled: true
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+
+  config:
+    clientId:
+    tenantId:
+    cookieSecret:
+    clientSecret:
+    configFile: |-
+      reverse_proxy = true
+      email_domains = '*'
+      skip_auth_routes = [ 'GET=^/health', 'GET=^/metrics', 'GET=^/swagger' ]
+      show_debug_on_error = false
+      silence_ping_logging = true
+      skip_provider_button = false
+
+  extraVolumes:
+    - name: proxy-secret
+      secret:
+        secretName:
+  extraVolumeMounts:
+    - name: proxy-secret
+      mountPath: /secrets/client_secret
+      subPath: client_secret
+  alphaConfig:
+    enabled: true
+    existingConfig:
+
+  podLabels: {}
+  replicaCount: 1
+  deploymentAnnotations:
+    reloader.stakater.com/auto: "true"
+
+  podDisruptionBudget:
+    enabled: false
+
+  metrics:
+    servicemonitor:
+      enabled: true
+      # Prometheus scrape interval
+      interval: 60s
+      # Prometheus scrape timeout
+      scrapeTimeout: 30s
+      # Add custom labels to the ServiceMonitor resource
+      labels: {}
+
+  extraObjects:
+    - apiVersion: networking.istio.io/v1beta1
+      kind: Sidecar
+      metadata:
+        name: "{{ .Release.Name }}-oauth2-proxy"
+        namespace: "{{ .Release.Namespace }}"
+      spec:
+        workloadSelector:
+          labels:
+            app.kubernetes.io/instance: "{{ .Release.Name }}"
+            app: oauth2-proxy
+        outboundTrafficPolicy:
+          mode: ALLOW_ANY
+    - apiVersion: policy/v1
+      kind: PodDisruptionBudget
+      metadata:
+        name: "{{ .Release.Name }}-oauth2-proxy"
+        namespace: "{{ .Release.Namespace }}"
+      spec:
+        minAvailable: 1
+        selector:
+          matchLabels:
+            app.kubernetes.io/instance: "{{ .Release.Name }}"
+            app: oauth2-proxy
+    - apiVersion: autoscaling/v2
+      kind: HorizontalPodAutoscaler
+      metadata:
+        name: "{{ .Release.Name }}-oauth2-proxy"
+        namespace: "{{ .Release.Namespace }}"
+      spec:
+        scaleTargetRef:
+          apiVersion: apps/v1
+          kind: Deployment
+          name: "{{ .Release.Name }}-oauth2-proxy"
+        minReplicas: 2
+        maxReplicas: 5
+        metrics:
+          - type: Resource
+            resource:
+              name: cpu
+              target:
+                type: Utilization
+                averageUtilization: 95
+          - type: Resource
+            resource:
+              name: memory
+              target:
+                type: Utilization
+                averageUtilization: 95

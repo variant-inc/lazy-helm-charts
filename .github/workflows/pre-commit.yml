@@ -13,8 +13,10 @@ jobs:
       - uses: actions/checkout@v3
       - name: pre-commit dependencies
         run: |
+          # helm repo update
           for i in `find charts -name Chart.yaml | sed 's/Chart.yaml//g'`;
-            do helm dependency update --skip-refresh "$i";
+          do
+            helm dependency update "$i";
           done
 
           mkdir -p "$HOME/.local/bin"

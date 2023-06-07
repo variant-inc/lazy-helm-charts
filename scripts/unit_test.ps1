@@ -9,7 +9,7 @@ catch
 $chartDirs = (Get-ChildItem -Directory ./charts/ -Name)
 foreach ( $chartDir in $chartDirs )
 {
-  helm dependency update "./charts/${chartDir}" --skip-refresh
+  helm dependency update "./charts/${chartDir}"
 }
 
 helm unittest --strict -f ci/unit/*.yaml ./charts/*
