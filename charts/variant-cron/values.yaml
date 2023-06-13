@@ -6,20 +6,7 @@ istio:
   # [These services](https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8) are globally whitelisted and do not require declaration.
   # See [egress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/egress).
   # See [Ingress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/ingress) for more Istio details.
-  egress:
-    []
-    # - name: some-external-api
-    #   hosts:
-    #     - "test.example.com"
-    #   ports:
-    #     - number: 443
-    #       protocol: HTTPS
-    # - name: some-external-database
-    #   addresses:
-    #     - "10.0.0.1"
-    #   ports:
-    #     - number: 5432
-    #       protocol: TCP
+  egress: []
 
 # @ignored
 # -- (list) https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod
@@ -92,28 +79,24 @@ cronJob:
 # Create your secret in AWS Secrets Manager as plain text.
 # Full contents of this secret will be mounted as a file your application can read to /app/secrets/{name}
 # See [AWS Secrets](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) for more details.
-awsSecrets:
-  []
-  # - name: eng-secret-in-aws
-
-# -- (map) User defined secret variables are implemented here.
-# [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables)
-secretVars:
-  {}
-  # key: value
-
-# -- (map) User defined environment variables are implemented here.
-# [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables)
-configVars:
-  {}
-  # key: value
+# @default -- Example: `[{ "name": "eng-secret-in-aws", "type": "" }]`
+awsSecrets: []
 
 # @ignored
 # -- (string) Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision`
 # that will be applied to all objects created by a specific chart installation.
 # Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version
 revision:
-  # test-latest
+
+# -- (map) User defined secret variables are implemented here.
+# [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables)
+# @default -- Example: `foo: bar`
+secretVars: {}
+
+# -- (map) User defined environment variables are implemented here.
+# [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables)
+# @default -- Example: `bar: foo`
+configVars: {}
 
 # @ignored
 # -- Node labels for pod assignment

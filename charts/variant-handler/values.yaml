@@ -6,20 +6,7 @@ istio:
   # [These services](https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8) are globally whitelisted and do not require declaration.
   # See [egress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/egress) and
   # [Ingress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/ingress) for more details.
-  egress:
-    []
-    # - name: some-external-api
-    #   hosts:
-    #     - "test.example.com"
-    #   ports:
-    #     - number: 443
-    #       protocol: HTTPS
-    # - name: some-external-database
-    #   addresses:
-    #     - "10.0.0.1"
-    #   ports:
-    #     - number: 5432
-    #       protocol: TCP
+  egress: []
 
 # This allows prometheus to scrape /metrics endpoint
 serviceMonitor:
@@ -70,7 +57,7 @@ securityContext:
   # -- Drop All capabilities
   capabilities:
     drop:
-    - ALL
+      - ALL
   # @ignored
   # -- Runs as non root. Must use numeric User in container
   runAsNonRoot: true
@@ -119,47 +106,33 @@ deployment:
   args: []
   # @ignored
   # -- (list) `deprecated` List of Conditional Env Vars denoted by conditional (bool) and envVars (list)
-  conditionalEnvVars:
-    []
-    # - condition: false
-    #   envVars:
-    #     - name: false_conditional
-    #       value: false_conditional
-    # - condition: true
-    #   envVars:
-    #     - name: true_conditional_1
-    #       value: true_conditional_1
-    #     - name: true_conditional_2
-    #       value: true_conditional_2
+  conditionalEnvVars: []
   # -- (map) https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   # -- (map) https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   podAnnotations: {}
+
+# -- A list of secrets to configure to make available to your API.
+# Create your secret in AWS Secrets Manager as plain text.
+# Full contents of this secret will be mounted as a file your application can read to /app/secrets/{name}
+# See [AWS Secrets](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) for more details.
+# @default -- Example: `[{ "name": "eng-secret-in-aws", "type": "" }]`
+awsSecrets: []
 
 # @ignored
 # -- (string) Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision`
 # that will be applied to all objects created by a specific chart installation.
 # Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version
-revision: abc
-
-# -- A list of secrets to configure to make available to your API.
-# Create your secret in AWS Secrets Manager as plain text.
-# Full contents of this secret will be mounted as a file your application can read.
-# See [AWS Secrets](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) for more details.
-awsSecrets:
-  []
-  # - name: testKey
+revision:
 
 # -- (map) User defined secret variables are implemented here.
 # [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables)
-secretVars:
-  {}
-  # foo: bar
+# @default -- Example: `foo: bar`
+secretVars: {}
 
 # -- (map) User defined environment variables are implemented here.
 # [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables)
-configVars:
-  {}
-  # bar: foo
+# @default -- Example: `bar: foo`
+configVars: {}
 
 # @ignored
 # -- (map) Node labels for pod assignment

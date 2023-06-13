@@ -75,8 +75,8 @@ All possible objects created by this chart:
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| awsSecrets | list | `[]` | A list of secrets to configure to make available to your API. Create your secret in AWS Secrets Manager as plain text. Full contents of this secret will be mounted as a file your application can read to /app/secrets/{name} See [AWS Secrets](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) for more details. |
-| configVars | map | `{}` | User defined environment variables are implemented here. [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) |
+| awsSecrets | list | Example: `[{ "name": "eng-secret-in-aws", "type": "" }]` | A list of secrets to configure to make available to your API. Create your secret in AWS Secrets Manager as plain text. Full contents of this secret will be mounted as a file your application can read to /app/secrets/{name} See [AWS Secrets](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) for more details. |
+| configVars | map | Example: `bar: foo` | User defined environment variables are implemented here. [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) |
 | cronJob.command | list | `nil` | full path to the job script to execute. https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/ |
 | cronJob.concurrencyPolicy | string | `"Replace"` | https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/#concurrency-policy |
 | cronJob.image.pullPolicy | string | `"IfNotPresent"` | IfNotPresent, Always, Never |
@@ -96,7 +96,7 @@ All possible objects created by this chart:
 | podSecurityContext | map | `{"fsGroup":65534}` | Security Context for pods |
 | podSecurityContext.fsGroup | int | `65534` | The files created in the container will be created with this gid `65534` is a `nobody` group |
 | restartPolicy | string | `"Never"` | Use Never by default for jobs so new pod is created on failure instead of restarting containers |
-| secretVars | map | `{}` | User defined secret variables are implemented here. [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) |
+| secretVars | map | Example: `foo: bar` | User defined secret variables are implemented here. [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) |
 | securityContext | map | `{"capabilities":{"drop":["ALL"]},"runAsGroup":null,"runAsUser":null}` | Security Context for containers |
 | securityContext.capabilities | object | `{"drop":["ALL"]}` | Drop All capabilities |
 | securityContext.runAsGroup | int | `nil` | Runs as numeric user |
