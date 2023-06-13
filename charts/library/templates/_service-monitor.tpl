@@ -16,7 +16,7 @@ spec:
   namespaceSelector:
     matchNames:
       - {{ .Release.Namespace }}
-  selector: 
+  selector:
     matchLabels:
       {{- $selectorLabels | nindent 6 }}
 {{- end }}

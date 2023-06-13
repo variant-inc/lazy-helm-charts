@@ -31,9 +31,9 @@ spec:
   {{- end }}
     ### Behold! Long explanation for why securityContext is set here:
     #
-    # When the "eks.amazonaws.com/role-arn" annotation is applied to the ServiceAccount used by this Deployment, 
-    # some new volume is mounted which contains the AWS secrets for authentication. By default, the owner will 
-    # be root, but the AWS SDK in our applications need access to this volume at runtime and our applications 
+    # When the "eks.amazonaws.com/role-arn" annotation is applied to the ServiceAccount used by this Deployment,
+    # some new volume is mounted which contains the AWS secrets for authentication. By default, the owner will
+    # be root, but the AWS SDK in our applications need access to this volume at runtime and our applications
     # should _not_ run as root.
     #
     # fsGroup determines group ownership of volumes mounted in this dynamic manner.
@@ -48,7 +48,7 @@ spec:
     # Groups of nobody
     ###
   securityContext:
-    fsGroup: 65534
+    {{- toYaml .Values.podSecurityContext | nindent 6 }}
   {{- if or (len $secrets) (eq .Chart.Name "variant-ui") (.Values.usxpressCACertBundle.enabled)}}
   volumes:
   {{- range $secrets }}

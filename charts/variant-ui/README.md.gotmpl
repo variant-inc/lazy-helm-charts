@@ -16,16 +16,16 @@
 ### Prerequisites
 
 1. Use a CloudOps Github CI workflow that publishes an image
-   - [.NET](<https://github.com/variant-inc/actions-dotnet>)
-   - [Node](<https://github.com/variant-inc/actions-nodejs>)
-   - [Python](<https://github.com/variant-inc/actions-python>)
+   - [.NET](https://github.com/variant-inc/actions-dotnet)
+   - [Node](https://github.com/variant-inc/actions-nodejs)
+   - [Python](https://github.com/variant-inc/actions-python)
 1. Host a health check endpoint via `GET /health` which returns a status code < 400 when healthy or >= 400 when unhealthy
 1. Host a Prometheus metrics collection endpoint via `GET /metrics`
    - This chart configures a ServiceMonitor (see [Application Configuration](#application-configuration)) to collect metrics from your API
    - Middleware exists for most major API frameworks that provide a useful out-of-the box HTTP server metrics, and simple tools to push custom metrics for your product:
-     - [.NET](<https://github.com/prometheus-net/prometheus-net>)
-     - Node - [NestJS](<https://github.com/digikare/nestjs-prom), [Express](https://github.com/joao-fontenele/express-prometheus-middleware>)
-     - Python - [Flask](<https://github.com/rycus86/prometheus_flask_exporter), [Django](https://github.com/korfuri/django-prometheus>)
+     - [.NET](https://github.com/prometheus-net/prometheus-net)
+     - Node - [NestJS](https://github.com/digikare/nestjs-prom), [Express](https://github.com/joao-fontenele/express-prometheus-middleware)
+     - Python - [Flask](https://github.com/rycus86/prometheus_flask_exporter), [Django](https://github.com/korfuri/django-prometheus)
 
 ### Assumptions
 
@@ -39,7 +39,7 @@
 
 #### Application Configuration
 
-| Input | [Kubernetes Object Type](<https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/>) | Description | Default Value |
+| Input | [Kubernetes Object Type](https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/) | Description | Default Value |
 | - | - | - | - |
 | service.port | Service, ServiceMonitor | Port for internal services to access your API | 80 |
 | service.targetPort | Service, Deployment | Port on your container that exposes your HTTP API | 9000 |
@@ -64,13 +64,13 @@ When using public ingess, the following URL prefixes are rerouted to the root UR
 - swagger
 - swaggerui
 
-#### [Infrastructure Permissions](<https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/rolearn>)
+#### [Infrastructure Permissions](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/rolearn)
 
-#### [Egress Configuration](<https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/egress>)
+#### [Egress Configuration](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/egress)
 
 (*how your service will access external resources*)
 
-#### [Environment Variables](<https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables>)
+#### [Environment Variables](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables)
 
 #### Special Considerations
 
@@ -93,12 +93,12 @@ The host must be setup as a SAN on the certificate of the cluster. Please create
 
 All possible objects created by this chart:
 
-- [Deployment](<https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/deployment-v1/>)
-- [HorizontalPodAutoscaler](<https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/horizontal-pod-autoscaler-v1/>)
-- [ServiceEntry](<https://istio.io/latest/docs/reference/config/networking/service-entry/#ServiceEntry>)
-- [ServiceMonitor](<https://docs.openshift.com/container-platform/4.8/rest_api/monitoring_apis/servicemonitor-monitoring-coreos-com-v1.html>)
-- [Service](<https://kubernetes.io/docs/reference/kubernetes-api/service-resources/service-v1/>)
-- [ServiceAccount](<https://kubernetes.io/docs/reference/kubernetes-api/authentication-resources/service-account-v1/>)
-- [VirtualService](<https://istio.io/latest/docs/reference/config/networking/virtual-service/#VirtualService>)
+- [Deployment](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/deployment-v1/)
+- [HorizontalPodAutoscaler](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/horizontal-pod-autoscaler-v1/)
+- [ServiceEntry](https://istio.io/latest/docs/reference/config/networking/service-entry/#ServiceEntry)
+- [ServiceMonitor](https://docs.openshift.com/container-platform/4.8/rest_api/monitoring_apis/servicemonitor-monitoring-coreos-com-v1.html)
+- [Service](https://kubernetes.io/docs/reference/kubernetes-api/service-resources/service-v1/)
+- [ServiceAccount](https://kubernetes.io/docs/reference/kubernetes-api/authentication-resources/service-account-v1/)
+- [VirtualService](https://istio.io/latest/docs/reference/config/networking/virtual-service/#VirtualService)
 
 {{ template "chart.valuesSection" . }}

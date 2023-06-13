@@ -46,8 +46,6 @@ affinity: {}
 node:
   create: false
 
-CLUSTER_NAME: devops-playground
-
 tags:
   owner: platform-infrastructure
   octopus/project: test
