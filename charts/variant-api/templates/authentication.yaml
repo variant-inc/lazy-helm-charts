@@ -1,4 +1,4 @@
-{{- if .Values.authentication.enabled }}
+{{- if .Values.authentication.clientId }}
 {{- $fullName := (include "chart.fullname" .) -}}
 {{- $labels := (include "library.chart.labels" .) -}}
 {{- $selectorLabels := (include "library.chart.selectorLabels" .) -}}
@@ -13,6 +13,21 @@ spec:
     matchLabels:
       {{- $selectorLabels | nindent 6 }}
   jwtRules:
-  - issuer: {{ required ".Values.authentication.server is required when .Values.authentication.enabled" .Values.authentication.server }}
-    jwksUri: {{ required ".Values.authentication.jwksUri is required when .Values.authentication.enabled" .Values.authentication.jwksUri }}
+    - audiences:
+        - {{ .Values.authentication.clientId }}
+      issuer: >-
+        https://login.microsoftonline.com/{{ .Values.authentication.tenantId }}/v2.0
+      jwksUri: >-
+        https://login.microsoftonline.com/{{ .Values.authentication.tenantId }}/discovery/keys
+      outputClaimToHeaders:
+        - claim: roles
+          header: x-forwarded-roles
+        - claim: groups
+          header: x-forwarded-groups
+        - claim: preferred_username
+          header: x-forwarded-preferred-username
+        - claim: name
+          header: x-forwarded-name
+        - claim: email
+          header: x-forwarded-email
 {{- end }}

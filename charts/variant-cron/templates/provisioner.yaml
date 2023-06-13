@@ -44,17 +44,6 @@ spec:
       operator: In
       values: [{{ .Values.node.instanceType | quote }}]
     {{- end }}
-  # These fields vary per cloud provider, see your cloud provider specific documentation
-  provider:
-    blockDeviceMappings:
-      - deviceName: /dev/xvda
-        ebs:
-          volumeSize: 50Gi
-          volumeType: gp3
-          deleteOnTermination: true
-    subnetSelector:
-      kubernetes.io/role/internal-elb: '1'
-    securityGroupSelector:
-      kubernetes.io/cluster/{{ .Values.CLUSTER_NAME }}: '*'
-    tags: {{ required "Tags are required to create custom nodes" .Values.tags | toYaml | nindent 6 }}
+  providerRef:
+    name: bottlerocket
 {{- end }}

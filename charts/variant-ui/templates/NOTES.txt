@@ -7,8 +7,18 @@ Through VPN: https://{{ $.Release.Namespace }}-{{ $fullName }}.internal.apps.{{ 
 {{- if .Values.istio.ingress.public }}
 Public: https://{{ $.Release.Namespace }}-{{ $fullName }}.apps.{{ .Values.istio.ingress.host }}
 {{- end }}
-.
-VPN setup: https://usxpress.atlassian.net/wiki/spaces/CLOUD/pages/2486470195/How+to+configure+OpenVPN+using+SSO+to+access+USX+Variant+Resources
+======================================================
+{{- if (index .Values "oauth2-proxy").enabled }}
+Proxy has been enabled.
+Make sure that Authentication is not done inside your app.
+The following roles are made available to your app:
+1. x-forwarded-roles: contains list of roles for the user
+2. x-forwarded-refresh-token: contains refresh token
+3. x-forwarded-id-token: contains id token
+3. x-forwarded-access-token: contains access token
+4. x-forwarded-email: Self Explanatory. If this needs to be explained, then you shouldn't be here.
+5. x-forwarded-userinfo-endpoint: contains base64 encoded profile url
+{{- end }}
 ======================================================
 {{- end}}
 Mount path for configVars JSON file:

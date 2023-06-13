@@ -2,8 +2,8 @@ cronJob:
   schedule: "*/2 * * * *"
   image:
     tag: curlimages/curl
-  command: 
-    - /bin/echo 
+  command:
+    - /bin/echo
     - Hello from the K8s cluster
   suspend: true
 
@@ -12,8 +12,6 @@ revision: "test-provisioner"
 node:
   create: true
   instanceType: t3.medium
-
-CLUSTER_NAME: devops-playground
 
 tags:
   test: lazy-helm-provisioner-test

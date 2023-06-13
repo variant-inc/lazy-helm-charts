@@ -2,11 +2,11 @@
 
 {{ template "chart.deprecationWarning" . -}}
 
-{{ template "chart.badgesSection" . }}
+{{ template "chart.badgesSection" . -}}
 
 {{ template "chart.description" . }}
 
-### What this chart provides to you by default
+## What this chart provides to you by default
 
 - A CronJob image deployed to Kubernetes -- the Variant, CloudOps-approved way.
 
@@ -20,17 +20,23 @@
    - [Python](https://github.com/variant-inc/actions-python)
 2. Make sure curl utility is available in the image as it is used to check the status of the sidecar container. If not available, Based on the image you use add below commands in the Dockerfile.
    - Ubuntu / Debian OS
+
      ```bash
      RUN apt-get install curl
      ```
+
    - RHEL / CentOS / Fedora OS
+
      ```bash
      RUN yum install curl
      ```
+
    - Alpine OS
+
      ```bash
      RUN apk --no-cache add curl
      ```
+
 ***
 
 ### *OPTIONAL* Configuration Inputs

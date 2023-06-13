@@ -20,9 +20,8 @@ tests:
         purpose: test
         owner: devops
       authentication:
-        enabled: true
-        server: trustme.com
-        jwksUri: "https://login.microsoftonline.com/common/discovery/keys"
+        clientId: something
+        tenantId: tenantId
       authorization:
         rules:
           to:

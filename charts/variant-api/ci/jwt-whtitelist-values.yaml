@@ -16,8 +16,8 @@ istio:
 service:
   targetPort: 5000
 authentication:
-  enabled: false
-  server: trustme.com
+  clientId: something
+  tenantId: tenantId
 authorization:
   rules:
     to:

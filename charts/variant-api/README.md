@@ -1,8 +1,6 @@
 # Variant API Helm Chart
 
-![Version: 2.1.31](https://img.shields.io/badge/Version-2.1.31-informational?style=flat-square)
-
-A Helm chart for APIs to Variant clusters
+![Version: 2.2.0](https://img.shields.io/badge/Version-2.2.0-informational?style=flat-square) A Helm chart for APIs to Variant clusters
 
 ### What this chart provides to you by default
 
@@ -110,17 +108,13 @@ All possible objects created by this chart:
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| affinity | map | `{}` | Affinity for pod assignment. [Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity) |
-| authentication | bool | `{"enabled":false,"jwksUri":null,"server":null}` | selecting authentication: true when defining an api resource, [Istio RBAC](https://istio.io/v1.3/docs/reference/config/authorization/istio.rbac.v1alpha1/) resources are created  to require a valid JWT token before forwarding a request to your API. [Ingress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/ingress/) |
 | authorization | list | `{"rules":{"to":[]}}` | List of operation objects with methods and paths key values allowing certain methods and paths to be whitelisted within the cluster GET /health and Get /metrics are set by default in authorization.yaml |
 | autoscaling.maxReplicas | int | `5` | Maximum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/) |
-| autoscaling.minReplicas | int | `1` | Minimum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/) |
+| autoscaling.minReplicas | int | `2` | Minimum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/) |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` | CPU Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/) |
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` | Memory Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/) |
-| awsSecrets | list | `[]` | A list of secrets to configure to make available to your API. Create your secret in AWS Secrets Manager as plain text. Full contents of this secret will be mounted as a file your application can read to /app/secrets/{name}. See [AWS Secrets](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables/) for more details. |
-| configVars | map | `{}` | User defined environment variables are implemented here. [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables/) |
-| deployment.args | list | `[]` | List of arguments that can be passed in the image. |
-| deployment.conditionalEnvVars | list | `[]` | List of Conditional Env Vars denoted by conditional (bool) and envVars (list) |
+| awsSecrets | list | Example: `[{ "name": "eng-secret-in-aws", "type": "" }]` | A list of secrets to configure to make available to your API. Create your secret in AWS Secrets Manager as plain text. Full contents of this secret will be mounted as a file your application can read to /app/secrets/{name} See [AWS Secrets](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) for more details. |
+| configVars | map | Example: `bar: foo` | User defined environment variables are implemented here. [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) |
 | deployment.image.pullPolicy | string | `"IfNotPresent"` | IfNotPresent, Always, Never |
 | deployment.image.tag | string | `nil` | The full URL of the image to be deployed containing the HTTP API application |
 | deployment.podAnnotations | map | `{}` | [annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) |
@@ -128,7 +122,7 @@ All possible objects created by this chart:
 | deployment.resources.limits.memory | string | `"768Mi"` | Limits Memory |
 | deployment.resources.requests.cpu | float | `0.1` | Requests CPU |
 | deployment.resources.requests.memory | string | `"384Mi"` | Request memory |
-| istio.egress | list | `[]` | A whitelist of external services that your API requires connection to. The whitelist applies to the entire namespace in which this chart is installed. [These services](https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8) are globally whitelisted and do not require declaration. See [egress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/egress/) and [Ingress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/ingress/) for more details. |
+| istio.egress | list | `[]` | A whitelist of external services that your application requires connection to. The whitelist applies to the entire namespace in which this chart is installed. [These services](https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8) are globally whitelisted and do not require declaration. See [egress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/egress/) and [Ingress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/ingress/) for more details. |
 | istio.ingress.additionalHosts | object | `{"private":[{"domain":null,"prefix":null}],"public":[{"domain":null,"prefix":null}]}` | Additional prefixes used to construct URLs that point to your API. |
 | istio.ingress.additionalHosts.private | list | `[{"domain":null,"prefix":null}]` | List of additional private endpoints, accessible only through VPN |
 | istio.ingress.additionalHosts.private[0] | string | `{"domain":null,"prefix":null}` | prefix used to construct the URL, will be appended by `istio.ingress.host` by default |
@@ -136,28 +130,21 @@ All possible objects created by this chart:
 | istio.ingress.additionalHosts.public[0] | string | `{"domain":null,"prefix":null}` | prefix used to construct the URL, will be appended by `istio.ingress.host` by default |
 | istio.ingress.additionalHosts.public[0].domain | string | `nil` | optional domain if it has to differ from `istio.ingress.host`. Not yet implemented! |
 | istio.ingress.disableRewrite | bool | `false` | When `true`, the path `/{target-namespace}/{helm-release-name}` will be preserved in requests to your application, else rewritten to `/` when `false` |
-| istio.ingress.host | string | `nil` | The base domain that will be used to construct URLs that point to your API. This should almost always be the Octopus Variable named `DOMAIN` in the [AWS Access Keys](https://octopus.apps.ops-drivevariant.com/app#/Spaces-22/library/variables/). See [Ingress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/ingress/) for more Istio details. |
 | istio.ingress.public | bool | `false` | When `false`, an internal URL will be created that will expose your application *via OpenVPN-only*. When `true`, an additional publicly accessible URL will be created. This API should be secured behind some authentication method when set to `true`. See [Ingress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/ingress/) for more Istio details. |
-| istio.ingress.redirects | list | `[]` | Optional paths that will always redirect to internal/VPN endpoints |
+| istio.ingress.redirects | list | `[]` | Optional paths that will always redirect to internal/VPN endpoints - prefix: /hidden |
 | livenessProbe | map | `{}` | Indicates whether container is running. See [Probe](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/probes/) |
-| minAvailable | int | `1` | Minimum number of pods that should be available after an eviction See [Pod Disruption Budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) |
-| nodeSelector | map | `{}` | Node labels for pod assignment. [NodeSelector](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/nodeselector/) |
+| minAvailable | int | `1` | Minimum number of pods that should be available always See [Pod Disruption Budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) |
+| podSecurityContext | map | `{"fsGroup":65534}` | Security Context for pods |
+| podSecurityContext.fsGroup | int | `65534` | The files created in the container will be created with this gid `65534` is a `nobody` group |
 | readinessProbe | map | `{}` | Indicates whether container is ready for requests. See [Probe](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/probes/) |
-| revision | string | `nil` | Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision` that will be applied to all objects created by a specific chart installation. Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version |
-| secretVars | map | `{}` | User defined secret variables are implemented here. [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables/) |
-| securityContext.allowPrivilegeEscalation | bool | `false` | Setting it to false ensures that no child process of a container can gain more privileges than its parent |
+| secretVars | map | Example: `foo: bar` | User defined secret variables are implemented here. [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) |
+| securityContext | map | `{"capabilities":{"drop":["ALL"]},"runAsGroup":null,"runAsUser":null}` | Security Context for containers |
 | securityContext.capabilities | object | `{"drop":["ALL"]}` | Drop All capabilities |
-| securityContext.readOnlyRootFilesystem | bool | `false` | Requires that containers must run with a read-only root filesystem (i.e. no writable layer) |
-| securityContext.runAsNonRoot | bool | `true` | Runs as non root. Must use numeric User in container |
+| securityContext.runAsGroup | int | `nil` | Runs as numeric user |
 | securityContext.runAsUser | int | `nil` | Runs as numeric user |
 | service.healthCheckPort | string | `nil` | Optional port which serves a health check endpoint at `/health` Defaults to value of `service.targetPort` if not defined. |
 | service.metricsPort | string | `nil` | Optional port which serves prometheus metrics endpoint at `/metrics` Defaults to value of `service.targetPort` if not defined. |
-| service.port | int | `80` | Port for internal services to access your API |
 | service.targetPort | int | `9000` | Port on your container that exposes your HTTP API |
-| serviceAccount.roleArn | string | `nil` | Optional ARN of the IAM role to be assumed by your application. If your API requires access to any AWS services, a role should be created in AWS IAM. This role should have an inline policy that describes the permissions your API needs (connect to RDS, publish to an SNS topic, read from an SQS queue, etc.). [RoleArn](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/rolearn/) |
-| serviceMonitor.interval | string | `"10s"` | Frequency at which Prometheus metrics will be collected from your service |
-| serviceMonitor.scrapeTimeout | string | `"10s"` | Maximum wait duration for Prometheus metrics response from your service |
-| tags | map | `{}` | Deployment tags |
-| tolerations | list | `[]` | Tolerations for pod assignment. [Tolerations](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/tolerations/) |
+| serviceMonitor.enabled | bool | `false` | Service Monitor Enabled |
 | usxpressCACertBundle.certMountPath | string | `"/etc/ssl/certs/"` | The cert is mounted to the default path mentioned. The path can also be changed. |
 | usxpressCACertBundle.enabled | bool | `true` | If set to true, volume mounts the certificate from the custom-ca-certs secret |

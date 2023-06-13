@@ -88,5 +88,4 @@ template:
     {{- end }}
 parallelism: 1
 backoffLimit: 2
-activeDeadlineSeconds: {{ .Values.cronJob.activeDeadlineSeconds  }}
 {{- end}}
