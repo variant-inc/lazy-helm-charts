@@ -22,7 +22,7 @@ jobs:
 
           mark_as_latest="false"
           if [ "${GITVERSION_PRERELEASELABEL}" == "" ]; then
-              versionNumber="true"
+              mark_as_latest="true"
           fi
           echo "mark_as_latest=$mark_as_latest" >>"$GITHUB_ENV"
 
