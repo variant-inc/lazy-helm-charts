@@ -17,11 +17,11 @@ tests:
         purpose: test
         owner: devops
     asserts:
-      - template: virtual-service.yaml
+      - template: virtual-service/virtual-service-private.yaml
         containsDocument:
           apiVersion: networking.istio.io/v1alpha3
           kind: VirtualService
-          name: test-internal
-      - template: virtual-service.yaml
+          name: test-private
+      - template: virtual-service/virtual-service-private.yaml
         hasDocuments:
-          count: 2
+          count: 1

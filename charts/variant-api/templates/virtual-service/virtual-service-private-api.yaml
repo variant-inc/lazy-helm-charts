@@ -1,0 +1,30 @@
+{{- $fullName := (include "chart.fullname" .) -}}
+{{- $labels := (include "library.chart.labels" .) -}}
+{{- $release := .Release -}}
+{{- $host := (include "chart.ingressHostname" .) -}}
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ $fullName }}-private-api
+  labels: {{ $labels | nindent 4 }}
+spec:
+  gateways:
+    - default/default-private
+  hosts:
+    - api.internal.{{ $host }}
+    - api.internal.apps.{{ $host }}
+  http:
+    - name: Private Ingress
+      match:
+        - uri:
+            prefix: /{{ $release.Namespace }}/{{ $release.Name }}/
+      {{ if not .Values.istio.ingress.disableRewrite -}}
+      rewrite:
+        uri: /
+      {{ end -}}
+      route:
+        - destination:
+            host: {{ $fullName }}
+            port:
+              number: {{ .Values.service.port }}

@@ -1,0 +1,26 @@
+{{- $fullName := (include "chart.fullname" .) -}}
+{{- $labels := (include "library.chart.labels" .) -}}
+{{- $host := (include "chart.ingressHostname" .) -}}
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ $fullName }}-private
+  labels: {{ $labels | nindent 4 }}
+spec:
+  gateways:
+    - default/default-private
+  hosts:
+    - {{ $fullName }}.internal.apps.{{ $host }}
+    {{- range .Values.istio.ingress.additionalHosts.private }}
+    {{- if .prefix }}
+    - {{ .prefix }}.internal.{{ $host }}
+    {{- end }}
+    {{- end }}
+  http:
+    - name: Private Ingress
+      route:
+        - destination:
+            host: {{ $fullName }}
+            port:
+              number: {{ .Values.service.port }}

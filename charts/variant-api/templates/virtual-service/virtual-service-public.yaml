@@ -1,0 +1,52 @@
+{{- if .Values.istio.ingress.public }}
+{{- $fullName := (include "chart.fullname" .) -}}
+{{- $labels := (include "library.chart.labels" .) -}}
+{{- $host := (include "chart.ingressHostname" .) -}}
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ $fullName }}-public
+  labels: {{ $labels | nindent 4 }}
+spec:
+  gateways:
+    - default/default-public
+  hosts:
+    - {{ $fullName }}.apps.{{ $host }}
+    {{- range .Values.istio.ingress.additionalHosts.public }}
+    {{- if .prefix }}
+    - {{ .prefix }}.{{ $host }}
+    {{- end }}
+    {{- end }}
+  http:
+    - name: Private Path Redirects
+      match:
+      {{- if .Values.istio.ingress.redirects}}
+        {{- range .Values.istio.ingress.redirects }}
+        - uri:
+            prefix: {{ .prefix  }}
+        {{- end }}
+      {{- end }}
+        - uri:
+            prefix: /health
+        - uri:
+            prefix: /swagger
+      redirect:
+        authority: {{ $fullName }}.internal.apps.{{ $host }}
+        redirectCode: 307
+    - name: Default Ingress
+      match:
+        - headers:
+            Authorization:
+              regex: .*
+      route:
+        - destination:
+            host: {{ $fullName }}
+            port:
+              number: {{ .Values.service.port }}
+    - name: Authorization Failed
+      directResponse:
+        status: 401
+        body:
+          string: Unauthorized
+{{- end -}}
