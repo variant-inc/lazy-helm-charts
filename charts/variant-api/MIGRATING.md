@@ -101,14 +101,14 @@ resource "helm_release" "test" {
         - name: true_conditional_1
           value: true_conditional_1
         - name: true_conditional_2
-          value: true_conditional_2      
+          value: true_conditional_2
 EOF
   ]
 
   /* Pre-existing `set` blocks below
     ...
   */
-} 
+}
 ```
 
 ### Startup Arguments
@@ -127,14 +127,14 @@ resource "helm_release" "test" {
 {chart alias}:
   deployment:
     args:
-      - Variant.ScheduleAdherence.Api.dll   
+      - Variant.ScheduleAdherence.Api.dll
 EOF
   ]
 
   /* Pre-existing `set` blocks below
     ...
   */
-} 
+}
 ```
 
 ### Ports
@@ -158,14 +158,14 @@ resource "helm_release" "test" {
   service:
     targetPort: 5000
     healthCheckPort: 5001
-    metricsPort: 5002  
+    metricsPort: 5002
 EOF
   ]
 
   /* Pre-existing `set` blocks below
     ...
   */
-} 
+}
 ```
 
 ### Secrets

@@ -16,7 +16,7 @@ tests:
         team: devops
         purpose: test
         owner: devops
-      cronJob.command: 
+      cronJob.command:
         - /bin/echo
         - "Hello from unit test"
     asserts:
@@ -42,7 +42,7 @@ tests:
         team: devops
         purpose: test
         owner: devops
-      cronJob.command: 
+      cronJob.command:
         - /bin/echo
         - "Hello from unit test"
       cronJob.suspend: true

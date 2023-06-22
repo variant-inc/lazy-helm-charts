@@ -25,8 +25,8 @@ cronJob:
     tag: curlimages/curl
   args: []
   podAnnotations: {}
-  command: 
-    - /bin/echo 
+  command:
+    - /bin/echo
     - Hello from the K8s cluster
   suspend: true
 

@@ -2,7 +2,7 @@
 
 ![Version: 2.2.1](https://img.shields.io/badge/Version-2.2.1-informational?style=flat-square) A Helm chart for APIs to Variant clusters
 
-### What this chart provides to you by default
+## What this chart provides to you by default
 
 - An API that is reachable only via [OpenVPN](https://usxtech.atlassian.net/wiki/spaces/CLOUD/pages/1332445185/How+to+configure+OpenVPN+using+Okta+SSO+to+access+USX+Variant+Resources), or by other services inside the same cluster
   - See [ingress configuration](#ingress-configuration) to make it public, and for information regarding the generated URLs
@@ -11,13 +11,13 @@
 - An API that is isolated from infrastructure access - Amazon services are firewall whitelisted by default, but you still need an AWS role if you need access to AWS services (SQS, SNS, RDS, etc.)
   - See [infrastructure permissions](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/rolearn)
 
-### How do I access my API?
+## How do I access my API?
 
 - Via VPN at `https://api.internal.apps.<DOMAIN>/my-namespace/my-api/`
 - If set to public it can be accessed at `https://api.apps.<DOMAIN>/my-namespace/my-api/`
 - To other services within the same cluster at `http://my-api.my-namespace.svc.cluster.local/`
 
-### Port Forwarding
+## Port Forwarding
 
 - Using Lens:
   - Start port forwarding
@@ -88,6 +88,7 @@ When using public ingess, the following URL prefixes are rerouted to the root UR
 #### [Infrastructure Permissions](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/rolearn)
 
 #### [Egress Configuration](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/egress)
+
 (*how your API will access external resources*)
 
 #### [Environment Variables](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables)

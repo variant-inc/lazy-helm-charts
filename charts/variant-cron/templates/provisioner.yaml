@@ -7,7 +7,7 @@ metadata:
 spec:
   # If nil, the feature is disabled, nodes will never expire
   # 30 Days Default = 60 * 60 * 24 * 30 Seconds;
-  ttlSecondsUntilExpired: {{ .Values.node.ttlSecondsUntilExpired}} 
+  ttlSecondsUntilExpired: {{ .Values.node.ttlSecondsUntilExpired}}
 
   # If nil, the feature is disabled, nodes will never scale down due to low utilization
   ttlSecondsAfterEmpty: {{ .Values.node.ttlSecondsAfterEmpty }}
