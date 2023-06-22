@@ -1,3 +1,4 @@
+---
 # This file contains the defaults for all optional, overridable values
 
 istio:
@@ -31,7 +32,7 @@ cronJob:
   suspend: true
 
 secrets: []
-  #- name: eng-secret-in-aws
+  # - name: eng-secret-in-aws
 
 secretVars:
   foo: bar

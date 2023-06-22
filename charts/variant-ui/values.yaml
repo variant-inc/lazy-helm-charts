@@ -1,5 +1,6 @@
 # Default values for istio.
 # This is a YAML-formatted file.
+---
 # Declare variables to be passed into your templates.
 
 # -- nameOverride replaces the name of the chart in the Chart.yaml file
