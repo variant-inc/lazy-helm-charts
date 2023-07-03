@@ -5,8 +5,8 @@
 {{- $name := printf "%s-%s" $fullName (required "A valid name is required for each ServiceEntry!" .name) }}
 {{ $hosts := .hosts }}
 {{- if and (not .hosts) .addresses }}
-  {{- /* 
-    If only addresses are provided, the name of this ServiceEntry 
+  {{- /*
+    If only addresses are provided, the name of this ServiceEntry
     can be used as the hostname to resolve the whitelisted addresses.
   */}}
   {{- $hosts = list $name }}

@@ -2,7 +2,7 @@
 
 ![Version: 1.1.27](https://img.shields.io/badge/Version-1.1.27-informational?style=flat-square) A Helm chart for kubernetes handler
 
-### What this chart provides to you by default
+## What this chart provides to you by default
 
 - A chart to deploy a handler image to Kubernetes -- the Variant,
   CloudOps-approved way.
@@ -68,6 +68,8 @@ All possible objects created by this chart:
 - [ServiceMonitor](https://docs.openshift.com/container-platform/4.8/rest_api/monitoring_apis/servicemonitor-monitoring-coreos-com-v1.html)
 - [Service](https://kubernetes.io/docs/reference/kubernetes-api/service-resources/service-v1/)
 - [ServiceAccount](https://kubernetes.io/docs/reference/kubernetes-api/authentication-resources/service-account-v1/)
+
+<!-- markdownlint-disable MD034 -->
 
 ## Values
 

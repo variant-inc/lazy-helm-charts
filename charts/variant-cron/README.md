@@ -71,6 +71,8 @@ All possible objects created by this chart:
 - [Secret](https://kubernetes.io/docs/reference/kubernetes-api/config-and-storage-resources/secret-v1/)
 - [ConfigMap](https://kubernetes.io/docs/reference/kubernetes-api/config-and-storage-resources/config-map-v1/)
 
+<!-- markdownlint-disable MD034 -->
+
 ## Values
 
 | Key | Type | Default | Description |

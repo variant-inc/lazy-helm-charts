@@ -10,6 +10,6 @@ metadata:
     {{- $labels | nindent 4 }}
   {{- if .Values.serviceAccount.roleArn }}
   annotations:
-    "eks.amazonaws.com/role-arn": "{{ .Values.serviceAccount.roleArn }}" 
+    "eks.amazonaws.com/role-arn": "{{ .Values.serviceAccount.roleArn }}"
   {{- end }}
 {{- end }}

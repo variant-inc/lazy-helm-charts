@@ -1,3 +1,4 @@
+---
 # This file contains the defaults for all optional, overridable values
 
 istio:
@@ -25,13 +26,13 @@ cronJob:
     tag: curlimages/curl
   args: []
   podAnnotations: {}
-  command: 
-    - /bin/echo 
+  command:
+    - /bin/echo
     - Hello from the K8s cluster
   suspend: true
 
 secrets: []
-  #- name: eng-secret-in-aws
+  # - name: eng-secret-in-aws
 
 secretVars:
   foo: bar

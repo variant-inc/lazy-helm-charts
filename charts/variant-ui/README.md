@@ -97,6 +97,8 @@ All possible objects created by this chart:
 - [ServiceAccount](https://kubernetes.io/docs/reference/kubernetes-api/authentication-resources/service-account-v1/)
 - [VirtualService](https://istio.io/latest/docs/reference/config/networking/virtual-service/#VirtualService)
 
+<!-- markdownlint-disable MD034 -->
+
 ## Values
 
 | Key | Type | Default | Description |

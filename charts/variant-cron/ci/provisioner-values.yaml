@@ -1,3 +1,4 @@
+---
 cronJob:
   schedule: "*/2 * * * *"
   image:

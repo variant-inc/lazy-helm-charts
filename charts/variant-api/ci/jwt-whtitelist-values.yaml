@@ -1,3 +1,4 @@
+---
 deployment:
   image:
     tag: 064859874041.dkr.ecr.us-east-2.amazonaws.com/lazy-helm-charts/variant-api:v0.3
@@ -34,4 +35,3 @@ tags:
   team: devops
   purpose: test
   owner: devops
-
