@@ -24,13 +24,19 @@ spec:
       to:
         - operation:
             methods: ["GET"]
-            paths: ["/health"]
+            paths:
+              - "/health"
+              - "{{ .Release.Namespace }}/{{ .Release.Name }}/health"
         - operation:
             methods: ["GET"]
-            paths: ["/metrics"]
+            paths:
+              - "/metrics"
+              - "{{ .Release.Namespace }}/{{ .Release.Name }}/metrics"
         - operation:
             methods: ["GET"]
-            paths: ["/swagger"]
+            paths:
+              - "/swagger*"
+              - "{{ .Release.Namespace }}/{{ .Release.Name }}/swagger*"
     {{- if .Values.authorization.rules.to }}
     {{- range  .Values.authorization.rules.to }}
     {{- if and (ne .operation.paths "/*") (ne .operation.paths "*") }}
