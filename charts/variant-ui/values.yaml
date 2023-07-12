@@ -140,7 +140,9 @@ secretVars: {}
 # @default -- Example: `bar: foo`
 configVars: {}
 
-# -- (string) Mount path for configVars JSON file. Default /app/config. Config file full path would be /app/config/config.json
+# -- (string) Mount path for configVars JSON file.
+# Config file full path would be /app/config/config.json
+# @default -- /app/config
 configMountPath: /app/config
 
 # @ignored

@@ -1,6 +1,6 @@
 # Variant UI Helm Chart
 
-![Version: 1.5.0](https://img.shields.io/badge/Version-1.5.0-informational?style=flat-square) A Helm chart for a web UI configuration
+![Version: 1.5.1](https://img.shields.io/badge/Version-1.5.1-informational?style=flat-square) A Helm chart for a web UI configuration
 
 ## How do I access my UI?
 
@@ -108,7 +108,7 @@ All possible objects created by this chart:
 | autoscaling.targetCPUUtilizationPercentage | int | `80` | CPU Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling) |
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` | Memory Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling) |
 | awsSecrets | list | Example: `[{ "name": "eng-secret-in-aws", "type": "" }]` | A list of secrets to configure to make available to your API. Create your secret in AWS Secrets Manager as plain text. Full contents of this secret will be mounted as a file your application can read to /app/secrets/{name} See [AWS Secrets](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) for more details. |
-| configMountPath | string | `"/app/config"` | Mount path for configVars JSON file. Default /app/config. Config file full path would be /app/config/config.json |
+| configMountPath | string | /app/config | Mount path for configVars JSON file. Config file full path would be /app/config/config.json |
 | configVars | map | Example: `bar: foo` | User defined environment variables are implemented here. [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) |
 | deployment.image.pullPolicy | string | `"IfNotPresent"` | IfNotPresent, Always, Never |
 | deployment.image.tag | string | `nil` | The full URL of the image to be deployed containing the UI web application |

@@ -57,9 +57,21 @@ spec:
         secretName: {{ $fullName}}-{{ .name }}
   {{- end }}
   {{- if eq .Chart.Name "variant-ui" }}
+  {{- if .Values.configVars }}
     - name: config-file
       configMap:
         name: {{ $fullName }}-chart-json
+  {{- end }}
+  {{- if .Values.secretVars }}
+    - name: secret-file
+      secret:
+        secretName: {{ $fullName }}-chart-json
+  {{- end }}
+  {{- if len .Values.awsSecrets }}
+    - name: external-secret-file
+      secret:
+        secretName: {{ $fullName }}-external-json
+  {{- end }}
   {{- end }}
   {{- if .Values.usxpressCACertBundle.enabled }}
     - name: custom-ca-certs
@@ -162,9 +174,23 @@ spec:
           subPath: {{ $fullName }}-{{ .name }}
       {{- end }}
       {{- if eq .Chart.Name "variant-ui" }}
+      {{- if .Values.configVars }}
         - name: config-file
           readOnly: true
+          mountPath: {{ .Values.configMountPath }}/config.json
+          subPath: config.json
+      {{- end }}
+      {{- if .Values.secretVars }}
+        - name: secret-file
+          readOnly: true
           mountPath: {{ .Values.configMountPath }}
+      {{- end }}
+      {{- if len .Values.awsSecrets }}
+        - name: external-secret-file
+          readOnly: true
+          mountPath: {{ .Values.configMountPath }}/external_secrets.json
+          subPath: external_secrets.json
+      {{- end }}
       {{- end }}
       {{- if .Values.usxpressCACertBundle.enabled }}
         - name: custom-ca-certs

@@ -14,6 +14,13 @@ spec:
   secretStoreRef:
     name: default
     kind: ClusterSecretStore
+  target:
+    deletionPolicy: Delete
+    template:
+      mergePolicy: Merge
+      metadata:
+        labels:
+          {{- $labels | nindent 10 }}
   {{ if hasPrefix "postgres-secret-" .name }}
   dataFrom:
   - extract:
