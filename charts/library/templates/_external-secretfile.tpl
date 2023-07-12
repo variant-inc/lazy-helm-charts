@@ -23,11 +23,11 @@ spec:
       engineVersion: v2
       data:
         external_secrets.json: |
-          {{`{{ $values := dict }}
-          {{ range $k, $v := . }}
-          {{ $values = merge $values ($v | fromJson) }}
-          {{ end }}
-          {{ $values | toPrettyJson }}`}}
+          {{`{{- $values := dict }}
+          {{- range $k, $v := . }}
+          {{- $values = merge $values ($v | fromJson) }}
+          {{- end }}
+          {{- $values | toPrettyJson }}`}}
   data:
 {{- range $secrets }}
   - secretKey: {{ .name }}

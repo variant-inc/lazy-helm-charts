@@ -183,7 +183,8 @@ spec:
       {{- if .Values.secretVars }}
         - name: secret-file
           readOnly: true
-          mountPath: {{ .Values.configMountPath }}
+          mountPath: {{ .Values.configMountPath }}/secrets.json
+          subPath: secrets.json
       {{- end }}
       {{- if len .Values.awsSecrets }}
         - name: external-secret-file
