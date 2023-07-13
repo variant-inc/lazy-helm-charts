@@ -9,6 +9,6 @@ metadata:
     {{- include "library.chart.labels" . | nindent 4 }}
 type: Opaque
 stringData:
-  secret.json: {{ .Values.secretVars | toPrettyJson | quote -}}
+  secrets.json: {{ .Values.secretVars | toPrettyJson | quote -}}
 {{- end }}
 {{- end }}
