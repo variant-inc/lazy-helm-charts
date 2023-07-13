@@ -140,6 +140,10 @@ secretVars: {}
 # @default -- Example: `bar: foo`
 configVars: {}
 
+# @ignored
+# -- (map) Variables created by DX configMaps
+configVarsFile: {}
+
 # -- (string) Mount path for configVars JSON file.
 # Config file full path would be /app/config/config.json
 # @default -- /app/config

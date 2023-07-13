@@ -8,6 +8,6 @@ metadata:
   labels:
     {{- include "library.chart.labels" . | nindent 4 }}
 data:
-  config.json: {{ .Values.configVars | toPrettyJson | quote -}}
+  config.json: {{ deepCopy .Values.configVars | merge .Values.configVarsFile | toPrettyJson | quote -}}
 {{- end }}
 {{- end }}
