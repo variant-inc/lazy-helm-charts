@@ -8,6 +8,8 @@ metadata:
   name: {{ $fullName }}
   labels:
     {{- $labels | nindent 4 }}
+  annotations:
+    reloader.stakater.com/auto: "true"
 spec:
   selector:
     matchLabels:

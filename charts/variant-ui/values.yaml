@@ -248,8 +248,7 @@ oauth2-proxy:
 
   podLabels: {}
   replicaCount: 1
-  deploymentAnnotations:
-    reloader.stakater.com/auto: "true"
+  deploymentAnnotations: {}
 
   podDisruptionBudget:
     enabled: false

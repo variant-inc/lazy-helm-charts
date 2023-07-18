@@ -1,6 +1,6 @@
 # Variant Handler Helm Chart
 
-![Version: 1.1.27](https://img.shields.io/badge/Version-1.1.27-informational?style=flat-square) A Helm chart for kubernetes handler
+![Version: 1.1.28](https://img.shields.io/badge/Version-1.1.28-informational?style=flat-square) A Helm chart for kubernetes handler
 
 ## What this chart provides to you by default
 
