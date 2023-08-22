@@ -59,6 +59,7 @@ template:
     serviceAccountName: {{ $fullName }}
     automountServiceAccountToken: true
     nodeSelector:
+      karpenter.sh/capacity-type: on-demand
     {{- if .Values.node.create }}
       cloudops.io/namespace: {{ .Release.Namespace }}
       {{- if .Values.node.instanceType }}
