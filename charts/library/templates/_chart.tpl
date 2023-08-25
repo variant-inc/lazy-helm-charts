@@ -45,6 +45,7 @@ Pod labels
 app.kubernetes.io/name: {{ .Chart.Name }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 app: {{ .Release.Name }}
+revision: {{ required "revision is required" .Values.revision | quote }}
 {{- range $key, $value := .Values.tags }}
 cloudops.io.{{ $key }}: {{ $value | replace " " "-"| quote }}
 {{- end }}

@@ -11,7 +11,7 @@
 {{- end }}
 {{- range $awsSecrets }}
 - secretRef:
-    name: {{ $fullName }}-{{ .name }}
+    name: {{ $fullName }}-{{ (.name | replace "_" "-") }}
 {{- end }}
 {{- if len $configEnv }}
 - configMapRef:

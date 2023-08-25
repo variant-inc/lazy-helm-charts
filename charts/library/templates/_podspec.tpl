@@ -1,6 +1,6 @@
 {{- define "library.podspec.tpl" }}
 {{- $fullName := (include "chart.fullname" .) -}}
-{{- $secrets := .Values.awsSecrets -}}
+{{- $awsSecrets := .Values.awsSecrets -}}
 spec:
   serviceAccountName: {{ $fullName }}
   automountServiceAccountToken: true
@@ -49,12 +49,12 @@ spec:
     ###
   securityContext:
     {{- toYaml .Values.podSecurityContext | nindent 6 }}
-  {{- if or (len $secrets) (eq .Chart.Name "variant-ui") (.Values.usxpressCACertBundle.enabled)}}
+  {{- if or (len $awsSecrets) (eq .Chart.Name "variant-ui") (.Values.usxpressCACertBundle.enabled)}}
   volumes:
-  {{- range $secrets }}
-    - name: {{ $fullName}}-{{ .name }}
+  {{- range $awsSecrets }}
+    - name: {{ $fullName }}-{{ (.name | replace "_" "-") }}
       secret:
-        secretName: {{ $fullName}}-{{ .name }}
+        secretName: {{ $fullName}}-{{ (.name | replace "_" "-") }}
   {{- end }}
   {{- if eq .Chart.Name "variant-ui" }}
   {{- if .Values.configVars }}
@@ -165,12 +165,12 @@ spec:
         {{- end }}
         {{- end }}
         {{- end }}
-      {{- if or (len $secrets) (eq .Chart.Name "variant-ui") (.Values.usxpressCACertBundle.enabled)}}
+      {{- if or (len $awsSecrets) (eq .Chart.Name "variant-ui") (.Values.usxpressCACertBundle.enabled)}}
       volumeMounts:
-      {{- range $secrets }}
-        - name: {{ $fullName }}-{{ .name }}
+      {{- range $awsSecrets }}
+        - name: {{ $fullName }}-{{ (.name | replace "_" "-") }}
           readOnly: true
-          mountPath: /app/secrets/{{ $fullName }}-{{ .name }}
+          mountPath: /app/secrets/{{ $fullName }}-{{ (.name | replace "_" "-") }}
           subPath: {{ $fullName }}-{{ .name }}
       {{- end }}
       {{- if eq .Chart.Name "variant-ui" }}

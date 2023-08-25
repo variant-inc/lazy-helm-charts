@@ -7,7 +7,7 @@
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
-  name: {{ $fullName }}-{{ required "name is required for each secret" .name }}
+  name: {{ $fullName }}-{{ required "name is required for each secret" (.name | replace "_" "-") }}
   labels:
     {{- $labels | nindent 4 }}
 spec:
