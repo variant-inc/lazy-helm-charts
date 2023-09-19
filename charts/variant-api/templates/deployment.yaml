@@ -10,6 +10,9 @@ metadata:
     {{- $labels | nindent 4 }}
   annotations:
     reloader.stakater.com/auto: "true"
+    goldilocks.fairwinds.com/vpa-update-mode: auto
+    goldilocks.fairwinds.com/vpa-resource-policy: >
+      {"containerPolicies":[{"containerName":"*","minAllowed":{"cpu":"5m","memory":"50Mi"}},{"containerName":"istio-proxy","mode":"Off"}]}
 spec:
   selector:
     matchLabels:
