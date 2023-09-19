@@ -1,0 +1,20 @@
+{{- define "library.destinationrule.tpl" }}
+{{- $fullName := (include "library.chart.fullname" .) -}}
+{{- $labels := (include "library.chart.labels" .) -}}
+{{- $selectorLabels := (include "library.chart.selectorLabels" .) -}}
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- $labels | nindent 4 }}
+spec:
+  host: {{ $fullName }}.{{ .Release.Namespace }}.svc.cluster.local
+  exportTo: "*"
+  trafficPolicy:
+    outlierDetection:
+      consecutiveErrors: 7
+      interval: 30s
+      baseEjectionTime: 30s
+{{- end }}
