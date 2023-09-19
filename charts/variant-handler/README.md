@@ -1,6 +1,6 @@
 # Variant Handler Helm Chart
 
-![Version: 1.1.29](https://img.shields.io/badge/Version-1.1.29-informational?style=flat-square) A Helm chart for kubernetes handler
+![Version: 1.2.0](https://img.shields.io/badge/Version-1.2.0-informational?style=flat-square) A Helm chart for kubernetes handler
 
 ## What this chart provides to you by default
 
@@ -76,6 +76,7 @@ All possible objects created by this chart:
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | autoscaling.enabled | bool | `false` | Flag to trigger HPA, Allowed values true or false. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling) |
+| autoscaling.kafka | object | `{"enabled":true,"lagThreshold":50}` | Autoscaling for Kafka |
 | autoscaling.maxReplicas | int | `5` | Maximum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling) |
 | autoscaling.minReplicas | int | `2` | Minimum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling) |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` | CPU Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling) |
@@ -91,7 +92,7 @@ All possible objects created by this chart:
 | deployment.resources.requests.memory | string | `"384Mi"` | Request memory |
 | istio.egress | list | `[]` | A whitelist of external services that your application requires connection to. The whitelist applies to the entire namespace in which this chart is installed. [These services](https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8) are globally whitelisted and do not require declaration. See [egress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/egress) and [Ingress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/ingress) for more details. |
 | livenessProbe | map | `{}` | Indicates whether container is running. See [Probe](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/probes) |
-| minAvailable | int | `1` | Minimum number of pods that should be available after an eviction See [Pod Disruption Budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) |
+| maxUnavailable | int | `2` | Minimum number of pods that should be available after an eviction See [Pod Disruption Budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) |
 | podSecurityContext | map | `{"fsGroup":65534}` | Security Context for pods |
 | podSecurityContext.fsGroup | int | `65534` | The files created in the container will be created with this gid `65534` is a `nobody` group |
 | readinessProbe | map | `{}` | Indicates whether container is ready for requests. See [Probe](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/probes) |
