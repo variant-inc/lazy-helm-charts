@@ -1,1 +1,1 @@
-{{ include "library.hpa.tpl"  . }}
+{{ include "library.hpa.http.tpl"  . }}

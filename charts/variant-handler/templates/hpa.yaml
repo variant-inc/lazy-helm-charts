@@ -1,3 +1,48 @@
 {{- if .Values.autoscaling.enabled }}
-  {{ include "library.hpa.tpl"  . }}
+{{- $fullName := (include "chart.fullname" .) -}}
+{{- $labels := (include "library.chart.labels" .) -}}
+{{- if .Values.autoscaling.kafka.enabled }}
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- $labels | nindent 4 }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ $fullName }}
+  minReplicaCount: {{ .Values.autoscaling.minReplicas | default 2 }}
+  maxReplicaCount: {{ .Values.autoscaling.maxReplicas }}
+  triggers:
+    - type: kafka
+      metadata:
+        bootstrapServers: {{ .Values.autoscaling.kafka.bootstrapServers }}
+        consumerGroup: {{ .Values.autoscaling.kafka.consumerGroup }}
+        lagThreshold: {{ .Values.autoscaling.kafka.lagThreshold | default 50 | quote }}
+        sasl: plaintext
+        tls: enable
+      authenticationRef:
+        name: {{ $fullName }}
+---
+{{ $secretName := printf "%s-dx--%s-kafka-creds" $fullName .Values.autoscaling.kafka.user }}
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- $labels | nindent 4 }}
+spec:
+  secretTargetRef:
+    - parameter: username
+      name: {{ $secretName }}
+      key: KAFKA__api_key
+    - parameter: password
+      name: {{ $secretName }}
+      key: KAFKA__api_secret
+{{- end }}
+{{- else }}
+{{ include "library.hpa.tpl"  . }}
 {{- end }}

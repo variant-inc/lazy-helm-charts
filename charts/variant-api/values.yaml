@@ -81,10 +81,8 @@ autoscaling:
   minReplicas: 2
   # -- (int) Maximum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/)
   maxReplicas: 5
-  # -- (int) CPU Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/)
-  targetCPUUtilizationPercentage: 80
-  # -- (int) Memory Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/)
-  targetMemoryUtilizationPercentage: 80
+  # -- (int) Number of HTTP Requests Per Second
+  httpRequestsPerSecond: 100
 
 deployment:
   image:
@@ -220,7 +218,7 @@ tags: {}
 
 # -- (int) Minimum number of pods that should be available always
 # See [Pod Disruption Budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/)
-minAvailable: 1
+maxUnavailable: 2
 
 usxpressCACertBundle:
   # -- (bool) If set to true, volume mounts the certificate from the custom-ca-certs secret

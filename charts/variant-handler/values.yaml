@@ -83,6 +83,19 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # -- (int) Memory Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling)
   targetMemoryUtilizationPercentage: 80
+  # -- Autoscaling for Kafka
+  kafka:
+    ## -- Enable Autoscaling for Kafka
+    enabled: true
+    ## - Lag Threshold of the Consumer Group
+    lagThreshold: 50
+    # @ignored
+    ## -- Name of the consumer group
+    consumerGroup:
+    # @ignored
+    bootstrapServers: ""
+    # @ignored
+    user: ""
 
 deployment:
   image:
@@ -164,7 +177,7 @@ tags: {}
 
 # -- (int) Minimum number of pods that should be available after an eviction
 # See [Pod Disruption Budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/)
-minAvailable: 1
+maxUnavailable: 2
 
 usxpressCACertBundle:
   # -- (bool) If set to true, volume mounts the certificate from the custom-ca-certs secret
