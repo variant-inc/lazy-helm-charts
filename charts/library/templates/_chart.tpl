@@ -20,11 +20,9 @@ Common labels
 {{- define "library.chart.labels" -}}
 helm.sh/chart: {{ include "library.chart.chart" . }}
 {{ include "library.chart.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
+app.kubernetes.io/version: {{ default .Values.revision .Chart.AppVersion | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-revision: {{ required "revision is required" .Values.revision | quote }}
+app.kubernetes.io/component: {{ .Chart.Name }}
 {{- range $key, $value := .Values.tags }}
 cloudops.io.{{ $key }}: {{ $value | replace " " "-"| quote }}
 {{- end }}
@@ -34,18 +32,20 @@ cloudops.io.{{ $key }}: {{ $value | replace " " "-"| quote }}
 Selector labels
 */}}
 {{- define "library.chart.selectorLabels" -}}
-app.kubernetes.io/name: {{ .Chart.Name }}
+app.kubernetes.io/name: {{ .Release.Name }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/component: {{ .Chart.Name }}
 {{- end }}
 
 {{/*
 Pod labels
 */}}
 {{- define "library.chart.podLabels" -}}
-app.kubernetes.io/name: {{ .Chart.Name }}
+app.kubernetes.io/name: {{ .Release.Name }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/component: {{ .Chart.Name }}
+app.kubernetes.io/version: {{ default .Values.revision .Chart.AppVersion | quote }}
 app: {{ .Release.Name }}
-revision: {{ required "revision is required" .Values.revision | quote }}
 {{- range $key, $value := .Values.tags }}
 cloudops.io.{{ $key }}: {{ $value | replace " " "-"| quote }}
 {{- end }}
