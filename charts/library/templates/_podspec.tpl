@@ -11,13 +11,24 @@ spec:
     {{- end }}
   {{- end }}
   affinity:
-  {{- if len .Values.affinity }}
-  {{- range $key, $value := .Values.affinity }}
-    {{ $key }}: {{ toYaml $value | nindent 8 }}
-  {{- end }}
-  {{- else }}
-    {{- include "library.chart.podAntiAffinity" . | nindent 8 }}
-  {{- end }}
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+                - key : app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - {{ .Release.Name }}
+            topologyKey: kubernetes.io/hostname
+  topologySpreadConstraints:
+    - maxSkew: 1
+      topologyKey: topology.kubernetes.io/zone
+      whenUnsatisfiable: ScheduleAnyway
+      labelSelector:
+        matchLabels:
+          app.kubernetes.io/name: {{ .Release.Name }}
   {{- if len .Values.tolerations }}
   tolerations:
   {{- range .Values.tolerations }}

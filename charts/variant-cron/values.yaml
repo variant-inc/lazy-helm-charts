@@ -109,11 +109,6 @@ nodeSelector: {}
 # [Tolerations](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/tolerations)
 tolerations: []
 
-# @ignored
-# -- Affinity for pod assignment
-# [Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity)
-affinity: {}
-
 # Karpenter Provisioner Variables. https://karpenter.sh/v0.6.0/provisioner/
 node:
   # -- Flag to determine whether or not custom nodes will be provisioned.

@@ -158,11 +158,6 @@ nodeSelector: {}
 # [Tolerations](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/tolerations)
 tolerations: []
 
-# @ignored
-# -- (map) Affinity for pod assignment
-# [Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity)
-affinity: {}
-
 # -- (map) Indicates whether container is ready for requests.
 # See [Probe](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/probes)
 readinessProbe: {}

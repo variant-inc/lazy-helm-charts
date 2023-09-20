@@ -58,18 +58,11 @@ template:
     restartPolicy: {{ .Values.restartPolicy }}
     serviceAccountName: {{ $fullName }}
     automountServiceAccountToken: true
-    nodeSelector:
-      karpenter.sh/capacity-type: on-demand
     {{- if .Values.node.create }}
+    nodeSelector:
       cloudops.io/namespace: {{ .Release.Namespace }}
       {{- if .Values.node.instanceType }}
       node.kubernetes.io/instance-type: {{ .Values.node.instanceType | quote }}
-      {{- end }}
-    {{- end }}
-    {{- if len .Values.affinity }}
-    affinity:
-      {{- range $key, $value := .Values.affinity }}
-      {{ $key }}: {{ toYaml $value }}
       {{- end }}
     {{- end }}
     tolerations:

@@ -49,25 +49,5 @@ app: {{ .Release.Name }}
 {{- range $key, $value := .Values.tags }}
 cloudops.io.{{ $key }}: {{ $value | replace " " "-"| quote }}
 {{- end }}
-{{- end }}
-
-{{/*
-Pod AntiAffinity
-*/}}
-{{- define "library.chart.podAntiAffinity" -}}
-podAntiAffinity:
-  preferredDuringSchedulingIgnoredDuringExecution:
-  - weight: 100
-    podAffinityTerm:
-      labelSelector:
-        matchExpressions:
-        - key : app.kubernetes.io/instance
-          operator: In
-          values:
-          - {{ .Release.Name }}
-        - key : app.kubernetes.io/name
-          operator: In
-          values:
-          - {{ .Chart.Name }}
-      topologyKey: kubernetes.io/hostname
+cloudops.io/logging_enabled: 'true'
 {{- end }}

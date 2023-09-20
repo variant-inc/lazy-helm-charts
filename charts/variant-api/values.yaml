@@ -167,11 +167,6 @@ nodeSelector: {}
 # [Tolerations](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/tolerations/)
 tolerations: []
 
-# @ignored
-# -- (map) Affinity for pod assignment.
-# [Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity)
-affinity: {}
-
 # -- (map) Security Context for pods
 podSecurityContext:
   # -- The files created in the container will be created with this gid
