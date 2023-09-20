@@ -82,7 +82,7 @@ autoscaling:
   # -- (int) Maximum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/)
   maxReplicas: 5
   # -- (int) Number of HTTP Requests Per Second
-  httpRequestsPerSecond: 100
+  httpRequestsPerSecond: 10
 
 deployment:
   image:

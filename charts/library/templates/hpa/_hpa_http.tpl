@@ -25,5 +25,5 @@ spec:
           name: {{ $fullName }}
         target:
           type: Value
-          value: {{ .Values.autoscaling.httpRequestsPerSecond | default 100 | quote }}
+          value: {{ .Values.autoscaling.httpRequestsPerSecond | default 10 | quote }}
 {{- end }}

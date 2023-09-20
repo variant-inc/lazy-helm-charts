@@ -103,7 +103,7 @@ All possible objects created by this chart:
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| autoscaling.httpRequestsPerSecond | int | `100` | Number of HTTP Requests Per Second |
+| autoscaling.httpRequestsPerSecond | int | `10` | Number of HTTP Requests Per Second |
 | autoscaling.maxReplicas | int | `5` | Maximum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling) |
 | autoscaling.minReplicas | int | `2` | Minimum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling) |
 | awsSecrets | list | Example: `[{ "name": "eng-secret-in-aws", "type": "" }]` | A list of secrets to configure to make available to your API. Create your secret in AWS Secrets Manager as plain text. Full contents of this secret will be mounted as a file your application can read to /app/secrets/{name} See [AWS Secrets](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) for more details. |

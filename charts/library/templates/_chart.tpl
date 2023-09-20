@@ -22,7 +22,6 @@ helm.sh/chart: {{ include "library.chart.chart" . }}
 {{ include "library.chart.selectorLabels" . }}
 app.kubernetes.io/version: {{ default .Values.revision .Chart.AppVersion | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-app.kubernetes.io/component: {{ .Chart.Name }}
 {{- range $key, $value := .Values.tags }}
 cloudops.io.{{ $key }}: {{ $value | replace " " "-"| quote }}
 {{- end }}
