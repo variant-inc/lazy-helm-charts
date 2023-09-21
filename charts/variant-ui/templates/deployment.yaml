@@ -22,5 +22,5 @@ spec:
       labels:
         {{- $podLabels | nindent 8 }}
       annotations:
-        {{- include "chart.podAnnotations" . | indent 8 }}
+        {{- include "library.chart.podAnnotations" . | nindent 8 }}
     {{- include "library.podspec.tpl" . | nindent 4 }}

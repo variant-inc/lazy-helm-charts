@@ -86,7 +86,7 @@ autoscaling:
   # -- Autoscaling for Kafka
   kafka:
     ## -- Enable Autoscaling for Kafka
-    enabled: true
+    enabled: false
     ## - Lag Threshold of the Consumer Group
     lagThreshold: 50
     # @ignored
@@ -121,9 +121,9 @@ deployment:
   # @ignored
   # -- (list) `deprecated` List of Conditional Env Vars denoted by conditional (bool) and envVars (list)
   conditionalEnvVars: []
-  # -- (map) https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-  # -- (map) https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-  podAnnotations: {}
+
+# -- (map) https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+podAnnotations: {}
 
 # -- A list of secrets to configure to make available to your API.
 # Create your secret in AWS Secrets Manager as plain text.
@@ -172,10 +172,18 @@ tags: {}
 
 # -- (int) Minimum number of pods that should be available after an eviction
 # See [Pod Disruption Budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/)
-maxUnavailable: 2
+maxUnavailable: 1
 
 usxpressCACertBundle:
   # -- (bool) If set to true, volume mounts the certificate from the custom-ca-certs secret
   enabled: true
   # -- (string)  The cert is mounted to the default path mentioned. The path can also be changed.
   certMountPath: /etc/ssl/certs/
+
+# @ignored
+# For setting up otel sidecar for auto instrumentation
+otel:
+  # Enable OTel sidecar
+  enabled: false
+  # Language of the application
+  language:

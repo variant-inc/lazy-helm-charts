@@ -83,7 +83,6 @@ All possible objects created by this chart:
 | cronJob.concurrencyPolicy | string | `"Replace"` | https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/#concurrency-policy |
 | cronJob.image.pullPolicy | string | `"IfNotPresent"` | IfNotPresent, Always, Never |
 | cronJob.image.tag | string | `nil` | The full URL of the image to be deployed containing the HTTP API application |
-| cronJob.podAnnotations | map | `{}` | https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/ |
 | cronJob.resources.limits.cpu | int | `nil` | Limits CPU, intentionally set to null, can't be overridden |
 | cronJob.resources.limits.memory | string | `"768Mi"` | Limits Memory |
 | cronJob.resources.requests.cpu | float | `0.1` | Requests CPU |
@@ -95,6 +94,7 @@ All possible objects created by this chart:
 | node.instanceType | string | `nil` | The EC2 Instance Type for your custom nodes. |
 | node.ttlSecondsAfterEmpty | int | `3600` | Number of seconds before custom nodes will be removed if nothing is running on them. |
 | node.ttlSecondsUntilExpired | string | `nil` | If nil, the feature is disabled, nodes will never expire |
+| podAnnotations | map | `{}` | https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/ |
 | podSecurityContext | map | `{"fsGroup":65534}` | Security Context for pods |
 | podSecurityContext.fsGroup | int | `65534` | The files created in the container will be created with this gid `65534` is a `nobody` group |
 | restartPolicy | string | `"Never"` | Use Never by default for jobs so new pod is created on failure instead of restarting containers |

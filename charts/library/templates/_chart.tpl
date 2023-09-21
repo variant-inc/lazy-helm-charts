@@ -33,7 +33,6 @@ Selector labels
 {{- define "library.chart.selectorLabels" -}}
 app.kubernetes.io/name: {{ .Release.Name }}
 app.kubernetes.io/instance: {{ .Release.Name }}
-app.kubernetes.io/component: {{ .Chart.Name }}
 {{- end }}
 
 {{/*
@@ -49,4 +48,20 @@ app: {{ .Release.Name }}
 cloudops.io.{{ $key }}: {{ $value | replace " " "-"| quote }}
 {{- end }}
 cloudops.io/logging_enabled: 'true'
+{{- end }}
+
+{{/*
+Pod Annotations
+*/}}
+{{- define "library.chart.podAnnotations" -}}
+checksum/serviceaccount: {{ include (print $.Template.BasePath "/serviceaccount.yaml") . | sha256sum }}
+kubectl.kubernetes.io/default-container : {{ .Release.Namespace }}
+{{- range $key, $val := .Values.podAnnotations }}
+{{- if not (hasPrefix "instrumentation.opentelemetry.io" $key) }}
+{{ $key }}: {{ $val | quote }}
+{{- end }}
+{{- end }}
+{{- if and .Values.otel.enabled .Values.otel.language }}
+instrumentation.opentelemetry.io/{{ .Values.otel.language }}: "false"
+{{- end }}
 {{- end }}
