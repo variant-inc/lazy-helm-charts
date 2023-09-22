@@ -140,4 +140,4 @@ otel:
   # Enable OTel sidecar
   enabled: false
   # Language of the application
-  language:
+  language: sdk

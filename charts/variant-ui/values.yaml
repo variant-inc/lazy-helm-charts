@@ -212,7 +212,7 @@ otel:
   # Enable OTel sidecar
   enabled: false
   # Language of the application
-  language:
+  language: sdk
 
 # @ignored
 # Refer <https://github.com/oauth2-proxy/manifests/blob/main/helm/oauth2-proxy/values.yaml>

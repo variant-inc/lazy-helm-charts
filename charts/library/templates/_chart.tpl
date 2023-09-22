@@ -55,13 +55,14 @@ Pod Annotations
 */}}
 {{- define "library.chart.podAnnotations" -}}
 checksum/serviceaccount: {{ include (print $.Template.BasePath "/serviceaccount.yaml") . | sha256sum }}
-kubectl.kubernetes.io/default-container : {{ .Release.Namespace }}
+kubectl.kubernetes.io/default-container: {{ .Release.Namespace }}
 {{- range $key, $val := .Values.podAnnotations }}
 {{- if not (hasPrefix "instrumentation.opentelemetry.io" $key) }}
 {{ $key }}: {{ $val | quote }}
 {{- end }}
 {{- end }}
 {{- if and .Values.otel.enabled .Values.otel.language }}
-instrumentation.opentelemetry.io/{{ .Values.otel.language }}: "false"
+instrumentation.opentelemetry.io/inject-{{ .Values.otel.language }}: "false"
+instrumentation.opentelemetry.io/container-names: {{ .Release.Namespace }}
 {{- end }}
 {{- end }}
