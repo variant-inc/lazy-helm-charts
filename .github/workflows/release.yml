@@ -35,3 +35,4 @@ jobs:
           CR_SKIP_EXISTING: true
         with:
           mark_as_latest: ${{ env.mark_as_latest }}
+          packages_with_index: 'false'
