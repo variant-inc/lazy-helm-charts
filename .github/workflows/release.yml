@@ -29,10 +29,8 @@ jobs:
           echo "mark_as_latest=$mark_as_latest" >>"$GITHUB_ENV"
 
       - name: Run chart-releaser
-        uses: helm/chart-releaser-action@main
+        uses: helm/chart-releaser-action@v1.5.0
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          CR_SKIP_EXISTING: true
-        with:
-          mark_as_latest: ${{ env.mark_as_latest }}
-          packages_with_index: 'false'
+        # with:
+        #   mark_as_latest: ${{ env.mark_as_latest }}
