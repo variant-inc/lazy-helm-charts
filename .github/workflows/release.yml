@@ -14,6 +14,8 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Configure Git
         run: |
@@ -21,7 +23,7 @@ jobs:
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
           mark_as_latest="false"
-          if [ "${GITVERSION_PRERELEASELABEL}" == "" ]; then
+          if [ "${GITHUB_REF##*/}" == "master" ]; then
               mark_as_latest="true"
           fi
           echo "mark_as_latest=$mark_as_latest" >>"$GITHUB_ENV"
