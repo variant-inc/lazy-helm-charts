@@ -10,7 +10,7 @@ spec:
   {{- if eq (.Values.autoscaling.minReplicas | int) 1 }}
   maxUnavailable: 0
   {{ else }}
-  minAvailable: {{ .Values.minAvailable }}
+  maxUnavailable: {{ .Values.maxUnavailable }}
   {{ end }}
   selector:
     matchLabels:

@@ -69,12 +69,13 @@ cronJob:
       memory: 384Mi
   # -- (string) https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/#concurrency-policy
   concurrencyPolicy: Replace
-  # -- (map) https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-  podAnnotations: {}
   # -- (list) full path to the job script to execute. https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/
   command:
   # -- (bool) https://kubernetes.io/blog/2021/04/12/introducing-suspended-jobs/
   suspend: false
+
+# -- (map) https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+podAnnotations: {}
 
 # -- A list of secrets to configure to make available to your API.
 # Create your secret in AWS Secrets Manager as plain text.
@@ -109,11 +110,6 @@ nodeSelector: {}
 # [Tolerations](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/tolerations)
 tolerations: []
 
-# @ignored
-# -- Affinity for pod assignment
-# [Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity)
-affinity: {}
-
 # Karpenter Provisioner Variables. https://karpenter.sh/v0.6.0/provisioner/
 node:
   # -- Flag to determine whether or not custom nodes will be provisioned.
@@ -137,3 +133,11 @@ usxpressCACertBundle:
   enabled: true
   # -- (string)  The cert is mounted to the default path mentioned. The path can also be changed.
   certMountPath: /etc/ssl/certs/
+
+# @ignored
+# For setting up otel sidecar for auto instrumentation
+otel:
+  # Enable OTel sidecar
+  enabled: false
+  # Language of the application
+  language: sdk

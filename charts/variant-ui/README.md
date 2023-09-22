@@ -1,6 +1,6 @@
 # Variant UI Helm Chart
 
-![Version: 1.5.6](https://img.shields.io/badge/Version-1.5.6-informational?style=flat-square) A Helm chart for a web UI configuration
+![Version: 1.6.0](https://img.shields.io/badge/Version-1.6.0-informational?style=flat-square) A Helm chart for a web UI configuration
 
 ## How do I access my UI?
 
@@ -103,16 +103,14 @@ All possible objects created by this chart:
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| autoscaling.httpRequestsPerSecond | int | `10` | Number of HTTP Requests Per Second |
 | autoscaling.maxReplicas | int | `5` | Maximum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling) |
 | autoscaling.minReplicas | int | `2` | Minimum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling) |
-| autoscaling.targetCPUUtilizationPercentage | int | `80` | CPU Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling) |
-| autoscaling.targetMemoryUtilizationPercentage | int | `80` | Memory Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling) |
 | awsSecrets | list | Example: `[{ "name": "eng-secret-in-aws", "type": "" }]` | A list of secrets to configure to make available to your API. Create your secret in AWS Secrets Manager as plain text. Full contents of this secret will be mounted as a file your application can read to /app/secrets/{name} See [AWS Secrets](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) for more details. |
 | configMountPath | string | /app/config | Mount path for configVars JSON file. Config file full path would be /app/config/config.json |
 | configVars | map | Example: `bar: foo` | User defined environment variables are implemented here. [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) |
 | deployment.image.pullPolicy | string | `"IfNotPresent"` | IfNotPresent, Always, Never |
 | deployment.image.tag | string | `nil` | The full URL of the image to be deployed containing the UI web application |
-| deployment.podAnnotations | map | `{}` | https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/ |
 | deployment.resources.limits.cpu | int | `nil` | Limits CPU, intentionally set to null, can't be overridden |
 | deployment.resources.limits.memory | string | `"768Mi"` | Limits Memory |
 | deployment.resources.requests.cpu | float | `0.1` | Requests CPU |
@@ -128,8 +126,9 @@ All possible objects created by this chart:
 | istio.ingress.public | bool | `false` | When `false`, an internal URL will be created that will expose your application *via OpenVPN-only*. When `true`, an additional publicly accessible URL will be created. This API should be secured behind some authentication method when set to `true`. |
 | istio.ingress.redirects | list | `[]` | Optional paths that will always redirect to internal/VPN endpoints - prefix: /hidden |
 | livenessProbe | map | `{}` | Indicates whether container is running. See [Probe](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/probes) |
-| minAvailable | int | `1` | Minimum number of pods that should be available after an eviction See [Pod Disruption Budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) |
+| maxUnavailable | int | `1` | Minimum number of pods that should be available after an eviction See [Pod Disruption Budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) |
 | nameOverride | string | `nil` | nameOverride replaces the name of the chart in the Chart.yaml file |
+| podAnnotations | map | `{}` | https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/ |
 | podSecurityContext | map | `{"fsGroup":65534}` | Security Context for pods |
 | podSecurityContext.fsGroup | int | `65534` | The files created in the container will be created with this gid `65534` is a `nobody` group |
 | readinessProbe | map | `{}` | Indicates whether container is ready for requests. See [Probe](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/probes) |

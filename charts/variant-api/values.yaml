@@ -81,10 +81,8 @@ autoscaling:
   minReplicas: 2
   # -- (int) Maximum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/)
   maxReplicas: 5
-  # -- (int) CPU Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/)
-  targetCPUUtilizationPercentage: 80
-  # -- (int) Memory Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/)
-  targetMemoryUtilizationPercentage: 80
+  # -- (int) Number of HTTP Requests Per Second
+  httpRequestsPerSecond: 10
 
 deployment:
   image:
@@ -116,8 +114,9 @@ deployment:
   #     - name: false_conditional
   #       value: false_conditional
   conditionalEnvVars: []
-  # -- (map) [annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/)
-  podAnnotations: {}
+
+# -- (map) [annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/)
+podAnnotations: {}
 
 # @ignored
 # [Istio RBAC](https://istio.io/v1.3/docs/reference/config/authorization/istio.rbac.v1alpha1/) resources are created
@@ -169,11 +168,6 @@ nodeSelector: {}
 # [Tolerations](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/tolerations/)
 tolerations: []
 
-# @ignored
-# -- (map) Affinity for pod assignment.
-# [Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity)
-affinity: {}
-
 # -- (map) Security Context for pods
 podSecurityContext:
   # -- The files created in the container will be created with this gid
@@ -220,10 +214,18 @@ tags: {}
 
 # -- (int) Minimum number of pods that should be available always
 # See [Pod Disruption Budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/)
-minAvailable: 1
+maxUnavailable: 1
 
 usxpressCACertBundle:
   # -- (bool) If set to true, volume mounts the certificate from the custom-ca-certs secret
   enabled: true
   # -- (string)  The cert is mounted to the default path mentioned. The path can also be changed.
   certMountPath: /etc/ssl/certs/
+
+# @ignored
+# For setting up otel sidecar for auto instrumentation
+otel:
+  # Enable OTel sidecar
+  enabled: false
+  # Language of the application
+  language: sdk

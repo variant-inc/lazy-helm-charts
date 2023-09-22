@@ -6,6 +6,10 @@ metadata:
   name: {{ $fullName }}
   labels:
     {{- $labels | nindent 4 }}
+  annotations:
+    goldilocks.fairwinds.com/vpa-update-mode: initial
+    goldilocks.fairwinds.com/vpa-resource-policy: >
+      {"containerPolicies":[{"containerName":"*","minAllowed":{"cpu":"5m","memory":"50Mi"}},{"containerName":"istio-proxy","mode":"Off"}]}
 spec:
   schedule: {{  required "cronJob.schedule is required" .Values.cronJob.schedule | quote }}
   concurrencyPolicy: {{ .Values.cronJob.concurrencyPolicy }}

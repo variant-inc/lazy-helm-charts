@@ -20,11 +20,8 @@ Common labels
 {{- define "library.chart.labels" -}}
 helm.sh/chart: {{ include "library.chart.chart" . }}
 {{ include "library.chart.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
+app.kubernetes.io/version: {{ default .Values.revision .Chart.AppVersion | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-revision: {{ required "revision is required" .Values.revision | quote }}
 {{- range $key, $value := .Values.tags }}
 cloudops.io.{{ $key }}: {{ $value | replace " " "-"| quote }}
 {{- end }}
@@ -34,7 +31,7 @@ cloudops.io.{{ $key }}: {{ $value | replace " " "-"| quote }}
 Selector labels
 */}}
 {{- define "library.chart.selectorLabels" -}}
-app.kubernetes.io/name: {{ .Chart.Name }}
+app.kubernetes.io/name: {{ .Release.Name }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
@@ -42,32 +39,30 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Pod labels
 */}}
 {{- define "library.chart.podLabels" -}}
-app.kubernetes.io/name: {{ .Chart.Name }}
+app.kubernetes.io/name: {{ .Release.Name }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/component: {{ .Chart.Name }}
+app.kubernetes.io/version: {{ default .Values.revision .Chart.AppVersion | quote }}
 app: {{ .Release.Name }}
-revision: {{ required "revision is required" .Values.revision | quote }}
 {{- range $key, $value := .Values.tags }}
 cloudops.io.{{ $key }}: {{ $value | replace " " "-"| quote }}
 {{- end }}
+cloudops.io/logging_enabled: 'true'
 {{- end }}
 
 {{/*
-Pod AntiAffinity
+Pod Annotations
 */}}
-{{- define "library.chart.podAntiAffinity" -}}
-podAntiAffinity:
-  preferredDuringSchedulingIgnoredDuringExecution:
-  - weight: 100
-    podAffinityTerm:
-      labelSelector:
-        matchExpressions:
-        - key : app.kubernetes.io/instance
-          operator: In
-          values:
-          - {{ .Release.Name }}
-        - key : app.kubernetes.io/name
-          operator: In
-          values:
-          - {{ .Chart.Name }}
-      topologyKey: kubernetes.io/hostname
+{{- define "library.chart.podAnnotations" -}}
+checksum/serviceaccount: {{ include (print $.Template.BasePath "/serviceaccount.yaml") . | sha256sum }}
+kubectl.kubernetes.io/default-container: {{ .Release.Namespace }}
+{{- range $key, $val := .Values.podAnnotations }}
+{{- if not (hasPrefix "instrumentation.opentelemetry.io" $key) }}
+{{ $key }}: {{ $val | quote }}
+{{- end }}
+{{- end }}
+{{- if and .Values.otel.enabled .Values.otel.language }}
+instrumentation.opentelemetry.io/inject-{{ .Values.otel.language }}: "false"
+instrumentation.opentelemetry.io/container-names: {{ .Release.Namespace }}
+{{- end }}
 {{- end }}

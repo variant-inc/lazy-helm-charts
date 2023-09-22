@@ -13,19 +13,3 @@ Create chart name and version as used by the chart label.
 {{- define "chart.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
-
-{{- define "chart.podAnnotations" -}}
-{{- if len .Values.configVars }}
-checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
-{{- end }}
-{{- if len .Values.awsSecrets }}
-checksum/secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
-{{- end }}
-checksum/serviceaccount: {{ include (print $.Template.BasePath "/serviceaccount.yaml") . | sha256sum }}
-{{- range .Values.configMaps }}
-checksum/{{ . | trunc 53 | trimSuffix "-" }}: {{ print (lookup "v1" "ConfigMap" $.Release.Namespace . ) | sha256sum }}
-{{- end }}
-{{- with .Values.deployment.podAnnotations }}
-{{ toYaml . }}
-{{- end }}
-{{- end }}

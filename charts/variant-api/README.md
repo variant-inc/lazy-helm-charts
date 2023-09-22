@@ -1,6 +1,6 @@
 # Variant API Helm Chart
 
-![Version: 2.2.5](https://img.shields.io/badge/Version-2.2.5-informational?style=flat-square) A Helm chart for APIs to Variant clusters
+![Version: 2.3.0](https://img.shields.io/badge/Version-2.3.0-informational?style=flat-square) A Helm chart for APIs to Variant clusters
 
 ## What this chart provides to you by default
 
@@ -110,15 +110,13 @@ All possible objects created by this chart:
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | authorization | list | `{"rules":{"to":[]}}` | List of operation objects with methods and paths key values allowing certain methods and paths to be whitelisted within the cluster GET /health and Get /metrics are set by default in authorization.yaml |
+| autoscaling.httpRequestsPerSecond | int | `10` | Number of HTTP Requests Per Second |
 | autoscaling.maxReplicas | int | `5` | Maximum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/) |
 | autoscaling.minReplicas | int | `2` | Minimum Number of Replicas. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/) |
-| autoscaling.targetCPUUtilizationPercentage | int | `80` | CPU Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/) |
-| autoscaling.targetMemoryUtilizationPercentage | int | `80` | Memory Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling/) |
 | awsSecrets | list | Example: `[{ "name": "eng-secret-in-aws", "type": "" }]` | A list of secrets to configure to make available to your API. Create your secret in AWS Secrets Manager as plain text. Full contents of this secret will be mounted as a file your application can read to /app/secrets/{name} See [AWS Secrets](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) for more details. |
 | configVars | map | Example: `bar: foo` | User defined environment variables are implemented here. [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) |
 | deployment.image.pullPolicy | string | `"IfNotPresent"` | IfNotPresent, Always, Never |
 | deployment.image.tag | string | `nil` | The full URL of the image to be deployed containing the HTTP API application |
-| deployment.podAnnotations | map | `{}` | [annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) |
 | deployment.resources.limits.cpu | int | `nil` | Limits CPU, intentionally set to null, can't be overridden |
 | deployment.resources.limits.memory | string | `"768Mi"` | Limits Memory |
 | deployment.resources.requests.cpu | float | `0.1` | Requests CPU |
@@ -134,7 +132,8 @@ All possible objects created by this chart:
 | istio.ingress.public | bool | `false` | When `false`, an internal URL will be created that will expose your application *via OpenVPN-only*. When `true`, an additional publicly accessible URL will be created. This API should be secured behind some authentication method when set to `true`. See [Ingress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/ingress/) for more Istio details. |
 | istio.ingress.redirects | list | `[]` | Optional paths that will always redirect to internal/VPN endpoints - prefix: /hidden |
 | livenessProbe | map | `{}` | Indicates whether container is running. See [Probe](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/probes/) |
-| minAvailable | int | `1` | Minimum number of pods that should be available always See [Pod Disruption Budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) |
+| maxUnavailable | int | `1` | Minimum number of pods that should be available always See [Pod Disruption Budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) |
+| podAnnotations | map | `{}` | [annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) |
 | podSecurityContext | map | `{"fsGroup":65534}` | Security Context for pods |
 | podSecurityContext.fsGroup | int | `65534` | The files created in the container will be created with this gid `65534` is a `nobody` group |
 | readinessProbe | map | `{}` | Indicates whether container is ready for requests. See [Probe](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/probes/) |

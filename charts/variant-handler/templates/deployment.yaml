@@ -10,6 +10,11 @@ metadata:
     {{- $labels | nindent 4 }}
   annotations:
     reloader.stakater.com/auto: "true"
+    {{- if and .Values.autoscaling.enabled .Values.autoscaling.kafka.enabled }}
+    goldilocks.fairwinds.com/vpa-update-mode: auto
+    {{- end }}
+    goldilocks.fairwinds.com/vpa-resource-policy: >
+      {"containerPolicies":[{"containerName":"*","minAllowed":{"cpu":"5m","memory":"50Mi"}},{"containerName":"istio-proxy","mode":"Off"}]}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -20,5 +25,5 @@ spec:
       labels:
         {{- $podLabels | nindent 8 }}
       annotations:
-        {{- include "chart.podAnnotations" . | indent 8 }}
+        {{- include "library.chart.podAnnotations" . | nindent 8 }}
     {{- include "library.podspec.tpl" . | nindent 4 }}
