@@ -1,7 +1,7 @@
 {{- if .Values.autoscaling.enabled }}
 {{- $fullName := (include "chart.fullname" .) -}}
 {{- $labels := (include "library.chart.labels" .) -}}
-{{- if .Values.autoscaling.kafka.enabled }}
+{{- if .Values.kafka.enabled }}
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
@@ -19,15 +19,15 @@ spec:
   triggers:
     - type: kafka
       metadata:
-        bootstrapServers: {{ .Values.autoscaling.kafka.bootstrapServers }}
-        consumerGroup: {{ .Values.autoscaling.kafka.consumerGroup }}
-        lagThreshold: {{ .Values.autoscaling.kafka.lagThreshold | default 50 | quote }}
+        bootstrapServers: {{ .Values.kafka.bootstrapServers }}
+        consumerGroup: {{ .Values.kafka.consumerGroup }}
+        lagThreshold: {{ .Values.kafka.lagThreshold | default 50 | quote }}
         sasl: plaintext
         tls: enable
       authenticationRef:
         name: {{ $fullName }}
 ---
-{{ $secretName := printf "%s-dx--%s-kafka-creds" $fullName .Values.autoscaling.kafka.user }}
+{{- $secretName := printf "%s-%s" $fullName (.Values.kafka.masterUserSecret | replace "_" "-") }}
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
@@ -38,10 +38,10 @@ spec:
   secretTargetRef:
     - parameter: username
       name: {{ $secretName }}
-      key: KAFKA__api_key
+      key: CCLUSTER__api_key
     - parameter: password
       name: {{ $secretName }}
-      key: KAFKA__api_secret
+      key: CCLUSTER__api_secret
 {{- end }}
 {{- else }}
 {{ include "library.hpa.tpl"  . }}

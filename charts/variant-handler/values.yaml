@@ -83,19 +83,21 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # -- (int) Memory Utilization Percentage. [Autoscaling](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/autoscaling)
   targetMemoryUtilizationPercentage: 80
-  # -- Autoscaling for Kafka
-  kafka:
-    ## -- Enable Autoscaling for Kafka
-    enabled: false
-    ## - Lag Threshold of the Consumer Group
-    lagThreshold: 50
-    # @ignored
-    ## -- Name of the consumer group
-    consumerGroup:
-    # @ignored
-    bootstrapServers: ""
-    # @ignored
-    user: ""
+
+# -- Autoscaling for Kafka
+kafka:
+  # @ignored
+  ## -- Enable Autoscaling for Kafka
+  enabled: false
+  ## - Lag Threshold of the Consumer Group
+  lagThreshold: 10
+  # @ignored
+  ## -- Name of the consumer group
+  consumerGroup:
+  # @ignored
+  bootstrapServers: ""
+  # @ignored
+  masterUserSecret: dx--ccloud-kafka-master
 
 deployment:
   image:
