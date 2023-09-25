@@ -14,8 +14,13 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: {{ $fullName }}
+    envSourceContainerName: {{ $fullName }}
   minReplicaCount: {{ .Values.autoscaling.minReplicas | default 2 }}
   maxReplicaCount: {{ .Values.autoscaling.maxReplicas }}
+  cooldownPeriod: 300
+  fallback:
+    failureThreshold: 3
+    replicas: {{ .Values.autoscaling.minReplicas | default 2 }}
   triggers:
     - type: kafka
       metadata:
@@ -24,8 +29,31 @@ spec:
         lagThreshold: {{ .Values.kafka.lagThreshold | default 50 | quote }}
         sasl: plaintext
         tls: enable
+        scaleToZeroOnInvalidOffset: 'true'
+        activationLagThreshold: '3'
       authenticationRef:
         name: {{ $fullName }}
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: {{ $fullName }}-{{ .Values.kafka.masterUserSecret }}
+  labels:
+    {{- $labels | nindent 4 }}
+spec:
+  secretStoreRef:
+    name: default
+    kind: ClusterSecretStore
+  target:
+    deletionPolicy: Delete
+    template:
+      mergePolicy: Merge
+      metadata:
+        labels:
+          {{- $labels | nindent 10 }}
+  dataFrom:
+  - extract:
+      key: {{ .Values.kafka.masterUserSecret }}
 ---
 {{- $secretName := printf "%s-%s" $fullName (.Values.kafka.masterUserSecret | replace "_" "-") }}
 apiVersion: keda.sh/v1alpha1
