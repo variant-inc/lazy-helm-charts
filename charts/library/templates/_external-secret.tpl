@@ -39,6 +39,7 @@ spec:
   dataFrom:
   - extract:
       key: {{ .name }}
+  refreshInterval: 30s
 {{- end -}}
 {{- end -}}
 {{- end }}

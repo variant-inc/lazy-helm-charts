@@ -33,6 +33,7 @@ spec:
   - secretKey: {{ .name }}
     remoteRef:
       key: {{ .name }}
+  refreshInterval: 30s
 {{- end }}
 {{- end }}
 {{- end }}

@@ -51,6 +51,7 @@ spec:
       metadata:
         labels:
           {{- $labels | nindent 10 }}
+  refreshInterval: 30s
   dataFrom:
   - extract:
       key: {{ .Values.kafka.masterUserSecret }}
