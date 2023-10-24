@@ -1,0 +1,5 @@
+---
+apiVersion: v2
+name: routes
+description: This chart is to create Istio Services for Ingress
+version: 0.1.0

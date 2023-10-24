@@ -1,0 +1,36 @@
+---
+# @ignored
+# This is the domain to be used by the charts
+domain: usxpress.io
+
+# @ignored
+# cert-manager Cluster Issuer
+issuer: letsencrypt
+
+# -- (string) Full Name of the Application
+name:
+
+# -- (string) short environment name
+environment:
+
+# -- list(string) List of subdomains
+subdomains: []
+
+public:
+  # -- (bool) If `true`, the URL is exposed
+  enabled: false
+  # -- (bool) If `true`, Istio will not check for `authorization` header
+  disableAuth: false
+  # -- list(string) These paths will be private.
+  # A separate virtualService and Gateway will be created.
+  privatePaths:
+    - /health
+    - /swagger
+    - /metrics
+
+# Details of Upstream
+upstream:
+  # -- (string) Name of the Upstream Service
+  name:
+  # -- (number) Port of the Upstream Service
+  port:

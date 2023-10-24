@@ -26,4 +26,6 @@ jobs:
           curl -sfSL "$HELM_DOCS_TAR" > helm-docs.tar.gz
           tar -xvf helm-docs.tar.gz -C $HOME/.local/bin
       - uses: actions/setup-python@v3
+        with:
+          python-version: '3.10'
       - uses: pre-commit/action@v3.0.0

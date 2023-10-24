@@ -1,7 +1,7 @@
 ---
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v4.5.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
@@ -14,7 +14,7 @@ repos:
     hooks:
       - id: beautysh
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.34.0
+    rev: v0.37.0
     hooks:
       - id: markdownlint
   - repo: https://github.com/adrienverge/yamllint
@@ -23,7 +23,7 @@ repos:
       - id: yamllint
         args: [--format, parsable, --strict]
   - repo: https://github.com/norwoodj/helm-docs
-    rev: v1.11.0
+    rev: v1.11.3
     hooks:
       - id: helm-docs
   - repo: https://github.com/gruntwork-io/pre-commit

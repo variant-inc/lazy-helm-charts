@@ -1,0 +1,31 @@
+{{- if .Values.public.enabled }}
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ include "routes.name" . }}-private
+  labels: {{- include "routes.labels" . | nindent 4 }}
+spec:
+  gateways:
+    - {{ include "routes.name" . }}-private
+  hosts:
+    {{ include "domains" . | nindent 4 }}
+  http:
+    - name: default
+      {{- if len .Values.public.privatePaths }}
+      match:
+        {{- range .Values.public.privatePaths }}
+        - uri:
+            prefix: {{ .prefix  }}
+        {{- end }}
+      {{- end }}
+      route:
+        - destination:
+            host: {{ .Values.upstream.name }}
+            port:
+              number: {{ .Values.upstream.port }}
+      retries:
+        attempts: 3
+        perTryTimeout: 0.1s
+        retryOn: gateway-error,connect-failure,refused-stream
+{{- end }}

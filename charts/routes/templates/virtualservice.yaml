@@ -1,0 +1,46 @@
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ include "routes.name" . }}
+  labels: {{- include "routes.labels" . | nindent 4 }}
+spec:
+  gateways:
+    - {{ include "routes.name" . }}
+  hosts:
+    {{ include "domains" . | nindent 4 }}
+  http:
+{{- if and .Values.public.enabled (len .Values.public.privatePaths) }}
+    - name: Private Paths
+      match:
+        {{- range .Values.public.privatePaths }}
+        - uri:
+            prefix: {{ .prefix  }}
+        {{- end }}
+      redirect:
+        authority: {{ include "redirect.private" . }}
+        redirectCode: 307
+{{- end }}
+    - name: default
+{{- if and .Values.public.enabled (not .Values.public.disableAuth) }}
+      match:
+        - headers:
+            Authorization:
+              regex: .*
+{{- end }}
+      route:
+        - destination:
+            host: {{ .Values.upstream.name }}
+            port:
+              number: {{ .Values.upstream.port }}
+      retries:
+        attempts: 3
+        perTryTimeout: 0.1s
+        retryOn: gateway-error,connect-failure,refused-stream
+{{- if and .Values.public.enabled (not .Values.public.disableAuth) }}
+    - name: Authorization Failed
+      directResponse:
+        status: 401
+        body:
+          string: Unauthorized
+{{- end }}
