@@ -16,13 +16,13 @@ spec:
       tls:
         httpsRedirect: true
       hosts:
-        {{ include "domains.private" . | nindent 8 }}
+        {{- include "domains.private" . | nindent 8 }}
     - port:
         number: 443
         name: https
         protocol: HTTPS
       hosts:
-        {{ include "domains.private" . | nindent 8 }}
+        {{- include "domains.private" . | nindent 8 }}
       tls:
         mode: SIMPLE
         credentialName: {{ include "routes.name" . }}-tls

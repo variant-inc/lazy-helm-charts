@@ -2,7 +2,7 @@
 Expand the name of the chart.
 */}}
 {{- define "routes.name" -}}
-{{- .name | required "`name` is required" }}
+{{- .Values.name | required "`name` is required" }}
 {{- end }}
 
 {{/*

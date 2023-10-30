@@ -9,14 +9,14 @@ spec:
   gateways:
     - {{ include "routes.name" . }}-private
   hosts:
-    {{ include "domains" . | nindent 4 }}
+    {{- include "domains.private" . | nindent 4 }}
   http:
     - name: default
       {{- if len .Values.public.privatePaths }}
       match:
-        {{- range .Values.public.privatePaths }}
+        {{- range ( concat ( list "/health" "/swagger" "/metrics" ) .Values.public.privatePaths | uniq ) }}
         - uri:
-            prefix: {{ .prefix  }}
+            prefix: {{ .  }}
         {{- end }}
       {{- end }}
       route:

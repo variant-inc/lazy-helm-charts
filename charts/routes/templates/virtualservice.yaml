@@ -8,14 +8,14 @@ spec:
   gateways:
     - {{ include "routes.name" . }}
   hosts:
-    {{ include "domains" . | nindent 4 }}
+    {{- include "domains" . | nindent 4 }}
   http:
 {{- if and .Values.public.enabled (len .Values.public.privatePaths) }}
     - name: Private Paths
       match:
-        {{- range .Values.public.privatePaths }}
+        {{- range ( concat ( list "/health" "/swagger" "/metrics" ) .Values.public.privatePaths | uniq ) }}
         - uri:
-            prefix: {{ .prefix  }}
+            prefix: {{ .  }}
         {{- end }}
       redirect:
         authority: {{ include "redirect.private" . }}
@@ -25,8 +25,7 @@ spec:
 {{- if and .Values.public.enabled (not .Values.public.disableAuth) }}
       match:
         - headers:
-            Authorization:
-              regex: .*
+            Authorization: {}
 {{- end }}
       route:
         - destination:

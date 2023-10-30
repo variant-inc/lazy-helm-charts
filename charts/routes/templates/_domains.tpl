@@ -1,7 +1,7 @@
 {{- define "domains" }}
 {{- $environment := "" }}
 {{- if .Values.environment }}
-{{- $environment := printf "%s." .Values.environment }}
+{{- $environment = printf "%s." .Values.environment }}
 {{- end }}
 {{- $domain := .Values.domain }}
 {{- range .Values.subdomains }}
@@ -13,7 +13,7 @@
 {{- if .Values.public.enabled }}
 {{- $environment := "" }}
 {{- if .Values.environment }}
-{{- $environment := printf "%s." .Values.environment }}
+{{- $environment = printf "%s." .Values.environment }}
 {{- end }}
 {{- $domain := .Values.domain }}
 {{- range .Values.subdomains }}
@@ -25,8 +25,8 @@
 {{- define "redirect.private" }}
 {{- $environment := "" }}
 {{- if .Values.environment }}
-{{- $environment := printf "%s." .Values.environment }}
+{{- $environment = printf "%s." .Values.environment }}
 {{- end }}
 {{- $domain := .Values.domain }}
-{{ printf "%s.internal.%s%s" (index .Values.subdomains 0) $environment $domain | quote }}
+{{- printf "%s.internal.%s%s" (index .Values.subdomains 0) $environment $domain | quote }}
 {{- end }}
