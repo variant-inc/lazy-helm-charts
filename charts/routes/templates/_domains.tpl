@@ -1,4 +1,7 @@
 {{- define "domains" }}
+{{- if not (len .Values.subdomains) }}
+{{- fail "There should be at least 1 subdomain provided" }}
+{{- end }}
 {{- $environment := "" }}
 {{- if .Values.environment }}
 {{- $environment = printf "%s." .Values.environment }}
