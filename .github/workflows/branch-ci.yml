@@ -14,13 +14,18 @@ jobs:
       id-token: write
     name: CI
     steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v4
+        with:
+          go-version: '>=1.21.0'
+      - run:
+          go test ./... -v
+      # - id: lazy-setup
+      #   uses: variant-inc/actions-setup@v2
 
-      - id: lazy-setup
-        uses: variant-inc/actions-setup@v2
-
-      - name: Unit Test
-        shell: pwsh
-        run: ./scripts/unit_test.ps1
+      # - name: Unit Test
+      #   shell: pwsh
+      #   run: ./scripts/unit_test.ps1
 
       # - name: Lazy Action Octopus
       #   uses: variant-inc/actions-octopus@v2
