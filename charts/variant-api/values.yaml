@@ -1,6 +1,22 @@
 ---
 # Defaults and documentation of chart values
 
+# @ignored
+global:
+  # -- (map) Deployment tags
+  tags: {}
+
+  # @ignored
+  # -- (string) Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision`
+  # that will be applied to all objects created by a specific chart installation.
+  # Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version
+  revision:
+
+  # @ignored
+  # -- Port for internal services to access your API
+  upstream:
+    port: 80
+
 istio:
   ingress:
     # @ignored
@@ -64,9 +80,6 @@ service:
   # -- Optional port which serves prometheus metrics endpoint at `/metrics`
   # Defaults to value of `service.targetPort` if not defined.
   metricsPort:
-  # @ignored
-  # -- Port for internal services to access your API
-  port: 80
 
 # @ignored
 serviceAccount:
@@ -142,12 +155,6 @@ authorization:
 # @default -- Example: `[{ "name": "eng-secret-in-aws", "type": "" }]`
 awsSecrets: []
 
-# @ignored
-# -- (string) Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision`
-# that will be applied to all objects created by a specific chart installation.
-# Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version
-revision:
-
 # -- (map) User defined secret variables are implemented here.
 # [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables)
 # @default -- Example: `foo: bar`
@@ -207,10 +214,6 @@ livenessProbe: {}
 #   httpGet:
 #     path: /health
 #     port: 5000
-
-# @ignored
-# -- (map) Deployment tags
-tags: {}
 
 # -- (int) Minimum number of pods that should be available always
 # See [Pod Disruption Budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/)

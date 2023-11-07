@@ -43,7 +43,7 @@ spec:
         - destination:
             host: {{ $fullName }}
             port:
-              number: {{ .Values.service.port }}
+              number: {{ .Values.global.upstream.port }}
     - name: Authorization Failed
       directResponse:
         status: 401

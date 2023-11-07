@@ -24,25 +24,8 @@ func TestRoutesNegativeTemplate(t *testing.T) {
 
 	logger.Log(t, "Namespace: %s\n", namespaceName)
 
-	t.Run("no_name_template_test", func(t *testing.T) {
-		options := &helm.Options{
-			SetValues: map[string]string{
-				"name":       "",
-				"subdomains": "{test,helm}",
-			},
-			KubectlOptions: k8s.NewKubectlOptions("", "", namespaceName),
-		}
-		_, err := helm.RenderTemplateE(t, options, helmChartPath, releaseName, []string{})
-		require.Error(t, err)
-
-		require.Contains(t, err.Error(), "`name` is required")
-	})
-
 	t.Run("no_subdomains_template_test", func(t *testing.T) {
 		options := &helm.Options{
-			SetValues: map[string]string{
-				"name": "test",
-			},
 			KubectlOptions: k8s.NewKubectlOptions("", "", namespaceName),
 		}
 		_, err := helm.RenderTemplateE(t, options, helmChartPath, releaseName, []string{})

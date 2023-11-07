@@ -1,6 +1,8 @@
 package routes
 
 import (
+	"encoding/json"
+	"fmt"
 	certmanager "github.com/cert-manager/cert-manager/pkg/apis/certmanager/v1"
 	"github.com/gruntwork-io/terratest/modules/helm"
 	"github.com/gruntwork-io/terratest/modules/k8s"
@@ -9,7 +11,6 @@ import (
 	"github.com/stretchr/testify/require"
 	istioNetworking "istio.io/client-go/pkg/apis/networking/v1beta1"
 	"path/filepath"
-	"strconv"
 	"strings"
 	"testing"
 )
@@ -27,18 +28,35 @@ func TestRoutesPublicDisableAuthTemplate(t *testing.T) {
 
 	logger.Log(t, "Namespace: %s\n", namespaceName)
 
+	values := Routes{
+		Global: Global{
+			Upstream: Upstream{
+				Name: "vibin",
+				Port: 1234,
+			},
+		},
+		Subdomains: []Subdomain{
+			{
+				Product: "bar",
+			},
+		},
+		Public: Public{
+			Enabled:     true,
+			DisableAuth: true,
+		},
+	}
+	subdomain1, _ := json.Marshal(values.Subdomains[0])
+	global, _ := json.Marshal(values.Global)
+	public, _ := json.Marshal(values.Public)
+
 	// Set up the args. For this test, we will set the following input values:
 	// - containerImageRepo=nginx
 	// - containerImageTag=1.15.8
 	options := &helm.Options{
-		SetValues: map[string]string{
-			"name":               "test",
-			"environment":        "",
-			"subdomains":         "{test,helm}",
-			"public.disableAuth": "true",
-			"public.enabled":     "true",
-			"upstream.name":      "charts",
-			"upstream.port":      "1234",
+		SetJsonValues: map[string]string{
+			"global":       string(global),
+			"subdomains.0": string(subdomain1),
+			"public":       string(public),
 		},
 		KubectlOptions: k8s.NewKubectlOptions("", "", namespaceName),
 	}
@@ -52,31 +70,28 @@ func TestRoutesPublicDisableAuthTemplate(t *testing.T) {
 		)
 
 		// Verify the name matches the expected supplied name in values.
-		require.Equal(t, options.SetValues["name"]+"-private", virtualService.Name)
+		require.Equal(t, releaseName+"-private", virtualService.Name)
 
 		// Verify the gateway name matches the expected supplied name in values.
-		require.Equal(t, options.SetValues["name"]+"-private", virtualService.Spec.Gateways[0])
+		require.Equal(t, releaseName+"-private", virtualService.Spec.Gateways[0])
 
 		// Verify length of Hosts in VirtualService is 2.
-		require.Equal(t, 2, len(virtualService.Spec.Hosts))
+		require.Equal(t, 1, len(virtualService.Spec.Hosts))
 
 		// Verify the host name matches the expected supplied name in values.
 		require.Equal(t,
-			"test.internal.usxpress.io",
+			fmt.Sprintf(
+				"%s.internal.%s",
+				values.Subdomains[0].Product,
+				"usxpress.io",
+			),
 			virtualService.Spec.Hosts[0],
-		)
-
-		// Verify the host name matches the expected supplied name in values.
-		require.Equal(t,
-			"helm.internal.usxpress.io",
-			virtualService.Spec.Hosts[1],
 		)
 
 		require.NotEqual(t, "Private Paths", virtualService.Spec.Http[0].Name)
 		require.Equal(t, "default", virtualService.Spec.Http[0].Name)
-		portNumber, _ := strconv.Atoi(options.SetValues["upstream.port"])
-		require.Equal(t, options.SetValues["upstream.name"], virtualService.Spec.Http[0].Route[0].Destination.Host)
-		require.Equal(t, uint32(portNumber), virtualService.Spec.Http[0].Route[0].Destination.Port.Number)
+		require.Equal(t, values.Global.Upstream.Name, virtualService.Spec.Http[0].Route[0].Destination.Host)
+		require.Equal(t, uint32(values.Global.Upstream.Port), virtualService.Spec.Http[0].Route[0].Destination.Port.Number)
 		require.Equal(t, int32(3), virtualService.Spec.Http[0].Retries.Attempts)
 		require.Equal(t, int32(100000000), virtualService.Spec.Http[0].Retries.PerTryTimeout.GetNanos())
 		require.Equal(t, "gateway-error,connect-failure,refused-stream", virtualService.Spec.Http[0].Retries.RetryOn)
@@ -91,7 +106,7 @@ func TestRoutesPublicDisableAuthTemplate(t *testing.T) {
 		)
 
 		// Verify the name matches the expected supplied name in values.
-		require.Equal(t, options.SetValues["name"]+"-private", gateway.Name)
+		require.Equal(t, releaseName+"-private", gateway.Name)
 
 		// Verify the gateway selector type is private.
 		require.Equal(t, "private", gateway.Spec.Selector["type"])
@@ -101,27 +116,25 @@ func TestRoutesPublicDisableAuthTemplate(t *testing.T) {
 
 		// Verify the host name matches the expected supplied name in values.
 		require.Equal(t,
-			"test.internal.usxpress.io",
+			fmt.Sprintf(
+				"%s.internal.%s",
+				values.Subdomains[0].Product,
+				"usxpress.io",
+			),
 			gateway.Spec.Servers[0].Hosts[0],
 		)
 		require.Equal(t,
-			"test.internal.usxpress.io",
+			fmt.Sprintf(
+				"%s.internal.%s",
+				values.Subdomains[0].Product,
+				"usxpress.io",
+			),
 			gateway.Spec.Servers[1].Hosts[0],
-		)
-
-		// Verify the host name matches the expected supplied name in values.
-		require.Equal(t,
-			"helm.internal.usxpress.io",
-			gateway.Spec.Servers[0].Hosts[1],
-		)
-		require.Equal(t,
-			"helm.internal.usxpress.io",
-			gateway.Spec.Servers[1].Hosts[1],
 		)
 
 		// Verify certificateName
 		require.Equal(t,
-			options.SetValues["name"]+"-tls",
+			releaseName+"-tls",
 			gateway.Spec.Servers[1].Tls.CredentialName,
 		)
 	})
@@ -135,38 +148,42 @@ func TestRoutesPublicDisableAuthTemplate(t *testing.T) {
 		)
 
 		// Verify the name matches the expected supplied name in values.
-		require.Equal(t, options.SetValues["name"], virtualService.Name)
+		require.Equal(t, releaseName, virtualService.Name)
 
 		// Verify the gateway name matches the expected supplied name in values.
-		require.Equal(t, options.SetValues["name"], virtualService.Spec.Gateways[0])
+		require.Equal(t, releaseName, virtualService.Spec.Gateways[0])
 
 		// Verify length of Hosts in VirtualService is 2.
-		require.Equal(t, 2, len(virtualService.Spec.Hosts))
+		require.Equal(t, 1, len(virtualService.Spec.Hosts))
 
 		// Verify the host name matches the expected supplied name in values.
 		require.Equal(t,
-			"test.usxpress.io",
+			fmt.Sprintf(
+				"%s.%s",
+				values.Subdomains[0].Product,
+				"usxpress.io",
+			),
 			virtualService.Spec.Hosts[0],
-		)
-
-		// Verify the host name matches the expected supplied name in values.
-		require.Equal(t,
-			"helm.usxpress.io",
-			virtualService.Spec.Hosts[1],
 		)
 
 		require.Equal(t, 2, len(virtualService.Spec.Http))
 
 		require.Equal(t, "Private Paths", virtualService.Spec.Http[0].Name)
 		require.Equal(t, 3, len(virtualService.Spec.Http[0].Match))
-		require.Equal(t, "test.internal.usxpress.io", virtualService.Spec.Http[0].Redirect.Authority)
+		require.Equal(
+			t,
+			fmt.Sprintf(
+				"%s.internal.%s",
+				values.Subdomains[0].Product,
+				"usxpress.io",
+			),
+			virtualService.Spec.Http[0].Redirect.Authority)
 		require.Equal(t, uint32(307), virtualService.Spec.Http[0].Redirect.RedirectCode)
 
 		require.Equal(t, "default", virtualService.Spec.Http[1].Name)
 		require.Empty(t, virtualService.Spec.Http[1].Match)
-		require.Equal(t, options.SetValues["upstream.name"], virtualService.Spec.Http[1].Route[0].Destination.Host)
-		portNumber, _ := strconv.Atoi(options.SetValues["upstream.port"])
-		require.Equal(t, uint32(portNumber), virtualService.Spec.Http[1].Route[0].Destination.Port.Number)
+		require.Equal(t, values.Global.Upstream.Name, virtualService.Spec.Http[1].Route[0].Destination.Host)
+		require.Equal(t, uint32(values.Global.Upstream.Port), virtualService.Spec.Http[1].Route[0].Destination.Port.Number)
 		require.Equal(t, int32(3), virtualService.Spec.Http[1].Retries.Attempts)
 		require.Equal(t, int32(100000000), virtualService.Spec.Http[1].Retries.PerTryTimeout.GetNanos())
 		require.Equal(t, "gateway-error,connect-failure,refused-stream", virtualService.Spec.Http[1].Retries.RetryOn)
@@ -181,7 +198,7 @@ func TestRoutesPublicDisableAuthTemplate(t *testing.T) {
 		)
 
 		// Verify the name matches the expected supplied name in values.
-		require.Equal(t, options.SetValues["name"], gateway.Name)
+		require.Equal(t, releaseName, gateway.Name)
 
 		// Verify the gateway selector type is private.
 		require.Equal(t, "public", gateway.Spec.Selector["type"])
@@ -193,27 +210,25 @@ func TestRoutesPublicDisableAuthTemplate(t *testing.T) {
 
 		// Verify the host name matches the expected supplied name in values.
 		require.Equal(t,
-			"test.usxpress.io",
+			fmt.Sprintf(
+				"%s.%s",
+				values.Subdomains[0].Product,
+				"usxpress.io",
+			),
 			gateway.Spec.Servers[0].Hosts[0],
 		)
 		require.Equal(t,
-			"test.usxpress.io",
+			fmt.Sprintf(
+				"%s.%s",
+				values.Subdomains[0].Product,
+				"usxpress.io",
+			),
 			gateway.Spec.Servers[1].Hosts[0],
-		)
-
-		// Verify the host name matches the expected supplied name in values.
-		require.Equal(t,
-			"helm.usxpress.io",
-			gateway.Spec.Servers[0].Hosts[1],
-		)
-		require.Equal(t,
-			"helm.usxpress.io",
-			gateway.Spec.Servers[1].Hosts[1],
 		)
 
 		// Verify certificateName
 		require.Equal(t,
-			options.SetValues["name"]+"-tls",
+			releaseName+"-tls",
 			gateway.Spec.Servers[1].Tls.CredentialName,
 		)
 	})
@@ -227,39 +242,35 @@ func TestRoutesPublicDisableAuthTemplate(t *testing.T) {
 		)
 
 		// Verify the name matches the expected supplied name in values.
-		require.Equal(t, options.SetValues["name"], certificate.Name)
+		require.Equal(t, releaseName, certificate.Name)
 
 		// Verify the namespace is istio-system.
 		require.Equal(t, "istio-system", certificate.Namespace)
 
 		// Verify the certificate secret name is correct.
-		require.Equal(t, options.SetValues["name"]+"-tls", certificate.Spec.SecretName)
+		require.Equal(t, releaseName+"-tls", certificate.Spec.SecretName)
 
 		// Verify length of Servers is 2.
-		require.Equal(t, 4, len(certificate.Spec.DNSNames))
+		require.Equal(t, 2, len(certificate.Spec.DNSNames))
 
 		// Verify the host name matches the expected supplied name in values.
 		require.Equal(t,
-			"test.usxpress.io",
+			fmt.Sprintf(
+				"%s.%s",
+				values.Subdomains[0].Product,
+				"usxpress.io",
+			),
 			certificate.Spec.DNSNames[0],
 		)
 
 		// Verify the host name matches the expected supplied name in values.
 		require.Equal(t,
-			"helm.usxpress.io",
+			fmt.Sprintf(
+				"%s.internal.%s",
+				values.Subdomains[0].Product,
+				"usxpress.io",
+			),
 			certificate.Spec.DNSNames[1],
-		)
-
-		// Verify the host name matches the expected supplied name in values.
-		require.Equal(t,
-			"test.internal.usxpress.io",
-			certificate.Spec.DNSNames[2],
-		)
-
-		// Verify the host name matches the expected supplied name in values.
-		require.Equal(t,
-			"helm.internal.usxpress.io",
-			certificate.Spec.DNSNames[3],
 		)
 	})
 }

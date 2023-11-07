@@ -15,7 +15,7 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - port: {{ .Values.service.port }}
+    - port: {{ .Values.global.upstream.port }}
       targetPort: http
       protocol: TCP
       name: http

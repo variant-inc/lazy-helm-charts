@@ -1,15 +1,6 @@
 ---
-# @ignored
+
 global:
-  # -- (map) Deployment tags
-  tags: {}
-
-  # @ignored
-  # -- (string) Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision`
-  # that will be applied to all objects created by a specific chart installation.
-  # Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version
-  revision:
-
   # @ignored
   # This is the domain to be used by the charts
   domain: usxpress.io
@@ -24,9 +15,9 @@ global:
   # Details of Upstream
   upstream:
     # -- (string) Name of the Upstream Service
-    name:
+    name: foo-bar
     # -- (number) Port of the Upstream Service
-    port:
+    port: 1234
 
 # -- list(string) List of subdomains
 # subdomains:
@@ -38,7 +29,13 @@ global:
 #     app:
 #     # Type of the App - API/nothing
 #     type:
-subdomains: []
+subdomains:
+  - app: foo
+    product: bar
+  - app: honey
+    product: bar
+    type: api
+
 
 public:
   # -- (bool) If `true`, the URL is exposed

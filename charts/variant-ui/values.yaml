@@ -1,12 +1,21 @@
-# Default values for istio.
-# This is a YAML-formatted file.
 ---
 # Declare variables to be passed into your templates.
 
-# -- nameOverride replaces the name of the chart in the Chart.yaml file
-nameOverride:
-# -- fullnameOverride completely replaces the generated name.
-fullnameOverride:
+# @ignored
+global:
+  # -- (map) Deployment tags
+  tags: {}
+
+  # @ignored
+  # -- (string) Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision`
+  # that will be applied to all objects created by a specific chart installation.
+  # Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version
+  revision:
+
+  # @ignored
+  # -- Port for internal services to access your API
+  upstream:
+    port: 80
 
 istio:
   ingress:
@@ -67,9 +76,6 @@ service:
   # -- Optional port which serves prometheus metrics endpoint at `/metrics`
   # Defaults to value of `service.targetPort` if not defined.
   metricsPort:
-  # @ignored
-  # -- Port for internal services to access your API
-  port: 80
 
 # @ignored
 serviceAccount:
@@ -122,12 +128,6 @@ podAnnotations: {}
 # See [AWS Secrets](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables) for more details.
 # @default -- Example: `[{ "name": "eng-secret-in-aws", "type": "" }]`
 awsSecrets: []
-
-# @ignored
-# -- (string) Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision`
-# that will be applied to all objects created by a specific chart installation.
-# Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version
-revision:
 
 # -- (map) User defined secret variables are implemented here.
 # [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables)
@@ -192,10 +192,6 @@ securityContext:
   # -- (bool) Requires that containers must run with a read-only root filesystem (i.e. no writable layer)
   readOnlyRootFilesystem: false
 
-# @ignored
-# -- (map) Deployment tags
-tags: {}
-
 # -- (int) Minimum number of pods that should be available after an eviction
 # See [Pod Disruption Budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/)
 maxUnavailable: 1
@@ -213,104 +209,3 @@ otel:
   enabled: false
   # Language of the application
   language: sdk
-
-# @ignored
-# Refer <https://github.com/oauth2-proxy/manifests/blob/main/helm/oauth2-proxy/values.yaml>
-oauth2-proxy:
-  enabled: false
-  securityContext:
-    enabled: true
-    runAsNonRoot: true
-    allowPrivilegeEscalation: false
-
-  config:
-    clientId:
-    tenantId:
-    cookieSecret:
-    clientSecret:
-    configFile: |-
-      reverse_proxy = true
-      email_domains = '*'
-      skip_auth_routes = [ 'GET=^/health', 'GET=^/metrics', 'GET=^/swagger' ]
-      show_debug_on_error = false
-      silence_ping_logging = true
-      skip_provider_button = false
-
-  extraVolumes:
-    - name: proxy-secret
-      secret:
-        secretName:
-  extraVolumeMounts:
-    - name: proxy-secret
-      mountPath: /secrets/client_secret
-      subPath: client_secret
-  alphaConfig:
-    enabled: true
-    existingConfig:
-
-  podLabels: {}
-  replicaCount: 1
-  deploymentAnnotations: {}
-
-  podDisruptionBudget:
-    enabled: false
-
-  metrics:
-    servicemonitor:
-      enabled: true
-      # Prometheus scrape interval
-      interval: 60s
-      # Prometheus scrape timeout
-      scrapeTimeout: 30s
-      # Add custom labels to the ServiceMonitor resource
-      labels: {}
-
-  extraObjects:
-    - apiVersion: networking.istio.io/v1beta1
-      kind: Sidecar
-      metadata:
-        name: "{{ .Release.Name }}-oauth2-proxy"
-        namespace: "{{ .Release.Namespace }}"
-      spec:
-        workloadSelector:
-          labels:
-            app.kubernetes.io/instance: "{{ .Release.Name }}"
-            app: oauth2-proxy
-        outboundTrafficPolicy:
-          mode: ALLOW_ANY
-    - apiVersion: policy/v1
-      kind: PodDisruptionBudget
-      metadata:
-        name: "{{ .Release.Name }}-oauth2-proxy"
-        namespace: "{{ .Release.Namespace }}"
-      spec:
-        maxUnavailable: 1
-        selector:
-          matchLabels:
-            app.kubernetes.io/instance: "{{ .Release.Name }}"
-            app: oauth2-proxy
-    - apiVersion: autoscaling/v2
-      kind: HorizontalPodAutoscaler
-      metadata:
-        name: "{{ .Release.Name }}-oauth2-proxy"
-        namespace: "{{ .Release.Namespace }}"
-      spec:
-        scaleTargetRef:
-          apiVersion: apps/v1
-          kind: Deployment
-          name: "{{ .Release.Name }}-oauth2-proxy"
-        minReplicas: 2
-        maxReplicas: 5
-        metrics:
-          - type: Resource
-            resource:
-              name: cpu
-              target:
-                type: Utilization
-                averageUtilization: 95
-          - type: Resource
-            resource:
-              name: memory
-              target:
-                type: Utilization
-                averageUtilization: 95

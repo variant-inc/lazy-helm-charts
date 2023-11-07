@@ -22,8 +22,3 @@ dependencies:
   - name: library
     repository: file://../library
     version: 0.1.0
-  - name: oauth2-proxy
-    version: "~6.12.0"
-    # alias: oauth2Proxy
-    repository: https://oauth2-proxy.github.io/manifests
-    condition: oauth2-proxy.enabled

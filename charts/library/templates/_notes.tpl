@@ -31,5 +31,6 @@ Use terminal command like this:
 kubectl exec -i -t -n {{ $.Release.Namespace }} <pod name> -c {{ $fullName }} -- sh -c "clear; (bash || ash || sh)"
 ======================================================
 Checking for events and troubleshooting:
-https://backstage.apps.ops-drivevariant.com/docs/default/component/dx-docs/Troubleshooting/
+https://grafana.usxpress.io/goto/joTpUy4Ig?orgId=1
+https://dx.docs.usxpress.io/Troubleshooting/
 {{- end }}

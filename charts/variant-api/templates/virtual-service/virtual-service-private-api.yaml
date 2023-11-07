@@ -27,4 +27,4 @@ spec:
         - destination:
             host: {{ $fullName }}
             port:
-              number: {{ .Values.service.port }}
+              number: {{ .Values.global.upstream.port }}

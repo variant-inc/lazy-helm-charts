@@ -3,8 +3,8 @@
 apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
-  name: {{ include "routes.name" . }}-private
-  labels: {{- include "routes.labels" . | nindent 4 }}
+  name: {{ .Release.Name }}-private
+  labels: {{- include "library.chart.labels" . | nindent 4 }}
 spec:
   selector:
     type: private
@@ -25,5 +25,5 @@ spec:
         {{- include "domains.private" . | nindent 8 }}
       tls:
         mode: SIMPLE
-        credentialName: {{ include "routes.name" . }}-tls
+        credentialName: {{ .Release.Name }}-tls
 {{- end }}

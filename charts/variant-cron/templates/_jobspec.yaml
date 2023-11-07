@@ -54,7 +54,7 @@ template:
         {{- end}}
         env:
           - name: REVISION
-            value: {{ required "revision is required" .Values.revision | quote }}
+            value: {{ required "revision is required" .Values.global.revision | quote }}
     restartPolicy: {{ .Values.restartPolicy }}
     serviceAccountName: {{ $fullName }}
     automountServiceAccountToken: true

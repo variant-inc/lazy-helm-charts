@@ -3,11 +3,11 @@
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: {{ include "routes.name" . }}-private
-  labels: {{- include "routes.labels" . | nindent 4 }}
+  name: {{ .Release.Name }}-private
+  labels: {{- include "library.chart.labels" . | nindent 4 }}
 spec:
   gateways:
-    - {{ include "routes.name" . }}-private
+    - {{ .Release.Name }}-private
   hosts:
     {{- include "domains.private" . | nindent 4 }}
   http:
@@ -21,9 +21,9 @@ spec:
       {{- end }}
       route:
         - destination:
-            host: {{ .Values.upstream.name }}
+            host: {{ include "upstream" . }}
             port:
-              number: {{ .Values.upstream.port }}
+              number: {{ .Values.global.upstream.port }}
       retries:
         attempts: 3
         perTryTimeout: 0.1s

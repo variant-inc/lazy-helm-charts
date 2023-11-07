@@ -159,7 +159,7 @@ spec:
           {{- toYaml .Values.deployment.resources.requests | nindent 12 }}
       env:
         - name: REVISION
-          value: {{ required "revision is required" .Values.revision | quote }}
+          value: {{ required "revision is required" .Values.global.revision | quote }}
         - name: API_BASE_PATH
           value: /{{ .Release.Namespace }}/{{ .Release.Name }}
         {{- range .Values.deployment.envVars }}

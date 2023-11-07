@@ -2,14 +2,14 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: {{ include "routes.name" . }}
+  name: {{ .Release.Name }}
   namespace: istio-system # This should be istio-system
 spec:
-  secretName: {{ include "routes.name" . }}-tls
+  secretName: {{ .Release.Name }}-tls
   dnsNames:
     {{- include "domains" . | nindent 4 }}
     {{- include "domains.private" . | nindent 4 }}
   issuerRef:
-    name: {{ .Values.issuer }}
+    name: {{ .Values.global.issuer }}
     kind: ClusterIssuer
     group: cert-manager.io

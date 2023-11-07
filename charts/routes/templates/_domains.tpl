@@ -1,35 +1,34 @@
-{{- define "domains" }}
+{{- define "sub-domains" }}
 {{- if not (len .Values.subdomains) }}
 {{- fail "There should be at least 1 subdomain provided" }}
 {{- end }}
-{{- $environment := "" }}
-{{- if .Values.environment }}
-{{- $environment = printf "%s." .Values.environment }}
-{{- end }}
-{{- $domain := .Values.domain }}
+{{- $subdomains := list -}}
 {{- range .Values.subdomains }}
-- {{ printf "%s.%s%s" . $environment $domain | quote }}
+{{- $product := include "check-string-nil-empty" .product }}
+{{- $app := include "check-string-nil-empty" .app }}
+{{- $type := include "check-string-nil-empty" .type }}
+{{- $subdomains = printf "%s%s%s" $type $product $app | append $subdomains -}}
+{{- end }}
+{{- join "," $subdomains }}
+{{- end }}
+
+{{- define "domains" }}
+{{- $domain := .Values.global.domain }}
+{{- range (include "sub-domains" $ | split ",") }}
+- {{ printf "%s%s%s" . (include "environment" $) $domain }}
 {{- end }}
 {{- end }}
 
 {{- define "domains.private" }}
 {{- if .Values.public.enabled }}
-{{- $environment := "" }}
-{{- if .Values.environment }}
-{{- $environment = printf "%s." .Values.environment }}
-{{- end }}
-{{- $domain := .Values.domain }}
-{{- range .Values.subdomains }}
-- {{ printf "%s.internal.%s%s" . $environment $domain | quote }}
+{{- $domain := .Values.global.domain }}
+{{- range (include "sub-domains" $ | split ",") }}
+- {{ printf "%sinternal.%s%s" . (include "environment" $) $domain }}
 {{- end }}
 {{- end }}
 {{- end }}
 
 {{- define "redirect.private" }}
-{{- $environment := "" }}
-{{- if .Values.environment }}
-{{- $environment = printf "%s." .Values.environment }}
-{{- end }}
-{{- $domain := .Values.domain }}
-{{- printf "%s.internal.%s%s" (index .Values.subdomains 0) $environment $domain | quote }}
+{{- $domain := .Values.global.domain }}
+{{- printf "%sinternal.%s%s" (include "sub-domains" . | split ",")._0 (include "environment" .) $domain | quote }}
 {{- end }}

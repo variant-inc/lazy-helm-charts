@@ -26,7 +26,7 @@ spec:
         - destination:
             host: {{ $service }}
             port:
-              number: {{ .Values.service.port }}
+              number: {{ .Values.global.upstream.port }}
 {{ if .Values.istio.ingress.public }}
 ---
 apiVersion: networking.istio.io/v1alpha3
@@ -67,5 +67,5 @@ spec:
         - destination:
             host: {{ $service }}
             port:
-              number: {{ .Values.service.port }}
+              number: {{ .Values.global.upstream.port }}
 {{ end }}

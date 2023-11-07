@@ -1,6 +1,17 @@
 ---
 # This file contains the defaults for all optional, overridable values
 
+# @ignored
+global:
+  # -- (map) Deployment tags
+  tags: {}
+
+  # @ignored
+  # -- (string) Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision`
+  # that will be applied to all objects created by a specific chart installation.
+  # Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version
+  revision:
+
 istio:
   # -- A whitelist of external services that your application requires connection to.
   # The whitelist applies to the entire namespace in which this chart is installed.
@@ -84,12 +95,6 @@ podAnnotations: {}
 # @default -- Example: `[{ "name": "eng-secret-in-aws", "type": "" }]`
 awsSecrets: []
 
-# @ignored
-# -- (string) Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision`
-# that will be applied to all objects created by a specific chart installation.
-# Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version
-revision:
-
 # -- (map) User defined secret variables are implemented here.
 # [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables)
 # @default -- Example: `foo: bar`
@@ -120,10 +125,6 @@ node:
   ttlSecondsUntilExpired:
   # -- Number of seconds before custom nodes will be removed if nothing is running on them.
   ttlSecondsAfterEmpty: 3600
-
-# @ignored
-# -- Tags to be applied to custom node provisioner and labels
-tags: {}
 
 # -- Use Never by default for jobs so new pod is created on failure instead of restarting containers
 restartPolicy: Never

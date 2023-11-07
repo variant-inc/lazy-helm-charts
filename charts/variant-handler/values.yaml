@@ -1,6 +1,22 @@
 ---
 # This file contains the defaults for all optional, overridable values
 
+# @ignored
+global:
+  # -- (map) Deployment tags
+  tags: {}
+
+  # @ignored
+  # -- (string) Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision`
+  # that will be applied to all objects created by a specific chart installation.
+  # Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version
+  revision:
+
+  # @ignored
+  # -- Port for internal services to access your API
+  upstream:
+    port: 80
+
 istio:
   # -- A whitelist of external services that your application requires connection to.
   # The whitelist applies to the entire namespace in which this chart is installed.
@@ -24,8 +40,6 @@ serviceMonitor:
   selector: {}
 
 service:
-  # -- Port for internal services to access your API
-  port: 80
   # -- Port on your container that exposes your HTTP API
   targetPort: 9000
   # -- Optional port which serves a health check endpoint at `/health`
@@ -134,12 +148,6 @@ podAnnotations: {}
 # @default -- Example: `[{ "name": "eng-secret-in-aws", "type": "" }]`
 awsSecrets: []
 
-# @ignored
-# -- (string) Value for a [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) named `revision`
-# that will be applied to all objects created by a specific chart installation.
-# Strongly encouraged that this value corresponds to 1 of: Octopus package version, short-SHA of the commit, Octopus release version
-revision:
-
 # -- (map) User defined secret variables are implemented here.
 # [More Information](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/environment_variables)
 # @default -- Example: `foo: bar`
@@ -167,10 +175,6 @@ readinessProbe: {}
 # -- (map) Indicates whether container is running.
 # See [Probe](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/probes)
 livenessProbe: {}
-
-# @ignored
-# -- (map) Deployment tags
-tags: {}
 
 # -- (int) Minimum number of pods that should be available after an eviction
 # See [Pod Disruption Budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/)

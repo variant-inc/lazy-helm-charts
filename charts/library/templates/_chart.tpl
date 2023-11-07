@@ -20,9 +20,9 @@ Common labels
 {{- define "library.chart.labels" -}}
 helm.sh/chart: {{ include "library.chart.chart" . }}
 {{ include "library.chart.selectorLabels" . }}
-app.kubernetes.io/version: {{ default .Values.revision .Chart.AppVersion | quote }}
+app.kubernetes.io/version: {{ default .Values.global.revision .Chart.AppVersion | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- range $key, $value := .Values.tags }}
+{{- range $key, $value := .Values.global.tags }}
 cloudops.io.{{ $key }}: {{ $value | replace " " "-"| quote }}
 {{- end }}
 {{- end }}
@@ -42,7 +42,7 @@ Pod labels
 app.kubernetes.io/name: {{ .Release.Name }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/component: {{ .Chart.Name }}
-app.kubernetes.io/version: {{ default .Values.revision .Chart.AppVersion | quote }}
+app.kubernetes.io/version: {{ default .Values.global.revision .Chart.AppVersion | quote }}
 app: {{ .Release.Name }}
 {{- range $key, $value := .Values.tags }}
 cloudops.io.{{ $key }}: {{ $value | replace " " "-"| quote }}
