@@ -19,6 +19,11 @@ jobs:
         with:
           go-version: '>=1.21.0'
       - run:
+          for i in `find . -name Chart.yaml | sed 's/Chart.yaml//g'`;
+          do
+            helm dependency update "$i";
+          done
+
           go test ./... -v
       # - id: lazy-setup
       #   uses: variant-inc/actions-setup@v2

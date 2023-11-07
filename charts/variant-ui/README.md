@@ -1,6 +1,6 @@
 # Variant UI Helm Chart
 
-![Version: 1.6.2](https://img.shields.io/badge/Version-1.6.2-informational?style=flat-square) A Helm chart for a web UI configuration
+![Version: 1.7.0](https://img.shields.io/badge/Version-1.7.0-informational?style=flat-square) A Helm chart for a web UI configuration
 
 ## How do I access my UI?
 
@@ -115,7 +115,6 @@ All possible objects created by this chart:
 | deployment.resources.limits.memory | string | `"768Mi"` | Limits Memory |
 | deployment.resources.requests.cpu | float | `0.1` | Requests CPU |
 | deployment.resources.requests.memory | string | `"384Mi"` | Request memory |
-| fullnameOverride | string | `nil` | fullnameOverride completely replaces the generated name. |
 | istio.egress | list | `[]` | A whitelist of external services that your API requires connection to. The whitelist applies to the entire namespace in which this chart is installed. [These services](https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8) are globally whitelisted and do not require declaration. See [Ingress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/ingress) for more Istio details. |
 | istio.ingress.additionalHosts | object | `{"private":[{"domain":null,"prefix":null}],"public":[{"domain":null,"prefix":null}]}` | Additional prefixes used to construct URLs that point to your API. |
 | istio.ingress.additionalHosts.private | list | `[{"domain":null,"prefix":null}]` | List of additional private endpoints, accessible only through VPN |
@@ -127,7 +126,6 @@ All possible objects created by this chart:
 | istio.ingress.redirects | list | `[]` | Optional paths that will always redirect to internal/VPN endpoints - prefix: /hidden |
 | livenessProbe | map | `{}` | Indicates whether container is running. See [Probe](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/probes) |
 | maxUnavailable | int | `1` | Minimum number of pods that should be available after an eviction See [Pod Disruption Budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) |
-| nameOverride | string | `nil` | nameOverride replaces the name of the chart in the Chart.yaml file |
 | podAnnotations | map | `{}` | https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/ |
 | podSecurityContext | map | `{"fsGroup":65534}` | Security Context for pods |
 | podSecurityContext.fsGroup | int | `65534` | The files created in the container will be created with this gid `65534` is a `nobody` group |

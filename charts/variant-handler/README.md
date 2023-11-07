@@ -1,6 +1,6 @@
 # Variant Handler Helm Chart
 
-![Version: 1.2.3](https://img.shields.io/badge/Version-1.2.3-informational?style=flat-square) A Helm chart for kubernetes handler
+![Version: 1.3.0](https://img.shields.io/badge/Version-1.3.0-informational?style=flat-square) A Helm chart for kubernetes handler
 
 ## What this chart provides to you by default
 
@@ -104,7 +104,6 @@ All possible objects created by this chart:
 | securityContext.runAsUser | int | `nil` | Runs as numeric user |
 | service.healthCheckPort | string | `nil` | Optional port which serves a health check endpoint at `/health` Defaults to value of `service.targetPort` if not defined. |
 | service.metricsPort | string | `nil` | Optional port which serves prometheus metrics endpoint at `/metrics` Defaults to value of `service.targetPort` if not defined. |
-| service.port | int | `80` | Port for internal services to access your API |
 | service.targetPort | int | `9000` | Port on your container that exposes your HTTP API |
 | serviceMonitor.enabled | bool | `false` | Service Monitor Enabled |
 | usxpressCACertBundle.certMountPath | string | `"/etc/ssl/certs/"` | The cert is mounted to the default path mentioned. The path can also be changed. |
