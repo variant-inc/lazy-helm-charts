@@ -6,7 +6,7 @@
 {{- range .Values.subdomains }}
 {{- $product := include "check-string-nil-empty" .product }}
 {{- $app := include "check-string-nil-empty" .app }}
-{{- $type := include "check-string-nil-empty" .type }}
+{{- $type := include "check-string-nil-empty" (.type | default $.Values.global.type) }}
 {{- $subdomains = printf "%s%s%s" $type $product $app | append $subdomains -}}
 {{- end }}
 {{- join "," $subdomains }}

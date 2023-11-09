@@ -13,6 +13,7 @@ type Global struct {
 	Upstream    Upstream          `json:"upstream"`
 	Revision    string            `json:"revision,omitempty"`
 	Tags        map[string]string `json:"tags,omitempty"`
+	Type        string            `json:"type,omitempty"`
 }
 
 type Upstream struct {

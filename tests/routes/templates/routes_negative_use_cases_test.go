@@ -1,4 +1,6 @@
-package routes
+//go:build unit
+
+package templates
 
 import (
 	"github.com/gruntwork-io/terratest/modules/helm"
@@ -16,7 +18,7 @@ func TestRoutesNegativeTemplate(t *testing.T) {
 	t.Parallel()
 
 	// Path to the helm chart we will test
-	helmChartPath, err := filepath.Abs("../../charts/routes")
+	helmChartPath, err := filepath.Abs("../../../charts/routes")
 
 	releaseName := "helm-routes" + strings.ToLower(random.UniqueId())
 	namespaceName := "medieval-" + strings.ToLower(random.UniqueId())

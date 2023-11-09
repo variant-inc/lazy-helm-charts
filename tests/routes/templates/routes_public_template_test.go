@@ -1,4 +1,6 @@
-package routes
+//go:build unit
+
+package templates
 
 import (
 	"encoding/json"
@@ -9,6 +11,7 @@ import (
 	"github.com/gruntwork-io/terratest/modules/logger"
 	"github.com/gruntwork-io/terratest/modules/random"
 	"github.com/stretchr/testify/require"
+	"github.com/variant-inc/lazy-helm-charts/tests/routes"
 	istioNetworking "istio.io/client-go/pkg/apis/networking/v1beta1"
 	"path/filepath"
 	"strings"
@@ -20,7 +23,7 @@ func TestRoutesPublicTemplate(t *testing.T) {
 	t.Parallel()
 
 	// Path to the helm chart we will test
-	helmChartPath, err := filepath.Abs("../../charts/routes")
+	helmChartPath, err := filepath.Abs("../../../charts/routes")
 
 	releaseName := "helm-routes" + strings.ToLower(random.UniqueId())
 	namespaceName := "medieval-" + strings.ToLower(random.UniqueId())
@@ -28,9 +31,9 @@ func TestRoutesPublicTemplate(t *testing.T) {
 
 	logger.Log(t, "Namespace: %s\n", namespaceName)
 
-	values := Routes{
-		Global: Global{
-			Upstream: Upstream{
+	values := routes.Routes{
+		Global: routes.Global{
+			Upstream: routes.Upstream{
 				Port: 1234,
 			},
 			Revision: "1.1.1",
@@ -38,12 +41,12 @@ func TestRoutesPublicTemplate(t *testing.T) {
 				"tag1": "value1",
 			},
 		},
-		Subdomains: []Subdomain{
+		Subdomains: []routes.Subdomain{
 			{
 				Product: "bar",
 			},
 		},
-		Public: Public{
+		Public: routes.Public{
 			Enabled:     true,
 			DisableAuth: false,
 			PrivatePaths: []string{

@@ -28,6 +28,9 @@ global:
     # -- (number) Port of the Upstream Service
     port:
 
+  # -- (string) Type of the Route. Is it API or UI?
+  type:
+
 # -- list(string) List of subdomains
 # subdomains:
 #   -
