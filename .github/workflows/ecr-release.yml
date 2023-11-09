@@ -1,0 +1,159 @@
+---
+name: Release Charts - ECR
+
+on:  # yamllint disable-line rule:truthy
+  workflow_dispatch:
+    inputs:
+      before_sha:
+        description: SHA for old commit
+        required: true
+        type: string
+      after_sha:
+        description: SHA for latest commit
+        required: true
+        type: string
+  push:
+    branches:
+      - "**"
+    paths-ignore:
+      - "**/Chart.yaml"
+
+jobs:
+  folders:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - if: ${{ github.event_name == 'push' }}
+        run: |
+          set -e
+          events=$(cat $GITHUB_EVENT_PATH)
+          before_sha=$(echo $events | jq -r '.before')
+          after_sha=$(echo $events | jq -r '.after')
+
+          folders=$(git \
+            --no-pager diff \
+            ${before_sha}..${after_sha} \
+            --name-only \
+            -- charts/ ':(exclude)*/Chart.yaml' || git --no-pager \
+              diff ${after_sha}~1 --name-only \
+              -- charts/ ':(exclude)*/Chart.yaml' | cut -d/ -f2 | uniq | jq -R -s -c 'split("\n")[:-1]')
+          echo "FOLDERS=$folders" >> "$GITHUB_ENV"
+
+      - if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: |
+          set -e
+
+          folders=$(git \
+            --no-pager diff \
+            ${{ inputs.before_sha }}..${{ inputs.after_sha }} \
+            --name-only \
+            -- charts/ ':(exclude)*/Chart.yaml' | cut -d/ -f2 | uniq | jq -R -s -c 'split("\n")[:-1]')
+          echo "FOLDERS=$folders" >> "$GITHUB_ENV"
+
+      - id: set-matrix
+        run: |
+          echo "matrix=$FOLDERS" >> "$GITHUB_OUTPUT"
+
+  release:
+    runs-on: ubuntu-latest
+    needs:
+      - folders
+    if: ${{ needs.folders.outputs.matrix != '[]' && needs.folders.outputs.matrix != '' }}
+    permissions:
+      contents: write
+      id-token: write
+    strategy:
+      matrix:
+        folders: ${{ fromJson(needs.folders.outputs.matrix) }}
+    steps:
+      - uses: variant-inc/actions-setup@v2
+
+      - name: Import GPG key
+        id: import-gpg
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+
+      - name: Configure
+        run: |
+          git config --global user.email "${{ steps.import-gpg.outputs.email }}"
+          git config --global user.name "${{ steps.import-gpg.outputs.name }}"
+
+          echo "ECR_REPOSITORY=${{ matrix.folders }}" >> "$GITHUB_ENV"
+          echo "AWS_REGION=us-east-2" >> "$GITHUB_ENV"
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::064859874041:role/eks-github-runner
+          aws-region: 'us-east-2'
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+        with:
+          mask-password: 'false'
+
+      - name: Create ECR if not exists
+        run: scripts/ecr_create.sh
+
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0
+        with:
+          versionSpec: 5.x
+
+      - name: set GitVersion.yml
+        run: |
+          rm GitVersion.yml || true
+
+          current_path=$(pwd)
+
+          cd charts/${{ matrix.folders }}
+          version=$(cat Chart.yaml | yq '.version')
+          chart=$(cat Chart.yaml | yq '.name')
+          export version
+
+          cd $current_path
+          cat GitVersion.tpl | envsubst > GitVersion.yml
+
+      - name: Determine Version
+        uses: gittools/actions/gitversion/execute@v0
+        with:
+          useConfigFile: true
+
+      - name: Push to ECR
+        run: |
+          cd charts/${{ matrix.folders }}
+          chart=$(cat Chart.yaml | yq '.name')
+
+          versionNumber="${GITVERSION_ASSEMBLYSEMVER}"
+          if [ "${GITVERSION_PRERELEASELABEL}" == "" ]; then
+              versionNumber="${GITVERSION_NUGETVERSION}"
+          fi
+
+          echo "$(yq '.version = "'$versionNumber'"' Chart.yaml)" > Chart.yaml
+
+          cat Chart.yaml
+
+          cd ../
+          helm package $chart -u
+
+          helm registry login \
+            --username ${{ steps.login-ecr.outputs.docker_username_064859874041_dkr_ecr_us_east_2_amazonaws_com }} \
+            --password ${{ steps.login-ecr.outputs.docker_password_064859874041_dkr_ecr_us_east_2_amazonaws_com }} \
+            ${{ steps.login-ecr.outputs.registry }}
+
+          helm push ${chart}-${versionNumber}.tgz oci://${{ steps.login-ecr.outputs.registry }}/ --debug
+
+      - name: Bump Version
+        if: github.ref == 'refs/heads/master'
+        run: |
+          git add .
+          git commit -am "Bump Version - ${{ matrix.folders }}"
+          git push

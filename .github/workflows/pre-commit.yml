@@ -25,6 +25,13 @@ jobs:
           HELM_DOCS_TAR=$(curl -sfSL https://api.github.com/repos/norwoodj/helm-docs/releases/latest | grep -o -E "https://.+?Linux_x86_64.tar.gz")
           curl -sfSL "$HELM_DOCS_TAR" > helm-docs.tar.gz
           tar -xvf helm-docs.tar.gz -C $HOME/.local/bin
+
+          sudo apt install shellcheck
+
+          SHFFMT_VERSION="$(curl -sfSL https://api.github.com/repos/mvdan/sh/releases/latest | jq -r '.tag_name')"
+          curl -sfSLo ./shfmt "https://github.com/mvdan/sh/releases/download/$SHFFMT_VERSION/shfmt_${SHFFMT_VERSION}_$(uname)_amd64"
+          chmod +x shfmt
+          mv shfmt $HOME/.local/bin/
       - uses: actions/setup-python@v3
         with:
           python-version: '3.10'

@@ -12,6 +12,7 @@
 {{- join "," $subdomains }}
 {{- end }}
 
+
 {{- define "domains" }}
 {{- $domain := .Values.global.domain }}
 {{- range (include "sub-domains" $ | split ",") }}

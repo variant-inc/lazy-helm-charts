@@ -9,10 +9,11 @@ repos:
         exclude: charts/.*/templates/
       - id: check-shebang-scripts-are-executable
       - id: check-case-conflict
-  - repo: https://github.com/lovesegfault/beautysh
-    rev: v6.2.1
+  - repo: https://github.com/jumanjihouse/pre-commit-hooks
+    rev: 3.0.0
     hooks:
-      - id: beautysh
+      - id: shellcheck
+      - id: shfmt
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.37.0
     hooks:
