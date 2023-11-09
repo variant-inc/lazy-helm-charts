@@ -24,7 +24,7 @@ jobs:
             helm dependency update "$i";
           done
 
-          go test ./... -v
+          go test ./... -v --tags=unit
       # - id: lazy-setup
       #   uses: variant-inc/actions-setup@v2
 
