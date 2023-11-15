@@ -24,6 +24,6 @@ spec:
           kind: Service
           name: {{ $fullName }}
         target:
-          type: Value
-          value: {{ .Values.autoscaling.httpRequestsPerSecond | default 10 | quote }}
+          type: AverageValue
+          averageValue: {{ .Values.autoscaling.httpRequestsPerSecond | default 10 | quote }}
 {{- end }}
