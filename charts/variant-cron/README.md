@@ -1,6 +1,6 @@
 # Variant CronJob Helm Chart
 
-![Version: 1.3.3](https://img.shields.io/badge/Version-1.3.3-informational?style=flat-square) A Helm chart for Istio Objects
+![Version: 1.3.4](https://img.shields.io/badge/Version-1.3.4-informational?style=flat-square) A Helm chart for Istio Objects
 
 ## What this chart provides to you by default
 
@@ -90,10 +90,10 @@ All possible objects created by this chart:
 | cronJob.schedule | string | `nil` | Cron Style Schedule. For help check https://crontab.guru/ |
 | cronJob.suspend | bool | `false` | https://kubernetes.io/blog/2021/04/12/introducing-suspended-jobs/ |
 | istio.egress | list | `[]` | A whitelist of external services that your application requires connection to. The whitelist applies to the entire namespace in which this chart is installed. [These services](https://github.com/variant-inc/iaac-eks/blob/master/scripts/istio/service-entries.eps#L8) are globally whitelisted and do not require declaration. See [egress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/egress). See [Ingress](https://backstage.apps.ops-drivevariant.com/docs/default/Component/dx-docs/Apps/Common/ingress) for more Istio details. |
+| node.consolidateAfter | string | `nil` | If nil, the feature is disabled, nodes will never expire |
 | node.create | bool | `false` | Flag to determine whether or not custom nodes will be provisioned. |
+| node.expireAfter | string | `"1h"` | The amount of time a Node can live on the cluster before being removed. |
 | node.instanceType | string | `nil` | The EC2 Instance Type for your custom nodes. |
-| node.ttlSecondsAfterEmpty | int | `3600` | Number of seconds before custom nodes will be removed if nothing is running on them. |
-| node.ttlSecondsUntilExpired | string | `nil` | If nil, the feature is disabled, nodes will never expire |
 | podAnnotations | map | `{}` | https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/ |
 | podSecurityContext | map | `{"fsGroup":65534}` | Security Context for pods |
 | podSecurityContext.fsGroup | int | `65534` | The files created in the container will be created with this gid `65534` is a `nobody` group |

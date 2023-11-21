@@ -1,0 +1,67 @@
+{{- if .Values.node.create }}
+{{- $fullName := (include "chart.fullname" .) -}}
+apiVersion: karpenter.sh/v1beta1
+kind: NodePool
+metadata:
+  name: {{ .Release.Namespace }}-{{ $fullName }}
+  labels:
+    {{- include "library.chart.labels" . | nindent 4 }}
+spec:
+  disruption:
+    {{- if .Values.node.consolidateAfter }}
+    consolidationPolicy: WhenEmpty
+    consolidateAfter: {{ .Values.node.consolidateAfter }}
+    {{- else }}
+    consolidationPolicy: WhenUnderutilized
+    {{- end }}
+    expireAfter: {{ .Values.node.expireAfter }}
+
+  template:
+    metadata:
+      labels:
+        {{- range $key, $value := .Values.nodeSelector }}
+        {{ $key }}: {{ $value }}
+        {{- end }}
+        cloudops.io/namespace: {{ .Release.Namespace }}
+    spec:
+      nodeClassRef:
+        name: bottlerocket
+      taints:
+        - key: "namespace"
+          value: {{ .Release.Namespace | quote }}
+          effect: "NoSchedule"
+        {{- range .Values.tolerations }}
+        - key: {{ required "Key is required for tolerations" .key | quote }}
+          effect: {{ .effect | default "NoSchedule" | quote }}
+        {{- end }}
+
+      requirements:
+        - key: kubernetes.io/os
+          operator: In
+          values:
+            - linux
+        - key: kubernetes.io/arch
+          operator: In
+          values:
+            - amd64
+        - key: karpenter.sh/capacity-type
+          operator: In
+          values:
+            - on-demand
+        - key: karpenter.k8s.aws/instance-category
+          operator: In
+          values:
+            - c
+            - m
+            - r
+        - key: karpenter.k8s.aws/instance-generation
+          operator: Gt
+          values:
+            - '2'
+        {{- if .Values.node.instanceType }}
+        - key: "node.kubernetes.io/instance-type"
+          operator: In
+          values:
+            - {{ .Values.node.instanceType | quote }}
+        {{- end }}
+{{- end }}

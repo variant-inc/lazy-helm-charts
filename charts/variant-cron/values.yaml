@@ -117,9 +117,9 @@ node:
   # -- The EC2 Instance Type for your custom nodes.
   instanceType:
   # -- If nil, the feature is disabled, nodes will never expire
-  ttlSecondsUntilExpired:
-  # -- Number of seconds before custom nodes will be removed if nothing is running on them.
-  ttlSecondsAfterEmpty: 3600
+  consolidateAfter:
+  # -- The amount of time a Node can live on the cluster before being removed.
+  expireAfter: 1h
 
 # @ignored
 # -- Tags to be applied to custom node provisioner and labels
