@@ -1996,6 +1996,32 @@ entries:
     version: 1.0.0
   variant-cron:
   - apiVersion: v2
+    created: "2023-11-21T16:32:40.020369495Z"
+    dependencies:
+    - name: library
+      repository: file://../library
+      version: 0.1.0
+    description: A Helm chart for Istio Objects
+    digest: 9c22219147e2215b5ecb12eac8cc80dd55515c9a4557ecb623e17ae09e8b9eb0
+    home: https://www.drivevariant.com/
+    icon: https://github.com/variant-inc/in-helm-charts/raw/gh-pages/assets/variant-logo.svg
+    kubeVersion: ^1.7.1-0
+    maintainers:
+    - email: vibind@drivevariant.com
+      name: vibindaniel
+    - email: samira@drivevariant.com
+      name: samiralyateem
+    - email: leeh@drivevariant.com
+      name: LeeHughsVariant
+    - email: naveenp@drivevariant.com
+      name: naveenp
+    name: variant-cron
+    sources:
+    - https://github.com/variant-inc
+    urls:
+    - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-cron-1.3.4/variant-cron-1.3.4.tgz
+    version: 1.3.4
+  - apiVersion: v2
     created: "2023-11-10T13:47:47.245542835Z"
     dependencies:
     - name: library
@@ -7012,4 +7038,4 @@ entries:
     urls:
     - https://github.com/variant-inc/lazy-helm-charts/releases/download/variant-ui-1.0.0/variant-ui-1.0.0.tgz
     version: 1.0.0
-generated: "2023-11-15T20:47:17.468325721Z"
+generated: "2023-11-21T16:32:40.021095346Z"
