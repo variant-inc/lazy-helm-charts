@@ -71,7 +71,7 @@ spec:
     - parameter: password
       name: {{ $secretName }}
       key: CCLUSTER__api_secret
-{{- end }}
 {{- else }}
 {{ include "library.hpa.tpl"  . }}
+{{- end }}
 {{- end }}
