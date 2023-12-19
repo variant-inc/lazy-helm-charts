@@ -1,6 +1,6 @@
 # Variant UI Helm Chart
 
-![Version: 1.6.3](https://img.shields.io/badge/Version-1.6.3-informational?style=flat-square) A Helm chart for a web UI configuration
+![Version: 1.6.4](https://img.shields.io/badge/Version-1.6.4-informational?style=flat-square) A Helm chart for a web UI configuration
 
 ## How do I access my UI?
 
