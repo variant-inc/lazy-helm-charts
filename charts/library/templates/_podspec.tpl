@@ -163,15 +163,15 @@ spec:
         - name: API_BASE_PATH
           value: /{{ .Release.Namespace }}/{{ .Release.Name }}
         {{- range .Values.deployment.envVars }}
-        - name: {{ required ".name is required for all envVars" .name }}
-          value: {{ required ".value is required for all envVars" .value | quote }}
+        - name: {{ .name }}
+          value: {{ .value | quote }}
         {{- end }}
         {{- if len .Values.deployment.conditionalEnvVars }}
         {{- range .Values.deployment.conditionalEnvVars }}
         {{- if .condition }}
         {{- range .envVars }}
-        - name: {{ required ".name is required for all envVars" .name }}
-          value: {{ required ".value is required for all envVars" .value | quote }}
+        - name: {{ .name }}
+          value: {{ .value | quote }}
         {{- end }}
         {{- end }}
         {{- end }}
