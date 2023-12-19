@@ -29,7 +29,7 @@ tests:
       - template: cron.yaml
         hasDocuments:
           count: 2
-  - it: should have provisioner
+  - it: should have nodepool
     release:
       name: test
       namespace: test
@@ -58,12 +58,12 @@ tests:
         team: devops
         purpose: test
     asserts:
-      - template: provisioner.yaml
+      - template: nodepool.yaml
         containsDocument:
-          apiVersion: karpenter.sh/v1alpha5
-          kind: Provisioner
+          apiVersion: karpenter.sh/v1beta1
+          kind: NodePool
           name: test-test
-      - template: provisioner.yaml
+      - template: nodepool.yaml
         hasDocuments:
           count: 1
   - it: defaults to Never restart policy
