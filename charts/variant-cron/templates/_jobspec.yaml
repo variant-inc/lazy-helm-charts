@@ -8,6 +8,7 @@ template:
       {{- $podLabels | nindent 6 }}
     annotations:
       {{- include "library.chart.podAnnotations" . | nindent 6 }}
+      karpenter.sh/do-not-disrupt: "true"
   spec:
     {{- with .Values.imagePullSecrets }}
     imagePullSecrets:
