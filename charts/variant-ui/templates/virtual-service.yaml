@@ -13,7 +13,7 @@ metadata:
   labels: {{ $labels | nindent 4 }}
 spec:
   gateways:
-    - default/default
+    - default/default-private
   hosts:
     - {{ .Release.Namespace }}-{{ $fullName }}.internal.apps.{{ $host }}
     {{- range .Values.istio.ingress.additionalHosts.private }}
@@ -36,7 +36,7 @@ metadata:
   labels: {{ $labels | nindent 4 }}
 spec:
   gateways:
-    - default/default
+    - default/default-public
   hosts:
     - {{ .Release.Namespace }}-{{ $fullName }}.apps.{{ $host }}
     {{- range .Values.istio.ingress.additionalHosts.public }}
