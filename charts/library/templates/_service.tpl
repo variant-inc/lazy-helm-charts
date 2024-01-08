@@ -10,7 +10,7 @@ metadata:
   labels:
     {{- $labels | nindent 4 }}
   annotations:
-    service.kubernetes.io/topology-mode: auto
+    service.kubernetes.io/topology-mode: Auto
 spec:
   type: ClusterIP
   ports:
