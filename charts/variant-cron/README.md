@@ -1,6 +1,6 @@
 # Variant CronJob Helm Chart
 
-![Version: 1.3.6](https://img.shields.io/badge/Version-1.3.6-informational?style=flat-square) A Helm chart for Istio Objects
+![Version: 1.3.7](https://img.shields.io/badge/Version-1.3.7-informational?style=flat-square) A Helm chart for Istio Objects
 
 ## What this chart provides to you by default
 

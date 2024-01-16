@@ -1,5 +1,4 @@
 {{- define "library.configMap.tpl" }}
-{{- if .Values.configVars }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -8,6 +7,7 @@ metadata:
   labels:
     {{- include "library.chart.labels" . | nindent 4 }}
 data:
+{{- if .Values.configVars }}
   {{- range $key, $value := .Values.configVars }}
   {{ $key }}: {{ $value | quote }}
   {{- end }}
